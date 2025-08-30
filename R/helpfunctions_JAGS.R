@@ -110,7 +110,7 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
   if (any(n_adapt > 0L, n_iter > 0L)) {
 
     f <- future::future({})
-    parallel <- f$asynchronous
+    parallel <- !inherits(f, "UniprocessFuture") #f$asynchronous
 
     fit <- if (isTRUE(parallel) |
                (isTRUE(add_samples) & inherits(models, "list"))) {
