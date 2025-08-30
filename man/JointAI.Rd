@@ -2,6 +2,7 @@
 % Please edit documentation in R/JointAI.R
 \docType{package}
 \name{JointAI}
+\alias{JointAI-package}
 \alias{JointAI}
 \title{JointAI: Joint Analysis and Imputation of Incomplete Data}
 \description{
@@ -159,4 +160,16 @@ Erler, N.S., Rizopoulos D., Jaddoe, V.W.V., Franco, O.H. & Lesaffre, E.M.E.H. (2
 Bayesian imputation of time-varying covariates in linear mixed models.
 \emph{Statistical Methods in Medical Research}, 28(2), 555–568.
 \doi{10.1177/0962280217730851}
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://nerler.github.io/JointAI/}
+  \item Report bugs at \url{https://github.com/nerler/JointAI/issues/}
+}
+
+}
+\author{
+\strong{Maintainer}: Nicole S. Erler \email{n.s.erler@umcutrecht.nl} (\href{https://orcid.org/0000-0002-9370-6832}{ORCID})
+
 }

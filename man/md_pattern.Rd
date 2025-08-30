@@ -29,8 +29,8 @@ and y-axis (on the right) be printed?}
 
 \item{ylab}{y-axis label}
 
-\item{legend.position}{the position of legends ("none", "left", "right",
-"bottom", "top", or two-element numeric vector)}
+\item{legend.position}{the default position of legends ("none", "left",
+"right", "bottom", "top", "inside")}
 
 \item{sort_columns}{logical; should the columns be sorted by number of missing
 values? (default is \code{TRUE})}
