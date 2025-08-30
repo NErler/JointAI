@@ -1,7 +1,7 @@
 Package: JointAI
 Version: 1.0.5.9000
 Title: Joint Analysis and Imputation of Incomplete Data
-Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
+Authors@R: c(person("Nicole S.", "Erler", email = "n.s.erler@umcutrecht.nl",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0002-9370-6832")))
 Description: Joint analysis and imputation of incomplete data in the Bayesian
