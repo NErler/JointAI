@@ -37,11 +37,11 @@ jagsmodel_glmm <- function(info) {
   ranefpriors <- paste0(
     unlist(
       lapply(names(info$hc_list$hcvars), function(lvl) {
-      if (isTRUE(info$rd_vcov[[lvl]] != "full")) {
-        ranef_priors(info$nranef[lvl], paste0("_", info$varname, "_", lvl),
-                     rd_vcov = info$rd_vcov[[lvl]])
-      }
-    })), collapse = "\n")
+        if (isTRUE(info$rd_vcov[[lvl]] != "full")) {
+          ranef_priors(info$nranef[lvl], paste0("_", info$varname, "_", lvl),
+                       rd_vcov = info$rd_vcov[[lvl]])
+        }
+      })), collapse = "\n")
 
 
 
@@ -101,7 +101,7 @@ jagsmodel_glmm <- function(info) {
          tab(), "}", "\n",
          "\n",
          paste0(unlist(sapply(names(rdintercept), write_ranefs, info = info,
-                       rdintercept = rdintercept, rdslopes = rdslopes)),
+                              rdintercept = rdintercept, rdslopes = rdslopes)),
                 collapse = ''),
          tab(), "# Priors for the model for ", info$varname, "\n",
          tab(), "for (k in ", min(unlist(info$parelmts)), ":",

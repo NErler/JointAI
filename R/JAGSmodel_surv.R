@@ -85,7 +85,7 @@ jagsmodel_survreg <- function(info) {
 
 
   paste0(tab(2L), add_dashes(paste0("# Weibull survival model for ",
-                                   info$varname)), "\n",
+                                    info$varname)), "\n",
          tab(), "for (", index, " in 1:", info$N[gsub("M_", "",
                                                       info$resp_mat[2L])],
          ") {", "\n",
@@ -177,7 +177,7 @@ jagsmodel_coxph <- function(info) {
                          assoc_type = info$assoc_type,
                          covnames = vector(mode = "list",
                                            length = length(info$lp[["M_lvlone"]]
-                                                           )),
+                                           )),
                          trafo = info$fcts_all,
                          isgk = FALSE)
       }), collapse = " + ")

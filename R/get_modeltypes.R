@@ -78,7 +78,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     data[, allvars, drop = FALSE]
   }
 
-    all_lvls <- get_datlvls(dat_all, groups)
+  all_lvls <- get_datlvls(dat_all, groups)
 
 
 
@@ -149,14 +149,14 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     models <- do.call(rbind,
                       c(types['outcome'],
                         if (any(!varinfo$out) & length(NA_lvls) > 0)
-                        lapply(1:max(NA_lvls), function(k) {
-                          set <- if (k == max(NA_lvls)) {
-                            c('incomplete_lvl')
-                          } else {
-                            c('incomplete_lvl', 'complete_lvl')
-                          }
-                          do.call(rbind, types[paste0(set, k)])
-                        })
+                          lapply(1:max(NA_lvls), function(k) {
+                            set <- if (k == max(NA_lvls)) {
+                              c('incomplete_lvl')
+                            } else {
+                              c('incomplete_lvl', 'complete_lvl')
+                            }
+                            do.call(rbind, types[paste0(set, k)])
+                          })
                       ))
 
     models <- unlist(setNames(models$type, models$L1))

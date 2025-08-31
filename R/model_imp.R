@@ -731,7 +731,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   args <- as.list(match.call())
   if (!is.null(args$meth))
     errormsg("The argument %s has been replaced by the argument %s.",
-              dQuote("meth"), dQuote("models"))
+             dQuote("meth"), dQuote("models"))
 
   if (!is.null(args$parallel) | !is.null(args$n.cores)) {
     errormsg("The arguments %s and %s are no longer used. To perform the
@@ -757,11 +757,11 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   # * model dimensions ---------------------------------------------------------
   par_index_main <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in%
-                                     names(Mlist$fixed)],
-                     Mlist = Mlist)
+                                                  names(Mlist$fixed)],
+                                  Mlist = Mlist)
   par_index_other <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in%
-                                         names(Mlist$fixed)],
-                         Mlist = Mlist)
+                                                   names(Mlist$fixed)],
+                                   Mlist = Mlist)
 
   # * model info ---------------------------------------------------------------
   info_list <- get_model_info(Mlist, par_index_main = par_index_main,
