@@ -41,8 +41,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id',
   }
 
   subDF <- data[, (colSums(is.na(data[data[, imp] == 0, ])) > 0 &
-                   colSums(is.na(data[data[, imp] != 0, ])) == 0) |
-                names(data) %in% c(imp, id, rownr)]
+                     colSums(is.na(data[data[, imp] != 0, ])) == 0) |
+                  names(data) %in% c(imp, id, rownr)]
 
   DForig <- subDF[subDF[, imp] == 0, ]
 
@@ -84,44 +84,44 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id',
                             labeller else "label_value"
       ) +
       ggplot2::scale_color_manual(name = '',
-                         limits = c(FALSE, TRUE),
-                         values = c('dodgerblue3', 'midnightblue'),
-                         labels = c('imputed', 'observed')) +
+                                  limits = c(FALSE, TRUE),
+                                  values = c('dodgerblue3', 'midnightblue'),
+                                  labels = c('imputed', 'observed')) +
       ggplot2::scale_fill_manual(name = '', limits = c(FALSE, TRUE),
-                        values = c('dodgerblue3', 'midnightblue'),
-                        labels = c('imputed', 'observed')) +
+                                 values = c('dodgerblue3', 'midnightblue'),
+                                 labels = c('imputed', 'observed')) +
       ggplot2::scale_linewidth_manual(name = '',
                                       limits = c(FALSE, TRUE),
                                       values = c(0.5, 1.3),
                                       labels = c('imputed', 'observed')) +
       ggplot2::xlab('')
-      if (unique(na.omit(dat$type) == 'numeric')) {
-        if (min(table(dat[, imp])) == 1) {
-          pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
-                                             color = get(imp) == 0,
-                                             linewidth = get(imp) == 0),
-                                     geom = 'line',
-                                position = 'identity', na.rm = TRUE) +
-            ggplot2::geom_point(data = subset(dat, get(imp) > 0),
-                                ggplot2::aes(x = as.numeric(.data$value),
-                                             y = 0, color = get(imp) == 0,
-                                             shape = get(imp) == 0),
-                                alpha = 0.5, show.legend = FALSE)
-        } else {
-          pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
-                                             linewidth = get(imp) == 0,
-                                             color = get(imp) == 0,
-                                             group = get(imp)), geom = 'line',
-                                position = 'identity', na.rm = TRUE)
-        }
+    if (unique(na.omit(dat$type) == 'numeric')) {
+      if (min(table(dat[, imp])) == 1) {
+        pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
+                                                color = get(imp) == 0,
+                                                linewidth = get(imp) == 0),
+                                   geom = 'line',
+                                   position = 'identity', na.rm = TRUE) +
+          ggplot2::geom_point(data = subset(dat, get(imp) > 0),
+                              ggplot2::aes(x = as.numeric(.data$value),
+                                           y = 0, color = get(imp) == 0,
+                                           shape = get(imp) == 0),
+                              alpha = 0.5, show.legend = FALSE)
       } else {
-        pl + ggplot2::geom_bar(ggplot2::aes(x = .data$value,
-                                            y = .data$proportion,
-                                       group = get(imp), fill = get(imp) == 0),
-                          position = "dodge", stat = 'identity',
-                          color = 'midnightblue') +
-          ggplot2::ylab('proportion')
+        pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
+                                                linewidth = get(imp) == 0,
+                                                color = get(imp) == 0,
+                                                group = get(imp)), geom = 'line',
+                                   position = 'identity', na.rm = TRUE)
       }
+    } else {
+      pl + ggplot2::geom_bar(ggplot2::aes(x = .data$value,
+                                          y = .data$proportion,
+                                          group = get(imp), fill = get(imp) == 0),
+                             position = "dodge", stat = 'identity',
+                             color = 'midnightblue') +
+        ggplot2::ylab('proportion')
+    }
   })
 
   # get number of rows and columns of plots

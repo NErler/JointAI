@@ -25,19 +25,19 @@ write_model <- function(info_list, Mlist, modelfile = "") {
 
 
         paste0("\r",
-          tab(), "for (", index[lvl], " in 1:", Mlist$N[lvl], ") {", "\n",
+               tab(), "for (", index[lvl], " in 1:", Mlist$N[lvl], ") {", "\n",
 
-          # distribution specification
-          ranef_distr(nam = paste0(nam, "_", lvl),
-                      index = index[lvl],
-                      nranef = max(unlist(nranef))),
+               # distribution specification
+               ranef_distr(nam = paste0(nam, "_", lvl),
+                           index = index[lvl],
+                           nranef = max(unlist(nranef))),
 
-          paste_mu_b_full(lps = unlist(rd_lps, recursive = FALSE),
-                          nranef, paste0(nam, "_", lvl), index[lvl]),
-          "\n",
-          tab(), "}", "\n\n",
-          ranef_priors(max(unlist(nranef)), paste0(nam, "_", lvl),
-                       rd_vcov = "full")
+               paste_mu_b_full(lps = unlist(rd_lps, recursive = FALSE),
+                               nranef, paste0(nam, "_", lvl), index[lvl]),
+               "\n",
+               tab(), "}", "\n\n",
+               ranef_priors(max(unlist(nranef)), paste0(nam, "_", lvl),
+                            rd_vcov = "full")
         )
       })
     }
@@ -50,7 +50,7 @@ write_model <- function(info_list, Mlist, modelfile = "") {
         } else {
           k$custom
         }
-        }), collapse = "\n\n\n"),
+      }), collapse = "\n\n\n"),
 
       if (length(unlist(rd_vcov_full)) > 0) {
         paste0("\n\n\n\r", tab(),

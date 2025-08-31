@@ -186,8 +186,8 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     as.integer(attr(x, "rd_intercept")) +
       if (!is.null(x$rd_slope_coefs)) {
         nrow(x$rd_slope_coefs)
-      # if (any(!vapply(x$rd_slope_coefs, is.null, FUN.VALUE = logical(1L)))) {
-      #   nrow(do.call(rbind, x$rd_slope_coefs))
+        # if (any(!vapply(x$rd_slope_coefs, is.null, FUN.VALUE = logical(1L)))) {
+        #   nrow(do.call(rbind, x$rd_slope_coefs))
       } else {
         0L
       }
@@ -225,7 +225,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
                       covrs)
 
     get_assoc_type(covrs[covrs %in% tvars],
-                             Mlist$models, assoc_type, Mlist$refs)
+                   Mlist$models, assoc_type, Mlist$refs)
   } else if (modeltype %in% "coxph") {
     "obs.value"
   } else if (isTRUE(isgk)) {

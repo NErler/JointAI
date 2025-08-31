@@ -25,7 +25,7 @@ melt_list <- function(l, varname = "L1", valname = "value") {
       "In melt_list(): Element(s) %s has/have length zero.
              I will ignore this.",
       paste_and(names(Filter(\(x) length(x) == 0, x = l)),
-        dQ = TRUE
+                dQ = TRUE
       )
     )
     l <- Filter(Negate(\(x) length(x) == 0), l)
@@ -37,7 +37,7 @@ melt_list <- function(l, varname = "L1", valname = "value") {
     errormsg(
       "In melt_list(): Not all elements are atomic vectors (%s).",
       paste_and(names(Filter(\(x) !is.atomic(x) | !is.vector(x), l)),
-        dQ = TRUE
+                dQ = TRUE
       )
     )
   }
@@ -46,8 +46,8 @@ melt_list <- function(l, varname = "L1", valname = "value") {
     rbind,
     lapply(seq_along(l), function(k) {
       df <- as.data.frame(list(l[[k]]),
-        col.names = valname,
-        stringsAsFactors = FALSE
+                          col.names = valname,
+                          stringsAsFactors = FALSE
       )
 
       df[, varname] <- names(l)[k]
@@ -132,7 +132,7 @@ melt_matrix_list <- function(l, varnames = NULL) {
 
 
   if (is.null(varnames) &&
-    length(unique(lapply(l, \(x) names(dimnames(x))))) > 1L) {
+      length(unique(lapply(l, \(x) names(dimnames(x))))) > 1L) {
     errormsg(
       "In melt_matrix_list(): When the argument %s is not provided,
              all matrices must have the same names of their %s.",
@@ -218,7 +218,7 @@ melt_data_frame <- function(data, id_vars = NULL, varname = "variable",
     do.call(
       rbind,
       replicate(ncol(d), subset(data, select = id_vars),
-        simplify = FALSE
+                simplify = FALSE
       )
     )
   }
@@ -257,14 +257,14 @@ melt_data_frame <- function(data, id_vars = NULL, varname = "variable",
 melt_data_frame_list <- function(l, id_vars = NULL, varname = NULL,
                                  valname = "value", lname = "L1") {
   if (!inherits(l, "list") || !all(sapply(l, inherits, "data.frame") |
-    sapply(l, inherits, "NULL"))) {
+                                   sapply(l, inherits, "NULL"))) {
     errormsg("This function may not work for objects that are not a
              list of data frames.")
   }
 
   lnew <- lapply(l[!sapply(l, is.null)],
-    melt_data_frame, valname = valname,
-    varname = varname, id_vars = id_vars
+                 melt_data_frame, valname = valname,
+                 varname = varname, id_vars = id_vars
   )
 
   if (is.null(names(lnew))) {

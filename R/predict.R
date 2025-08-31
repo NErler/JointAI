@@ -345,7 +345,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
     warnmsg("Prediction for cases with missing covariates is not yet
         implemented.
         I will report %s instead of predicted values for those cases.",
-        dQuote("NA"), exdent = 6L)
+            dQuote("NA"), exdent = 6L)
 
 
   # linear predictor values for the selected iterations of the MCMC sample

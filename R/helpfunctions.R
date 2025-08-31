@@ -623,9 +623,9 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
 
   md_list <- lapply(seq_len(nrow(md)), get_row, dat = md)
   locf <- lapply(md_list, find_locf_cols,
-              gk_time = which(names(md) == timevar),
-              time_cols = grep(paste0("^", timevar, "."), colnames(md)),
-              val_cols = valcol_nrs, longvars = longvars)
+                 gk_time = which(names(md) == timevar),
+                 time_cols = grep(paste0("^", timevar, "."), colnames(md)),
+                 val_cols = valcol_nrs, longvars = longvars)
 
 
   # locf <- nlapply(seq_len(nrow(md)), function(i) {
