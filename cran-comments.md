@@ -1,4 +1,23 @@
+# JointAI (version 1.0.6)
 
+## Round 1
+
+### Test environments
+* local Windows 10, R 4.3.3
+* windows server 2022 x64 (via github actions), R 4.3.3
+* ubuntu 22.04.4 LTS (via github actions), R 4.2.3, R 4.3.3, devel
+* mac-OS Ventura 13.3.1 (via macOS builder), R 4.3.0
+* win-builder (oldrelease, devel and release)
+
+
+### R CMD check results
+0 errors | 0 warnings | 0 notes
+
+### Reverse dependencies
+One reverse dependency: "remiod"; passed the check.
+  
+---  
+  
 # JointAI (version 1.0.5)
 
 ## Round 1
