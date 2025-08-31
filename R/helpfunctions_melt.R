@@ -278,3 +278,58 @@ melt_data_frame_list <- function(l, id_vars = NULL, varname = NULL,
 
   do.call(rbind, lnew)
 }
+
+
+
+# old version of the function; included for reverse dependency remiod;
+# re-introduced 2 April 2024
+#
+melt_data.frame <- function(data, id.vars = NULL, varnames = NULL,
+                            valname = 'value') {
+  if (!inherits(data, 'data.frame'))
+    errormsg("This function may not work for objects that are not data.frames.")
+
+  data$rowID <- paste0('rowID', seq_len(nrow(data)))
+  X <- data[, !names(data) %in% c('rowID', id.vars), drop = FALSE]
+
+  g <- list(rowID = data$rowID,
+            variable = if (ncol(X) > 0) names(X)
+  )
+
+  out <- expand.grid(Filter(Negate(is.null), g), stringsAsFactors = FALSE)
+
+  if (length(unique(sapply(X, class))) > 1) {
+    out[, valname] <- unlist(lapply(X, as.character))
+  } else {
+    out[, valname] <- unlist(X)
+  }
+
+  mout <- merge(data[, c("rowID", id.vars)], out)
+
+  attr(mout, 'out.attrs') <- NULL
+
+  if (ncol(X) > 0) mout[order(mout$variable), -1] else mout
+}
+
+melt_data.frame_list <- function(X, id.vars = NULL, varnames = NULL,
+                                 valname = 'value') {
+  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame') |
+                                   sapply(X, inherits, 'NULL')))
+    errormsg("This function may not work for objects that are not a
+             list of data frames.")
+
+  Xnew <- lapply(X[!sapply(X, is.null)],
+                 melt_data.frame, varnames = varnames, id.vars = id.vars)
+
+  if (is.null(names(Xnew)))
+    names(Xnew) <- seq_along(Xnew)
+
+  Xnew <- lapply(names(Xnew), function(k) {
+    cbind(Xnew[[k]], L1 = k, stringsAsFactors = FALSE)
+  })
+
+  out <- do.call(rbind, Xnew)
+
+  attr(out, 'out.attrs') <- NULL
+  return(out)
+}
