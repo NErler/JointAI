@@ -338,8 +338,8 @@ extract_id <- function(random, warn = TRUE) {
     if (any(rdmatch[[1L]] > 0L)) {
       # remove "(... | " from the formula
       rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-        rdmatch,
-        invert = FALSE
+                              rdmatch,
+                              invert = FALSE
       ))
       rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
 
@@ -348,7 +348,7 @@ extract_id <- function(random, warn = TRUE) {
 
       # split by + * : /
       id <- unique(unlist(strsplit(id[id != ""],
-        split = "[[:space:]]*[+*:/][[:space:]]*"
+                                   split = "[[:space:]]*[+*:/][[:space:]]*"
       )))
     } else {
       rdmatch <- gregexpr(
@@ -359,11 +359,11 @@ extract_id <- function(random, warn = TRUE) {
       if (any(rdmatch[[1L]] > 0L)) {
         # remove "... | " from the formula
         id <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-          rdmatch,
-          invert = TRUE
+                                rdmatch,
+                                invert = TRUE
         ))
         id <- unique(unlist(strsplit(id[id != ""],
-          split = "[[:space:]]*[+*:/][[:space:]]*"
+                                     split = "[[:space:]]*[+*:/][[:space:]]*"
         )))
       } else {
         id <- NULL
