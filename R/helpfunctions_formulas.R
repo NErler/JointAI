@@ -9,23 +9,34 @@ extract_outcomes_list <- function(fixed) {
   # if fixed is not a list, turn into list
   fixed <- check_formula_list(fixed)
 
-  out_nam_list <- lapply(fixed, function(x) {
-    # get the LHS of the formula
-    lhs <- extract_lhs(x)
+  lhs_strings <- lapply(fixed, extract_lhs_string)
+  lhs_varnames <- lapply(fixed, extract_lhs_varnames)
 
-    # names of the outcome variables
-    outnam <- all.vars(as.formula(paste0(lhs, "~ 1")))
+  names(lhs_varnames) <- unlist(lhs_strings)
 
-    if (any(length(outnam) == 0L, is.na(outnam), is.null(outnam))) {
-      errormsg("Unable to extract the outcome variable.")
-    }
-    outnam
-  })
+  return(lhs_varnames)
 
-  names(out_nam_list) <- cvapply(fixed, extract_lhs)
-
-  out_nam_list
+  # out_nam_list <- lapply(fixed, function(x) {
+  #   # get the LHS of each formula
+  #   lhs <- extract_lhs_string(x)
+  #
+  #   # names of the outcome variables
+  #   varnames <- all.vars(as.formula(paste0(lhs, "~ 1")))
+  #
+  #   if (any(length(varnames) == 0L, is.na(varnames), is.null(varnames))) {
+  #     errormsg("Unable to extract the outcome variable.")
+  #   }
+  #   varnames
+  # })
+  #
+  # names(out_nam_list) <- cvapply(fixed, extract_lhs)
+  #
+  # out_nam_list
 }
+
+
+
+
 #' Extract variable names from the left-hand side of a formula
 #'
 #' This internal helper function extracts variable names from the left-hand
