@@ -178,41 +178,44 @@ test_that("remove_lhs() works", {
 
 
 # extract_lhs ------------------------------------------------------------------
-test_that('extract_lhs works', {
+test_that('extract_lhs returns lhs string', {
   # simple response
-  expect_equal(extract_lhs(y ~ a + b), "y")
+  expect_equal(extract_lhs_string(y ~ a + b), "y")
 
   # survival object
-  expect_equal(extract_lhs(Surv(time, status) ~ a + b), "Surv(time, status)")
-  expect_equal(extract_lhs(Surv(time, status == 3) ~ a + b),
+  expect_equal(extract_lhs_string(Surv(time, status) ~ a + b), "Surv(time, status)")
+  expect_equal(extract_lhs_string(Surv(time, status == 3) ~ a + b),
                "Surv(time, status == 3)")
 
   # cbind response
-  expect_equal(extract_lhs(cbind(a, b, c) ~ x), "cbind(a, b, c)")
+  expect_equal(extract_lhs_string(cbind(a, b, c) ~ x), "cbind(a, b, c)")
 
   # function/trafo response
-  expect_equal(extract_lhs(I(x^2) ~ y), "I(x^2)")
-  expect_equal(extract_lhs(log(x^2) ~ y), "log(x^2)")
-  expect_equal(extract_lhs(a + b ~ y + z), "a + b")
-
-  # null
-  expect_null(extract_lhs(NULL))
-
+  expect_equal(extract_lhs_string(I(x^2) ~ y), "I(x^2)")
+  expect_equal(extract_lhs_string(log(x^2) ~ y), "log(x^2)")
+  expect_equal(extract_lhs_string(a + b ~ y + z), "a + b")
 })
 
+test_that("extract_lhs returns NULL for NULL object", {
+    expect_null(extract_lhs_string(NULL))
+})
 
-test_that('extract_lhs returns error', {
+test_that('extract_lhs returns error for one-sided formula', {
   # no response
-  expect_error(extract_lhs(~ y + z))
+  expect_error(extract_lhs_string(~ y + z))
+})
 
+test_that("extact_lhs returns error for non-formula objects", {
   # not a formula
-  expect_error(extract_lhs("a ~ y + z"))
-  expect_error(extract_lhs(NA))
+  expect_error(extract_lhs_string("a ~ y + z"))
+  expect_error(extract_lhs_string(NA))
+  expect_error(extract_lhs_string(33))
+  expect_error(extract_lhs_string(TRUE))
+  expect_error(extract_lhs_string(expression(y ~ x + y)))
 
   # a list of formulas
-  expect_error(extract_lhs(list(a ~ b + c, x ~ y + z)))
+  expect_error(extract_lhs_string(list(a ~ b + c, x ~ y + z)))
 })
-
 
 
 # split_formula-----------------------------------------------
