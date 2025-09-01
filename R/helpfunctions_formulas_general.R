@@ -1,13 +1,19 @@
-#' Check/convert formula to list
+#' Ensure object is a (list of) formula(s)
 #'
-#' Check if an object is a list of formulas and/or NULL elements and convert
-#' it to a list if it is a formula object.
+#' Check if an object is NULL, a formula, or a list of formulas and (optionally)
+#' convert it to a list of formulas. If the input is of unknown type or if it
+#' is a list that has entries that are neither `formula` nor `NULL`, an error
+#' is thrown.
 #'
 #' Internal function; used in many help functions, get_refs, *_imp, predict
 #' (2022-02-05)
-#' @param formula any object
-#' @param convert logical; should the input be converted to a list?
+#'
+#' @param formula An object expected to be either a formula, a list of formulas,
+#'                or `NULL`.
+#' @param convert Logical; if `TRUE`, a single formula is wrapped in a list.
+#' @return A `formula`, a `list` of `formula` (and/or `NULL`) objects, or `NULL`
 #' @keywords internal
+
 check_formula_list <- function(formula, convert = TRUE) {
 
   if (is.null(formula)) {
