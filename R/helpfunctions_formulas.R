@@ -26,8 +26,38 @@ extract_outcome <- function(fixed) {
 
   out_nam_list
 }
+#' Extract variable names from the left-hand side of a formula
+#'
+#' This internal helper function extracts variable names from the left-hand
+#' side (LHS) of a formula or a list of formulas. It supports standard formulas,
+#' survival objects, transformations (e.g., `log(x)`), and multivariate outcomes
+#' (e.g., `cbind(a, b, c)`).
+#'
+#' @param formula A formula object, a list of formulas, or `NULL`.
+#'
+#' @return A character vector of variable names from the LHS of the formula,
+#'          or a list of such vectors if a list of formulas is provided.
+#'          Returns `NULL` if the input is `NULL`.
+#'
+#' @keywords internal
 
+extract_lhs_varnames <- function(formula) {
+  if (is.null(formula)) return(NULL)
 
+  # if input is list, apply this function recursively to each element
+  if (inherits(formula, "list")) {
+    return(lapply(formula, extract_lhs_varnames))
+  }
+
+  if (!inherits(formula, "formula")) {
+    errormsg("The argument 'formula' must be a formula.")
+  }
+  if (length(formula) != 3L) {
+    errormsg("The formula must be two-sided (i.e. have length 3).")
+  }
+
+  all.vars(formula[[2]])
+}
 
 
 
