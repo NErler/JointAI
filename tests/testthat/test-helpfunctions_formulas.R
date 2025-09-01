@@ -57,6 +57,50 @@ test_that('extract_outcomes_list works', {
 
 
 
+test_that("extract_lhs_varnames works with simple formulas", {
+  expect_equal(extract_lhs_varnames(y ~ x + z), "y")
+  expect_equal(extract_lhs_varnames(Surv(a, b) ~ x + z), c("a", "b"))
+  expect_equal(extract_lhs_varnames(log(x) ~ a), "x")
+  expect_equal(extract_lhs_varnames(cbind(a, b, c) ~ 1), c("a", "b", "c"))
+})
+
+
+test_that("extract_lhs_varnames handles NULL input", {
+  expect_null(extract_lhs_varnames(NULL))
+  expect_equal(extract_lhs_varnames(list(a = NULL, b = NULL)),
+               list(a = NULL, b = NULL))
+})
+
+
+test_that("extract_lhs_varnames throws error for one-sided formulas", {
+  expect_error(extract_lhs_varnames(~ x + z))
+  expect_error(extract_lhs_varnames(~ time | id))
+  expect_error(
+    extract_lhs_varnames(list(y ~ x + z, ~ time | id, Surv(a, b) ~ x + z))
+  )
+})
+
+test_that("extract_lhs_varnames throws error for non-formulas", {
+  expect_error(extract_lhs_varnames(expression( y ~ x + z)))
+  expect_error(extract_lhs_varnames("y ~ time | id"))
+  expect_error(
+    extract_lhs_varnames(list(y ~ x + z, NA, Surv(a, b) ~ x + z))
+  )
+})
+
+
+test_that("extract_lhs_varnames works with lists of formulas", {
+  expect_equal(
+    extract_lhs_varnames(list(y ~ x + z, Surv(a, b) ~ x + z)),
+    list("y", c("a", "b"))
+  )
+  expect_equal(
+    extract_lhs_varnames(list(a = y ~ x + z, NULL, b = Surv(a, b) ~ x + z)),
+    list(a = "y", NULL, b = c("a", "b"))
+  )
+})
+
+
 
 
 
