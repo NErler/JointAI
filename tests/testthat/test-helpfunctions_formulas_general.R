@@ -19,11 +19,11 @@ test_that('check_formula_list works', {
 
   # list of formulas and NULL elements
   expect_equal(check_formula_list(list(y ~ x + z, NULL)),
-               list(y ~ x + z, NULL))
+               list(y ~ x + z, NULL), ignore_formula_env = TRUE)
 
   # list of only NULL elements
   expect_equal(check_formula_list(list(NULL, NULL, NULL)),
-               list(NULL, NULL, NULL))
+               list(NULL, NULL, NULL), ignore_formula_env = TRUE)
 })
 
 
@@ -219,6 +219,25 @@ test_that("extact_lhs returns error for non-formula objects", {
 
 
 # split_formula-----------------------------------------------
+
+library(testthat)
+
+test_that("extract_fixef_formula throws error for non-formulas", {
+  expect_error(extract_fixef_formula("not a formula"))
+  expect_error(extract_fixef_formula(NA))
+  expect_error(extract_fixef_formula(42))
+  expect_error(extract_fixef_formula(expression(y ~ x)))
+})
+
+test_that("extract_ranef_formula throws error for non-formulas", {
+  expect_error(extract_ranef_formula("not a formula"))
+  expect_error(extract_ranef_formula(NA))
+  expect_error(extract_ranef_formula(42))
+  expect_error(extract_ranef_formula(expression(y ~ x)))
+})
+
+
+
 fmls <- list(
   list(fmla = y ~ a + b + (b | id),
        fixed = list(y = y ~ a + b),
@@ -240,21 +259,32 @@ fmls <- list(
        random = list(y = ~ (1|id) + (1|class))),
   list(fmla = y ~ a + b + (id | group1 + group2),
        fixed = list(y = y ~ a + b),
-       random = list(y = ~ (id | group1 + group2)))
+       random = list(y = ~ (id | group1 + group2))),
+  list(fmla = y ~ a + b - 1,
+       fixed = list(y = y ~ 0 + a + b),
+       random = list(y = NULL)),
+  list(fmla = y ~ 0 + (1 | id),
+       fixed = list(y = y ~ 0),
+       random = list(y = ~ (1 | id)))
 )
 
-test_that('split_formula works', {
+
+test_that("extract_fixef_formula works", {
   for (i in seq_along(fmls)) {
-    expect_equal(split_formula(fmls[[i]]$fmla),
-                 list(fixed = fmls[[i]]$fixed[[1]],
-                      random = fmls[[i]]$random[[1]]),
+    expect_equal(extract_fixef_formula(fmls[[i]]$fmla),
+                 fmls[[i]]$fixed[[1]],
                  ignore_formula_env = TRUE)
   }
-
-  expect_equal(split_formula(y ~ a + b),
-               list(fixed = y ~ a + b,
-                    random = NULL), ignore_formula_env = TRUE)
 })
+
+test_that("extract_ranef_formula works", {
+  for (i in seq_along(fmls)) {
+    expect_equal(extract_ranef_formula(fmls[[i]]$fmla),
+                 fmls[[i]]$random[[1]],
+                 ignore_formula_env = TRUE)
+  }
+})
+
 
 
 
@@ -263,7 +293,7 @@ test_that('split_formula_list works', {
   expect_equal(
     split_formula_list(lapply(fmls, "[[", "fmla")),
     list(fixed = unlist(lapply(fmls, "[[", 'fixed')),
-         random = unlist(lapply(fmls, "[[", 'random'))),
+         random = unlist(lapply(fmls, "[[", 'random'), recursive = FALSE)),
     ignore_formula_env = TRUE)
 })
 

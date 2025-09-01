@@ -11,7 +11,8 @@
 #' @param formula An object expected to be either a formula, a list of formulas,
 #'                or `NULL`.
 #' @param convert Logical; if `TRUE`, a single formula is wrapped in a list.
-#' @return A `formula`, a `list` of `formula` (and/or `NULL`) objects, or `NULL`
+#' @return A named `list` of `formula` (and/or `NULL`) objects, or `NULL`. If
+#'        `convert` is `FALSE`, a single formula is returned as-is.
 #' @keywords internal
 
 check_formula_list <- function(formula, convert = TRUE) {
@@ -24,8 +25,9 @@ check_formula_list <- function(formula, convert = TRUE) {
   if (inherits(formula, "formula")) {
     if (convert) {
       formula <- list(formula)
+    } else {
+      return(formula)
     }
-    return(formula)
   }
 
   if (inherits(formula, "list")) {
@@ -238,77 +240,100 @@ all_vars <- function(fmla) {
 
 
 
-#' Split a formula into fixed and random effects parts
+
+
+
+#' Extract fixed effects formula from lme4-type formula
 #'
-#' Split a lme4 style formula into nlme style formulas.
+#' @param formula a `formula` object (typically in lme4-style)
 #'
-#' Internal function, used in *_imp and help functions (2022-02-06)
-#'
-#' @param formula a `formula` object
+#' @returns a `formula` object
 #' @keywords internal
 #'
+extract_fixef_formula <- function(formula) {
+  if (!inherits(formula, "formula")) {
+    errormsg("The provided object is not a %s object.", dQuote("formula"))
+  }
 
-split_formula <- function(formula) {
-  # get all terms from the formula and identify which contain the vertical bar
-  # (= random effects)
   term_labels <- attr(terms(formula), "term.labels")
   which_ranef <- grepl("|", term_labels, fixed = TRUE)
+  intercept <- attr(terms(formula), "intercept")
 
-  # build fixed effects formula by combining all non-random effects terms with
-  # a "+", and combine with the LHS
   rhs <- paste(
     c(
-      term_labels[!which_ranef],
-      if (attr(terms(formula), "intercept") == 0L) "0"
+      if (intercept == 0L || sum(!which_ranef) == 0L) intercept,
+      term_labels[!which_ranef]
     ),
     collapse = " + "
   )
 
-  fixed <- paste0(
-    as.character(formula)[2L], " ~ ",
-    if (rhs == "") {
-      1L
-    } else {
-      rhs
-    }
-  )
-
-  # build random effects formula by pasting all random effects terms in brackets
-  # (to separate different random effects terms from each other), and combine
-  # them with "+"
-  rhs2 <- paste0("(", term_labels[which_ranef], ")", collapse = " + ")
-
-  # if there are random effect terms at all, combine with "~" and convert to a
-  # formula object
-  random <- if (rhs2 != "()") as.formula(paste0(" ~ ", rhs2))
-
-  list(
-    fixed = as.formula(fixed),
-    random = random
-  )
+  as.formula(paste0(as.character(formula)[2L], " ~ ", rhs))
 }
+
+
+#' Extract random effects formula from lme4-type formula
+#'
+#' @param formula a `formula` object (typically in lme4-style)
+#'
+#' @returns a one-sided `formula` object (or `NULL` if there are no random
+#'          effects)
+#'
+#' @keywords internal
+
+extract_ranef_formula <- function(formula) {
+  if (!inherits(formula, "formula")) {
+    errormsg("The provided object is not a %s object.", dQuote("formula"))
+  }
+
+  term_labels <- attr(terms(formula), "term.labels")
+  which_ranef <- grepl("|", term_labels, fixed = TRUE)
+
+  # paste each random effects term in parentheses to separate them
+  rhs <- paste0("(", term_labels[which_ranef], ")", collapse = " + ")
+
+  if (any(which_ranef)) {
+    as.formula(paste0(" ~ ", rhs))
+  }
+}
+
 
 
 #' Split a list of formulas into fixed and random effects parts.
 #'
-#' Calls `split_formula()` on each formula in a list to create one list of the
+#' Calls `extract_fixef_formula()` and `extract_ranef_formula()` on each
+#' formula in a list to create one list of the
 #' fixed effects formulas and one list containing the random effects formulas.
 #'
 #' Internal function, used in *_imp() (2022-02-06)
 #'
-#' @param formulas a `list` of `formula` objects
+#' @param formula a `formula` or a `list` of `formula` objects
+#' @returns A `list` with two elements, `fixed` and `random`, each of which is a
+#'          named `list` of `formula` objects (or `NULL`)
 #' @keywords internal
 #'
 
-split_formula_list <- function(formulas) {
-  formulas <- check_formula_list(formulas)
+split_formula_list <- function(formula) {
+  formula_list <- check_formula_list(formula)
 
-  l <- lapply(formulas, split_formula)
-  names(l) <- cvapply(formulas, function(x) as.character(x)[2L])
+  fixed <- lapply(formula_list, extract_fixef_formula)
+  random <- lapply(formula_list, extract_ranef_formula)
+
+
+  # extract lhs string as names for the list elements
+  lhs_strings <- lapply(formula, extract_lhs_string)
+
+  # If there are non-null elements, assign lhs of each formula as name of the
+  # list element
+  # Note: the "if" is needed to not assign "" names to only NULL lists
+  if (any(!sapply(fixed, is.null)))
+    names(fixed) <- gsub("NULL", "", lhs_strings)
+  if (any(!sapply(random, is.null)))
+    names(random) <- gsub("NULL", "", lhs_strings)
+
 
   list(
-    fixed = lapply(l, "[[", "fixed"),
-    random = lapply(l, "[[", "random")
+    fixed = fixed,
+    random = random
   )
 }
 

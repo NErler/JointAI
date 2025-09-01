@@ -13,7 +13,8 @@ or \code{NULL}.}
 \item{convert}{Logical; if \code{TRUE}, a single formula is wrapped in a list.}
 }
 \value{
-A \code{formula}, a \code{list} of \code{formula} (and/or \code{NULL}) objects, or \code{NULL}
+A named \code{list} of \code{formula} (and/or \code{NULL}) objects, or \code{NULL}. If
+\code{convert} is \code{FALSE}, a single formula is returned as-is.
 }
 \description{
 Check if an object is NULL, a formula, or a list of formulas and (optionally)

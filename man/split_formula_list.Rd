@@ -4,13 +4,18 @@
 \alias{split_formula_list}
 \title{Split a list of formulas into fixed and random effects parts.}
 \usage{
-split_formula_list(formulas)
+split_formula_list(formula)
 }
 \arguments{
-\item{formulas}{a \code{list} of \code{formula} objects}
+\item{formula}{a \code{formula} or a \code{list} of \code{formula} objects}
+}
+\value{
+A \code{list} with two elements, \code{fixed} and \code{random}, each of which is a
+named \code{list} of \code{formula} objects (or \code{NULL})
 }
 \description{
-Calls \code{split_formula()} on each formula in a list to create one list of the
+Calls \code{extract_fixef_formula()} and \code{extract_ranef_formula()} on each
+formula in a list to create one list of the
 fixed effects formulas and one list containing the random effects formulas.
 }
 \details{
