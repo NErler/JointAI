@@ -25,7 +25,10 @@ check_formula_list <- function(formula, convert = TRUE) {
     if (convert) {
       formula <- list(formula)
     }
-  } else if (inherits(formula, "list")) {
+    return(formula)
+  }
+
+  if (inherits(formula, "list")) {
     # check if all elements are either formulas or NULL
     fmla_elmt <- lvapply(formula, inherits, "formula")
     null_elmt <- lvapply(formula, is.null)
@@ -35,8 +38,10 @@ check_formula_list <- function(formula, convert = TRUE) {
              %s.", dQuote("formula"))
     }
   } else {
-    errormsg("The provided object is not of class %s nor is it a %s.",
-             dQuote("formula"), dQuote("list"))
+    errormsg(
+      "The provided object is not of class %s nor is it a %s.",
+      dQuote("formula"), dQuote("list")
+    )
   }
 
   formula
@@ -117,11 +122,17 @@ combine_formula_lists <- function(fixed, random, warn = TRUE) {
 #'
 combine_formulas <- function(fixed, random) {
   fmla <- paste(
-    c(deparse(fixed, width.cutoff = 500L),
+    c(
+      deparse(fixed, width.cutoff = 500L),
       if (!is.null(random)) {
-        paste0(gsub("~", "(", deparse(random, width.cutoff = 500L)),
-               ")")
-      }), collapse = " + ")
+        paste0(
+          gsub("~", "(", deparse(random, width.cutoff = 500L)),
+          ")"
+        )
+      }
+    ),
+    collapse = " + "
+  )
 
   as.formula(fmla)
 }
@@ -142,11 +153,11 @@ combine_formulas <- function(fixed, random) {
 #' @keywords internal
 #'
 remove_lhs <- function(formula) {
-
   formula <- check_formula_list(formula, convert = FALSE)
 
-  if (is.null(formula))
+  if (is.null(formula)) {
     return(NULL)
+  }
 
   if (inherits(formula, "list")) {
     lapply(formula, remove_lhs)
@@ -162,8 +173,6 @@ remove_lhs <- function(formula) {
 #'
 #' Extracts the left hand side from a `formula` object and returns it as
 #' character string.
-#' Relevant, for example, for survival formulas, where `Surv(...)` is a
-#' `call`.
 #'
 #' Internal; used in various help functions (2022-02-05)
 #'
@@ -179,19 +188,17 @@ extract_lhs_string <- function(formula) {
   }
 
   # check that formula is a formula object
-  if (!inherits(formula, "formula"))
+  if (!inherits(formula, "formula")) {
     errormsg("The provided formula is not a %s object.", dQuote("formula"))
-
+  }
 
   # check that the formula has a LHS
-  if (attr(terms(formula), "response") != 1L)
+  if (attr(terms(formula), "response") != 1L) {
     errormsg("Unable to extract response from the formula.")
-
+  }
 
   if (length(formula) == 3L) {
     deparse(formula[[2L]], width.cutoff = 500L)
-    # } else if (length(formula) == 2L) {
-    # ""
   } else {
     # not sure this is ever needed... Can't come up with an example for a
     # formula that has a response and length 2.
@@ -213,17 +220,19 @@ extract_lhs_string <- function(formula) {
 #' @keywords internal
 
 all_vars <- function(fmla) {
-
-  if (is.null(fmla))
+  if (is.null(fmla)) {
     return(NULL)
+  }
 
   if (inherits(fmla, "list")) {
     unique(unlist(lapply(fmla, all_vars)))
   } else if (inherits(fmla, "formula")) {
     all.vars(fmla)
   } else {
-    errormsg("The provided object is not a %s nor a list of %s objects.",
-             dQuote("formula"), dQuote("formula"))
+    errormsg(
+      "The provided object is not a %s nor a list of %s objects.",
+      dQuote("formula"), dQuote("formula")
+    )
   }
 }
 
@@ -240,7 +249,6 @@ all_vars <- function(fmla) {
 #'
 
 split_formula <- function(formula) {
-
   # get all terms from the formula and identify which contain the vertical bar
   # (= random effects)
   term_labels <- attr(terms(formula), "term.labels")
@@ -248,16 +256,22 @@ split_formula <- function(formula) {
 
   # build fixed effects formula by combining all non-random effects terms with
   # a "+", and combine with the LHS
-  rhs <- paste(c(term_labels[!which_ranef],
-                 if (attr(terms(formula), "intercept") == 0L) "0"),
-               collapse = " + ")
+  rhs <- paste(
+    c(
+      term_labels[!which_ranef],
+      if (attr(terms(formula), "intercept") == 0L) "0"
+    ),
+    collapse = " + "
+  )
 
-  fixed <- paste0(as.character(formula)[2L], " ~ ",
-                  if (rhs == "") {
-                    1L
-                  } else {
-                    rhs
-                  })
+  fixed <- paste0(
+    as.character(formula)[2L], " ~ ",
+    if (rhs == "") {
+      1L
+    } else {
+      rhs
+    }
+  )
 
   # build random effects formula by pasting all random effects terms in brackets
   # (to separate different random effects terms from each other), and combine
@@ -268,8 +282,10 @@ split_formula <- function(formula) {
   # formula object
   random <- if (rhs2 != "()") as.formula(paste0(" ~ ", rhs2))
 
-  list(fixed = as.formula(fixed),
-       random = random)
+  list(
+    fixed = as.formula(fixed),
+    random = random
+  )
 }
 
 
@@ -285,14 +301,15 @@ split_formula <- function(formula) {
 #'
 
 split_formula_list <- function(formulas) {
-
   formulas <- check_formula_list(formulas)
 
   l <- lapply(formulas, split_formula)
   names(l) <- cvapply(formulas, function(x) as.character(x)[2L])
 
-  list(fixed = lapply(l, "[[", "fixed"),
-       random = lapply(l, "[[", "random"))
+  list(
+    fixed = lapply(l, "[[", "fixed"),
+    random = lapply(l, "[[", "random")
+  )
 }
 
 
@@ -309,18 +326,21 @@ split_formula_list <- function(formulas) {
 #'
 #'
 extract_id <- function(random, warn = TRUE) {
-
   random <- check_formula_list(random)
 
   ids <- lapply(random, function(x) {
     # match the vertical bar (...|...)
-    rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
-                        deparse(x, width.cutoff = 500L))
+    rdmatch <- gregexpr(
+      pattern = "\\([^|]*\\|[^)]*\\)",
+      deparse(x, width.cutoff = 500L)
+    )
 
     if (any(rdmatch[[1L]] > 0L)) {
       # remove "(... | " from the formula
       rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-                              rdmatch, invert = FALSE))
+        rdmatch,
+        invert = FALSE
+      ))
       rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
 
       # extract and remove )
@@ -328,18 +348,23 @@ extract_id <- function(random, warn = TRUE) {
 
       # split by + * : /
       id <- unique(unlist(strsplit(id[id != ""],
-                                   split = "[[:space:]]*[+*:/][[:space:]]*")))
+        split = "[[:space:]]*[+*:/][[:space:]]*"
+      )))
     } else {
-      rdmatch <- gregexpr(pattern = "[[:print:]]*\\|[ ]*",
-                          deparse(x, width.cutoff = 500L))
+      rdmatch <- gregexpr(
+        pattern = "[[:print:]]*\\|[ ]*",
+        deparse(x, width.cutoff = 500L)
+      )
 
       if (any(rdmatch[[1L]] > 0L)) {
         # remove "... | " from the formula
         id <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-                                rdmatch, invert = TRUE))
+          rdmatch,
+          invert = TRUE
+        ))
         id <- unique(unlist(strsplit(id[id != ""],
-                                     split = "[[:space:]]*[+*:/][[:space:]]*")))
-
+          split = "[[:space:]]*[+*:/][[:space:]]*"
+        )))
       } else {
         id <- NULL
       }
@@ -347,10 +372,12 @@ extract_id <- function(random, warn = TRUE) {
     id
   })
 
-  if (is.null(unlist(ids)) & !is.null(unlist(random)))
-    if (warn)
+  if (is.null(unlist(ids)) & !is.null(unlist(random))) {
+    if (warn) {
       warnmsg("No %s variable could be identified. I will assume that all
               observations are independent.", dQuote("id"))
+    }
+  }
 
   unique(unlist(ids))
 }
