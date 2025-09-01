@@ -1,7 +1,7 @@
 
 
 # used in divide_matrices, get_models, and helpfunctions (2020-06-09)
-extract_outcome <- function(fixed) {
+extract_outcomes_list <- function(fixed) {
   # Extract the names(s) of the outcome variable(s) from (a list of) fixed
   # effects formula(s)
   # - fixed: a two-sided formula object or a list of such objects
@@ -162,7 +162,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
       extract_lhs
     )
   } else {
-    lapply(fixed, extract_lhs)
+    lapply(fixed, extract_lhs_string)
   }
 
   # convert the lh_sides in RHSs formulas to be able to extract the functions

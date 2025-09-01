@@ -167,8 +167,7 @@ remove_lhs <- function(formula) {
 #'
 #' @keywords internal
 #'
-extract_lhs <- function(formula) {
-
+extract_lhs_string <- function(formula) {
   if (is.null(formula)) {
     return(NULL)
   }

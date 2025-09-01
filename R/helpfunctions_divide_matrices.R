@@ -17,7 +17,7 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
   group_lvls <- colSums(!identify_level_relations(groups))
 
   # gather names of outcomes of survival models
-  survinfo <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
+  survinfo <- extract_outcomes_list(fixed)[grepl("^Surv\\(", fixed)]
 
   # identify levels of all variables in the data
   datlvls <- get_datlvls(data, groups)
@@ -103,7 +103,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
                       timevar))
 
   # identify survival outcomes and the related variables
-  survout <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
+  survout <- extract_outcomes_list(fixed)[grepl("^Surv\\(", fixed)]
 
   # identify data levels
   # datlvls <- cvapply(data[, allvars], check_varlevel, groups = groups)
@@ -183,7 +183,7 @@ extract_outcome_data <- function(fixed, random = NULL, data,
 
   lvls <- colSums(!identify_level_relations(groups))
 
-  outcomes <- outnams <- extract_outcome(fixed)
+  outcomes <- outnams <- extract_outcomes_list(fixed)
 
   # set attribute "type" to identify survival outcomes
   for (i in seq_along(fixed)) {
@@ -219,7 +219,7 @@ extract_outcome_data <- function(fixed, random = NULL, data,
       } else if (analysis_type == "JM") "JM" else "survreg"
       names(fixed)[i] <- names(outnams[i])
     } else {
-      outcomes[[i]] <- split_outcome(lhs = extract_lhs(fixed[[i]]), data = data)
+      outcomes[[i]] <- split_outcome(lhs = extract_lhs_string(fixed[[i]]), data = data)
       nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
       # varlvl <- cvapply(outcomes[[i]], check_varlevel, groups = groups)
       varlvl <- get_datlvls(outcomes[[i]], groups)
@@ -578,7 +578,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
   # make a subset containing only covariates
   subdat <- subset(data,
-                   select = setdiff(allvars, unlist(extract_outcome(fixed))))
+                   select = setdiff(allvars, unlist(extract_outcomes_list(fixed))))
 
   contr_list <- lapply(refs, attr, "contr_matrix")
 

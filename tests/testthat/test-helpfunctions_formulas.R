@@ -20,7 +20,7 @@ runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
 
 
 
-# extract_outcome ----------------------------------------------------------
+# extract_outcomes_list --------------------------------------------------------
 library(splines)
 ys <- list(list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y",
                 RHS = list(~ a + b)),
@@ -44,13 +44,13 @@ ys <- list(list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y",
 # list(fixed = y + x ~ a + b, out = c("y + x"))
 )
 
-test_that('extract_outcome works', {
+test_that('extract_outcomes_list works', {
   for (i in seq_along(ys)) {
-    expect_equal(extract_outcome(ys[[i]]$fixed), ys[[i]]$out)
+    expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
   }
 
   # test whole list of formulas
-  expect_equal(extract_outcome(lapply(ys, "[[", "fixed")),
+  expect_equal(extract_outcomes_list(lapply(ys, "[[", "fixed")),
                sapply(ys, "[[", "out"))
 })
 

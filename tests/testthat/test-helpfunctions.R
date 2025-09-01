@@ -44,7 +44,7 @@ test_that('extract_id results in warning', {
 
 
 
-test_that('extract_outcome works', {
+test_that('extract_outcomes_list works', {
   ys <- list(list(fixed = y ~ a + b, out = list(y = 'y')),
              list(fixed = y ~ 1, out = list(y = 'y')),
              list(fixed = Surv(a, b) ~ 1,
@@ -57,7 +57,7 @@ test_that('extract_outcome works', {
   )
 
   for (i in seq_along(ys)) {
-    expect_equal(extract_outcome(ys[[i]]$fixed), ys[[i]]$out)
+    expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
   }
 })
 
@@ -120,6 +120,6 @@ test_that('extract_outcome works', {
 #   )
 #
 #   for (i in seq_along(ys)) {
-#     expect_equal(extract_outcome(ys[[i]]$fixed), ys[[i]]$out)
+#     expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
 #   }
 # })
