@@ -170,7 +170,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
                       c("survreg", "coxph"))) {
     lapply(
       fixed[!cvapply(fixed, attr, "type") %in% c("survreg", "coxph")],
-      extract_lhs
+      extract_lhs_string
     )
   } else {
     lapply(fixed, extract_lhs_string)
