@@ -125,12 +125,7 @@ check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
                           timevar = NULL, mess = TRUE) {
 
   # check classes of covariates
-  vars <- unique(c(all_vars(c(fixed, remove_grouping(random), auxvars)),
-                   timevar))
-
-  covars <- unique(c(all_vars(c(remove_lhs(fixed), remove_grouping(random),
-                                auxvars)),
-                     timevar))
+  vars <- all_vars(fixed, remove_grouping(random), auxvars, timevar)
 
   classes <- unlist(sapply(data[vars], class))
 
@@ -237,14 +232,14 @@ check_data <- function(data, fixed, random, auxvars, timevar, mess) {
 
   # drop empty levels
   data <- drop_levels(data = data,
-                      allvars = all_vars(c(fixed, random, auxvars)),
+                      allvars = all_vars(fixed, random, auxvars),
                       mess = mess)
 
 
   # convert continuous variable with 2 different values and logical variables
   # to factors
   data <- convert_variables(data = data,
-                            allvars = all_vars(c(fixed, random, auxvars)),
+                            allvars = all_vars(fixed, random, auxvars),
                             mess = mess)
 
   data
