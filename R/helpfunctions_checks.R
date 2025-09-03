@@ -120,29 +120,53 @@ check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
 }
 
 
-# used in model_imp (2020-06-09)
-check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
-                          timevar = NULL, mess = TRUE) {
-
+#' Check classes of all variables used in the model
+#'
+#' Runs a check that all variables that are used in the model are of a known
+#' class (numeric, ordered, factor, logical, integer) so that type-appropriate
+#' models can be specified.
+#' Note: This function does not check the type of grouping variables, which
+#'       may be character strings.
+#'
+#' used in model_imp (2020-06-09)
+#'
+#' @param data a `data.frame`
+#' @param fixed a `formula`
+#' @param random a `formula`
+#' @param auxvars a one-sided `formula`
+#' @param timevar a character string (name of the time variable, used in joint
+#'                models)
+#' @param mess logical, if `TRUE` messages are printed
+#'
+#' @returns nothing, but throws an error if a variable is of an unknown class
+#' @keywords internal
+#'
+check_classes <- function(data,
+                          fixed = NULL,
+                          random = NULL,
+                          auxvars = NULL,
+                          timevar = NULL,
+                          mess = TRUE) {
   # check classes of covariates
   vars <- all_vars(fixed, remove_grouping(random), auxvars, timevar)
 
   classes <- unlist(sapply(data[vars], class))
+  known_classes <- c("numeric", "ordered", "factor", "logical", "integer")
 
+  # Throw an error for variables of unknown classes
+  if (any(w <- which(!classes %in% known_classes))) {
 
-  # error for variables of unknown classes
-  if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical',
-                          'integer'))) {
-    w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical',
-                               'integer'))
-
-    pr <- sapply(split(classes[w], classes[w]), function(x) {
-      paste0(dQuote(unique(x)), ' (variables: ',
-             paste0(names(x), collapse = ", "), ")")
+    unknown_classes <- sapply(split(classes[w], classes[w]), function(x) {
+      paste0(
+        dQuote(unique(x)),
+        " (variables: ", paste0(names(x), collapse = ", "), ")"
+      )
     })
 
-    errormsg("Variables of type %s can not be handled.",
-             paste(pr, collapse = ', '))
+    errormsg(
+      "Variables of type %s can not be handled.",
+      paste(unknown_classes, collapse = ", ")
+    )
   }
 }
 
