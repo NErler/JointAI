@@ -107,16 +107,30 @@ check_fixed_random <- function(arglist) {
 
 
 
-# used in model_imp (2020-06-09)
+#' Check that all variables in formulas are in the data
+#'
+#' @param datanames a character vector (of all variable names in the data)
+#' @param fixed the fixed effects formula (or list of formulas)
+#' @param random the random effects formula (or list of formulas)
+#' @param auxvars one-sided formula of auxiliary variables
+#' @param timevar a character string (name of the time variable, used in joint models)
+#'
+#' @returns nothing, but throws an error if a variable is missing
+#' @keywords internal
+#' used in model_imp (2020-06-09)
+#'
 check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
                                auxvars = NULL, timevar = NULL) {
 
   # make vector of any variable occurring in the formulas
   allvars <- all_vars(fixed, random, auxvars, timevar)
 
-  if (any(!allvars %in% datanames))
-    errormsg("Variable(s) %s were not found in the data." ,
-             paste(dQuote(allvars[!allvars %in% datanames]), collapse = ", "))
+  if (any(!allvars %in% datanames)) {
+    errormsg(
+      "Variable(s) %s were not found in the data.",
+      paste(dQuote(allvars[!allvars %in% datanames]), collapse = ", ")
+    )
+  }
 }
 
 
