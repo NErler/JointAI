@@ -2,14 +2,16 @@
 % Please edit documentation in R/helpfunctions_formulas_general.R
 \name{all_vars}
 \alias{all_vars}
-\title{Extract names of variables from a (list of) formula(s)}
+\title{Extract names of variables from several objects}
 \usage{
-all_vars(fmla)
+all_vars(...)
 }
 \arguments{
-\item{fmla}{a formula or list of formulas}
+\item{...}{\code{formula} objects, lists of formulas or character strings that are
+valid variable names (in the sense of \code{make.vars()})}
 }
 \description{
-Version of \code{all.vars()} that can handle lists of formulas.
+Version of \code{all.vars()} that can handle \code{formula}s, \code{lists} of \code{formulas} and
+character strings.
 }
 \keyword{internal}

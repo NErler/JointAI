@@ -106,10 +106,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # - timevar: name of the time variable of the time-varying covariates
   # - groups: list of grouping information (as in Mlist)
 
-  allvars <- unique(c(
-    all_vars(c(fixed, random, auxvars)),
-    timevar
-  ))
+  allvars <- all_vars(fixed, random, auxvars, timevar)
 
   # identify survival outcomes and the related variables
   survout <- extract_outcomes_list(fixed)[grepl("^Surv\\(", fixed)]
@@ -598,7 +595,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   groups <- get_groups(idvar, data)
 
   # identify all variables involved and those variables that are covariates
-  allvars <- all_vars(c(fixed, remove_grouping(random), auxvars))
+  allvars <- all_vars(fixed, remove_grouping(random), auxvars)
 
   # in order to be able to include functions in the auxiliary variables,
   # extract the term labels from auxvars and build the formula used
@@ -606,13 +603,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # term labels.
   auxterms <- if (!is.null(auxvars)) attr(terms(auxvars), "term.labels")
 
-  covar_terms <- unique(c(
-    all_vars(c(
-      remove_lhs(fixed),
-      remove_grouping(random)
-    )),
-    auxterms
-  ))
+  covar_terms <- all_vars(remove_lhs(fixed), remove_grouping(random), auxterms)
 
 
 

@@ -710,9 +710,8 @@ get_missinfo <- function(object) {
     errormsg("Use only with 'JointAI' objects.")
 
 
-  allvars <- unique(
-    c(all_vars(c(object$fixed, object$random, object$Mlist$auxvars)),
-      object$Mlist$timevar))
+  allvars <- all_vars(object$fixed, object$random, object$Mlist$auxvars,
+                      object$Mlist$timevar)
 
   groups <- object$Mlist$groups
 

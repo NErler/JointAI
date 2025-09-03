@@ -153,7 +153,7 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {# nocov start
     covars <- all_vars(remove_lhs(formula))
   }
   if (!is.null(auxvars))
-    covars <- unique(c(covars, all_vars(auxvars)))
+    covars <- all_vars(covars, auxvars)
 
   factors <- covars[sapply(data[covars], is.factor)]
 

@@ -112,9 +112,7 @@ check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
                                auxvars = NULL, timevar = NULL) {
 
   # make vector of any variable occurring in the formulas
-  allvars <- unique(c(all_vars(c(fixed, random, auxvars)),
-                      timevar)
-  )
+  allvars <- all_vars(fixed, random, auxvars, timevar)
 
   if (any(!allvars %in% datanames))
     errormsg("Variable(s) %s were not found in the data." ,

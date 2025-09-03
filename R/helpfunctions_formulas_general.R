@@ -211,31 +211,55 @@ extract_lhs_string <- function(formula) {
 
 
 
-#' Extract names of variables from a (list of) formula(s)
 #'
-#' Version of `all.vars()` that can handle lists of formulas.
+#' Version of `all.vars()` that can handle `formula`s, `lists` of `formulas` and
+#' character strings.
 #'
 #'
-#' @param fmla a formula or list of formulas
+#' @param ... `formula` objects, lists of formulas or character strings that are
+#'            valid variable names (in the sense of `make.vars()`)
 #' @export
 #'
 #' @keywords internal
 
-all_vars <- function(fmla) {
-  if (is.null(fmla)) {
-    return(NULL)
-  }
+# all_vars <- function(fmla) {
+#   if (is.null(fmla)) {
+#     return(NULL)
+#   }
+#
+#   if (inherits(fmla, "list")) {
+#     unique(unlist(lapply(fmla, all_vars)))
+#   } else if (inherits(fmla, "formula")) {
+#     all.vars(fmla)
+#   } else {
+#     errormsg(
+#       "The provided object is not a %s nor a list of %s objects.",
+#       dQuote("formula"), dQuote("formula")
+#     )
+#   }
+# }
 
-  if (inherits(fmla, "list")) {
-    unique(unlist(lapply(fmla, all_vars)))
-  } else if (inherits(fmla, "formula")) {
-    all.vars(fmla)
-  } else {
-    errormsg(
-      "The provided object is not a %s nor a list of %s objects.",
-      dQuote("formula"), dQuote("formula")
-    )
-  }
+all_vars <- function(...) {
+
+  input <- as.list(match.call())[-1L]
+  parent_envir <- parent.frame()
+  input_list <- unlist(lapply(input, eval, envir = parent_envir))
+
+  variable_list <- lapply(input_list, function(x) {
+
+    if (inherits(x, "formula")) {
+      all.vars(x)
+    } else {
+      is_variable_name <- isTRUE(all(make.names(x) == x))
+      if (is_variable_name) {
+        x
+      } else {
+        errormsg("I don't know how to extract variable names from %s.",
+                 dQuote(x))
+      }
+    }
+  })
+  unique(unlist(variable_list))
 }
 
 

@@ -347,15 +347,16 @@ test_that("all_vars works", {
   expect_equal(all_vars(y ~ a + B + I(c/d^2) + ns(time, df = 3) +
                           (1 | id/center)),
                c("y", "a", "B", "c", "d", "time", "id", "center"))
-  expect_equal(all_vars(list(y ~ a + B + I(c/d^2),
+  expect_equal(all_vars(list(Surv(etime, status == 3) ~ a + B + I(c/d^2),
                              a ~ c + ns(time, df = 3) + (1 | id/center))),
-               c("y", "a", "B", "c", "d", "time", "id", "center"))
-})
+               c("etime", "status", "a", "B", "c", "d", "time", "id", "center"))
+
+  expect_equal(all_vars(c("a", "b", "c")), c("a", "b", "c"))
+  expect_equal(all_vars("abc"), "abc")
+  })
 
 test_that("all_vars gives an error", {
   expect_error(all_vars(NA))
   expect_error(all_vars(1))
   expect_error(all_vars(list(NULL, 1, "abc", ~ b + c)))
-  expect_error(all_vars(c("a", "b", "c")))
-  expect_error(all_vars("abc"))
 })
