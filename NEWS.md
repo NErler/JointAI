@@ -1,12 +1,18 @@
 # JointAI (development version)
 
+* `all_vars()`: update of the function; can now handle an unspecified number of
+  input objects and can extract variable names from formulas and character 
+  strings that are valid variable names
+
+--------------------------------------------------------------------------------
+
+# JointAI 1.0.6
+
 * clean-up of helper functions and additional unit tests
 * fix typos in argument names in helpfiles
 * fix documentation syntax (CRAN NOTEs)
 
 --------------------------------------------------------------------------------
-
-
 
 # JointAI 1.0.5
 
