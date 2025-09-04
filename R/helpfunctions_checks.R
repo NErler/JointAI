@@ -259,7 +259,28 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
 
 
 
-# used in model_imp() (2020-07-02)
+#' Run all data related checks
+#'
+#' Wrapper function to check that
+#' - all used variables are present in the `data`
+#' - that the classes of the variables are of a type for which default model
+#'   types are defined
+#' - checks for empty variable levels
+#' - converts binary continuous variables and logical variables to factors
+#'
+#' used in `model_imp()` (2025-09-04)
+#' @param data a `data.frame`
+#' @param fixed a `formula` (or list of formulas)
+#' @param random a one-sided `formula` (or list of one-sided formulas)
+#' @param auxvars a one-sided `formula`
+#' @param timevar a character string (name of the time variable, used in joint
+#'               models)
+#' @param mess logical, if `TRUE` messages are printed
+#' @param warn logical, if `TRUE` warnings are printed
+#'
+#' @returns the cleaned `data.frame`
+#' @keywords internal
+#'
 check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
   # run all data related checks
 

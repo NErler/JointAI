@@ -20,4 +20,7 @@ side (LHS) of a formula or a list of formulas. It supports standard formulas,
 survival objects, transformations (e.g., \code{log(x)}), and multivariate outcomes
 (e.g., \code{cbind(a, b, c)}).
 }
+\seealso{
+\code{\link[=extract_lhs_string]{extract_lhs_string()}}
+}
 \keyword{internal}

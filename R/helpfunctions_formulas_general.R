@@ -211,6 +211,7 @@ extract_lhs_string <- function(formula) {
 
 
 
+#' Extract names of variables from several objects
 #'
 #' Version of `all.vars()` that can handle `formula`s, `lists` of `formulas` and
 #' character strings.
