@@ -186,7 +186,25 @@ check_classes <- function(data,
 
 
 
-# used in model_imp (2020-06-09
+#' Check for empty factor levels
+#'
+#' CHECKS if there are empty factor levels in any of the variables used in the
+#' model.
+#'
+#' @section Note:
+#' Originally, the function also dropped these levels. Then, I (accidentally?)
+#' had commented out a line so that no check was performed.
+#' Now, only create a warning if there are empty levels, but do not drop them.
+#'
+#' used in model_imp (2020-06-09)
+#'
+#' @param data a `data.frame`
+#' @param allvars a character vector (of all variable names used in the model)
+#' @param warn logical, if `TRUE` warnings are printed
+#'
+#' @returns the `data.frame` (unchanged)
+#' @keywords internal
+#'
 drop_levels <- function(data, allvars, warn = TRUE) {
 
   data_orig <- data
