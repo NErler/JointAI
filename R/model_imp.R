@@ -742,7 +742,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 
   # data pre-processing --------------------------------------------------------
-  data <- check_data(data, fixed, random, auxvars, timevar, mess)
+  data <- check_data(data, fixed, random, auxvars, timevar, mess, warn)
 
 
   # * divide matrices ----------------------------------------------------------

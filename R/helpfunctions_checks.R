@@ -187,18 +187,19 @@ check_classes <- function(data,
 
 
 # used in model_imp (2020-06-09
-drop_levels <- function(data, allvars, mess = TRUE) {
+drop_levels <- function(data, allvars, warn = TRUE) {
 
   data_orig <- data
-  # data[allvars] <- droplevels(data[allvars])
+  data[allvars] <- droplevels(data[allvars])
 
-  if (mess) {
+  if (warn) {
     lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))
     lvl2 <- sapply(data[allvars], function(x) length(levels(x)))
 
     if (any(lvl1 != lvl2))
-      msg('Empty levels were dropped from %s.',
-          dQuote(names(lvl1)[which(lvl1 != lvl2)]))
+      warnmsg('The variable(s) %s has/have empty levels.
+              Use `droplevels()` on your input data to remove empty levels.',
+          paste_and(dQuote(names(lvl1)[which(lvl1 != lvl2)])))
   }
   return(data)
 }
@@ -259,7 +260,7 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
 
 
 # used in model_imp() (2020-07-02)
-check_data <- function(data, fixed, random, auxvars, timevar, mess) {
+check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
   # run all data related checks
 
   check_vars_in_data(names(data), fixed = fixed, random = random,
@@ -271,7 +272,7 @@ check_data <- function(data, fixed, random, auxvars, timevar, mess) {
   # drop empty levels
   data <- drop_levels(data = data,
                       allvars = all_vars(fixed, random, auxvars),
-                      mess = mess)
+                      warn = warn)
 
 
   # convert continuous variable with 2 different values and logical variables
