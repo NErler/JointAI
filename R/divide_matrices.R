@@ -243,7 +243,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
 
-  nranef <- get_nranef(idvar = idvar, random = random, data = data)
+  nranef <- get_nranef(random = random, data = data)
   rd_vcov <- check_rd_vcov(rd_vcov = rd_vcov, nranef = nranef)
 
   list(data = data,

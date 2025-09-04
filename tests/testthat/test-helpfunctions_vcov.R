@@ -231,34 +231,32 @@ test_that("check_rd_vcov", {
 test_that("get_nranef works", {
 
   expect_equal(
-    get_nranef(idvar = "id", random = ~ 1 | id, data = longDF),
+    get_nranef(random = ~ 1 | id, data = longDF),
     list(id = 1)
   )
 
   expect_equal(
-    get_nranef(idvar = "id", random = list(~ 1 | id, ~ time | id),
+    get_nranef(random = list(~ 1 | id, ~ time | id),
                data = longDF),
     list(id = c(1, 2))
   )
 
   expect_equal(
-    get_nranef(idvar = "id", random = list(a = ~ (1 | id),  b = ~ time | id),
+    get_nranef(random = list(a = ~ (1 | id),  b = ~ time | id),
                data = longDF),
     list(id = c(a = 1, b = 2))
   )
 
   expect_equal(
-    get_nranef(idvar = "id",
-               random = list(~ (1 | id),  ~ splines::ns(time, df = 3) | id),
+    get_nranef(random = list(~ (1 | id),  ~ splines::ns(time, df = 3) | id),
                data = longDF),
     list(id = c(1, 4))
   )
 
 
   expect_equal(
-    get_nranef(idvar = c("id", "center"), random = ~ 1 | id,
-               data = longDF),
-    list(id = 1, center = 0)
+    get_nranef(random = ~ 1 | id, data = longDF),
+    list(id = 1)
   )
 
 })
