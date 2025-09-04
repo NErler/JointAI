@@ -132,7 +132,7 @@ check_random_lvls <- function(random, rel_lvls) {
   if (is.null(random)) {
     nlapply(rel_lvls, function(x) ~ 1)
   } else {
-    rd <- remove_grouping(random)
+    rd <- rd_terms_by_grouping(random)
 
     if (any(!names(rd) %in% rel_lvls)) {
       errormsg("You have specified random effects for levels on which there
@@ -143,6 +143,53 @@ check_random_lvls <- function(random, rel_lvls) {
     }
   }
 }
+
+
+
+#' Extract terms by grouping variables from a formula
+#'
+#' This function takes a formula as input, extracts terms that are
+#' associated with grouping variables, and organizes them by grouping variable.
+#'
+#'
+#' @param formula a `formula` object
+#'
+#' @returns a named list of one-sided formulas, where each name corresponds to
+#'          a grouping variable and the formula contains all terms associated
+#'          with that grouping variable.
+#' @keywords internal
+#'
+rd_terms_by_grouping <- function(formula) {
+
+  if (is.null(formula)) return(NULL)
+
+  if (!inherits(formula, "formula")) {
+    errormsg("Input must be a formula.")
+  }
+
+  terms <- attr(terms(formula), "term.labels")
+  rd_terms <- grep("\\|", terms, value = TRUE)
+
+  split_rd_terms <- strsplit(x = rd_terms, split = " *\\| *")
+
+  rd_terms_list <- lapply(split_rd_terms, function(x) {
+    data.frame(
+      grouping_variables = all.vars(reformulate(x[2])),
+      variable_terms = x[1]
+    )
+  })
+
+  rd_terms_df <- do.call(rbind, rd_terms_list)
+
+  lapply(
+    split(rd_terms_df, rd_terms_df$grouping_variables),
+    function(k) {
+      reformulate(k$variable_terms)
+    })
+}
+
+
+
 
 
 #' Create list of column numbers containing the variables involved in the random
