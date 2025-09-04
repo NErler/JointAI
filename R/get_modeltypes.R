@@ -53,7 +53,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
 
   # extract the id variable from the random effects formula and get groups
-  idvar <- extract_id(random, warn = warn)
+  idvar <- extract_grouping(random, warn = warn)
   groups <- get_groups(idvar, data)
 
   random2 <- remove_grouping(random)

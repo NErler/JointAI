@@ -71,7 +71,7 @@ predDF.formula <- function(object, data, vars, length = 100L, ...) {
 #' @export
 predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
 
-  id_vars <- extract_id(vars, warn = FALSE)
+  id_vars <- extract_grouping(vars, warn = FALSE)
   varying <- all_vars(vars)
 
   if (is.null(idvar))

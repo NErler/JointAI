@@ -100,7 +100,7 @@ remove_grouping <- function(fmla) {
                         pattern = "^\\(", replacement =  "~ ")
         ranef <- lapply(ranef, function(k) as.formula(k[k != ""]))
 
-        nam <- extract_id(x, warn = FALSE)
+        nam <- extract_grouping(x, warn = FALSE)
 
         if (length(nam) > 1L & length(ranef) == 1L) {
           ranef <- rep(ranef, length(nam))
@@ -119,7 +119,7 @@ remove_grouping <- function(fmla) {
         ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
                      deparse(x, width.cutoff = 500L))
 
-        nam <- extract_id(x, warn = FALSE)
+        nam <- extract_grouping(x, warn = FALSE)
 
         l <- list(as.formula(ranef))
         names(l) <- nam

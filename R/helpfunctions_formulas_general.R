@@ -265,8 +265,6 @@ all_vars <- function(...) {
 
 
 
-
-
 #' Extract fixed effects formula from lme4-type formula
 #'
 #' @param formula a `formula` object (typically in lme4-style)
@@ -364,69 +362,100 @@ split_formula_list <- function(formula) {
 
 
 
-#' Extract all id variables from a list of random effects formulas
+
+
+# extract_id <- function(random, warn = TRUE) {
+#   random <- check_formula_list(random)
+#
+#   ids <- lapply(random, function(x) {
+#     # match the vertical bar (...|...)
+#     rdmatch <- gregexpr(
+#       pattern = "\\([^|]*\\|[^)]*\\)",
+#       deparse(x, width.cutoff = 500L)
+#     )
+#
+#     if (any(rdmatch[[1L]] > 0L)) {
+#       # remove "(... | " from the formula
+#       rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
+#                               rdmatch,
+#                               invert = FALSE
+#       ))
+#       rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
+#
+#       # extract and remove )
+#       id <- gsub(")", "", unlist(regmatches(rd, rdid, invert = TRUE)))
+#
+#       # split by + * : /
+#       id <- unique(unlist(strsplit(id[id != ""],
+#                                    split = "[[:space:]]*[+*:/][[:space:]]*"
+#       )))
+#     } else {
+#       rdmatch <- gregexpr(
+#         pattern = "[[:print:]]*\\|[ ]*",
+#         deparse(x, width.cutoff = 500L)
+#       )
+#
+#       if (any(rdmatch[[1L]] > 0L)) {
+#         # remove "... | " from the formula
+#         id <- unlist(regmatches(deparse(x, width.cutoff = 500L),
+#                                 rdmatch,
+#                                 invert = TRUE
+#         ))
+#         id <- unique(unlist(strsplit(id[id != ""],
+#                                      split = "[[:space:]]*[+*:/][[:space:]]*"
+#         )))
+#       } else {
+#         id <- NULL
+#       }
+#     }
+#     id
+#   })
+#
+#   if (is.null(unlist(ids)) & !is.null(unlist(random))) {
+#     if (warn) {
+#       warnmsg("No %s variable could be identified. I will assume that all
+#               observations are independent.", dQuote("id"))
+#     }
+#   }
+#
+#   unique(unlist(ids))
+# }
+#
+
+
+
+#' Extract grouping variables from a (list of) formula(s)
 #'
-#' Internal function, used in `divide_matrices()`, `get_models()`,
-#' various help functions, `predict()` (2022-02-06)
+#' Extracts the grouping variables (i.e., variables after `|`) from a model
+#' formula or a list of such formulas
 #'
-#' @param random a one-sided random effects formula or a list of such formulas
-#' @param warn logical; should warnings be printed?
+#' @param formula a `formula` object or a `list` of `formula` objects
+#' @param warn does nothing
+#'
+#' @returns a vector of character strings containing the unique grouping
+#'          variable names found in any of the input formulas, or `NULL` if
+#'          there is no grouping found
 #' @keywords internal
 #'
-#'
-extract_id <- function(random, warn = TRUE) {
-  random <- check_formula_list(random)
-
-  ids <- lapply(random, function(x) {
-    # match the vertical bar (...|...)
-    rdmatch <- gregexpr(
-      pattern = "\\([^|]*\\|[^)]*\\)",
-      deparse(x, width.cutoff = 500L)
-    )
-
-    if (any(rdmatch[[1L]] > 0L)) {
-      # remove "(... | " from the formula
-      rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-                              rdmatch,
-                              invert = FALSE
-      ))
-      rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
-
-      # extract and remove )
-      id <- gsub(")", "", unlist(regmatches(rd, rdid, invert = TRUE)))
-
-      # split by + * : /
-      id <- unique(unlist(strsplit(id[id != ""],
-                                   split = "[[:space:]]*[+*:/][[:space:]]*"
-      )))
-    } else {
-      rdmatch <- gregexpr(
-        pattern = "[[:print:]]*\\|[ ]*",
-        deparse(x, width.cutoff = 500L)
-      )
-
-      if (any(rdmatch[[1L]] > 0L)) {
-        # remove "... | " from the formula
-        id <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-                                rdmatch,
-                                invert = TRUE
-        ))
-        id <- unique(unlist(strsplit(id[id != ""],
-                                     split = "[[:space:]]*[+*:/][[:space:]]*"
-        )))
-      } else {
-        id <- NULL
-      }
-    }
-    id
-  })
-
-  if (is.null(unlist(ids)) & !is.null(unlist(random))) {
-    if (warn) {
-      warnmsg("No %s variable could be identified. I will assume that all
-              observations are independent.", dQuote("id"))
-    }
+extract_grouping <- function(formula, warn = FALSE) {
+  if (inherits(formula, "list")) {
+    groupings <- lapply(formula, extract_grouping)
+    return(unique(unlist(groupings)))
   }
 
-  unique(unlist(ids))
+  if (is.null(formula)) {
+    return(NULL)
+  }
+
+  if (!inherits(formula, "formula")) {
+    errormsg("The provided object is not a %s object.", dQuote("formula"))
+  }
+
+  formula_terms <- attr(terms(formula), "term.labels")
+  rd_terms <- grep("\\|", formula_terms, value = TRUE)
+  grouping_vars <- sapply(rd_terms, gsub, pattern = ".*\\| *", replace = "")
+
+  if (length(grouping_vars) > 0L) {
+    all.vars(parse(text = grouping_vars))
+  }
 }

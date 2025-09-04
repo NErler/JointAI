@@ -185,7 +185,7 @@ extract_outcome_data <- function(fixed, random = NULL, data,
                                  analysis_type = NULL, warn = TRUE) {
   fixed <- check_formula_list(fixed)
 
-  idvar <- extract_id(random, warn = warn)
+  idvar <- extract_grouping(random, warn = warn)
   groups <- get_groups(idvar, data)
 
   lvls <- colSums(!identify_level_relations(groups))
@@ -591,7 +591,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
   # extract the id variable and clustering structure from the random effects
   # formula and data
-  idvar <- extract_id(random, warn = warn)
+  idvar <- extract_grouping(random, warn = warn)
   groups <- get_groups(idvar, data)
 
   # identify all variables involved and those variables that are covariates

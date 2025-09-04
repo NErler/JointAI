@@ -10,7 +10,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # id's and groups ------------------------------------------------------------
   # extract the id variable from the random effects formula and get groups
-  idvar <- extract_id(random, warn = warn)
+  idvar <- extract_grouping(random, warn = warn)
 
   # re-format data for survival with time-varying covariates:
   # the time variables of the longitudinal measurements and the survival times

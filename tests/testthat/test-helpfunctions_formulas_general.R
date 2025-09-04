@@ -299,24 +299,24 @@ test_that('split_formula_list works', {
 
 
 
-# extract_id--------------------------------------------------------------
+# extract_grouping--------------------------------------------------------------
 
-test_that('extract_id works', {
+test_that('extract_grouping works', {
   # single formula
-  expect_equal(extract_id(~ 1 | id), "id")
-  expect_equal(extract_id(~ 0 | id), "id")
-  expect_equal(extract_id(~ time | id), "id")
-  expect_equal(extract_id(~ 1 | id/center), c("id", "center"))
-  expect_equal(extract_id(~ 1 | id + center), c("id", "center"))
-  expect_equal(extract_id(~ (1 | id) + (time | center)), c("id", "center"))
+  expect_equal(extract_grouping(~ 1 | id), "id")
+  expect_equal(extract_grouping(~ 0 | id), "id")
+  expect_equal(extract_grouping(~ time | id), "id")
+  expect_equal(extract_grouping(~ 1 | id/center), c("id", "center"))
+  expect_equal(extract_grouping(~ 1 | id + center), c("id", "center"))
+  expect_equal(extract_grouping(~ (1 | id) + (time | center)), c("id", "center"))
 
 
-  expect_null(extract_id(NULL))
-  expect_null(extract_id(~ a + b, warn = FALSE), NULL)
+  expect_null(extract_grouping(NULL))
+  expect_null(extract_grouping(~ a + b, warn = FALSE), NULL)
 
 
   # list of formulas
-  expect_equal(extract_id(list(a = ~ time | id,
+  expect_equal(extract_grouping(list(a = ~ time | id,
                                b = y ~ (time | id) + (1 | center),
                                d = NULL,
                                e = ~ 1 | group)),
@@ -326,18 +326,69 @@ test_that('extract_id works', {
 })
 
 
-test_that('extract_id gives warning', {
-  expect_warning(extract_id(~ a + b + c))
-  expect_warning(extract_id(~ 0))
-  expect_warning(extract_id(~ 1))
+test_that('extract_grouping returns NULL when no grouping term', {
+  # edit 2025-09-04: refactoring extract_id() to extract_grouping() does not
+  # return warnings any more for formulas without any grouping terms. This
+  # is intentional; too many warnings are irritating.
+  expect_null(extract_grouping(~ a + b + c))
+  expect_null(extract_grouping(~ 0))
+  expect_null(extract_grouping(~ 1))
 })
 
 
 
-test_that('extract_id gives in error', {
-  expect_error(extract_id("~ 1 | id"))
-  expect_error(extract_id(NA))
+test_that('extract_grouping gives in error', {
+  expect_error(extract_grouping("~ 1 | id"))
+  expect_error(extract_grouping(NA))
 })
+
+
+
+test_that('extract_grouping works', {
+  runs <- list(list(random = ~ 1 | id, ids = 'id'),
+               list(random = ~ 0 | id, ids = 'id'),
+               list(random = y ~ a + b + c, ids = NULL),
+               list(random = y ~ time | id, ids = 'id'),
+               list(random =  ~ a | id/class, ids = c('id', 'class')),
+               list(random = ~ a | id + class, ids = c('id', 'class')),
+               list(random = ~(a | id) + (b | id2), ids = c('id', 'id2'))
+  )
+
+  for (i in seq_along(runs)[-3]) {
+    expect_equal(extract_grouping(runs[[i]]$random), runs[[i]]$ids)
+  }
+
+  expect_null(extract_grouping(runs[[3]]$random))
+
+  expect_equal(extract_grouping(lapply(runs, "[[", "random")),
+               unique(unlist(lapply(runs, "[[", "ids"))))
+})
+
+
+test_that('extract_grouping results in error', {
+  err <- list(
+    "text",
+    NA,
+    TRUE,
+    mean
+  )
+
+  for (i in seq_along(err)) {
+    expect_error(extract_grouping(err[[i]]))
+  }
+})
+
+
+# test_that('extract_grouping results in warning', {
+#   rd_warn <- list(~1,
+#                   ~a + b + c,
+#                   ~ NULL)
+#
+#   for (i in seq_along(rd_warn)) {
+#     expect_warning(extract_grouping(rd_warn[[i]]))
+#   }
+# })
+
 
 
 # all_vars ---------------------------------------------------------------------
