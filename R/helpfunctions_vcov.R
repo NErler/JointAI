@@ -225,4 +225,27 @@ get_nranef <- function(idvar, random, data) {
       errormsg("I expected either a formula or list of formulas.")
     }
   })
+#' Get an element of a list, return a default value if it does not exist
+#'
+#' A small helper function to extract an element of a list and return a default
+#' value if the element does not exist (i.e., is `NULL`).
+#'
+#' @param object a `list`
+#' @param element the name of the element to extract (a character string)
+#' @param null_value the value to return if the element does not exist
+#'
+#' @returns the value of `object[[element]]` or `null_value` if
+#'         `object[[element]]` is `NULL`
+#' @keywords internal
+#'
+#' @examples
+#' mylist <- list(A = list(a = 1, b = 2), B = list(a = 23))
+#' sapply(mylist, get_listelement, "b", null_value = 0)
+#' # returns c(A = 2, B = 0)
+get_listelement <- function(object, element, null_value = 0) {
+  if (is.null(object[[element]])) {
+    null_value
+  } else {
+    object[[element]]
+  }
 }
