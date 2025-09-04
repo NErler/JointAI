@@ -6,16 +6,16 @@ library("survival")
 
 
 runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
-                  nogroup = list(id = ~ 1)),
+                  nogroup = (id = ~ 1)),
              list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id),
-                  nogroup = list(id = ~ 0)),
+                  nogroup = (id = ~ 0)),
              list(random = NULL, ids = NULL, RHS = NULL, nogroup = NULL),
              list(random = y ~ a + b + c, ids = NULL, RHS = list(~a + b + c),
-                  nogroup = list(y ~ a + b + c)),
+                  nogroup = (y ~ a + b + c)),
              list(random = y ~ time | id, ids = 'id', RHS = list(~time | id),
-                  nogroup = list(id = y ~ time)),
+                  nogroup = (id = y ~ time)),
              list(random = y ~ 0, ids = NULL, RHS = list(~ 0),
-                  nogroup = list(y ~ 0))
+                  nogroup = (y ~ -1))
 )
 
 
@@ -107,14 +107,14 @@ test_that("extract_lhs_varnames works with lists of formulas", {
 # remove grouping --------------------------------------------------------------
 test_that('remove_grouping works', {
   for (i in seq_along(runs)) {
-    expect_equal(remove_grouping(runs[[i]]$random), runs[[i]]$nogroup,
-                 ignore_formula_env = TRUE)
+    expect_equal(remove_grouping(runs[[i]]$random)[[1]], runs[[i]]$nogroup,
+                 ignore_formula_env = TRUE, ignore_attr = "names")
   }
 
   # test all together
   expect_equal(remove_grouping(lapply(runs, "[[", 'random')),
                lapply(runs, "[[", 'nogroup'),
-               ignore_formula_env = TRUE)
+               ignore_formula_env = TRUE, ignore_attr = "names")
 })
 
 

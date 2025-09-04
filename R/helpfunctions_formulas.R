@@ -51,6 +51,7 @@ extract_outcomes_list <- function(fixed) {
 #'          Returns `NULL` if the input is `NULL`.
 #'
 #' @keywords internal
+#' @seealso [extract_lhs_string()]
 
 extract_lhs_varnames <- function(formula) {
   if (is.null(formula)) return(NULL)
@@ -72,64 +73,123 @@ extract_lhs_varnames <- function(formula) {
 
 
 
-# used in divide_matrices, get_models, and help functions (20120-06-09)
-remove_grouping <- function(fmla) {
-  # Remove grouping from formula
-  # - fmla: a formula object or a list of formulas
 
-  # if fmla is not a list, turn into list
-  fmla <- check_formula_list(fmla)
 
-  if (is.null(fmla)) {
+
+#' Remove grouping part from (random effects) formula
+#'
+#' Removes the part after (and including) the pipe symbol (`|`) in a formula.
+#'
+#' @param formula A `formula` object (NOT a list of formulas)
+#'
+#' @returns A list of one-sided `formula` objects without the grouping part,
+#'          split by grouping variable
+#' @seealso [remove_grouping()]
+#' @keywords internal
+#'
+
+remove_formula_grouping <- function(formula) {
+  if (is.null(formula)) {
+    return(NULL)
+  }
+  if (!inherits(formula, "formula")) {
+    errormsg("The argument %s must be a formula.", dQuote("formula"))
+  }
+
+  terms <- attr(terms(formula), "term.labels")
+  new_terms <- gsub(" *\\|[[:print:]]*$", "", terms)
+  new_terms <- new_terms[new_terms != "1"]
+
+  response <- if (length(formula) == 3L) {
+    formula[[2]]
+  }
+
+  reformulate(new_terms, response = response,
+              intercept = attr(terms(formula), "intercept"))
+}
+
+#' Remove grouping part from (random effects) formulas
+#'
+#' Applies `remove_formula_grouping()` to a list of formulas.
+#'
+#' @param formulas A list of `formula` objects (or `NULL`)
+#'
+#' @returns A list of `formula` objects without the grouping part
+#' @seealso [remove_formula_grouping()]
+#'
+#' @keywords internal
+remove_grouping <- function(formulas) {
+
+  if (is.null(formulas)) {
     return(NULL)
   }
 
-  fl <- lapply(fmla, function(x) {
-    if (!is.null(x)) {
-      rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
-                          deparse(x, width.cutoff = 500L))
-
-      if (any(rdmatch[[1L]] > 0L)) {
-        rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-                                rdmatch, invert = FALSE))
-        # remove "|...) " from the formula
-        rdid <- gregexpr(pattern = " *\\|[[:print:]]*", rd)
-
-        # extract and remove (
-        ranef <- lapply(regmatches(rd, rdid, invert = TRUE), gsub,
-                        pattern = "^\\(", replacement =  "~ ")
-        ranef <- lapply(ranef, function(k) as.formula(k[k != ""]))
-
-        nam <- extract_grouping(x, warn = FALSE)
-
-        if (length(nam) > 1L & length(ranef) == 1L) {
-          ranef <- rep(ranef, length(nam))
-        } else if (length(nam) != length(ranef) & length(ranef) != 0L) {
-          errormsg("The number of grouping variables in the random effects
-                   formula does not match the number of separate formulas.
-                   This may be a problem with the specification of multiple
-                   random effects formula parts which include nested grouping.")
-        }
-
-        names(ranef) <- nam
-        ranef
-
-      } else {
-        # remove " | ..." from the formula
-        ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
-                     deparse(x, width.cutoff = 500L))
-
-        nam <- extract_grouping(x, warn = FALSE)
-
-        l <- list(as.formula(ranef))
-        names(l) <- nam
-        l
-      }
-    }
-  })
-
-  if (length(fl) == 1L) fl[[1L]] else fl
+  formulas <- check_formula_list(formulas)
+  lapply(formulas, remove_formula_grouping)
 }
+
+
+
+
+
+# # used in divide_matrices, get_models, and help functions (20120-06-09)
+# remove_grouping_old <- function(fmla) {
+#   # Remove grouping from formula
+#   # - fmla: a formula object or a list of formulas
+#
+#   # if fmla is not a list, turn into list
+#   fmla <- check_formula_list(fmla)
+#
+#   if (is.null(fmla)) {
+#     return(NULL)
+#   }
+#
+#   fl <- lapply(fmla, function(x) {
+#     if (!is.null(x)) {
+#       rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
+#                           deparse(x, width.cutoff = 500L))
+#
+#       if (any(rdmatch[[1L]] > 0L)) {
+#         rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
+#                                 rdmatch, invert = FALSE))
+#         # remove "|...) " from the formula
+#         rdid <- gregexpr(pattern = " *\\|[[:print:]]*", rd)
+#
+#         # extract and remove (
+#         ranef <- lapply(regmatches(rd, rdid, invert = TRUE), gsub,
+#                         pattern = "^\\(", replacement =  "~ ")
+#         ranef <- lapply(ranef, function(k) as.formula(k[k != ""]))
+#
+#         nam <- extract_grouping(x, warn = FALSE)
+#
+#         if (length(nam) > 1L & length(ranef) == 1L) {
+#           ranef <- rep(ranef, length(nam))
+#         } else if (length(nam) != length(ranef) & length(ranef) != 0L) {
+#           errormsg("The number of grouping variables in the random effects
+#                    formula does not match the number of separate formulas.
+#                    This may be a problem with the specification of multiple
+#                    random effects formula parts which include nested grouping.")
+#         }
+#
+#         names(ranef) <- nam
+#         ranef
+#
+#       } else {
+#         # remove " | ..." from the formula
+#         ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
+#                      deparse(x, width.cutoff = 500L))
+#
+#         nam <- extract_grouping(x, warn = FALSE)
+#
+#         l <- list(as.formula(ranef))
+#         names(l) <- nam
+#         l
+#       }
+#     }
+#   })
+#
+#   if (length(fl) == 1L) fl[[1L]] else fl
+# }
 
 
 # can probably be deleted!!!
