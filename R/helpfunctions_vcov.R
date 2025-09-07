@@ -181,11 +181,14 @@ check_rd_vcov <- function(rd_vcov, nranef) {
 
 
 #' Extract the number of random effects
-#' @param idvar vector of the names of all id variables
+#'
+#' This function extracts the number of random effects per variable and grouping
+#' level from the provided random effects formulas.
+#'
 #' @param random a random effect formula or list of random effects formulas
 #' @param data a `data.frame`
-#' @return a list by grouping level (`idvar`) with a named vector of the number
-#'         of random effects per variable (=names).
+#' @return a list of named vectors of the numbers of random effects per variable,
+#'        were each list element refers to a (hierarchical) grouping level.
 #' @keywords internal
 #'
 
@@ -266,6 +269,7 @@ get_nranef <- function(random, data) {
 #'
 #' @returns the value of `object[[element]]` or `null_value` if
 #'         `object[[element]]` is `NULL`
+#'
 #' @keywords internal
 #'
 #'

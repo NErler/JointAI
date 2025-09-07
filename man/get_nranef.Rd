@@ -10,14 +10,13 @@ get_nranef(random, data)
 \item{random}{a random effect formula or list of random effects formulas}
 
 \item{data}{a \code{data.frame}}
-
-\item{idvar}{vector of the names of all id variables}
 }
 \value{
-a list by grouping level (\code{idvar}) with a named vector of the number
-of random effects per variable (=names).
+a list of named vectors of the numbers of random effects per variable,
+were each list element refers to a (hierarchical) grouping level.
 }
 \description{
-Extract the number of random effects
+This function extracts the number of random effects per variable and grouping
+level from the provided random effects formulas.
 }
 \keyword{internal}

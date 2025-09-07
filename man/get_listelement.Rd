@@ -21,9 +21,4 @@ the value of \code{object[[element]]} or \code{null_value} if
 A small helper function to extract an element of a list and return a default
 value if the element does not exist (i.e., is \code{NULL}).
 }
-\examples{
-mylist <- list(A = list(a = 1, b = 2), B = list(a = 23))
-sapply(mylist, get_listelement, "b", null_value = 0)
-# returns c(A = 2, B = 0)
-}
 \keyword{internal}
