@@ -1,5 +1,7 @@
 
 # other functions --------------------------------------------------------------
+#TODO: document this function
+#TODO: check this function
 prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
                          call = match.call(), sframe = sys.frame(sys.nframe())) {
   arglist <- mget(names(formals), sframe)
@@ -63,7 +65,8 @@ prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
 }
 
 
-
+#TODO: document this function
+#TODO: check this function
 check_fixed_random <- function(arglist) {
 
   # if there is a "fixed" effects formula, but no "random" , check if "fixed"
