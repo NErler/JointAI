@@ -268,10 +268,7 @@ get_nranef <- function(random, data) {
 #'         `object[[element]]` is `NULL`
 #' @keywords internal
 #'
-#' @examples
-#' mylist <- list(A = list(a = 1, b = 2), B = list(a = 23))
-#' sapply(mylist, get_listelement, "b", null_value = 0)
-#' # returns c(A = 2, B = 0)
+#'
 get_listelement <- function(object, element, null_value = 0) {
   if (is.null(object[[element]])) {
     null_value
