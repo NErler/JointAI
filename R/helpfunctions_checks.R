@@ -1,10 +1,3 @@
-# helper functions ------------------------------------------------------------
-
-# used in this file (in convert_variables()) (2020-06-09)
-clean_names <- function(string) {
-  gsub(":", "_", string)
-}
-
 
 # other functions --------------------------------------------------------------
 prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
@@ -231,6 +224,22 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
 # * convert continuous variables with just two values to factor
 # * convert logical variables to a factor
 # * convert factor labels (exclude special characters)
+#' Replace ":" with "_" in a string
+#'
+#' Cleans up factor levels (or other strings) by replacing ":" with "_" to avoid
+#' issues with the current implementation of identifying interactions (which looks
+#' for ":" in model terms).
+#'
+#' used in this file (in convert_variables()) (2020-06-09)
+#'
+#' @param string a character string
+#'
+#' @returns the cleaned character string
+#' @keywords internal
+#'
+clean_names <- function(string) {
+  gsub(":", "_", string)
+}
 
   converted1 <- NULL
 
