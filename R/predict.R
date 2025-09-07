@@ -210,8 +210,11 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
                                  allvars = unique(c(all_vars(object$fixed),
                                                     all_vars(object$random),
                                                     all_vars(object$auxvars))),
-                                 mess = FALSE,
-                                 data_orig = object$data)
+                                 mess = FALSE
+                                 #data_orig = object$data
+                                 )
+    #TODO: new version of convert_variables does no longer have "data_orig" argument
+    #Maybe this check should be done by the new "compare_data_structure()".
   }
 
 
