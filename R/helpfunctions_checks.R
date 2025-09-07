@@ -154,9 +154,8 @@ check_classes <- function(data,
                           auxvars = NULL,
                           timevar = NULL,
                           mess = TRUE) {
-  # check classes of covariates
-  vars <- all_vars(fixed, remove_grouping(random), auxvars, timevar)
 
+  vars <- all_vars(fixed, remove_grouping(random), auxvars, timevar)
   classes <- unlist(sapply(data[vars], class))
   known_classes <- c("numeric", "ordered", "factor", "logical", "integer")
 
@@ -217,13 +216,6 @@ drop_levels <- function(data, allvars, warn = TRUE) {
 
 
 
-# used in model_imp (2020-06-09)
-convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
-# clean up data:
-# * change NaN to NA
-# * convert continuous variables with just two values to factor
-# * convert logical variables to a factor
-# * convert factor labels (exclude special characters)
 #' Replace ":" with "_" in a string
 #'
 #' Cleans up factor levels (or other strings) by replacing ":" with "_" to avoid
@@ -241,49 +233,113 @@ clean_names <- function(string) {
   gsub(":", "_", string)
 }
 
-  converted1 <- NULL
 
-  # convert binary continuous variable to factor
+#' Convert variables
+#'
+#' Cleans up the data by
+#' * changing `NaN` to `NA`
+#' * converting continuous variables with just two values to factor
+#' * converting logical variables to a factor
+#' * cleaning factor labels (using `make.names()`)
+#'
+#' used in model_imp (2025-09-07)
+#'
+#' @param data a `data.frame`
+#' @param allvars a character vector of the relevant variables in `data`
+#' @param mess logical, if `TRUE` messages are printed
+#'
+#' @returns the cleaned `data.frame`
+#' @keywords internal
+#'
+convert_variables <- function(data, allvars, mess = TRUE) {
+
+  data_orig <- data
+
   for (k in allvars) {
+    data[[k]] <- replace_nan_with_na(data[[k]])
+    data[[k]] <- two_value_to_factor(data[[k]])
 
-    # replace NaN values with NA
-    data[is.nan(data[, k]), k] <- NA
-
-    # set continuous variables with just two values to binary
-    if (!inherits(data[, k], 'factor') &
-        length(unique(na.omit(data[, k]))) == 2 & is.null(data_orig)) {
-      data[, k] <- factor(data[, k])
-      converted1 <- c(converted1, k)
-    } else if (!is.null(data_orig)) {
-      if (inherits(data_orig[, k], 'factor') &
-          !inherits(data[, k], 'factor')) {
-        data[, k] <- factor(data[, k], levels = levels(data_orig[, k]))
-        converted1 <- c(converted1, k)
-      }
-    }
-
-    # set logical variables to factors
-    if ('logical' %in% class(data[, k])) {
-      data[, k] <- factor(data[, k])
-      converted1 <- c(converted1, k)
-    }
-
-    # clean factor labels
+    # remove ":" from factor labels (otherwise dummies get confused with
+    # interaction terms)
     if (is.factor(data[, k])) {
       levels(data[, k]) <- clean_names(levels(data[, k]))
     }
   }
 
-  if (mess & length(c(converted1)) > 0)
-    msg(
-      ifelse(length(c(converted1)) == 1,
-             'The variable %s was converted to a factor.',
-             'The variables %s were converted to factors.'),
-      paste0(dQuote(converted1), collapse = ", "))
+  if (mess) {
+    compare_data_structure(data_orig, data)
+  }
 
   return(data)
 }
 
+
+
+#' Replace NaN values with NA
+#'
+#' @param x a vector (also works for matrices and scalars)
+#'
+#' @returns the vector (or object like the input) with `NaN` values replaced by
+#'          `NA`
+#' @keywords internal
+#'
+replace_nan_with_na <- function(x) {
+  x[is.nan(x)] <- NA
+  x
+}
+
+#' Convert two-value vectors to factors
+#'
+#' @param x a vector
+#'
+#' @returns the vector converted to a factor if it has exactly two unique
+#'         (non-missing) values and is not already a factor; otherwise the input
+#' @keywords internal
+#'
+two_value_to_factor <- function(x) {
+  if (!inherits(x, 'factor') & length(unique(na.omit(x))) == 2) {
+    x <- factor(x)
+  }
+  x
+}
+
+#' Compare the structure of two data.frames
+#'
+#' @param data1 a `data.frame`
+#' @param data2 a `data.frame`
+#'
+#' @returns nothing, but prints messages if the class of any variable
+#'         changed or if the levels of any factor variable changed
+#' @keywords internal
+#'
+compare_data_structure <- function(data1, data2) {
+
+  class_change <- mapply(function(x1, x2) any(x1 != x2),
+                         x1 = lapply(data1, class),
+                         x2 = lapply(data2, class)
+  )
+  class_change = Filter(isTRUE, class_change)
+
+  level_change <- mapply(function(x1, x2) !isTRUE(all.equal(x1, x2)),
+                         x1 = lapply(data1, levels),
+                         x2 = lapply(data2, levels)
+  )
+  level_change = Filter(isTRUE, level_change)
+
+  if (any(class_change)) {
+    msg("The variable(s) %s was/were changed to %s.",
+        paste_and(dQuote(names(class_change))),
+        paste_and(dQuote(sapply(data2[names(class_change)], class))))
+  }
+
+  if (any(level_change)) {
+    for (k in names(level_change)) {
+      msg("The levels of the variable %s was/were changed to %s.",
+          dQuote(k),
+          paste0(levels(data2[[k]]), collapse = ", "))
+    }
+  }
+}
 
 
 #' Run all data related checks
@@ -309,21 +365,17 @@ clean_names <- function(string) {
 #' @keywords internal
 #'
 check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
-  # run all data related checks
 
   check_vars_in_data(names(data), fixed = fixed, random = random,
                      auxvars = auxvars, timevar = timevar)
 
-  # check classes of covariates
   check_classes(data, fixed = fixed, random = random, auxvars = auxvars)
 
-  # drop empty levels
   data <- drop_levels(data = data,
                       allvars = all_vars(fixed, random, auxvars),
                       warn = warn)
 
-
-  # convert continuous variable with 2 different values and logical variables
+  # convert variable with 2 different values (continuous, character or logical)
   # to factors
   data <- convert_variables(data = data,
                             allvars = all_vars(fixed, random, auxvars),
