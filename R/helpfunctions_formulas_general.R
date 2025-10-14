@@ -240,6 +240,35 @@ extract_lhs_string <- function(formula) {
 #   }
 # }
 
+# all_vars <- function(...) {
+#
+#   input <- as.list(match.call())[-1L]
+#   parent_envir <- parent.frame()
+#   input_list <- unlist(lapply(input, eval, envir = parent_envir))
+#
+#   variable_list <- lapply(input_list, function(x) {
+#
+#     if (inherits(x, "formula")) {
+#       all.vars(x)
+#     } else {
+#       x_char <- try(all.vars(parse(text = x)))
+#       if (!inherits(x_char, "try-error")) {
+#         is_variable_name <- isTRUE(all(make.names(x_char) == x_char))
+#         x <- x_char
+#       } else {
+#         is_variable_name <- isTRUE(all(make.names(x) == x))
+#       }
+#       if (is_variable_name) {
+#         x
+#       } else {
+#         errormsg("I don't know how to extract variable names from %s.",
+#                  dQuote(x))
+#       }
+#     }
+#   })
+#   unique(unlist(variable_list))
+# }
+
 all_vars <- function(...) {
 
   input <- as.list(match.call())[-1L]
@@ -251,9 +280,9 @@ all_vars <- function(...) {
     if (inherits(x, "formula")) {
       all.vars(x)
     } else {
-      is_variable_name <- isTRUE(all(make.names(x) == x))
-      if (is_variable_name) {
-        x
+      x_char <- try(all.vars(parse(text = x)))
+      if (!inherits(x_char, "try-error")) {
+        x_char
       } else {
         errormsg("I don't know how to extract variable names from %s.",
                  dQuote(x))
@@ -262,8 +291,6 @@ all_vars <- function(...) {
   })
   unique(unlist(variable_list))
 }
-
-
 
 
 #' Extract fixed effects formula from lme4-type formula
