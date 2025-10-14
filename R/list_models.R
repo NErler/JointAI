@@ -69,6 +69,10 @@
 list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                         otherpars = TRUE, priors = TRUE, refcat = TRUE) {
 
+  #TODO: Include information on truncation in the output! Currently, the output
+  # just shows "linear model for..." but there is no information that the
+  # variable was truncated
+
   if (!inherits(object, "JointAI") & !inherits(object, "JointAI_errored"))
     errormsg("Use only with 'JointAI' objects.\n")
 
