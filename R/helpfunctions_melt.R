@@ -24,19 +24,19 @@ melt_list <- function(l, varname = "L1", valname = "value") {
     warnmsg(
       "In melt_list(): Element(s) %s has/have length zero.
              I will ignore this.",
-      paste_and(names(Filter(\(x) length(x) == 0, x = l)),
+      paste_and(names(Filter(function(x) length(x) == 0, x = l)),
                 dQ = TRUE
       )
     )
-    l <- Filter(Negate(\(x) length(x) == 0), l)
+    l <- Filter(Negate(function(x) length(x) == 0), l)
   }
 
   # Check for elements that cannot be converted to a data.frame or would
   # result in differing numbers of columns e.g., formulas, arrays, lists, ...
-  if (any(lvapply(l, \(x) !is.atomic(x) | !is.vector(x)))) {
+  if (any(lvapply(l, function(x) !is.atomic(x) | !is.vector(x)))) {
     errormsg(
       "In melt_list(): Not all elements are atomic vectors (%s).",
-      paste_and(names(Filter(\(x) !is.atomic(x) | !is.vector(x), l)),
+      paste_and(names(Filter(function(x) !is.atomic(x) | !is.vector(x), l)),
                 dQ = TRUE
       )
     )
@@ -132,7 +132,7 @@ melt_matrix_list <- function(l, varnames = NULL) {
 
 
   if (is.null(varnames) &&
-      length(unique(lapply(l, \(x) names(dimnames(x))))) > 1L) {
+      length(unique(lapply(l, function(x) names(dimnames(x))))) > 1L) {
     errormsg(
       "In melt_matrix_list(): When the argument %s is not provided,
              all matrices must have the same names of their %s.",
@@ -146,20 +146,20 @@ melt_matrix_list <- function(l, varnames = NULL) {
 
   # Melt each element of l separately and add the "L1" column to indicate the
   # element index
-  lnew <- lapply(names(l), \(k) {
+  lnew <- lapply(names(l), function(k) {
     cbind(melt_matrix(l[[k]], varnames = varnames), L1 = k)
   })
 
 
   # check if there are differences in variable classes between data.frames
   types <- ivapply(names(lnew[[1]]), function(n) {
-    length(unique(lapply(lnew, \(m) class(m[[n]]))))
+    length(unique(lapply(lnew, function(m) class(m[[n]]))))
   })
 
   # if there are any differences in variable classes, convert those variables
   # to characters to prevent issues with rbind()
   if (any(types > 1)) {
-    lnew <- lapply(lnew, \(x) {
+    lnew <- lapply(lnew, function(x) {
       x[which(types > 1)] <- lapply(x[which(types > 1)], as.character)
       x
     })
