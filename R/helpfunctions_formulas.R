@@ -419,6 +419,11 @@ make_fct_df <- function(varlist_elmt, data) {
   if (any(ivapply(vars, length) > ivapply(varlist_elmt, length)))
     df <- df[match(rep(names(vars), ivapply(vars, length)), df$fct), ]
 
+  # quick-and-dirty fix to avoid error when the same function (e.g., I()) is
+  # used multiple times with a different number of variables:
+  if (any(ivapply(vars, length) < ivapply(varlist_elmt, length)))
+    vars <- vars[df$fct]
+
   df$colname <- unlist(vars)
 
   df[, c("var", "colname", "fct")]
