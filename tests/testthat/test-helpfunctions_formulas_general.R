@@ -404,10 +404,19 @@ test_that("all_vars works", {
 
   expect_equal(all_vars(c("a", "b", "c")), c("a", "b", "c"))
   expect_equal(all_vars("abc"), "abc")
+  expect_equal(all_vars(list(NULL, 1, "abc", ~ b + c)),
+               c("abc", "b", "c"))
   })
 
-test_that("all_vars gives an error", {
-  expect_error(all_vars(NA))
-  expect_error(all_vars(1))
-  expect_error(all_vars(list(NULL, 1, "abc", ~ b + c)))
+test_that("all_vars gives returns empty string", {
+  expect_equal(all_vars(NA), character(0))
+  expect_equal(all_vars(1), character(0))
 })
+
+
+
+# test_that("all_vars gives an error", {
+#   expect_error(all_vars(NA))
+#   expect_error(all_vars(1))
+#   expect_error(all_vars(list(NULL, 1, "abc", ~ b + c)))
+# })
