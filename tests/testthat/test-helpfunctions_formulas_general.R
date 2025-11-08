@@ -205,7 +205,7 @@ test_that('extract_lhs returns error for one-sided formula', {
   expect_error(extract_lhs_string(~ y + z))
 })
 
-test_that("extact_lhs returns error for non-formula objects", {
+test_that("extract_lhs returns error for non-formula objects", {
   # not a formula
   expect_error(extract_lhs_string("a ~ y + z"))
   expect_error(extract_lhs_string(NA))
