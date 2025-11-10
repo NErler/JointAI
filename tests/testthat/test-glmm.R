@@ -1,6 +1,8 @@
 library("JointAI")
 library("splines")
 
+options(useFancyQuotes = TRUE)
+
 # Sys.setenv(IS_CHECK = "true")
 skip_on_cran()
 

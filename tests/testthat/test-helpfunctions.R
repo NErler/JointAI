@@ -1,50 +1,7 @@
 library("JointAI")
 
-test_that('extract_id works', {
-  runs <- list(list(random = ~ 1 | id, ids = 'id'),
-               list(random = ~ 0 | id, ids = 'id'),
-               list(random = y ~ a + b + c, ids = NULL),
-               list(random = y ~ time | id, ids = 'id'),
-               list(random =  ~ a | id/class, ids = c('id', 'class')),
-               list(random = ~ a | id + class, ids = c('id', 'class')),
-               list(random = ~(a | id) + (b | id2), ids = c('id', 'id2'))
-  )
 
-  for (i in seq_along(runs)) {
-    expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
-  }
-
-  expect_warning(extract_id(runs[[3]]$random), "could be identified")
-})
-
-
-test_that('extract_id results in error', {
-  err <- list(
-    "text",
-    NA,
-    TRUE,
-    mean
-  )
-
-  for (i in seq_along(err)) {
-    expect_error(extract_id(err[[i]]))
-  }
-})
-
-
-test_that('extract_id results in warning', {
-  rd_warn <- list(~1,
-                  ~a + b + c,
-                  ~ NULL)
-
-  for (i in seq_along(rd_warn)) {
-    expect_warning(extract_id(rd_warn[[i]]))
-  }
-})
-
-
-
-test_that('extract_outcome works', {
+test_that('extract_outcomes_list works', {
   ys <- list(list(fixed = y ~ a + b, out = list(y = 'y')),
              list(fixed = y ~ 1, out = list(y = 'y')),
              list(fixed = Surv(a, b) ~ 1,
@@ -57,7 +14,7 @@ test_that('extract_outcome works', {
   )
 
   for (i in seq_along(ys)) {
-    expect_equal(extract_outcome(ys[[i]]$fixed), ys[[i]]$out)
+    expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
   }
 })
 
@@ -120,6 +77,6 @@ test_that('extract_outcome works', {
 #   )
 #
 #   for (i in seq_along(ys)) {
-#     expect_equal(extract_outcome(ys[[i]]$fixed), ys[[i]]$out)
+#     expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
 #   }
 # })

@@ -19,11 +19,11 @@ test_that('check_formula_list works', {
 
   # list of formulas and NULL elements
   expect_equal(check_formula_list(list(y ~ x + z, NULL)),
-               list(y ~ x + z, NULL))
+               list(y ~ x + z, NULL), ignore_formula_env = TRUE)
 
   # list of only NULL elements
   expect_equal(check_formula_list(list(NULL, NULL, NULL)),
-               list(NULL, NULL, NULL))
+               list(NULL, NULL, NULL), ignore_formula_env = TRUE)
 })
 
 
@@ -178,44 +178,66 @@ test_that("remove_lhs() works", {
 
 
 # extract_lhs ------------------------------------------------------------------
-test_that('extract_lhs works', {
+test_that('extract_lhs returns lhs string', {
   # simple response
-  expect_equal(extract_lhs(y ~ a + b), "y")
+  expect_equal(extract_lhs_string(y ~ a + b), "y")
 
   # survival object
-  expect_equal(extract_lhs(Surv(time, status) ~ a + b), "Surv(time, status)")
-  expect_equal(extract_lhs(Surv(time, status == 3) ~ a + b),
+  expect_equal(extract_lhs_string(Surv(time, status) ~ a + b), "Surv(time, status)")
+  expect_equal(extract_lhs_string(Surv(time, status == 3) ~ a + b),
                "Surv(time, status == 3)")
 
   # cbind response
-  expect_equal(extract_lhs(cbind(a, b, c) ~ x), "cbind(a, b, c)")
+  expect_equal(extract_lhs_string(cbind(a, b, c) ~ x), "cbind(a, b, c)")
 
   # function/trafo response
-  expect_equal(extract_lhs(I(x^2) ~ y), "I(x^2)")
-  expect_equal(extract_lhs(log(x^2) ~ y), "log(x^2)")
-  expect_equal(extract_lhs(a + b ~ y + z), "a + b")
-
-  # null
-  expect_null(extract_lhs(NULL))
-
+  expect_equal(extract_lhs_string(I(x^2) ~ y), "I(x^2)")
+  expect_equal(extract_lhs_string(log(x^2) ~ y), "log(x^2)")
+  expect_equal(extract_lhs_string(a + b ~ y + z), "a + b")
 })
 
+test_that("extract_lhs returns NULL for NULL object", {
+    expect_null(extract_lhs_string(NULL))
+})
 
-test_that('extract_lhs returns error', {
+test_that('extract_lhs returns error for one-sided formula', {
   # no response
-  expect_error(extract_lhs(~ y + z))
+  expect_error(extract_lhs_string(~ y + z))
+})
 
+test_that("extract_lhs returns error for non-formula objects", {
   # not a formula
-  expect_error(extract_lhs("a ~ y + z"))
-  expect_error(extract_lhs(NA))
+  expect_error(extract_lhs_string("a ~ y + z"))
+  expect_error(extract_lhs_string(NA))
+  expect_error(extract_lhs_string(33))
+  expect_error(extract_lhs_string(TRUE))
+  expect_error(extract_lhs_string(expression(y ~ x + y)))
 
   # a list of formulas
-  expect_error(extract_lhs(list(a ~ b + c, x ~ y + z)))
+  expect_error(extract_lhs_string(list(a ~ b + c, x ~ y + z)))
 })
-
 
 
 # split_formula-----------------------------------------------
+
+library(testthat)
+
+test_that("extract_fixef_formula throws error for non-formulas", {
+  expect_error(extract_fixef_formula("not a formula"))
+  expect_error(extract_fixef_formula(NA))
+  expect_error(extract_fixef_formula(42))
+  expect_error(extract_fixef_formula(expression(y ~ x)))
+})
+
+test_that("extract_ranef_formula throws error for non-formulas", {
+  expect_error(extract_ranef_formula("not a formula"))
+  expect_error(extract_ranef_formula(NA))
+  expect_error(extract_ranef_formula(42))
+  expect_error(extract_ranef_formula(expression(y ~ x)))
+})
+
+
+
 fmls <- list(
   list(fmla = y ~ a + b + (b | id),
        fixed = list(y = y ~ a + b),
@@ -237,21 +259,32 @@ fmls <- list(
        random = list(y = ~ (1|id) + (1|class))),
   list(fmla = y ~ a + b + (id | group1 + group2),
        fixed = list(y = y ~ a + b),
-       random = list(y = ~ (id | group1 + group2)))
+       random = list(y = ~ (id | group1 + group2))),
+  list(fmla = y ~ a + b - 1,
+       fixed = list(y = y ~ 0 + a + b),
+       random = list(y = NULL)),
+  list(fmla = y ~ 0 + (1 | id),
+       fixed = list(y = y ~ 0),
+       random = list(y = ~ (1 | id)))
 )
 
-test_that('split_formula works', {
+
+test_that("extract_fixef_formula works", {
   for (i in seq_along(fmls)) {
-    expect_equal(split_formula(fmls[[i]]$fmla),
-                 list(fixed = fmls[[i]]$fixed[[1]],
-                      random = fmls[[i]]$random[[1]]),
+    expect_equal(extract_fixef_formula(fmls[[i]]$fmla),
+                 fmls[[i]]$fixed[[1]],
                  ignore_formula_env = TRUE)
   }
-
-  expect_equal(split_formula(y ~ a + b),
-               list(fixed = y ~ a + b,
-                    random = NULL), ignore_formula_env = TRUE)
 })
+
+test_that("extract_ranef_formula works", {
+  for (i in seq_along(fmls)) {
+    expect_equal(extract_ranef_formula(fmls[[i]]$fmla),
+                 fmls[[i]]$random[[1]],
+                 ignore_formula_env = TRUE)
+  }
+})
+
 
 
 
@@ -260,30 +293,30 @@ test_that('split_formula_list works', {
   expect_equal(
     split_formula_list(lapply(fmls, "[[", "fmla")),
     list(fixed = unlist(lapply(fmls, "[[", 'fixed')),
-         random = unlist(lapply(fmls, "[[", 'random'))),
+         random = unlist(lapply(fmls, "[[", 'random'), recursive = FALSE)),
     ignore_formula_env = TRUE)
 })
 
 
 
-# extract_id--------------------------------------------------------------
+# extract_grouping--------------------------------------------------------------
 
-test_that('extract_id works', {
+test_that('extract_grouping works', {
   # single formula
-  expect_equal(extract_id(~ 1 | id), "id")
-  expect_equal(extract_id(~ 0 | id), "id")
-  expect_equal(extract_id(~ time | id), "id")
-  expect_equal(extract_id(~ 1 | id/center), c("id", "center"))
-  expect_equal(extract_id(~ 1 | id + center), c("id", "center"))
-  expect_equal(extract_id(~ (1 | id) + (time | center)), c("id", "center"))
+  expect_equal(extract_grouping(~ 1 | id), "id")
+  expect_equal(extract_grouping(~ 0 | id), "id")
+  expect_equal(extract_grouping(~ time | id), "id")
+  expect_equal(extract_grouping(~ 1 | id/center), c("id", "center"))
+  expect_equal(extract_grouping(~ 1 | id + center), c("id", "center"))
+  expect_equal(extract_grouping(~ (1 | id) + (time | center)), c("id", "center"))
 
 
-  expect_null(extract_id(NULL))
-  expect_null(extract_id(~ a + b, warn = FALSE), NULL)
+  expect_null(extract_grouping(NULL))
+  expect_null(extract_grouping(~ a + b, warn = FALSE), NULL)
 
 
   # list of formulas
-  expect_equal(extract_id(list(a = ~ time | id,
+  expect_equal(extract_grouping(list(a = ~ time | id,
                                b = y ~ (time | id) + (1 | center),
                                d = NULL,
                                e = ~ 1 | group)),
@@ -293,18 +326,69 @@ test_that('extract_id works', {
 })
 
 
-test_that('extract_id gives warning', {
-  expect_warning(extract_id(~ a + b + c))
-  expect_warning(extract_id(~ 0))
-  expect_warning(extract_id(~ 1))
+test_that('extract_grouping returns NULL when no grouping term', {
+  # edit 2025-09-04: refactoring extract_id() to extract_grouping() does not
+  # return warnings any more for formulas without any grouping terms. This
+  # is intentional; too many warnings are irritating.
+  expect_null(extract_grouping(~ a + b + c))
+  expect_null(extract_grouping(~ 0))
+  expect_null(extract_grouping(~ 1))
 })
 
 
 
-test_that('extract_id gives in error', {
-  expect_error(extract_id("~ 1 | id"))
-  expect_error(extract_id(NA))
+test_that('extract_grouping gives an error', {
+  expect_error(extract_grouping("~ 1 | id"))
+  expect_error(extract_grouping(NA))
 })
+
+
+
+test_that('extract_grouping works', {
+  runs <- list(list(random = ~ 1 | id, ids = 'id'),
+               list(random = ~ 0 | id, ids = 'id'),
+               list(random = y ~ a + b + c, ids = NULL),
+               list(random = y ~ time | id, ids = 'id'),
+               list(random =  ~ a | id/class, ids = c('id', 'class')),
+               list(random = ~ a | id + class, ids = c('id', 'class')),
+               list(random = ~(a | id) + (b | id2), ids = c('id', 'id2'))
+  )
+
+  for (i in seq_along(runs)[-3]) {
+    expect_equal(extract_grouping(runs[[i]]$random), runs[[i]]$ids)
+  }
+
+  expect_null(extract_grouping(runs[[3]]$random))
+
+  expect_equal(extract_grouping(lapply(runs, "[[", "random")),
+               unique(unlist(lapply(runs, "[[", "ids"))))
+})
+
+
+test_that('extract_grouping results in error', {
+  err <- list(
+    "text",
+    NA,
+    TRUE,
+    mean
+  )
+
+  for (i in seq_along(err)) {
+    expect_error(extract_grouping(err[[i]]))
+  }
+})
+
+
+# test_that('extract_grouping results in warning', {
+#   rd_warn <- list(~1,
+#                   ~a + b + c,
+#                   ~ NULL)
+#
+#   for (i in seq_along(rd_warn)) {
+#     expect_warning(extract_grouping(rd_warn[[i]]))
+#   }
+# })
+
 
 
 # all_vars ---------------------------------------------------------------------
@@ -314,15 +398,25 @@ test_that("all_vars works", {
   expect_equal(all_vars(y ~ a + B + I(c/d^2) + ns(time, df = 3) +
                           (1 | id/center)),
                c("y", "a", "B", "c", "d", "time", "id", "center"))
-  expect_equal(all_vars(list(y ~ a + B + I(c/d^2),
+  expect_equal(all_vars(list(Surv(etime, status == 3) ~ a + B + I(c/d^2),
                              a ~ c + ns(time, df = 3) + (1 | id/center))),
-               c("y", "a", "B", "c", "d", "time", "id", "center"))
+               c("etime", "status", "a", "B", "c", "d", "time", "id", "center"))
+
+  expect_equal(all_vars(c("a", "b", "c")), c("a", "b", "c"))
+  expect_equal(all_vars("abc"), "abc")
+  expect_equal(all_vars(list(NULL, 1, "abc", ~ b + c)),
+               c("abc", "b", "c"))
+  })
+
+test_that("all_vars gives returns empty string", {
+  expect_equal(all_vars(NA), character(0))
+  expect_equal(all_vars(1), character(0))
 })
 
-test_that("all_vars gives an error", {
-  expect_error(all_vars(NA))
-  expect_error(all_vars(1))
-  expect_error(all_vars(list(NULL, 1, "abc", ~ b + c)))
-  expect_error(all_vars(c("a", "b", "c")))
-  expect_error(all_vars("abc"))
-})
+
+
+# test_that("all_vars gives an error", {
+#   expect_error(all_vars(NA))
+#   expect_error(all_vars(1))
+#   expect_error(all_vars(list(NULL, 1, "abc", ~ b + c)))
+# })

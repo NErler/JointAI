@@ -9,8 +9,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                             rd_vcov = rd_vcov, ...) {
 
   # id's and groups ------------------------------------------------------------
-  # extract the id variable from the random effects formula and get groups
-  idvar <- extract_id(random, warn = warn)
+  idvar <- extract_grouping(random, warn = warn)
 
   # re-format data for survival with time-varying covariates:
   # the time variables of the longitudinal measurements and the survival times
@@ -243,7 +242,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
 
-  nranef <- get_nranef(idvar = idvar, random = random, data = data)
+  nranef <- get_nranef(random = random, data = data)
   rd_vcov <- check_rd_vcov(rd_vcov = rd_vcov, nranef = nranef)
 
   list(data = data,

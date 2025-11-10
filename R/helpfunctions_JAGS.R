@@ -117,7 +117,7 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
 
       if (isTRUE(mess) & isTRUE(parallel))
         msg("Parallel sampling with %s workers started (%s).",
-            length(f$workers), Sys.time())
+            future::nbrOfWorkers(), Sys.time())
 
       if (isTRUE(mess) & !isTRUE(parallel))
         msg("Note: the original model was run in parallel.")
@@ -165,7 +165,7 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
     }
 
     fit$parallel <- parallel
-    fit$workers <- length(f$workers)
+    fit$workers <- future::nbrOfWorkers()
 
     if (!isTRUE(parallel)) {
       fit$time_adapt <- difftime_df(fit$time_adapt)

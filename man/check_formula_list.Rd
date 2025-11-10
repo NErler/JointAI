@@ -2,18 +2,25 @@
 % Please edit documentation in R/helpfunctions_formulas_general.R
 \name{check_formula_list}
 \alias{check_formula_list}
-\title{Check/convert formula to list}
+\title{Ensure object is a (list of) formula(s)}
 \usage{
 check_formula_list(formula, convert = TRUE)
 }
 \arguments{
-\item{formula}{any object}
+\item{formula}{An object expected to be either a formula, a list of formulas,
+or \code{NULL}.}
 
-\item{convert}{logical; should the input be converted to a list?}
+\item{convert}{Logical; if \code{TRUE}, a single formula is wrapped in a list.}
+}
+\value{
+A named \code{list} of \code{formula} (and/or \code{NULL}) objects, or \code{NULL}. If
+\code{convert} is \code{FALSE}, a single formula is returned as-is.
 }
 \description{
-Check if an object is a list of formulas and/or NULL elements and convert
-it to a list if it is a formula object.
+Check if an object is NULL, a formula, or a list of formulas and (optionally)
+convert it to a list of formulas. If the input is of unknown type or if it
+is a list that has entries that are neither \code{formula} nor \code{NULL}, an error
+is thrown.
 }
 \details{
 Internal function; used in many help functions, get_refs, *_imp, predict

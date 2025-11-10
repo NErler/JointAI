@@ -62,46 +62,86 @@ cvapply <- function(x, fun, ...) {
 
 # variable levels and grouping -------------------------------------------------
 
-get_groups <- function(idvar, data) {
-  # identify clusters/groups based on the id variables
-  # - idvar: vector of names of the id variables
-  # - data: a data.frame
+#' Get grouping information
+#'
+#' A helper function that generates grouping information from a data.frame
+#' and a character vector with the names of grouping variables.
+#' In all cases, the level "lvlone" is added to indicate the lowest level of
+#' the data (i.e., each observation is its own group).
+#'
+#' @param idvars a character vector with the names of grouping variables
+#' @param data a data.frame
+#'
+#' @returns a list with grouping information for each grouping level:
+#'          each element is a vector of length `nrow(data)` with the group
+#'          membership indices of each observation for the corresponding
+#'          grouping level.
+#' @keywords internal
+#'
+get_groups <- function(idvars, data) {
 
-  if (!is.null(idvar)) {
-    groups <- nlapply(idvar, function(i) {
+  if (!is.null(idvars)) {
+    groups <- nlapply(idvars, function(i) {
       match(data[, i], unique(data[, i]))
     })
 
-    # check for unnecessary nesting levels
-    gr_length <- ivapply(groups, function(x) length(unique(x))) == nrow(data)
-    if (any(gr_length)) {
-      if (sum(gr_length) == 1L) {
-        errormsg("The grouping level %s seem to be unnecessary.
-                 There are only unique observations at this level.",
-                 dQuote(names(gr_length[gr_length])))
-      } else {
-        errormsg("The grouping levels %s seem to be unnecessary.
-                 There are only unique observations at these levels.",
-                 paste_and(dQuote(names(gr_length[gr_length]))))
-      }
-    }
+    check_unnecessary_grouping_levels(groups, nrow(data))
+    check_duplicate_groupings(groups)
 
+    # add lowest-level grouping "lvlone"
     groups$lvlone <- seq_len(nrow(data))
 
-    # check for duplicate levels
-    gr_dupl <- duplicated(groups)
-    if (any(gr_dupl)) {
-      gr_dupl2 <- duplicated(groups, fromLast = TRUE)
-      errormsg("The grouping levels %s are duplicates.",
-               paste_and(dQuote(unique(c(names(groups)[gr_dupl],
-                                         names(groups)[gr_dupl2])))))
-    }
   } else {
     groups <- list(lvlone = seq_len(nrow(data)))
   }
 
-  groups
+  return(groups)
 }
+
+
+
+#' Check for unnecessary grouping levels
+#'
+#' @param groups a list of grouping information, as obtained from `get_groups()`
+#'
+#' @returns NULL; throws an error if unnecessary grouping levels are found
+#' @keywords internal
+#'
+check_unnecessary_grouping_levels <- function(groups, nrow_data) {
+  group_lengths <- ivapply(groups, function(x) length(unique(x)) == nrow_data)
+
+  if (any(group_lengths)) {
+    errormsg(
+      "The grouping level(s) %s seem(s) to be unnecessary.
+      There are only unique observations at these levels.",
+      paste_and(dQuote(names(group_lengths[group_lengths])))
+    )
+  }
+}
+
+#' Check for duplicate grouping levels
+#'
+#' @param groups a list of grouping information, as obtained from `get_groups()`
+#'
+#' @returns NULL; throws an error if duplicate grouping levels are found
+#' @keywords internal
+#'
+check_duplicate_groupings <- function(groups) {
+  group_duplicates <- duplicated(groups)
+  if (any(group_duplicates)) {
+    group_dupl2 <- duplicated(groups, fromLast = TRUE)
+    errormsg(
+      "The grouping levels %s are duplicates.",
+      paste_and(dQuote(unique(c(
+        names(groups)[group_duplicates],
+        names(groups)[group_dupl2]
+      ))))
+    )
+  }
+}
+
+
+
 
 
 check_cluster <- function(x, grouping) {

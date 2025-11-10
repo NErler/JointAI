@@ -6476,7 +6476,7 @@
       gamma_O1[3]   0    0  0     NaN
       
 
-# summary output remained the same on Windows
+# summary output remained the same on non-Windows
 
     Code
       lapply(models0, print)

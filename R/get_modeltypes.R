@@ -26,7 +26,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   }
 
   # check that all variables are found in the data
-  allvars <- unique(c(all_vars(c(fixed, random, auxvars)), timevar))
+  allvars <- all_vars(fixed, random, auxvars, timevar)
 
   if (any(!names(models) %in% names(data))) {
     errormsg("Variable(s) %s were not found in the data." ,
@@ -53,16 +53,18 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
 
   # extract the id variable from the random effects formula and get groups
-  idvar <- extract_id(random, warn = warn)
+  idvar <- extract_grouping(random, warn = warn)
   groups <- get_groups(idvar, data)
 
   random2 <- remove_grouping(random)
 
 
-  # new version of allvars, without the grouping variable
+  # NOTE: all_vars() checks if a string is a valid variable name but that is
+  # not the case for all names of fixed (e.g., Surv(time, status))
   allvars <- unique(c(names(fixed),
-                      all_vars(c(remove_lhs(fixed), random2, auxvars)),
-                      names(models), timevar))
+               all_vars(remove_lhs(fixed), random2, auxvars,
+                        names(models), timevar)
+  ))
 
   group_lvls <- colSums(!identify_level_relations(groups))
   max_lvl <- max(group_lvls)

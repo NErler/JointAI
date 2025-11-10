@@ -242,7 +242,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$start <- ifelse(is.null(start), start(object$MCMC),
                       max(start, start(object$MCMC)))
   out$end <- ifelse(is.null(end), end(object$MCMC), min(end, end(object$MCMC)))
-  out$thin <- coda::thin(object$MCMC)
+  out$thin <- ifelse(is.null(thin), coda::thin(object$MCMC), thin)
   out$nchain <- coda::nchain(object$MCMC) - sum(exclude_chains %in%
                                                   seq_along(object$MCMC))
   out$res <- res_list
@@ -392,8 +392,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 
   cat("MCMC settings:\n")
   cat("Iterations = ", x$start, ":", x$end, "\n", sep = "")
-  cat("Sample size per chain =", (x$end - x$start) / x$thin +
-        1, "\n")
+  cat("Sample size per chain =", floor((x$end - x$start + 1) / x$thin), "\n")
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
   cat("\n")
@@ -710,9 +709,8 @@ get_missinfo <- function(object) {
     errormsg("Use only with 'JointAI' objects.")
 
 
-  allvars <- unique(
-    c(all_vars(c(object$fixed, object$random, object$Mlist$auxvars)),
-      object$Mlist$timevar))
+  allvars <- all_vars(object$fixed, object$random, object$Mlist$auxvars,
+                      object$Mlist$timevar)
 
   groups <- object$Mlist$groups
 

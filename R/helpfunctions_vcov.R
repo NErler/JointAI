@@ -181,48 +181,102 @@ check_rd_vcov <- function(rd_vcov, nranef) {
 
 
 #' Extract the number of random effects
-#' @param idvar vector of the names of all id variables
+#'
+#' This function extracts the number of random effects per variable and grouping
+#' level from the provided random effects formulas.
+#'
 #' @param random a random effect formula or list of random effects formulas
 #' @param data a `data.frame`
-#' @return a list by grouping level (`idvar`) with a named vector of the number
-#'         of random effects per variable (=names).
+#' @return a list of named vectors of the numbers of random effects per variable,
+#'        were each list element refers to a (hierarchical) grouping level.
 #' @keywords internal
 #'
 
-get_nranef <- function(idvar, random, data) {
+# get_nranef_old <- function(idvar, random, data) {
+#
+#   nlapply(idvar, function(lvl) {
+#
+#     if (inherits(random, "formula")) {
+#
+#       rm_gr <- remove_grouping_old(random)
+#
+#       if (lvl %in% names(rm_gr)) {
+#         ncol(model.matrix(remove_grouping_old(random)[[lvl]], data = data))
+#       } else 0L
+#
+#     } else if (inherits(random, "list")) {
+#
+#       if (length(random) == 1L) {
+#         rm_gr <- remove_grouping_old(random)
+#         nrd <- if (lvl %in% names(rm_gr)) {
+#           ncol(model.matrix(rm_gr[[lvl]], data = data))
+#         } else 0L
+#
+#       } else {
+#
+#         nrd <- ivapply(remove_grouping_old(random), function(x) {
+#           if (lvl %in% names(x)) {
+#             ncol(model.matrix(x[[lvl]], data = data))
+#           } else 0L
+#         })
+#       }
+#
+#       names(nrd) <- names(random)
+#       nrd
+#
+#     } else {
+#       errormsg("I expected either a formula or list of formulas.")
+#     }
+#   })
+# }
 
-  nlapply(idvar, function(lvl) {
+get_nranef <- function(random, data) {
 
-    if (inherits(random, "formula")) {
+  if (is.null(random)) {
+    return(NULL)
+  }
 
-      rm_gr <- remove_grouping(random)
+  if (inherits(random, "list")) {
+    all_lvls <- extract_grouping(random)
+    n_ranef <- lapply(random, get_nranef, data = data)
 
-      if (lvl %in% names(rm_gr)) {
-        ncol(model.matrix(remove_grouping(random)[[lvl]], data = data))
-      } else 0L
+    nranef_by_lvl <- nlapply(all_lvls, function(lvl) {
+      sapply(n_ranef, get_listelement, lvl, null_value = 0L)
+    })
+    return(nranef_by_lvl)
+  }
 
-    } else if (inherits(random, "list")) {
+  rd_term_formulas <- rd_terms_by_grouping(random)
 
-      if (length(random) == 1L) {
-        rm_gr <- remove_grouping(random)
-        nrd <- if (lvl %in% names(rm_gr)) {
-          ncol(model.matrix(rm_gr[[lvl]], data = data))
-        } else 0L
-
-      } else {
-
-        nrd <- ivapply(remove_grouping(random), function(x) {
-          if (lvl %in% names(x)) {
-            ncol(model.matrix(x[[lvl]], data = data))
-          } else 0L
-        })
-      }
-
-      names(nrd) <- names(random)
-      nrd
-
-    } else {
-      errormsg("I expected either a formula or list of formulas.")
-    }
+  lapply(rd_term_formulas, function(fmla) {
+    ncol(model.matrix(fmla, data = data))
   })
+}
+
+
+
+
+
+
+#' Get an element of a list, return a default value if it does not exist
+#'
+#' A small helper function to extract an element of a list and return a default
+#' value if the element does not exist (i.e., is `NULL`).
+#'
+#' @param object a `list`
+#' @param element the name of the element to extract (a character string)
+#' @param null_value the value to return if the element does not exist
+#'
+#' @returns the value of `object[[element]]` or `null_value` if
+#'         `object[[element]]` is `NULL`
+#'
+#' @keywords internal
+#'
+#'
+get_listelement <- function(object, element, null_value = 0) {
+  if (is.null(object[[element]])) {
+    null_value
+  } else {
+    object[[element]]
+  }
 }

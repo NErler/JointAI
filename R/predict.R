@@ -71,7 +71,7 @@ predDF.formula <- function(object, data, vars, length = 100L, ...) {
 #' @export
 predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
 
-  id_vars <- extract_id(vars, warn = FALSE)
+  id_vars <- extract_grouping(vars, warn = FALSE)
   varying <- all_vars(vars)
 
   if (is.null(idvar))
@@ -210,8 +210,11 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
                                  allvars = unique(c(all_vars(object$fixed),
                                                     all_vars(object$random),
                                                     all_vars(object$auxvars))),
-                                 mess = FALSE,
-                                 data_orig = object$data)
+                                 mess = FALSE
+                                 #data_orig = object$data
+                                 )
+    #TODO: new version of convert_variables does no longer have "data_orig" argument
+    #Maybe this check should be done by the new "compare_data_structure()".
   }
 
 

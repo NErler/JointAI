@@ -6,21 +6,21 @@ library("survival")
 
 
 runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
-                  nogroup = list(id = ~ 1)),
+                  nogroup = (id = ~ 1)),
              list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id),
-                  nogroup = list(id = ~ 0)),
+                  nogroup = (id = ~ 0)),
              list(random = NULL, ids = NULL, RHS = NULL, nogroup = NULL),
              list(random = y ~ a + b + c, ids = NULL, RHS = list(~a + b + c),
-                  nogroup = list(y ~ a + b + c)),
+                  nogroup = (y ~ a + b + c)),
              list(random = y ~ time | id, ids = 'id', RHS = list(~time | id),
-                  nogroup = list(id = y ~ time)),
+                  nogroup = (id = y ~ time)),
              list(random = y ~ 0, ids = NULL, RHS = list(~ 0),
-                  nogroup = list(y ~ 0))
+                  nogroup = (y ~ -1))
 )
 
 
 
-# extract_outcome ----------------------------------------------------------
+# extract_outcomes_list --------------------------------------------------------
 library(splines)
 ys <- list(list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y",
                 RHS = list(~ a + b)),
@@ -44,17 +44,61 @@ ys <- list(list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y",
 # list(fixed = y + x ~ a + b, out = c("y + x"))
 )
 
-test_that('extract_outcome works', {
+test_that('extract_outcomes_list works', {
   for (i in seq_along(ys)) {
-    expect_equal(extract_outcome(ys[[i]]$fixed), ys[[i]]$out)
+    expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
   }
 
   # test whole list of formulas
-  expect_equal(extract_outcome(lapply(ys, "[[", "fixed")),
+  expect_equal(extract_outcomes_list(lapply(ys, "[[", "fixed")),
                sapply(ys, "[[", "out"))
 })
 
 
+
+
+test_that("extract_lhs_varnames works with simple formulas", {
+  expect_equal(extract_lhs_varnames(y ~ x + z), "y")
+  expect_equal(extract_lhs_varnames(Surv(a, b) ~ x + z), c("a", "b"))
+  expect_equal(extract_lhs_varnames(log(x) ~ a), "x")
+  expect_equal(extract_lhs_varnames(cbind(a, b, c) ~ 1), c("a", "b", "c"))
+})
+
+
+test_that("extract_lhs_varnames handles NULL input", {
+  expect_null(extract_lhs_varnames(NULL))
+  expect_equal(extract_lhs_varnames(list(a = NULL, b = NULL)),
+               list(a = NULL, b = NULL))
+})
+
+
+test_that("extract_lhs_varnames throws error for one-sided formulas", {
+  expect_error(extract_lhs_varnames(~ x + z))
+  expect_error(extract_lhs_varnames(~ time | id))
+  expect_error(
+    extract_lhs_varnames(list(y ~ x + z, ~ time | id, Surv(a, b) ~ x + z))
+  )
+})
+
+test_that("extract_lhs_varnames throws error for non-formulas", {
+  expect_error(extract_lhs_varnames(expression( y ~ x + z)))
+  expect_error(extract_lhs_varnames("y ~ time | id"))
+  expect_error(
+    extract_lhs_varnames(list(y ~ x + z, NA, Surv(a, b) ~ x + z))
+  )
+})
+
+
+test_that("extract_lhs_varnames works with lists of formulas", {
+  expect_equal(
+    extract_lhs_varnames(list(y ~ x + z, Surv(a, b) ~ x + z)),
+    list("y", c("a", "b"))
+  )
+  expect_equal(
+    extract_lhs_varnames(list(a = y ~ x + z, NULL, b = Surv(a, b) ~ x + z)),
+    list(a = "y", NULL, b = c("a", "b"))
+  )
+})
 
 
 
@@ -63,14 +107,14 @@ test_that('extract_outcome works', {
 # remove grouping --------------------------------------------------------------
 test_that('remove_grouping works', {
   for (i in seq_along(runs)) {
-    expect_equal(remove_grouping(runs[[i]]$random), runs[[i]]$nogroup,
-                 ignore_formula_env = TRUE)
+    expect_equal(remove_grouping(runs[[i]]$random)[[1]], runs[[i]]$nogroup,
+                 ignore_formula_env = TRUE, ignore_attr = "names")
   }
 
   # test all together
   expect_equal(remove_grouping(lapply(runs, "[[", 'random')),
                lapply(runs, "[[", 'nogroup'),
-               ignore_formula_env = TRUE)
+               ignore_formula_env = TRUE, ignore_attr = "names")
 })
 
 

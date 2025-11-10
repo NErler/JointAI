@@ -726,9 +726,11 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     random <- split_formula_list(formula)$random
   }
 
-  # check if the arguments meth, n.cores or parallel are provided
-  # (no longer used)
+
+  # return an error if the deprecated arguments meth, n.cores or parallel are
+  # provided
   args <- as.list(match.call())
+
   if (!is.null(args$meth))
     errormsg("The argument %s has been replaced by the argument %s.",
              dQuote("meth"), dQuote("models"))
@@ -742,7 +744,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 
   # data pre-processing --------------------------------------------------------
-  data <- check_data(data, fixed, random, auxvars, timevar, mess)
+  data <- check_data(data, fixed, random, auxvars, timevar, mess, warn)
 
 
   # * divide matrices ----------------------------------------------------------
