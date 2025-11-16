@@ -23,7 +23,7 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
   datlvls <- get_datlvls(data, groups)
 
   # if there are multiple survival variables and some time-varying variables
-  if (length(survinfo) > 0L & any(datlvls[unlist(survinfo)] != "lvlone")) {
+  if (length(survinfo) > 0L && any(datlvls[unlist(survinfo)] != "lvlone")) {
     surv_lvls <- sapply(survinfo, function(x) {
       lvls <- datlvls[unlist(x)]
       if (length(unique(lvls)) > 1L) {
@@ -191,13 +191,11 @@ extract_outcome_data <- function(fixed, random = NULL, data,
 
   # set attribute "type" to identify survival outcomes
   for (i in seq_along(fixed)) {
-    if (survival::is.Surv(eval(parse(text = names(outnams[i])),
-      envir = data
-    ))) {
+    if (
+      survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))
+    ) {
       outcomes[[i]] <- as.data.frame.matrix(
-        eval(parse(text = names(outnams[i])),
-          envir = data
-        )
+        eval(parse(text = names(outnams[i])), envir = data)
       )
 
       if (any(is.na(outcomes[[i]]))) {
@@ -222,12 +220,18 @@ extract_outcome_data <- function(fixed, random = NULL, data,
 
       attr(fixed[[i]], "type") <- if (analysis_type == "coxph") {
         "coxph"
-      } else if (analysis_type == "JM") "JM" else "survreg"
+      } else if (analysis_type == "JM") {
+        "JM"
+      } else {
+        "survreg"
+      }
       names(fixed)[i] <- names(outnams[i])
     } else {
-      outcomes[[i]] <- split_outcome(lhs = extract_lhs_string(fixed[[i]]), data = data)
+      outcomes[[i]] <- split_outcome(
+        lhs = extract_lhs_string(fixed[[i]]),
+        data = data
+      )
       nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
-      # varlvl <- cvapply(outcomes[[i]], check_varlevel, groups = groups)
       varlvl <- get_datlvls(outcomes[[i]], groups)
 
 
@@ -273,7 +277,8 @@ extract_outcome_data <- function(fixed, random = NULL, data,
       }
       if (i == 1L) {
         attr(fixed[[i]], "type") <- if (
-          isTRUE(analysis_type %in% c("glm", "lm"))) {
+          isTRUE(analysis_type %in% c("glm", "lm"))
+        ) {
           paste(gsub("^lm$", "glm", analysis_type),
             tolower(attr(analysis_type, "family")$family),
             attr(analysis_type, "family")$link,
@@ -712,10 +717,10 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed, lp_cols) {
   }
 
   if (is.null(names(nonprop))) {
-    if (length(fixed) == 1L & inherits(nonprop, "formula")) {
+    if (length(fixed) == 1L && inherits(nonprop, "formula")) {
       nonprop <- list(nonprop)
       names(nonprop) <- names(fixed)
-    } else if (length(fixed) == 1L & inherits(nonprop, "list")) {
+    } else if (length(fixed) == 1L && inherits(nonprop, "list")) {
       names(nonprop) <- names(fixed)
     } else {
       errormsg(
@@ -729,7 +734,11 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed, lp_cols) {
 
 
   lapply(names(nonprop), function(k) {
-    propvars <- cvapply(names(unlist(unname(lp_cols[[k]]))), replace_dummy, refs)
+    propvars <- cvapply(
+      names(unlist(unname(lp_cols[[k]]))),
+      replace_dummy,
+      refs
+    )
     if (any(!all_vars(nonprop[[k]]) %in% propvars)) {
       errormsg(
         "All variables that have non-proportional effect (specified via the
@@ -752,10 +761,9 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed, lp_cols) {
     # select the correct subset of the contrast matrices
     contr_list0 <- contr_list[intersect(all_vars(fmla), names(contr_list))]
     # get the column names of the design matrix
-    nam <- colnames(model.matrix(fmla,
-      data = data,
-      contrasts.arg = contr_list0
-    ))[-1L]
+    nam <- colnames(
+      model.matrix(fmla, data = data, contrasts.arg = contr_list0)
+    )[-1L]
 
     # divide the names by the hierarchical level of the variable
     nlapply(unique(dsgn_mat_lvls), function(k) {

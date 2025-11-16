@@ -45,7 +45,6 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
                      longnorm = 2, longbin = 2, longord = 2, longcount = 2,
                      coef = NULL, misvar = NULL, nmisvar = 7,
                      seed = NULL) {
-
   oldseed <- .Random.seed
   on.exit({
     .Random.seed <<- oldseed
@@ -61,7 +60,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       norm.names <- norm
       n.norm <- length(norm.names)
     }
-    if (length(norm) == 1 & is.numeric(norm)) {
+    if (length(norm) == 1 && is.numeric(norm)) {
       n.norm <- norm
       norm.names <- paste0("Xnorm", 1:n.norm)
     }
@@ -76,7 +75,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       bin.names <- bin
       n.bin <- length(bin)
     }
-    if (length(bin) == 1 & is.numeric(bin)) {
+    if (length(bin) == 1 && is.numeric(bin)) {
       n.bin <- bin
       bin.names <- paste0("Xbin", 1:n.bin)
     }
@@ -89,14 +88,20 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       multi.names <- multi
       n.multi <- length(multi.names)
     }
-    if (length(multi) == 1 & is.numeric(multi)) {
+    if (length(multi) == 1 && is.numeric(multi)) {
       n.multi <- multi
       multi.names <- paste0("Xmulti", 1:n.multi)
     }
     ncat.multi <- sample(3:5, n.multi, replace = TRUE)
-    DF.multi <- sapply(1:n.multi,
-                       function(i) factor(sample.int(ncat.multi[i],
-                                                     N, replace = TRUE)))
+    DF.multi <- sapply(
+      1:n.multi,
+      function(i) {
+        factor(sample.int(ncat.multi[i],
+          N,
+          replace = TRUE
+        ))
+      }
+    )
     colnames(DF.multi) <- multi.names
   }
 
@@ -105,14 +110,20 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       ord.names <- ord
       n.ord <- length(ord.names)
     }
-    if (length(ord) == 1 & is.numeric(ord)) {
+    if (length(ord) == 1 && is.numeric(ord)) {
       n.ord <- ord
       ord.names <- paste0("Xord", 1:n.ord)
     }
     ncat.ord <- sample(3:5, n.ord, replace = TRUE)
-    DF.ord <- sapply(1:n.ord,
-                     function(i) factor(sample.int(ncat.ord[i],
-                                                   N, replace = TRUE)))
+    DF.ord <- sapply(
+      1:n.ord,
+      function(i) {
+        factor(sample.int(ncat.ord[i],
+          N,
+          replace = TRUE
+        ))
+      }
+    )
     colnames(DF.ord) <- ord.names
   }
 
@@ -121,13 +132,14 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       count.names <- count
       n.count <- length(count.names)
     }
-    if (length(count) == 1 & is.numeric(count)) {
+    if (length(count) == 1 && is.numeric(count)) {
       n.count <- count
       count.names <- paste0("Xcount", 1:n.count)
     }
     lambda.count <- runif(n.count, 0.5, 5)
-    DF.count <- sapply(1:n.count, function(i)
-      rpois(N, lambda = lambda.count[i]))
+    DF.count <- sapply(1:n.count, function(i) {
+      rpois(N, lambda = lambda.count[i])
+    })
     colnames(DF.count) <- count.names
   }
 
@@ -140,59 +152,74 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
 
   if (is.list(longnorm)) {
     errormsg("Not yet implemented")
-
   } else {
     if (is.character(longnorm)) {
       longnorm.names <- longnorm
       n.longnorm <- length(longnorm.names)
     }
-    if (length(longnorm) == 1 & is.numeric(longnorm)) {
+    if (length(longnorm) == 1 && is.numeric(longnorm)) {
       n.longnorm <- longnorm
       longnorm.names <- paste0("Xlnorm", 1:n.longnorm)
     }
     mu.longnorm <- rnorm(n.longnorm)
     sig.longnorm <- rgamma(n.longnorm, 0.8, 2)
-    DF.longnorm <- sapply(1:n.longnorm,
-                      function(i) rnorm(nrow(DF), mu.longnorm[i],
-                                        sig.longnorm[i]))
+    DF.longnorm <- sapply(
+      1:n.longnorm,
+      function(i) {
+        rnorm(
+          nrow(DF), mu.longnorm[i],
+          sig.longnorm[i]
+        )
+      }
+    )
     colnames(DF.longnorm) <- longnorm.names
   }
 
   if (is.list(longbin)) {
     errormsg("Not yet implemented")
-
   } else {
     if (is.character(longbin)) {
       longbin.names <- longbin
       n.longbin <- length(longbin)
     }
-    if (length(longbin) == 1 & is.numeric(longbin)) {
+    if (length(longbin) == 1 && is.numeric(longbin)) {
       n.longbin <- longbin
       longbin.names <- paste0("Xlbin", 1:n.longbin)
     }
     plongbin <- runif(n.longbin)
-    DF.longbin <- sapply(1:n.longbin,
-                         function(i) factor(rbinom(nrow(DF), size = 1,
-                                                   plongbin[i])))
+    DF.longbin <- sapply(
+      1:n.longbin,
+      function(i) {
+        factor(rbinom(nrow(DF),
+          size = 1,
+          plongbin[i]
+        ))
+      }
+    )
     colnames(DF.longbin) <- longbin.names
   }
 
   if (is.list(longord)) {
     errormsg("Not yet implemented")
-
   } else {
     if (is.character(longord)) {
       longord.names <- longord
       n.longord <- length(longord.names)
     }
-    if (length(longord) == 1 & is.numeric(longord)) {
+    if (length(longord) == 1 && is.numeric(longord)) {
       n.longord <- longord
       longord.names <- paste0("Xlord", 1:n.longord)
     }
     ncat.longord <- sample(3:5, n.longord, replace = TRUE)
-    DF.longord <- sapply(1:n.longord,
-                     function(i) factor(sample.int(ncat.longord[i],
-                                                   nrow(DF), replace = TRUE)))
+    DF.longord <- sapply(
+      1:n.longord,
+      function(i) {
+        factor(sample.int(ncat.longord[i],
+          nrow(DF),
+          replace = TRUE
+        ))
+      }
+    )
     colnames(DF.longord) <- longord.names
   }
 
@@ -201,14 +228,19 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       longcount.names <- longcount
       n.longcount <- length(longcount.names)
     }
-    if (length(longcount) == 1 & is.numeric(longcount)) {
+    if (length(longcount) == 1 && is.numeric(longcount)) {
       n.longcount <- longcount
       longcount.names <- paste0("Xlcount", 1:n.longcount)
     }
     lambda.longcount <- runif(n.longcount, 0.5, 5)
-    DF.longcount <- sapply(1:n.longcount,
-                           function(i) rpois(nrow(DF),
-                                             lambda = lambda.longcount[i]))
+    DF.longcount <- sapply(
+      1:n.longcount,
+      function(i) {
+        rpois(nrow(DF),
+          lambda = lambda.longcount[i]
+        )
+      }
+    )
     colnames(DF.longcount) <- longcount.names
   }
 
@@ -219,8 +251,9 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
 
 
   # fixed effects -------------------------------------------------------------
-  fmla <- as.formula(paste("~", paste(names(DF)[names(DF) != "id"],
-                                      collapse = "+")))
+  fmla <- as.formula(
+    paste("~", paste(names(DF)[names(DF) != "id"], collapse = "+"))
+  )
 
   X <- model.matrix(fmla, DF)
   DF[, ord.names] <- lapply(DF[, ord.names], as.ordered)
@@ -232,12 +265,14 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
 
   # random effects ------------------------------------------------------------
   D <- rWishart(1, df = 2, Sigma = diag(rep(0.1, 2)))[, , 1]
-  b <- MASS::mvrnorm(N, c(0,0), Sigma = D)
+  b <- MASS::mvrnorm(N, c(0, 0), Sigma = D)
   Z <- model.matrix(~time, DF)
 
   # outcome
-  DF$y <- as.numeric(X %*% coef + rowSums(Z * b[match(DF$id, unique(DF$id))]) +
-                       rnorm(nrow(DF), 0, 0.5))
+  DF$y <- as.numeric(
+    X %*% coef + rowSums(Z * b[match(DF$id, unique(DF$id))]) +
+      rnorm(nrow(DF), 0, 0.5)
+  )
 
 
   if (is.null(misvar)) {
@@ -245,8 +280,9 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   }
   misperc <- runif(n = length(misvar), max = 0.5)
 
-  misid <- lapply(seq_len(length(misvar)),
-                  function(i) sample(unique(DF$id), size = N * misperc[i])
+  misid <- lapply(
+    seq_len(length(misvar)),
+    function(i) sample(unique(DF$id), size = N * misperc[i])
   )
 
   DF.mis <- DF
@@ -259,4 +295,3 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   }
   return(list(DF = DF, DF.mis = DF.mis))
 }
-

@@ -2,7 +2,7 @@
 test_that(
   "check_redundant_lvls throws error when grouping has only unique values",
   {
-  groups <- list(id = 1:5)
+    groups <- list(id = 1:5)
 
     expect_error(check_redundant_lvls(groups, 5))
   }
@@ -25,13 +25,11 @@ test_that("check_redundant_lvls() handles multiple grouping levels
 })
 
 
-
-
 # check_duplicate_groupings ----------------------------------------------------
 test_that("throws error when duplicate grouping levels are found", {
   groups <- list(
     group1 = c(1, 2, 1, 2),
-    group2 = c(1, 2, 1, 2)  # duplicate of group1
+    group2 = c(1, 2, 1, 2) # duplicate of group1
   )
 
   expect_error(check_duplicate_groupings(groups))
@@ -47,8 +45,7 @@ test_that("does not throw error when grouping levels are distinct", {
 })
 
 
-
-# get_groups ----
+# --- get_groups ----
 
 test_that("get_groups() returns lvlone when idvars is NULL", {
   data <- data.frame(a = 1:3, b = 4:6)
