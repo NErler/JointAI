@@ -1,6 +1,20 @@
 # other functions --------------------------------------------------------------
-#TODO: document this function
-#TODO: check this function
+
+#' Prepare list of arguments for model_imp()
+#'
+#'
+#' @param analysis_type Type of analysis to be performed.
+#' @param family Family object or character string specifying the error distribution and link function.
+#' @param formals List of formal arguments for the function.
+#' @param call The matched call as returned by `match.call()`.
+#' @param sframe An environment (typically from `sys.frame(sys.nframe())`)
+#'
+#' @returns A list of arguments prepared for `model_imp()`, including the
+#'          analysis type, family, formulas, and other relevant parameters.
+#' @keywords internal
+#'
+
+#TODO: add tests for this function and/or refactor further
 prep_arglist <- function(
   analysis_type,
   family = NULL,
@@ -8,58 +22,41 @@ prep_arglist <- function(
   call = match.call(),
   sframe = sys.frame(sys.nframe())
 ) {
-  arglist <- mget(names(formals), sframe)
-
   thiscall <- as.list(call)[-1L]
+
+  arglist <- mget(names(formals), sframe)
   arglist <- c(arglist, thiscall[!names(thiscall) %in% names(arglist)])
 
   arglist$thecall <- call
 
+  # In case the a variable (containing a formula) was passed to formula or
+  # fixed in *_imp(), overwrite the name of the variable in the original call
+  # with the actual formula
   if (inherits(arglist$thecall$formula, "name")) {
-    # arglist$thecall$formula <- eval(arglist$thecall$formula)
     arglist$thecall$formula <- arglist$formula
   }
   if (inherits(arglist$thecall$fixed, "name")) {
-    # arglist$thecall$fixed <- eval(arglist$thecall$fixed)
     arglist$thecall$fixed <- arglist$fixed
   }
 
-  if (!inherits(arglist$data, 'data.frame')) {
+  if (!inherits(arglist$data, "data.frame")) {
     errormsg(
       "Please provide a %s to the argument %s.",
-      sQuote('data.frame'),
-      dQuote('data')
+      sQuote("data.frame"),
+      dQuote("data")
     )
   }
 
-  # analysis type
   arglist$analysis_type <- analysis_type
 
-  # family
-  if (!is.null(family)) {
-    if (is.character(family)) {
-      family <- get(family, mode = "function", envir = parent.frame())
-      thefamily <- family()
-    } else if (is.function(family)) {
-      thefamily <- family()
-    } else if (inherits(family, "family")) {
-      thefamily <- family
-    }
-
-    if (
-      !thefamily$link %in%
-        c("identity", "log", "logit", "probit", "log", "cloglog", "inverse")
-    ) {
-      errormsg("%s is not an allowed link function.", dQuote(thefamily$link))
-    }
-
-    attr(arglist$analysis_type, "family") <- thefamily
-  }
+  thefamily <- resolve_family_obj(family)
+  attr(arglist$analysis_type, "family") <- thefamily
 
   # convert formulas (formula, fixed, random) to lists
-  for (arg in c('formula', 'fixed', 'random')) {
-    if (is.null(arglist[[arg]]) | is.list(arglist[[arg]])) {
-
+  for (arg in c("formula", "fixed", "random")) {
+    if (is.null(arglist[[arg]]) || is.list(arglist[[arg]])) {
+      # do nothing; otherwise NULL would be converted to a list by as.formula()
+      # below!
     } else if (is.symbol(arglist[[arg]])) {
       arglist[[arg]] <- try(eval(arglist[[arg]]), silent = TRUE)
       if (inherits(arglist[[arg]], "try-error")) {
@@ -73,6 +70,36 @@ prep_arglist <- function(
   arglist
 }
 
+
+#' Resolve family object
+#'
+#' @param family Family object, character string, or function.
+#'
+#' @returns A family object or NULL.
+#' @keywords internal
+#'
+
+resolve_family_obj <- function(family) {
+  if (is.null(family)) {
+    return(NULL)
+  }
+
+  thefamily <- if (is.character(family)) {
+    get(family, mode = "function", envir = parent.frame())()
+  } else if (is.function(family)) {
+    family()
+  } else if (inherits(family, "family")) {
+    family
+  } else {
+    errormsg("Unsupported \"family\" specification.")
+  }
+
+  allowed_links <- c("identity", "log", "logit", "probit", "cloglog", "inverse")
+  if (!thefamily$link %in% allowed_links) {
+    errormsg("%s is not an allowed link function.", dQuote(thefamily$link))
+  }
+  return(thefamily)
+}
 
 #TODO: document this function
 #TODO: check this function

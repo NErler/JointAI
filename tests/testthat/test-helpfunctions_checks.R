@@ -88,36 +88,48 @@ test_that("returns input unchanged if not converted", {
 })
 
 
-
 # compare_data_structure ------------------------------------------------------
 test_that("detects class changes between data.frames", {
   df1 <- data.frame(a = 1:3, b = factor(c("x", "y", "x")))
   df2 <- data.frame(a = as.character(1:3), b = factor(c("x", "y", "x")))
 
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = paste0("The variable\\(s\\) ", dQuote("a"),
-                                 " was/were changed to ", dQuote("character")))
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = paste0(
+      "The variable\\(s\\) ",
+      dQuote("a"),
+      " was/were changed to ",
+      dQuote("character")
+    )
+  )
 })
 
 test_that("detects level changes in factor variables", {
   df1 <- data.frame(a = factor(c("x", "y", "x")))
   df2 <- data.frame(a = factor(c("x", "y", "z"), levels = c("x", "y", "z")))
 
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = "The levels of the variable")
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = "The levels of the variable"
+  )
 })
 
 test_that("detects both class and level changes", {
   df1 <- data.frame(a = 1:3, b = factor(c("x", "y", "x")))
-  df2 <- data.frame(a = as.character(1:3), b = factor(c("x", "y", "z"),
-                                                      levels = c("x", "y", "z")))
+  df2 <- data.frame(
+    a = as.character(1:3),
+    b = factor(c("x", "y", "z"), levels = c("x", "y", "z"))
+  )
 
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = "The variable\\(s\\)")
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = "The levels of the variable")
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = "The variable\\(s\\)"
+  )
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = "The levels of the variable"
+  )
 })
-
 
 
 test_that("no message when data.frames are structurally identical", {
@@ -132,4 +144,42 @@ test_that("handles non-factor variables without error", {
   df2 <- data.frame(a = 1:3, b = letters[1:3])
 
   expect_silent(compare_data_structure(df1, df2))
+})
+
+
+# --- resolve_family_obj -----
+
+test_that("NULL family returns NULL", {
+  expect_null(resolve_family_obj(NULL))
+})
+
+test_that("passing a family object returns the same object", {
+  fam <- gaussian()
+  res <- resolve_family_obj(fam)
+  expect_s3_class(res, "family")
+  expect_identical(res, fam)
+})
+
+test_that("passing a family function is invoked and returns a family object", {
+  res <- resolve_family_obj(binomial)
+  expect_s3_class(res, "family")
+  expect_equal(res$family, "binomial")
+  expect_equal(res$link, "logit")
+})
+
+test_that("passing a string returns the corresponding family object", {
+  expect_equal(resolve_family_obj("poisson"), poisson())
+  expect_equal(resolve_family_obj("gaussian"), gaussian())
+})
+
+test_that("unsupported family specification throws an error", {
+  expect_error(resolve_family_obj(list(a = 1)), "Unsupported")
+  expect_error(resolve_family_obj(42))
+  expect_error(resolve_family_obj("abc"))
+})
+
+test_that("family with disallowed link triggers an error", {
+  fam <- gaussian()
+  fam$link <- "not_a_real_link"
+  expect_error(resolve_family_obj(fam), "not an allowed link function")
 })
