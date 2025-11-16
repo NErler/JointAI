@@ -19,7 +19,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                                 idvar = idvar)
 
   groups <- get_groups(idvar, data)
-  group_lvls <- colSums(!identify_level_relations(groups))
+  group_lvls <- get_grouping_levels(groups)
 
   # sort group levels and groups (so that higher levels, which contain the
   # ("Intercept") appear first in the linear predictor)
@@ -105,7 +105,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # identify levels of all variables
   # Mlvls <- apply(MX, 2, check_varlevel, groups = groups,
-  #                group_lvls = identify_level_relations(groups))
+  #                group_lvls = get_grouping_levels(groups))
   Mlvls <- get_datlvls(MX, groups)
 
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
@@ -199,11 +199,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
         covmat <- unique(Mlvls[attr(refs[[k]], "dummies")])
         # outcome matrix
         outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
-        if (colSums(!identify_level_relations(groups))[
-          gsub("M_", "", outmat)] <
-          colSums(!identify_level_relations(groups))[
-            gsub("M_", "", covmat)]) {
-
+        if (get_grouping_levels(groups)[
+          gsub("M_", "", outmat)
+        ] <
+          get_grouping_levels(groups)[
+            gsub("M_", "", covmat)
+          ]) {
           M[[unique(Mlvls[
             attr(refs[[k]], "dummies")])]][, attr(refs[[k]], "dummies")] <- NA
         }

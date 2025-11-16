@@ -7,12 +7,12 @@
 check_duplicate_groupings(groups)
 }
 \arguments{
-\item{groups}{a list of grouping information, as obtained from \code{get_groups()}}
+\item{groups}{a list of integer "id" variables}
 }
 \value{
 NULL; throws an error if duplicate grouping levels are found
 }
 \description{
-Check for duplicate grouping levels
+Used within \code{get_groups()}.
 }
 \keyword{internal}

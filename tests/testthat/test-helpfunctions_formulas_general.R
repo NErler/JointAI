@@ -379,18 +379,6 @@ test_that('extract_grouping results in error', {
 })
 
 
-# test_that('extract_grouping results in warning', {
-#   rd_warn <- list(~1,
-#                   ~a + b + c,
-#                   ~ NULL)
-#
-#   for (i in seq_along(rd_warn)) {
-#     expect_warning(extract_grouping(rd_warn[[i]]))
-#   }
-# })
-
-
-
 # all_vars ---------------------------------------------------------------------
 test_that("all_vars works", {
   expect_null(all_vars(NULL))
@@ -412,11 +400,3 @@ test_that("all_vars gives returns empty string", {
   expect_equal(all_vars(NA), character(0))
   expect_equal(all_vars(1), character(0))
 })
-
-
-
-# test_that("all_vars gives an error", {
-#   expect_error(all_vars(NA))
-#   expect_error(all_vars(1))
-#   expect_error(all_vars(list(NULL, 1, "abc", ~ b + c)))
-# })

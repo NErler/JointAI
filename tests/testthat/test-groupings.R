@@ -1,26 +1,27 @@
-
-# check_unnecessary_grouping_levels -------------------------------------------
-test_that("check_unnecessary_grouping_levels throws error when grouping level
-          has only unique values", {
+# check_redundant_lvls -------------------------------------------
+test_that(
+  "check_redundant_lvls throws error when grouping has only unique values",
+  {
   groups <- list(id = 1:5)
 
-  expect_error(check_unnecessary_grouping_levels(groups, 5))
-})
+    expect_error(check_redundant_lvls(groups, 5))
+  }
+)
 
-test_that("check_unnecessary_grouping_levels does not throw error when grouping
+test_that("check_redundant_lvls does not throw error when grouping
           levels are meaningful", {
   groups <- list(group = rep(1:2, each = 3))
 
-  expect_silent(check_unnecessary_grouping_levels(groups, length(groups$group)))
+  expect_silent(check_redundant_lvls(groups, length(groups$group)))
 })
 
-test_that("check_unnecessary_grouping_levels() handles multiple grouping levels
+test_that("check_redundant_lvls() handles multiple grouping levels
           correctly", {
   groups <- list(
     id = 1:6,
     group = rep(1:2, each = 3)
   )
-  expect_error(check_unnecessary_grouping_levels(groups, 6))
+  expect_error(check_redundant_lvls(groups, 6))
 })
 
 
@@ -85,3 +86,37 @@ test_that("get_groups() throws error for duplicate grouping levels", {
   )
 })
 
+
+# --- check_na_groupings --------
+test_that("check_na_groupings() throws error when NA values are present", {
+  groups <- list(
+    group1 = c(1, 2, NA, 2),
+    group2 = c("A", "B", "A", "B")
+  )
+
+  expect_error(check_na_groupings(groups))
+})
+
+test_that(
+  "check_na_groupings() throws error when there are NaN values in id variables",
+  {
+    groups <- list(
+      group1 = c(1, 2, NaN, 2),
+      group2 = c("A", "B", "A", "B")
+    )
+
+    expect_error(check_na_groupings(groups))
+  }
+)
+
+test_that(
+  "check_na_groupings() doesn't throw error when no NA values are present",
+  {
+    groups <- list(
+      group1 = c(1, 2, 1, 2),
+      group2 = c("A", "B", "A", "B")
+    )
+
+    expect_silent(check_na_groupings(groups))
+  }
+)

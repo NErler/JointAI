@@ -85,8 +85,9 @@ get_groups <- function(idvars, data) {
       match(data[, i], unique(data[, i]))
     })
 
-    check_unnecessary_grouping_levels(groups, nrow(data))
+    check_redundant_lvls(groups, nrow(data))
     check_duplicate_groupings(groups)
+    check_na_groupings(groups)
 
     # add lowest-level grouping "lvlone"
     groups$lvlone <- seq_len(nrow(data))
@@ -95,19 +96,21 @@ get_groups <- function(idvars, data) {
     groups <- list(lvlone = seq_len(nrow(data)))
   }
 
-  return(groups)
+  as.data.frame(groups)
 }
 
 
 
 #' Check for unnecessary grouping levels
 #'
-#' @param groups a list of grouping information, as obtained from `get_groups()`
+#' Used within `get_groups()`.
+#'
+#' @param groups a list of integer "id" variables
 #'
 #' @returns NULL; throws an error if unnecessary grouping levels are found
 #' @keywords internal
 #'
-check_unnecessary_grouping_levels <- function(groups, nrow_data) {
+check_redundant_lvls <- function(groups, nrow_data) {
   group_lengths <- ivapply(groups, function(x) length(unique(x)) == nrow_data)
 
   if (any(group_lengths)) {
@@ -121,7 +124,9 @@ check_unnecessary_grouping_levels <- function(groups, nrow_data) {
 
 #' Check for duplicate grouping levels
 #'
-#' @param groups a list of grouping information, as obtained from `get_groups()`
+#' Used within `get_groups()`.
+#'
+#' @param groups a list of integer "id" variables
 #'
 #' @returns NULL; throws an error if duplicate grouping levels are found
 #' @keywords internal
@@ -141,52 +146,81 @@ check_duplicate_groupings <- function(groups) {
 }
 
 
+#' Check for missing values in grouping variables
+#'
+#' Checks if any grouping variable contains missing values (`NA` or `NaN`) and
+#' throws an error if so. Used within `get_groups()`.
+#'
+#' @param groups a list of integer "id" variables
+#'
+#' @returns `NULL`; throws an error if missing values are found in any grouping
+#'           variable
+#' @keywords internal
+#'
+check_na_groupings <- function(groups) {
+  missing_values <- lvapply(groups, function(x) any(is.na(x) | is.nan(x)))
+
+  if (any(missing_values)) {
+    errormsg(
+      "The grouping level(s) %s contain(s) missing values.",
+      paste_and(dQuote(names(missing_values[missing_values])))
+    )
+  }
+}
 
 
 
-check_cluster <- function(x, grouping) {
-  # check if a variable varies within one cluster
-  # - x: a vector
-  # - grouping: a list of grouping information (obtained from get_groups())
-
-  attributes(x) <- NULL
-
-  lvapply(grouping, function(k) {
-    # for each level of grouping, compare the original vector with a
-    # reconstructed vector in which the first element per group is repeated
-    # for each group member
-    !identical(x[match(unique(k), k)][match(k, unique(k))],
-               x)
+#' Get grouping levels
+#'
+#' A helper function that identifies the hierarchy of grouping variables. It
+#' checks for each grouping level how many of the other grouping levels it
+#' varies within and returns the ranked order of the grouping levels.
+#'
+#' @param grouping_df a `data.frame` of grouping ("id") variables, as obtained
+#'        from `get_groups()`
+#'
+#' @returns a named integer vector identifying the grouping hierarchy, where
+#'          "1" is the level of the individual observations and the largest
+#'          number is the highest grouping level. Crossed levels will have the
+#'          same number.
+#' @keywords internal
+#'
+get_grouping_levels <- function(grouping_df) {
+  grouping_varies <- lapply(grouping_df, function(lvl) {
+    check_groups_vary_within_lvl(lvl, grouping_df)
   })
 
-  # returns a logical vector with length = length(groups) were TRUE means that
-  # the variable varies in the given level
+  lvl_hierarchy <- colSums(!do.call(rbind, grouping_varies))
+  lvl_hierarchy[order(lvl_hierarchy)]
 }
 
 
+#' Check if a grouping variable varies within another grouping variable
+#'
+#' @param lvl a vector defining a grouping level
+#' @param grouping_df a `data.frame` with where each column contains the
+#'                    grouping indices of a hierarchical level (as obtained
+#'                    by `get_groups(...)`)
+#'
+#' @returns a named logical vector indicating for each grouping variable
+#'          (column of `grouping_df`) whether it varies within the grouping
+#'          defined by `lvl`
+#' @keywords internal
 
-identify_level_relations <- function(grouping) {
-  # identify the ordering of the levels
-  # - grouping: a list (or vector) of grouping information
-  #  (obtained from get_groups())
+check_groups_vary_within_lvl <- function(lvl, grouping_df) {
+  # for each grouping (column of grouping_df), check if it varies within the
+  # grouping defined by "lvl"
+  grouping_varies <- sapply(split(grouping_df, lvl), function(sub_df) {
+    lvapply(sub_df, function(x) length(unique(x)) > 1L)
+  })
 
-  # if grouping is not yet a list, make it a list
-  if (!is.list(grouping))
-    grouping <- list(grouping)
-
-  # turn the list into a matrix, with the different levels as columns
-  g <- do.call(cbind, grouping)
-  # check if the grouping information varies within each of the clusters
-  res <- apply(g, 2L, check_cluster, grouping = grouping, simplify = FALSE)
-  res <- do.call(cbind, res)
-
-  if (!is.matrix(res))
-    res <- t(res)
-
-  # res is a matrix with a row and column per grouping level, containing
-  # TRUEs and FALSEs
-  res
+  if (ncol(grouping_df) > 1L) {
+    apply(grouping_varies, 1, any)
+  } else {
+    setNames(any(grouping_varies), colnames(grouping_df))
+  }
 }
+
 
 
 
@@ -208,59 +242,13 @@ get_datlvls <- function(data, groups) {
   })
   clus <- do.call(cbind, clus)
 
-  lvl_rel <- identify_level_relations(groups)
+  lvl_rel <- get_grouping_levels(groups_df)
 
-  k <- match(
-    data.frame(t(clus)),
-    data.frame(lvl_rel[colnames(clus), ])
-  )
-
-  k[is.na(k)] <- which.max(colSums(!lvl_rel))
-  setNames(colnames(clus)[k], rownames(clus))
+  apply(!clus[, names(lvl_rel), drop = FALSE], 1, function(k) {
+    names(lvl_rel)[max(which(k))]
+  })
 
 }
-
-
-
-# used in divide_matrices, get_modeltypes, helpfunctions_checks,
-# helpfunctions_formulas, plots, simulate_data (2020-06-09)
-check_varlevel <- function(x, groups, group_lvls = NULL) {
-  # identify the level of a variable
-  # - x: a vector
-  # - groups: a list of grouping information (obtained from get_groups())
-  # - group_lvls: the grouping level matrix
-  #               (obtained from identify_level_relations())
-
-  # if there are no groups, make a list with group name "no_levels" so that the
-  # syntax does not fail for single-level models
-  if (!is.list(groups))
-    groups <- list("no_levels" = groups)
-
-  # check the clustering of the variable
-  clus <- check_cluster(x, grouping = groups)
-
-  # clus is a logical vector, which is TRUE if x varies in a given level and
-  # FALSE when x is constant in the level
-
-
-  if (sum(!clus) > 1L) {
-    # if the variable is constant in more than one level, the exact level needs
-    # to be determined using the level structure of the grouping
-    if (is.null(group_lvls))
-      group_lvls <- identify_level_relations(groups)
-
-    names(which.max(colSums(!group_lvls[!clus, !clus, drop = FALSE])))
-  } else if (sum(!clus) == 1L) {
-    # if the variable is constant in exactly one level, that level is the
-    # level of the variable
-    names(clus)[!clus]
-  } else {
-    # if the variable varies in all levels, it is from level one
-    "lvlone"
-  }
-}
-
-
 
 
 
