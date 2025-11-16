@@ -327,7 +327,7 @@ compare_data_structure <- function(data1, data2) {
                          x1 = lapply(data1, levels),
                          x2 = lapply(data2, levels)
   )
-  level_change = Filter(isTRUE, level_change)
+  level_change <- Filter(isTRUE, level_change)
 
   if (any(class_change)) {
     msg("The variable(s) %s was/were changed to %s.",

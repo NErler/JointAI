@@ -246,7 +246,7 @@ test_that("extract_lhs returns error for one-sided formula", {
   expect_error(extract_lhs_string(~ y + z))
 })
 
-test_that("extact_lhs returns error for non-formula objects", {
+test_that("extract_lhs returns error for non-formula objects", {
   # not a formula
   expect_error(extract_lhs_string("a ~ y + z"))
   expect_error(extract_lhs_string(NA))
@@ -401,7 +401,7 @@ test_that("extract_grouping returns NULL when no grouping term", {
 })
 
 
-test_that("extract_grouping gives in error", {
+test_that("extract_grouping gives an error", {
   expect_error(extract_grouping("~ 1 | id"))
   expect_error(extract_grouping(NA))
 })
