@@ -370,7 +370,7 @@ split_formula_list <- function(formula) {
 
 
   # extract lhs string as names for the list elements
-  lhs_strings <- lapply(formula, extract_lhs_string)
+  lhs_strings <- lapply(formula_list, extract_lhs_string)
 
   # If there are non-null elements, assign lhs of each formula as name of the
   # list element

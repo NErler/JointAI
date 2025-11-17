@@ -348,7 +348,7 @@ test_that("extract_ranef_formula works", {
 })
 
 
-# split_formula_list --------------------------------------------------
+# --- split_formula_list ----------------------------------------------
 test_that("split_formula_list works", {
   expect_equal(
     split_formula_list(lapply(fmls, "[[", "fmla")),
@@ -356,6 +356,14 @@ test_that("split_formula_list works", {
       fixed = unlist(lapply(fmls, "[[", "fixed")),
       random = unlist(lapply(fmls, "[[", "random"), recursive = FALSE)
     ),
+    ignore_formula_env = TRUE
+  )
+})
+
+test_that("split_formula_list works for single formula", {
+  expect_equal(
+    split_formula_list(y ~ a + b + (1 | id)),
+    list(fixed = list(y = y ~ a + b), random = list(y = ~ (1 | id))),
     ignore_formula_env = TRUE
   )
 })
