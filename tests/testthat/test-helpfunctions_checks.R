@@ -183,3 +183,49 @@ test_that("family with disallowed link triggers an error", {
   fam$link <- "not_a_real_link"
   expect_error(resolve_family_obj(fam), "not an allowed link function")
 })
+
+
+# --- check_fixed_random -----
+test_that("returns arglist unchanged when random is provided", {
+  arg <- list(random = ~ 1 | id, fixed = NULL, formula = NULL)
+  expect_identical(check_fixed_random(arg), arg)
+})
+
+test_that("returns arglist unchanged when random is provided even if other elements exist", {
+  arg <- list(
+    random = list(~ 1 | id),
+    fixed = list(~ x + z),
+    formula = list(~y)
+  )
+  expect_identical(check_fixed_random(arg), arg)
+})
+
+
+test_that("errors when no fixed or formula structure is specified", {
+  expect_error(
+    check_fixed_random(list(fixed = NULL, formula = NULL, random = NULL))
+  )
+  expect_error(
+    check_fixed_random(list(fixed = y ~ a + b))
+  )
+  expect_error(
+    check_fixed_random(list(formula = y ~ x + z))
+  )
+})
+
+
+test_that("formula element with rd effects moves splits formula", {
+  arg <- list(formula = y ~ x + (1 | id), fixed = NULL, random = NULL)
+  res <- check_fixed_random(arg)
+
+  expect_equal(res, arg)
+})
+
+test_that("fixed element with random effects moved to formula", {
+  arg <- list(fixed = y ~ x + (1 | id), formula = NULL, random = NULL)
+  res <- check_fixed_random(arg)
+
+  expect_equal(arg$fixed, res$formula)
+  expect_null(res$random)
+  expect_null(res$fixed)
+})

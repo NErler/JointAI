@@ -114,7 +114,6 @@ resolve_family_obj <- function(family) {
 #' @returns The updated arglist.arglist
 #' @keywords internal
 #'
-#TODO: write tests for this function
 check_fixed_random <- function(arglist) {
   if (!is.null(arglist$random)) {
     return(arglist)
