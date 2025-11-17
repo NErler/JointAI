@@ -4,7 +4,8 @@
 #'
 #'
 #' @param analysis_type Type of analysis to be performed.
-#' @param family Family object or character string specifying the error distribution and link function.
+#' @param family `family` object or character string specifying the error
+#'                distribution and link function.
 #' @param formals List of formal arguments for the function.
 #' @param call The matched call as returned by `match.call()`.
 #' @param sframe An environment (typically from `sys.frame(sys.nframe())`)
@@ -14,14 +15,13 @@
 #' @keywords internal
 #'
 
-#TODO: add tests for this function and/or refactor further
+# TODO: add tests for this function and/or refactor further
 prep_arglist <- function(
-  analysis_type,
-  family = NULL,
-  formals = formals(),
-  call = match.call(),
-  sframe = sys.frame(sys.nframe())
-) {
+    analysis_type,
+    family = NULL,
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())) {
   thiscall <- as.list(call)[-1L]
 
   arglist <- mget(names(formals), sframe)
@@ -101,22 +101,25 @@ resolve_family_obj <- function(family) {
   return(thefamily)
 }
 
-#TODO: document this function
-#TODO: check this function
+#' Check wheather fixed or formula contains a random effects specification
+#'
+#' Checks if the objects provided to the `formula` and `fixed` arguments contain
+#' a random effects specification. This function is used in random effects
+#' models.
+#' In case the combined fixed and random effects formula is part of the `fixed`
+#' element, it is moved into the `formula` element.
+#'
+#' @param arglist A list containing 'fixed', 'random', and 'formula' elements.
+#'
+#' @returns The updated arglist.arglist
+#' @keywords internal
+#'
+#TODO: write tests for this function
 check_fixed_random <- function(arglist) {
-  # if there is a "fixed" effects formula, but no "random" , check if "fixed"
-  # contains the fixed and random effects
-  if (!is.null(arglist$fixed) & is.null(arglist$random)) {
-    can_split <- try(split_formula_list(arglist$fixed))
-
-    if (!inherits(can_split, 'try-error') & !is.null(can_split$random[[1]])) {
-      arglist$formula <- arglist$fixed
-      arglist$fixed <- NULL
-      arglist$random <- NULL
-    }
-  } else if (!is.null(arglist$formula) & is.null(arglist$random)) {
+  if (!is.null(arglist$random)) {
+    return(arglist)
+  } else if (!is.null(arglist$formula)) {
     can_split <- try(split_formula_list(arglist$formula))
-
     if (inherits(can_split, 'try-error')) {
       errormsg(
         "I cannot split the %s into a fixed and random effects part.",
@@ -128,14 +131,27 @@ check_fixed_random <- function(arglist) {
         dQuote("formula")
       )
     }
+  } else if (!is.null(arglist$fixed)) {
+    can_split <- try(split_formula_list(arglist$fixed), silent = TRUE)
+    if (inherits(can_split, "try-error")) {
+      errormsg(
+        "I cannot split %s into a fixed and random effects part.",
+        dQuote("fixed")
+      )
+    } else if (is.null(can_split$random[[1]])) {
+      errormsg(
+        "I cannot extract a random effects formula from %s.",
+        dQuote("fixed")
+      )
+    } else {
+      arglist$formula <- arglist$fixed
+      arglist$fixed <- NULL
+      arglist$random <- NULL
+    }
   }
 
-  if (is.null(arglist$fixed) & length(arglist$formula) == 0) {
+  if (length(arglist$fixed) == 0L && length(arglist$formula) == 0L) {
     errormsg("No fixed effects structure specified.")
-  }
-
-  if (is.null(arglist$random) & length(arglist$formula) == 0) {
-    errormsg("No random effects structure specified.")
   }
 
   arglist

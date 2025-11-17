@@ -10,16 +10,18 @@ prep_arglist(analysis_type, family = NULL, formals = formals(),
 \arguments{
 \item{analysis_type}{Type of analysis to be performed.}
 
-\item{family}{Family object or character string specifying the error distribution and link function.}
+\item{family}{\code{family} object or character string specifying the error
+distribution and link function.}
 
 \item{formals}{List of formal arguments for the function.}
 
 \item{call}{The matched call as returned by \code{match.call()}.}
 
-\item{sframe}{An environment (typically from \code{sys.frame(sys.nframe())}) from which to retrieve argument values; usually the calling frame.}
+\item{sframe}{An environment (typically from \code{sys.frame(sys.nframe())})}
 }
 \value{
-A list of arguments prepared for model_imp(), including the analysis type, family, formulas, and other relevant parameters.
+A list of arguments prepared for \code{model_imp()}, including the
+analysis type, family, formulas, and other relevant parameters.
 }
 \description{
 Prepare list of arguments for model_imp()
