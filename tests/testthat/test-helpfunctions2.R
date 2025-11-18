@@ -153,3 +153,33 @@ test_that("get_grouping_levels works for single level", {
 
   expect_equal(get_grouping_levels(grouping), c(lvlone = 1))
 })
+
+
+test_that("ordering of grouping levels for nested", {
+  groups <- data.frame(
+    lvlone = 1:10,
+    id = rep(1:5, 2),
+    cluster = rep(1, 10)
+  )
+  res <- c(lvlone = 1, id = 2, cluster = 3)
+
+  expect_equal(get_grouping_levels(groups), res)
+  expect_equal(get_grouping_levels(groups[c(3, 2, 1)]), res)
+  expect_equal(get_grouping_levels(groups[c(2, 1, 3)]), res)
+})
+
+test_that("ordering of grouping levels for crossed", {
+  grouping2 <- data.frame(
+    lvlone = 1:40,
+    id = rep(1:20, each = 2),
+    cluster = rep(c(1, 2), each = 20),
+    cluster2 = rep(c(1, 1, 2, 2), 10),
+    cluster3 = rep(1, 40)
+  )
+  res <- c(lvlone = 1, id = 2, cluster = 3, cluster2 = 3, cluster3 = 5)
+
+  expect_equal(get_grouping_levels(grouping2), res)
+  expect_equal(get_grouping_levels(grouping2[c(3, 1, 4, 2, 5)]), res)
+  expect_equal(get_grouping_levels(grouping2[c(5, 4, 3, 2, 1)]), res)
+  expect_equal(get_grouping_levels(grouping2[c(1, 3, 5, 4, 2)]), res)
+})

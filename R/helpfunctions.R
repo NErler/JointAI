@@ -191,7 +191,7 @@ get_grouping_levels <- function(grouping_df) {
   })
 
   lvl_hierarchy <- colSums(!do.call(rbind, grouping_varies))
-  lvl_hierarchy[order(lvl_hierarchy)]
+  lvl_hierarchy[order(lvl_hierarchy, names(lvl_hierarchy))]
 }
 
 
