@@ -24,10 +24,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # sort group levels and groups (so that higher levels, which contain the
   # ("Intercept") appear first in the linear predictor)
+  #TODO: remove this sorting here? Maybe better assure intercept is column 1
+  # when creating the design matrices.
   group_lvls <- sort(group_lvls, decreasing = TRUE)
   groups <- groups[names(group_lvls)]
 
-
+  #FIXME: Continue refactoring functons here!
   # in case of last-observation-carried forward: the value of the time-varying
   # covariates at the event times is filled in
   if (analysis_type == "coxph" && length(groups) > 1 && !is.null(timevar)) {

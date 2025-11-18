@@ -92,6 +92,9 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
 
 
 # used in divide_matrices (2020-06-09)
+#TODO: add documentation
+#TODO: refator this function
+#TODO: check if there is sufficient unit tests
 fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # fill in values of missing values in time-varying covariates in cox models
   # following the last-observation-carried-forward principle. If there are no
