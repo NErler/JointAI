@@ -169,7 +169,6 @@ check_na_groupings <- function(groups) {
 }
 
 
-
 #' Get grouping levels
 #'
 #' A helper function that identifies the hierarchy of grouping variables. It
@@ -222,8 +221,6 @@ check_groups_vary_within_lvl <- function(lvl, grouping_df) {
 }
 
 
-
-
 # More efficient alternative to running check_varlevel for each column of a
 # data.frame separately
 get_datlvls <- function(data, groups_df) {
@@ -245,9 +242,7 @@ get_datlvls <- function(data, groups_df) {
   apply(!clus[, names(lvl_rel), drop = FALSE], 1, function(k) {
     names(lvl_rel)[max(which(k))]
   })
-
 }
-
 
 
 # model_info helpers -----------------------------------------------------------
@@ -512,7 +507,8 @@ get_coef_names <- function(info_list) {
 
     if (!is.null(out)) {
       out$varnam_print <- cvapply(seq_along(out$outcat), function(k) {
-        switch(as.character(is.na(out$outcat[k])),
+        switch(
+          as.character(is.na(out$outcat[k])),
           "TRUE" = out$varname[k],
           "FALSE" = paste0(out$outcat[k], ": ", out$varname[k])
         )
@@ -529,13 +525,14 @@ get_coef_names <- function(info_list) {
 
 # used in get_data_list and predict (2020-06-09)
 get_matgk <- function(
-    Mlist,
-    gkx,
-    surv_lvl,
-    survinfo,
-    data,
-    rows = NULL,
-    td_cox = FALSE) {
+  Mlist,
+  gkx,
+  surv_lvl,
+  survinfo,
+  data,
+  rows = NULL,
+  td_cox = FALSE
+) {
   # get the Gauss-Kronrod quadrature version of the level one design matrix,
   # needed for a JM and coxph with time-varying covariates
   # - Mlist: the output of divide_matrices()
@@ -619,14 +616,15 @@ get_matgk <- function(
 
 # used here, in get_matgk() (2020-06-09)
 get_locf <- function(
-    fixed,
-    data,
-    idvar,
-    group_lvls,
-    groups,
-    timevar,
-    longvars,
-    gk_data) {
+  fixed,
+  data,
+  idvar,
+  group_lvls,
+  groups,
+  timevar,
+  longvars,
+  gk_data
+) {
   # Fill in the longitudinal covariate values in the Gauss-Kronrod version of
   # the design matrix for level one using last-observation-carried-forward.
   # !!! If there is no observation of the longitudinal covariate at baseline
@@ -795,8 +793,7 @@ get_row <- function(dat, i) {
 set_seed <- function(seed) {
   if (
     (R.version$major > 3L ||
-        (R.version$major == 3L && R.version$minor >= 6.0)
-    ) &&
+      (R.version$major == 3L && R.version$minor >= 6.0)) &&
       Sys.getenv("IS_CHECK") == "true"
   ) {
     suppressWarnings(set.seed(seed, sample.kind = "Rounding"))

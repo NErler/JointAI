@@ -1,12 +1,26 @@
 # split the data into matrices and obtain other relevant info for the further
 # steps
-divide_matrices <- function(data, fixed, random = NULL, analysis_type,
-                            auxvars = NULL, scale_vars = NULL, refcats = NULL,
-                            models = NULL, timevar = NULL, no_model = NULL,
-                            nonprop = NULL, rev = NULL,
-                            ppc = TRUE, shrinkage = FALSE,
-                            warn = TRUE, mess = TRUE, df_basehaz = 6,
-                            rd_vcov = rd_vcov, ...) {
+divide_matrices <- function(
+  data,
+  fixed,
+  random = NULL,
+  analysis_type,
+  auxvars = NULL,
+  scale_vars = NULL,
+  refcats = NULL,
+  models = NULL,
+  timevar = NULL,
+  no_model = NULL,
+  nonprop = NULL,
+  rev = NULL,
+  ppc = TRUE,
+  shrinkage = FALSE,
+  warn = TRUE,
+  mess = TRUE,
+  df_basehaz = 6,
+  rd_vcov = rd_vcov,
+  ...
+) {
   # id's and groups ------------------------------------------------------------
   idvar <- extract_grouping(random, warn = warn)
 
@@ -14,7 +28,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # the time variables of the longitudinal measurements and the survival times
   # are merged. The original column with survival times is retained and used in
   # the model, but the covariate value at the event time must be imputed.
-  data <- reformat_longsurvdata(data, fixed, random,
+  data <- reformat_longsurvdata(
+    data,
+    fixed,
+    random,
     timevar = timevar,
     idvar = idvar
   )
@@ -36,12 +53,14 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
   }
 
-
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
-  outcomes <- extract_outcome_data(fixed,
-    random = random, data = data,
-    analysis_type = analysis_type, warn = warn
+  outcomes <- extract_outcome_data(
+    fixed,
+    random = random,
+    data = data,
+    analysis_type = analysis_type,
+    warn = warn
   )
 
   # name the elements of fixed:
@@ -50,9 +69,13 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # * model types --------------------------------------------------------------
   models <- get_models(
-    fixed = fixed, random = random, data = data,
+    fixed = fixed,
+    random = random,
+    data = data,
     timevar = timevar,
-    auxvars = auxvars, no_model = no_model, models = models,
+    auxvars = auxvars,
+    no_model = no_model,
+    models = models,
     warn = warn
   )
 
@@ -68,7 +91,6 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     )])
   )
 
-
   # reference categories -----------------------------------------------------
   refs <- get_refs(c(fixed, auxvars), data, refcats, warn = warn)
 
@@ -81,7 +103,9 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # covariates -----------------------------------------------------------------
   # * preliminary design matrix ------------------------------------------------
   X <- model_matrix_combi(
-    fmla = c(fixed, auxvars), data = data, refs = refs,
+    fmla = c(fixed, auxvars),
+    data = data,
+    refs = refs,
     terms_list = get_terms_list(
       fmla = c(fixed, auxvars),
       data = data
@@ -106,18 +130,22 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
       as.formula(paste("~", paste0(add_to_aux, collapse = " + ")))
     }
   } else {
-    as.formula(paste0(c(deparse(auxvars, width.cutoff = 500L), add_to_aux),
+    as.formula(paste0(
+      c(deparse(auxvars, width.cutoff = 500L), add_to_aux),
       collapse = " + "
     ))
   }
 
   # design matrix with updated auxiliary variables
   terms_list <- get_terms_list(
-    fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data
+    fmla = c(fixed, unlist(remove_grouping(random)), auxvars),
+    data = data
   )
   X2 <- model_matrix_combi(
     fmla = c(fixed, unlist(remove_grouping(random)), auxvars),
-    data = data, refs = refs, terms_list = terms_list
+    data = data,
+    refs = refs,
+    terms_list = terms_list
   )
 
   # combine covariate design matrix with outcome design matrix
@@ -131,7 +159,6 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
 
-
   # identify interactions ------------------------------------------------------
   inter <- grep(":", colnames(MX), fixed = TRUE, value = TRUE)
 
@@ -144,32 +171,39 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     Mlvls[inter] <- paste0("M_", minlvl)
   }
 
-
   # Split data matrix by variable level
   # This split has to be done by names(groups) since they are sorted by level.
   # As a consequence, higher levels (which contain the "(Intercept)" will
   # appear first in the linear predictor, and also in the output. Just looks
   # nicer this way.
-  M <- sapply(paste0("M_", names(groups)), function(k) {
-    MX[, Mlvls == k, drop = FALSE]
-  }, simplify = FALSE)
+  M <- sapply(
+    paste0("M_", names(groups)),
+    function(k) {
+      MX[, Mlvls == k, drop = FALSE]
+    },
+    simplify = FALSE
+  )
 
   fcts_mis <- extract_fcts(
-    fixed = fixed, data, random = random,
-    auxvars = auxvars, complete = FALSE,
+    fixed = fixed,
+    data,
+    random = random,
+    auxvars = auxvars,
+    complete = FALSE,
     dsgn_mat_lvls = Mlvls
   )
   fcts_all <- extract_fcts(
-    fixed = fixed, data, random = random,
-    auxvars = auxvars, complete = TRUE,
+    fixed = fixed,
+    data,
+    random = random,
+    auxvars = auxvars,
+    complete = TRUE,
     dsgn_mat_lvls = Mlvls
   )
-
 
   if (any(fcts_mis$type %in% c("ns", "bs"))) {
     errormsg("Splines are currently not implemented for incomplete variables.")
   }
-
 
   # !!! Error message that will be needed when splines are implemented
   # if (any(fcts_mis$type %in% c("ns")))
@@ -177,15 +211,17 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   #           variables.
   # Please use B-splines (using %s) instead.", dQuote("bs()"))
 
-
   # * interactions -------------------------------------------------------------
   interactions <- match_interaction(inter, M)
 
   # scaling --------------------------------------------------------------------
-  scale_pars <- mapply(get_scale_pars,
-    mat = M, groups = groups[gsub("M_", "", names(M))],
+  scale_pars <- mapply(
+    get_scale_pars,
+    mat = M,
+    groups = groups[gsub("M_", "", names(M))],
     MoreArgs = list(
-      scale_vars = scale_vars, refs = refs,
+      scale_vars = scale_vars,
+      refs = refs,
       fcts_all = fcts_all,
       interactions = interactions,
       data = data
@@ -193,26 +229,31 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     SIMPLIFY = FALSE
   )
 
-
   # * set columns NA -----------------------------------------------------------
   # set interaction terms that involve incomplete variables to NA
   # (otherwise error in JAGS)
-  if (any(unlist(sapply(M, colnames)) %in% names(interactions)[
-    sapply(interactions, "attr", "has_NAs")
-  ])) {
+  if (
+    any(
+      unlist(sapply(M, colnames)) %in%
+        names(interactions)[
+          sapply(interactions, "attr", "has_NAs")
+        ]
+    )
+  ) {
     for (k in names(M)) {
-      M[[k]][, which(colnames(M[[k]]) %in% names(interactions)[
-        sapply(interactions, "attr", "has_NAs")
-      ])] <- NA
+      M[[k]][, which(
+        colnames(M[[k]]) %in%
+          names(interactions)[
+            sapply(interactions, "attr", "has_NAs")
+          ]
+      )] <- NA
     }
   }
-
 
   # set columns of trafos that need to be re-calculated in JAGS to NA
   for (k in names(M)) {
     M[[k]][, intersect(colnames(M[[k]]), fcts_mis$colname)] <- NA
   }
-
 
   # categorical variables ------------------------------------------------------
   # set dummies of incomplete variables to NA because they need to be
@@ -231,12 +272,14 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
         covmat <- unique(Mlvls[attr(refs[[k]], "dummies")])
         # outcome matrix
         outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
-        if (get_grouping_levels(groups)[
-          gsub("M_", "", outmat)
-        ] <
+        if (
           get_grouping_levels(groups)[
-            gsub("M_", "", covmat)
-          ]) {
+            gsub("M_", "", outmat)
+          ] <
+            get_grouping_levels(groups)[
+              gsub("M_", "", covmat)
+            ]
+        ) {
           M[[unique(Mlvls[
             attr(refs[[k]], "dummies")
           ])]][, attr(refs[[k]], "dummies")] <- NA
@@ -245,20 +288,29 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     }
   }
 
-
   # column names of the linear predictors for all models -----------------------
-  XXnam <- get_linpreds(fixed, random, data, models, auxvars, analysis_type,
-    warn = warn, refs = refs
+  XXnam <- get_linpreds(
+    fixed,
+    random,
+    data,
+    models,
+    auxvars,
+    analysis_type,
+    warn = warn,
+    refs = refs
   )
 
   lp_cols <- lapply(XXnam, function(XX) {
     Mcols <- if (!is.null(M)) {
-      sapply(M, function(x) c(na.omit(match(XX, colnames(x)))),
+      sapply(
+        M,
+        function(x) c(na.omit(match(XX, colnames(x)))),
         simplify = FALSE
       )
     }
 
-    cml <- sapply(names(Mcols)[sapply(Mcols, length) > 0],
+    cml <- sapply(
+      names(Mcols)[sapply(Mcols, length) > 0],
       function(i) {
         setNames(Mcols[[i]], colnames(M[[i]])[Mcols[[i]]])
       },
@@ -270,29 +322,40 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # get the linear predictor variables that have non-proportional effects in
   # cumulative logit models
-  lp_nonprop <- get_nonprop_lp(nonprop,
+  lp_nonprop <- get_nonprop_lp(
+    nonprop,
     dsgn_mat_lvls = Mlvls,
-    data, refs, fixed, lp_cols
+    data,
+    refs,
+    fixed,
+    lp_cols
   )
-
 
   # reduce the design matrices to the correct rows, according to their levels
   for (k in names(M)) {
-    M[[k]] <- M[[k]][match(
-      unique(groups[[gsub("M_", "", k)]]),
-      groups[[gsub("M_", "", k)]]
-    ), , drop = FALSE]
+    M[[k]] <- M[[k]][
+      match(
+        unique(groups[[gsub("M_", "", k)]]),
+        groups[[gsub("M_", "", k)]]
+      ),
+      ,
+      drop = FALSE
+    ]
   }
-
 
   nranef <- get_nranef(random = random, data = data)
   rd_vcov <- check_rd_vcov(rd_vcov = rd_vcov, nranef = nranef)
 
   list(
     data = data,
-    fixed = fixed, random = random, models = models,
-    M = M, Mlvls = Mlvls,
-    idvar = idvar, groups = groups, group_lvls = group_lvls,
+    fixed = fixed,
+    random = random,
+    models = models,
+    M = M,
+    Mlvls = Mlvls,
+    idvar = idvar,
+    groups = groups,
+    group_lvls = group_lvls,
     N = sapply(groups, function(x) length(unique(x))),
     timevar = timevar,
     auxvars = auxvars,
@@ -301,7 +364,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     lp_nonprop = lp_nonprop,
     rev = rev,
     interactions = interactions,
-    trafos = fcts_mis, fcts_all = fcts_all,
+    trafos = fcts_mis,
+    fcts_all = fcts_all,
     ppc = ppc,
     shrinkage = shrinkage,
     df_basehaz = df_basehaz,
@@ -321,7 +385,9 @@ get_Mlist <- function(object) {
   if (!(inherits(object, "JointAI") || inherits(object, "JointAI_errored"))) {
     errormsg(
       "%s must be of class %s or %s.",
-      dQuote("object"), dQuote("JointAI"), dQuote("JointAI_errored")
+      dQuote("object"),
+      dQuote("JointAI"),
+      dQuote("JointAI_errored")
     )
   }
 
