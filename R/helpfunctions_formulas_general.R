@@ -16,7 +16,6 @@
 #' @keywords internal
 
 check_formula_list <- function(formula, convert = TRUE) {
-
   if (is.null(formula)) {
     return(NULL)
   }
@@ -36,13 +35,17 @@ check_formula_list <- function(formula, convert = TRUE) {
     null_elmt <- lvapply(formula, is.null)
 
     if (!all(fmla_elmt | null_elmt)) {
-      errormsg("At least one element of the provided object is not of class
-             %s.", dQuote("formula"))
+      errormsg(
+        "At least one element of the provided object is not of class
+             %s.",
+        dQuote("formula")
+      )
     }
   } else {
     errormsg(
       "The provided object is not of class %s nor is it a %s.",
-      dQuote("formula"), dQuote("list")
+      dQuote("formula"),
+      dQuote("list")
     )
   }
 
@@ -67,7 +70,6 @@ check_formula_list <- function(formula, convert = TRUE) {
 #'
 
 combine_formula_lists <- function(fixed, random, warn = TRUE) {
-
   # check if the input objects are lists and convert them to lists otherwise
   fixed <- check_formula_list(fixed)
   random <- check_formula_list(random)
@@ -75,23 +77,31 @@ combine_formula_lists <- function(fixed, random, warn = TRUE) {
   # check if there are any random effects formulas with names that do not
   # appear in the list of fixed effects formulas (if there any names)
   if (any(!names(random) %in% names(fixed))) {
-    errormsg("There are random effects formulas for outcomes for which no fixed
-             effects formula is specified.")
+    errormsg(
+      "There are random effects formulas for outcomes for which no fixed
+             effects formula is specified."
+    )
   }
 
   if (length(random) > length(fixed)) {
-    errormsg("There are more random effects formulas than fixed effects
-                 formulas.")
+    errormsg(
+      "There are more random effects formulas than fixed effects
+                 formulas."
+    )
   }
 
-  if ((!is.null(random) & is.null(names(random)) & length(fixed) > 1L) & warn) {
-    warnmsg("I assume that the order of the fixed and random effects formulas
-            matches each other.")
+  if (
+    (!is.null(random) && is.null(names(random)) && length(fixed) > 1L) && warn
+  ) {
+    warnmsg(
+      "I assume that the order of the fixed and random effects formulas
+            matches each other."
+    )
   }
 
   # if fixed and random have names, make sure they are in the same order by
   # sorting the elements of random
-  if (!is.null(names(fixed)) & !is.null(names(random))) {
+  if (!is.null(names(fixed)) && !is.null(names(random))) {
     random <- random[names(fixed)]
   }
   # if fixed is longer than random the previous step will have introduced NULL
@@ -106,10 +116,8 @@ combine_formula_lists <- function(fixed, random, warn = TRUE) {
   # overwrite names of random with those of fixed
   names(random) <- names(fixed)
 
-
   Map(combine_formulas, fixed, random)
 }
-
 
 
 #' Combine a fixed and random effects formula
@@ -140,9 +148,6 @@ combine_formulas <- function(fixed, random) {
 }
 
 
-
-
-
 #' Remove the left hand side of a (list of) formula(s)
 #'
 #' Internal function; used in divide_matrices, get_models and help functions
@@ -167,8 +172,6 @@ remove_lhs <- function(formula) {
     formula(delete.response(terms(formula)))
   }
 }
-
-
 
 
 #' Extract the left hand side of a formula
@@ -204,11 +207,12 @@ extract_lhs_string <- function(formula) {
   } else {
     # not sure this is ever needed... Can't come up with an example for a
     # formula that has a response and length 2.
-    errormsg("Unable to extract a response from the formula.
-             Formula is not of length 3.")
+    errormsg(
+      "Unable to extract a response from the formula.
+             Formula is not of length 3."
+    )
   }
 }
-
 
 
 #' Extract names of variables from several objects
@@ -270,13 +274,11 @@ extract_lhs_string <- function(formula) {
 # }
 
 all_vars <- function(...) {
-
   input <- as.list(match.call())[-1L]
   parent_envir <- parent.frame()
   input_list <- unlist(lapply(input, eval, envir = parent_envir))
 
   variable_list <- lapply(input_list, function(x) {
-
     if (inherits(x, "formula")) {
       all.vars(x)
     } else {
@@ -284,8 +286,10 @@ all_vars <- function(...) {
       if (!inherits(x_char, "try-error")) {
         x_char
       } else {
-        errormsg("I don't know how to extract variable names from %s.",
-                 dQuote(x))
+        errormsg(
+          "I don't know how to extract variable names from %s.",
+          dQuote(x)
+        )
       }
     }
   })
@@ -347,7 +351,6 @@ extract_ranef_formula <- function(formula) {
 }
 
 
-
 #' Split a list of formulas into fixed and random effects parts.
 #'
 #' Calls `extract_fixef_formula()` and `extract_ranef_formula()` on each
@@ -368,88 +371,24 @@ split_formula_list <- function(formula) {
   fixed <- lapply(formula_list, extract_fixef_formula)
   random <- lapply(formula_list, extract_ranef_formula)
 
-
   # extract lhs string as names for the list elements
   lhs_strings <- lapply(formula_list, extract_lhs_string)
 
   # If there are non-null elements, assign lhs of each formula as name of the
   # list element
   # Note: the "if" is needed to not assign "" names to only NULL lists
-  if (any(!sapply(fixed, is.null)))
+  if (any(!sapply(fixed, is.null))) {
     names(fixed) <- gsub("NULL", "", lhs_strings)
-  if (any(!sapply(random, is.null)))
+  }
+  if (any(!sapply(random, is.null))) {
     names(random) <- gsub("NULL", "", lhs_strings)
-
+  }
 
   list(
     fixed = fixed,
     random = random
   )
 }
-
-
-
-
-
-
-# extract_id <- function(random, warn = TRUE) {
-#   random <- check_formula_list(random)
-#
-#   ids <- lapply(random, function(x) {
-#     # match the vertical bar (...|...)
-#     rdmatch <- gregexpr(
-#       pattern = "\\([^|]*\\|[^)]*\\)",
-#       deparse(x, width.cutoff = 500L)
-#     )
-#
-#     if (any(rdmatch[[1L]] > 0L)) {
-#       # remove "(... | " from the formula
-#       rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-#                               rdmatch,
-#                               invert = FALSE
-#       ))
-#       rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
-#
-#       # extract and remove )
-#       id <- gsub(")", "", unlist(regmatches(rd, rdid, invert = TRUE)))
-#
-#       # split by + * : /
-#       id <- unique(unlist(strsplit(id[id != ""],
-#                                    split = "[[:space:]]*[+*:/][[:space:]]*"
-#       )))
-#     } else {
-#       rdmatch <- gregexpr(
-#         pattern = "[[:print:]]*\\|[ ]*",
-#         deparse(x, width.cutoff = 500L)
-#       )
-#
-#       if (any(rdmatch[[1L]] > 0L)) {
-#         # remove "... | " from the formula
-#         id <- unlist(regmatches(deparse(x, width.cutoff = 500L),
-#                                 rdmatch,
-#                                 invert = TRUE
-#         ))
-#         id <- unique(unlist(strsplit(id[id != ""],
-#                                      split = "[[:space:]]*[+*:/][[:space:]]*"
-#         )))
-#       } else {
-#         id <- NULL
-#       }
-#     }
-#     id
-#   })
-#
-#   if (is.null(unlist(ids)) & !is.null(unlist(random))) {
-#     if (warn) {
-#       warnmsg("No %s variable could be identified. I will assume that all
-#               observations are independent.", dQuote("id"))
-#     }
-#   }
-#
-#   unique(unlist(ids))
-# }
-#
-
 
 
 #' Extract grouping variables from a (list of) formula(s)

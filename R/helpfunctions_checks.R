@@ -17,11 +17,12 @@
 
 # TODO: add tests for this function and/or refactor further
 prep_arglist <- function(
-    analysis_type,
-    family = NULL,
-    formals = formals(),
-    call = match.call(),
-    sframe = sys.frame(sys.nframe())) {
+  analysis_type,
+  family = NULL,
+  formals = formals(),
+  call = match.call(),
+  sframe = sys.frame(sys.nframe())
+) {
   thiscall <- as.list(call)[-1L]
 
   arglist <- mget(names(formals), sframe)
