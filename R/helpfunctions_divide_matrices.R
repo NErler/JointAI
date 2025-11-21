@@ -314,6 +314,34 @@ extract_outcome_data <- function(
   list(fixed = fixed, outcomes = outcomes, outnams = outnams)
 }
 
+#' Convert a factor to an integer representation
+#'
+#' @param x a vector. If `x` is a factor it will be converted to integers as
+#'          described below; otherwise `x` is returned unchanged.
+#'
+#' @return An integer vector when `x` is a factor, otherwise the original `x`.
+#'
+#' @note Used in `extract_outcome_data()`.
+#' @keywords internal
+
+factor_to_integer <- function(x) {
+  if (!inherits(x, "factor")) {
+    return(x)
+  }
+
+  n_lvl <- length(levels(x))
+
+  if (n_lvl == 2L) {
+    # binary factors have values 0, 1
+    as.integer(x) - 1L
+  } else if (n_lvl > 2L) {
+    # ordinal/multinomial factors have values 1, 2, 3, ...
+    as.integer(x)
+  } else {
+    errormsg("Factor has less than two levels.")
+  }
+}
+
 
 # used in extract_outcome_data() (2020-06-10)
 split_outcome <- function(lhs, data) {
