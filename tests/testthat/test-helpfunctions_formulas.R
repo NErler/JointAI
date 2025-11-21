@@ -1,47 +1,71 @@
-
 library("JointAI")
 library("survival")
 
 
-
-
-runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
-                  nogroup = (id = ~ 1)),
-             list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id),
-                  nogroup = (id = ~ 0)),
-             list(random = NULL, ids = NULL, RHS = NULL, nogroup = NULL),
-             list(random = y ~ a + b + c, ids = NULL, RHS = list(~a + b + c),
-                  nogroup = (y ~ a + b + c)),
-             list(random = y ~ time | id, ids = 'id', RHS = list(~time | id),
-                  nogroup = (id = y ~ time)),
-             list(random = y ~ 0, ids = NULL, RHS = list(~ 0),
-                  nogroup = (y ~ -1))
+runs <- list(
+  list(
+    random = ~ 1 | id,
+    ids = 'id',
+    RHS = list(~ 1 | id),
+    nogroup = (id = ~1)
+  ),
+  list(
+    random = ~ 0 | id,
+    ids = 'id',
+    RHS = list(~ 0 | id),
+    nogroup = (id = ~0)
+  ),
+  list(random = NULL, ids = NULL, RHS = NULL, nogroup = NULL),
+  list(
+    random = y ~ a + b + c,
+    ids = NULL,
+    RHS = list(~ a + b + c),
+    nogroup = (y ~ a + b + c)
+  ),
+  list(
+    random = y ~ time | id,
+    ids = 'id',
+    RHS = list(~ time | id),
+    nogroup = (id = y ~ time)
+  ),
+  list(random = y ~ 0, ids = NULL, RHS = list(~0), nogroup = (y ~ -1))
 )
-
 
 
 # extract_outcomes_list --------------------------------------------------------
 library(splines)
-ys <- list(list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y",
-                RHS = list(~ a + b)),
-           list(fixed = y ~ 1, out = list(y = 'y'), LHS = "y", RHS = list(~1)),
-           list(fixed = Surv(a, b) ~ 1, out = list("Surv(a, b)" = c('a', 'b')),
-                LHS = "Surv(a, b)", RHS = list(~1)),
-           list(fixed = Surv(a, b, d) ~ x + z,
-                out = list("Surv(a, b, d)" = c('a', 'b', 'd')),
-                LHS = "Surv(a, b, d)", RHS = list(~ x + z)),
-           list(fixed = cbind(a, b, d) ~ x + z,
-                out = list("cbind(a, b, d)" = c('a', 'b', 'd')),
-                LHS = "cbind(a, b, d)", RHS = list(~ x + z)),
-           list(fixed = y ~ C2 +
-                  ns(C1, df = 3,
-                     Boundary.knots = quantile(C1, c(0.025, 0.975))),
-                out = list(y = 'y'), LHS = 'y',
-                RHS = list( ~ C2 +
-                              ns(C1, df = 3,
-                                 Boundary.knots = quantile(C1,
-                                                           c(0.025, 0.975)))))
-# list(fixed = y + x ~ a + b, out = c("y + x"))
+ys <- list(
+  list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y", RHS = list(~ a + b)),
+  list(fixed = y ~ 1, out = list(y = 'y'), LHS = "y", RHS = list(~1)),
+  list(
+    fixed = Surv(a, b) ~ 1,
+    out = list("Surv(a, b)" = c('a', 'b')),
+    LHS = "Surv(a, b)",
+    RHS = list(~1)
+  ),
+  list(
+    fixed = Surv(a, b, d) ~ x + z,
+    out = list("Surv(a, b, d)" = c('a', 'b', 'd')),
+    LHS = "Surv(a, b, d)",
+    RHS = list(~ x + z)
+  ),
+  list(
+    fixed = cbind(a, b, d) ~ x + z,
+    out = list("cbind(a, b, d)" = c('a', 'b', 'd')),
+    LHS = "cbind(a, b, d)",
+    RHS = list(~ x + z)
+  ),
+  list(
+    fixed = y ~ C2 +
+      ns(C1, df = 3, Boundary.knots = quantile(C1, c(0.025, 0.975))),
+    out = list(y = 'y'),
+    LHS = 'y',
+    RHS = list(
+      ~ C2 +
+        ns(C1, df = 3, Boundary.knots = quantile(C1, c(0.025, 0.975)))
+    )
+  )
+  # list(fixed = y + x ~ a + b, out = c("y + x"))
 )
 
 test_that('extract_outcomes_list works', {
@@ -50,11 +74,11 @@ test_that('extract_outcomes_list works', {
   }
 
   # test whole list of formulas
-  expect_equal(extract_outcomes_list(lapply(ys, "[[", "fixed")),
-               sapply(ys, "[[", "out"))
+  expect_equal(
+    extract_outcomes_list(lapply(ys, "[[", "fixed")),
+    sapply(ys, "[[", "out")
+  )
 })
-
-
 
 
 test_that("extract_lhs_varnames works with simple formulas", {
@@ -67,8 +91,10 @@ test_that("extract_lhs_varnames works with simple formulas", {
 
 test_that("extract_lhs_varnames handles NULL input", {
   expect_null(extract_lhs_varnames(NULL))
-  expect_equal(extract_lhs_varnames(list(a = NULL, b = NULL)),
-               list(a = NULL, b = NULL))
+  expect_equal(
+    extract_lhs_varnames(list(a = NULL, b = NULL)),
+    list(a = NULL, b = NULL)
+  )
 })
 
 
@@ -81,7 +107,7 @@ test_that("extract_lhs_varnames throws error for one-sided formulas", {
 })
 
 test_that("extract_lhs_varnames throws error for non-formulas", {
-  expect_error(extract_lhs_varnames(expression( y ~ x + z)))
+  expect_error(extract_lhs_varnames(expression(y ~ x + z)))
   expect_error(extract_lhs_varnames("y ~ time | id"))
   expect_error(
     extract_lhs_varnames(list(y ~ x + z, NA, Surv(a, b) ~ x + z))
@@ -101,56 +127,73 @@ test_that("extract_lhs_varnames works with lists of formulas", {
 })
 
 
-
-
-
 # remove grouping --------------------------------------------------------------
 test_that('remove_grouping works', {
   for (i in seq_along(runs)) {
-    expect_equal(remove_grouping(runs[[i]]$random)[[1]], runs[[i]]$nogroup,
-                 ignore_formula_env = TRUE, ignore_attr = "names")
+    expect_equal(
+      remove_grouping(runs[[i]]$random)[[1]],
+      runs[[i]]$nogroup,
+      ignore_formula_env = TRUE,
+      ignore_attr = "names"
+    )
   }
 
   # test all together
-  expect_equal(remove_grouping(lapply(runs, "[[", 'random')),
-               lapply(runs, "[[", 'nogroup'),
-               ignore_formula_env = TRUE, ignore_attr = "names")
+  expect_equal(
+    remove_grouping(lapply(runs, "[[", 'random')),
+    lapply(runs, "[[", 'nogroup'),
+    ignore_formula_env = TRUE,
+    ignore_attr = "names"
+  )
 })
-
-
 
 
 # identify_functions -----------------------------------------------------------
 library(splines)
-fmls <- list(list(formula = y ~ I(a^2) + b + log(a),
-                  fcts = list(I = "I(a^2)", log = "log(a)")),
-             list(formula = out ~ log(x) + log(y) + log(x + z) + y*z,
-                  fcts = list(log = c("log(x)", "log(y)", "log(x + z)"))),
-             list(formula = y ~ ns(a, df = 3)*exp(log(z)) + ns(b, df = 2) +
-                    I(a^2/log(x) + 23*x*z),
-                  fcts = list(ns = c("ns(a, df = 3)", "ns(b, df = 2)"),
-                              exp = "exp(log(z))",
-                              log = c("exp(log(z))",
-                                      "I(a^2/log(x) + 23 * x * z)"),
-                              I = "I(a^2/log(x) + 23 * x * z)")),
-             list(formula = log(abc) ~ xy + zb + bs(a, df = 2),
-                  fcts = list(bs = "bs(a, df = 2)")),
-             list(formula = structure(Surv(time, status) ~ (x+z+k)^3 +
-                                        plogis(m), type = 'survival'),
-                  fcts = list(plogis = "plogis(m)")),
-             list(formula = NULL, fcts = NULL)
+fmls <- list(
+  list(
+    formula = y ~ I(a^2) + b + log(a),
+    fcts = list(I = "I(a^2)", log = "log(a)")
+  ),
+  list(
+    formula = out ~ log(x) + log(y) + log(x + z) + y * z,
+    fcts = list(log = c("log(x)", "log(y)", "log(x + z)"))
+  ),
+  list(
+    formula = y ~ ns(a, df = 3) *
+      exp(log(z)) +
+      ns(b, df = 2) +
+      I(a^2 / log(x) + 23 * x * z),
+    fcts = list(
+      ns = c("ns(a, df = 3)", "ns(b, df = 2)"),
+      exp = "exp(log(z))",
+      log = c("exp(log(z))", "I(a^2/log(x) + 23 * x * z)"),
+      I = "I(a^2/log(x) + 23 * x * z)"
+    )
+  ),
+  list(
+    formula = log(abc) ~ xy + zb + bs(a, df = 2),
+    fcts = list(bs = "bs(a, df = 2)")
+  ),
+  list(
+    formula = structure(
+      Surv(time, status) ~ (x + z + k)^3 +
+        plogis(m),
+      type = 'survival'
+    ),
+    fcts = list(plogis = "plogis(m)")
+  ),
+  list(formula = NULL, fcts = NULL)
 )
 
 test_that('identify_functions works', {
   for (i in seq_along(fmls)) {
-    expect_equal(identify_functions(fmls[[i]]$formula),
-                 fmls[[i]]$fcts)
+    expect_equal(identify_functions(fmls[[i]]$formula), fmls[[i]]$fcts)
   }
 })
 
 
 # !!! test for get_varlist --------------------------------------------------
-
 
 # !!! test for get_fct_dfList ------------------------------------------------
 # funlist <- list(log = c('log(p1)', "log(C1 + p1)"),
@@ -171,13 +214,11 @@ test_that('identify_functions works', {
 #
 # get_fct_dfList(varlist, data = longDF)
 
-
 # !!! tests for extract_fcts() -----------------------------------------------
-
 
 # !!! test for split_outcome() -------------------------------------------------
 
-# extract_outcome_data() -------------------------------------------------------
+# --- extract_outcome_data() ------------------------------------------
 survout <- as.data.frame.matrix(with(longDF, Surv(c1, b1)))
 names(survout) <- c('c1', 'b1')
 
@@ -202,14 +243,24 @@ fmla <- list(
 
 test_that("extract_outcome_data works", {
   for (i in seq_along(fmla)) {
-    expect_equal(extract_outcome_data(fmla[[i]]$fixed, data = longDF,
-                                      analysis_type = "something")$outcome[[1]],
-                 fmla[[i]]$outcome)
+    expect_equal(
+      extract_outcome_data(
+        fmla[[i]]$fixed,
+        data = longDF,
+        analysis_type = "something"
+      )$outcome[[1]],
+      fmla[[i]]$outcome
+    )
   }
 
-  expect_equal(extract_outcome_data(lapply(fmla, "[[", "fixed"), data = longDF,
-                                    analysis_type = 'something')$outcome,
-               lapply(fmla, "[[", 'outcome'))
+  expect_equal(
+    extract_outcome_data(
+      lapply(fmla, "[[", "fixed"),
+      data = longDF,
+      analysis_type = 'something'
+    )$outcome,
+    lapply(fmla, "[[", 'outcome')
+  )
 })
 
 test_that("multi column outcomes give error", {
@@ -247,35 +298,41 @@ test_that("multi column outcomes give error", {
 #   options(opt)
 # })
 
-
 # outcomes_to_mat() ------------------------------------------------------------
 test_that("outcomes_to_mat works", {
   mat <- data.matrix(do.call(cbind, unname(lapply(fmla, "[[", "outcome"))))
   dimnames(mat) <- list(NULL, dimnames(mat)[[2]])
-  expect_equal(outcomes_to_mat(
-    extract_outcome_data(lapply(fmla, "[[", "fixed"),
-                         data = longDF,
-                         analysis_type = 'something')),
-    mat)
+  expect_equal(
+    outcomes_to_mat(
+      extract_outcome_data(
+        lapply(fmla, "[[", "fixed"),
+        data = longDF,
+        analysis_type = 'something'
+      )
+    ),
+    mat
+  )
 })
 
 test_that("outcomes_to_mat gives error with duplicate outcome", {
-  fmla_err <- list('C1' = list(fixed = C1 ~ C2 + B1,
-                           outcome = subset(longDF, select = "C1")),
-               'cbind(C1, B1)' = list(fixed = cbind(C1, B1) ~ M2,
-                                      outcome = subset(longDF,
-                                                       select = c("C1", "B1"))),
-               'Surv(c1, B1)' = list(fixed = Surv(c1, B1) ~ O1 + C1,
-                                     outcome = as.data.frame.matrix(
-                                       with(longDF, Surv(c1, B1))))
+  fmla_err <- list(
+    'C1' = list(fixed = C1 ~ C2 + B1, outcome = subset(longDF, select = "C1")),
+    'cbind(C1, B1)' = list(
+      fixed = cbind(C1, B1) ~ M2,
+      outcome = subset(longDF, select = c("C1", "B1"))
+    ),
+    'Surv(c1, B1)' = list(
+      fixed = Surv(c1, B1) ~ O1 + C1,
+      outcome = as.data.frame.matrix(
+        with(longDF, Surv(c1, B1))
+      )
+    )
   )
 
   expect_error(outcomes_to_mat(
-    extract_outcome_data(lapply(fmla_err,
-                                "[[", "fixed"), data = longDF)))
+    extract_outcome_data(lapply(fmla_err, "[[", "fixed"), data = longDF)
+  ))
 })
-
-
 
 #
 # outcome1 <- list(y = data.frame(y = rgamma(10, 1, 0.1)))
@@ -310,4 +367,3 @@ test_that("outcomes_to_mat gives error with duplicate outcome", {
 # prep_outcome(outcomes = outcome7)
 # prep_outcome(outcomes = outcome8)
 # prep_outcome(outcomes = outcome9)
-

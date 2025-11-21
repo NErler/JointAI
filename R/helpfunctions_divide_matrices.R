@@ -237,7 +237,7 @@ extract_outcome_data <- function(
           columns for outcome %s.",
           ncol(outcomes[[i]]),
           i
-      )
+        )
       }
       nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
       varlvl <- get_datlvls(outcomes[[i]], groups)
@@ -259,7 +259,7 @@ extract_outcome_data <- function(
     }
   }
   list(fixed = fixed, outcomes = outcomes, outnams = outnams)
-          }
+}
 
 
 #' Choose default analysis model based on outcome and data level
@@ -308,23 +308,23 @@ choose_default_model <- function(outcome, lvl, max_lvl) {
 #' @keywords internal
 paste_analysis_type <- function(analysis_type) {
   if (isTRUE(analysis_type %in% c("glm", "lm"))) {
-          paste(
-            gsub("^lm$", "glm", analysis_type),
-            tolower(attr(analysis_type, "family")$family),
-            attr(analysis_type, "family")$link,
-            sep = "_"
-          )
-        } else if (isTRUE(analysis_type %in% c("glme", "lme"))) {
-          paste(
-            gsub("^[g]*lme$", "glmm", analysis_type),
-            tolower(attr(analysis_type, "family")$family),
-            attr(analysis_type, "family")$link,
-            sep = "_"
-          )
-        } else {
-          analysis_type
-        }
-      }
+    paste(
+      gsub("^lm$", "glm", analysis_type),
+      tolower(attr(analysis_type, "family")$family),
+      attr(analysis_type, "family")$link,
+      sep = "_"
+    )
+  } else if (isTRUE(analysis_type %in% c("glme", "lme"))) {
+    paste(
+      gsub("^[g]*lme$", "glmm", analysis_type),
+      tolower(attr(analysis_type, "family")$family),
+      attr(analysis_type, "family")$link,
+      sep = "_"
+    )
+  } else {
+    analysis_type
+  }
+}
 
 #' Convert a factor to an integer representation
 #'
