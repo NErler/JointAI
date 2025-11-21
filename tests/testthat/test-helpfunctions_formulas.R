@@ -181,23 +181,23 @@ test_that('identify_functions works', {
 survout <- as.data.frame.matrix(with(longDF, Surv(c1, b1)))
 names(survout) <- c('c1', 'b1')
 
-fmla <- list('C1' = list(fixed = C1 ~ C2 + B1,
-                         outcome = data.frame(C1 = longDF$C1)),
-             'cbind(C2, B1)' = list(fixed = cbind(C2, B1) ~ M2,
-                                    outcome = data.frame(
-                                      C2 = longDF$C2,
-                                      B1 = as.numeric(longDF$B1) - 1)),
-             'Surv(c1, b1)' = list(fixed = Surv(c1, b1) ~ O1 + C1,
-                                   outcome = survout),
-             'log(p2)' = list(fixed = log(p2) ~ c1 + b1,
-                              outcome = data.frame(
-                                `log(p2)` = log(longDF$p2),
-                                check.names = FALSE)),
-             'cbind(c2, log(p1))' = list(fixed = cbind(c2, log(p1)) ~ M2,
-                                         outcome = data.frame(
-                                           c2 = longDF$c2,
-                                           'log(p1)' = log(longDF$p1),
-                                           check.names = FALSE))
+fmla <- list(
+  'C1' = list(fixed = C1 ~ C2 + B1, outcome = data.frame(C1 = longDF$C1)),
+  'Surv(c1, b1)' = list(fixed = Surv(c1, b1) ~ O1 + C1, outcome = survout),
+  'log(p2)' = list(
+    fixed = log(p2) ~ c1 + b1,
+    outcome = data.frame(
+      `log(p2)` = log(longDF$p2),
+      check.names = FALSE
+    )
+  ),
+  'I(log(p1)^2)' = list(
+    fixed = I(log(p1)^2) ~ M2,
+    outcome = data.frame(
+      'I(log(p1)^2)' = log(longDF$p1)^2,
+      check.names = FALSE
+    )
+  )
 )
 
 test_that("extract_outcome_data works", {
@@ -212,6 +212,17 @@ test_that("extract_outcome_data works", {
                lapply(fmla, "[[", 'outcome'))
 })
 
+test_that("multi column outcomes give error", {
+  expect_error(
+    extract_outcome_data(
+      fixed = cbind(C2, B1) ~ M2,
+      data = data.frame(
+        C2 = longDF$C2,
+        B1 = as.numeric(longDF$B1) - 1
+      )
+    )
+  )
+})
 # model_matrix_combi() ---------------------------------------------------------
 
 # test_that('model_matrix_combi works', {
