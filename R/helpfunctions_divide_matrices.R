@@ -215,7 +215,10 @@ extract_outcome_data <- function(
       }
 
       names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c("time", "status")]
-      outcomes[[i]] <- as.data.frame(lapply(outcomes[[i]], factor_to_integer))
+      outcomes[[i]] <- as.data.frame(
+        lapply(outcomes[[i]], factor_to_integer),
+        check.names = FALSE
+      )
 
       attr(fixed[[i]], "type") <- if (analysis_type == "coxph") {
         "coxph"
