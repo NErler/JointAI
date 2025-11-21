@@ -204,34 +204,18 @@ extract_outcome_data <- function(
 
   outcomes <- outnams <- extract_outcomes_list(fixed)
 
-  # set attribute "type" to identify survival outcomes
   for (i in seq_along(fixed)) {
     if (
       survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))
     ) {
-      outcomes[[i]] <- as.data.frame.matrix(
-        eval(parse(text = names(outnams[i])), envir = data)
-      )
+      outcomes[[i]] <- varname_to_modelframe(names(outnams[i]), data)
 
       if (any(is.na(outcomes[[i]]))) {
-        errormsg("There are invalid values in the survival time or status.")
+        errormsg("There are missing values in the survival time or status.")
       }
 
-      names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c("time", "status")]
-      nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
-      if (any(nlev > 2L)) {
-        # ordinal variables have values 1, 2, 3, ...
-        outcomes[[i]][which(nlev > 2L)] <- lapply(
-          outcomes[[i]][which(nlev > 2L)],
-          function(x) as.numeric(x)
-        )
-      } else if (any(nlev == 2L)) {
-        # binary variables have values 0, 1
-        outcomes[[i]][nlev == 2L] <- lapply(
-          outcomes[[i]][nlev == 2L],
-          function(x) as.numeric(x) - 1L
-        )
-      }
+      names(outcomes[[i]]) <- outnams[[i]]
+      outcomes[[i]] <- as.data.frame(lapply(outcomes[[i]], factor_to_integer))
 
       attr(fixed[[i]], "type") <- if (analysis_type == "coxph") {
         "coxph"
@@ -242,55 +226,88 @@ extract_outcome_data <- function(
       }
       names(fixed)[i] <- names(outnams[i])
     } else {
-      outcomes[[i]] <- split_outcome(
-        lhs = extract_lhs_string(fixed[[i]]),
-        data = data
+      outcomes[[i]] <- varname_to_modelframe(
+        extract_lhs_string(fixed[[i]]),
+        data
       )
+
+      if (ncol(outcomes[[i]]) != 1L) {
+        errormsg(
+          "I expected a one-column response, but found the response has %s
+          columns for outcome %s.",
+          ncol(outcomes[[i]]),
+          i
+      )
+      }
       nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
       varlvl <- get_datlvls(outcomes[[i]], groups)
 
-      if (any(nlev > 2L)) {
-        # ordinal variables have values 1, 2, 3, ...
-        outcomes[[i]][which(nlev > 2L)] <- lapply(
-          outcomes[[i]][which(nlev > 2L)],
-          function(x) as.numeric(x)
-        )
-        attr(fixed[[i]], "type") <- cvapply(
-          lvls[varlvl] < max(lvls),
-          function(q) {
-            switch(as.character(q), "TRUE" = "clmm", "FALSE" = "clm")
-          }
-        )
-      } else if (any(nlev == 2L)) {
-        # binary variables have values 0, 1
-        outcomes[[i]][nlev == 2L] <- lapply(
-          outcomes[[i]][nlev == 2L],
-          function(x) as.numeric(x) - 1L
-        )
-
-        attr(fixed[[i]], "type") <- cvapply(
-          lvls[varlvl] < max(lvls),
-          function(q) {
-            switch(
-              as.character(q),
-              "TRUE" = "glmm_binomial_logit",
-              "FALSE" = "glm_binomial_logit"
-            )
-          }
-        )
-      } else if (any(nlev == 0L)) {
-        # continuous variables
-        attr(fixed[[i]], "type") <- cvapply(
-          lvls[varlvl] < max(lvls),
-          function(q) {
-            switch(as.character(q), "TRUE" = "lmm", "FALSE" = "lm")
-          }
+      if (i == 1L) {
+        attr(fixed[[i]], "type") <- paste_analysis_type(analysis_type)
+      } else {
+        attr(fixed[[i]], "type") <- choose_default_model(
+          outcomes[[i]],
+          lvls[varlvl],
+          max(lvls)
         )
       }
-      if (i == 1L) {
-        attr(fixed[[i]], "type") <- if (
-          isTRUE(analysis_type %in% c("glm", "lm"))
-        ) {
+      outcomes[[i]] <- as.data.frame(
+        lapply(outcomes[[i]], factor_to_integer),
+        check.names = FALSE
+      )
+      names(fixed)[i] <- outnams[i]
+    }
+  }
+  list(fixed = fixed, outcomes = outcomes, outnams = outnams)
+          }
+
+
+#' Choose default analysis model based on outcome and data level
+#'
+#' @param outcome outcome variable
+#' @param lvl hierarchical level of the outcome variable
+#' @param max_lvl maximum hierarchical level in the data
+#' @return character string giving the default model type
+#' @keywords internal
+
+choose_default_model <- function(outcome, lvl, max_lvl) {
+  nlev <- length(levels(outcome))
+
+  if (!inherits(outcome, "factor")) {
+    if (lvl < max_lvl) {
+      "lmm"
+    } else {
+      "lm"
+    }
+  } else if (nlev == 2L) {
+    if (lvl < max_lvl) {
+      "glmm_binomial_logit"
+    } else {
+      "glm_binomial_logit"
+    }
+  } else if (inherits(outcome, "ordered")) {
+    if (lvl < max_lvl) {
+      "clmm"
+    } else {
+      "clm"
+    }
+  } else {
+    if (lvl < max_lvl) {
+      "mlogitmm"
+    } else {
+      "mlogit"
+    }
+  }
+}
+
+#' Paste analysis type with family information
+#'
+#' @param analysis_type character string, as created by the separate `*-imp()``
+#'                      functions
+#' @return character string with family and link information appended
+#' @keywords internal
+paste_analysis_type <- function(analysis_type) {
+  if (isTRUE(analysis_type %in% c("glm", "lm"))) {
           paste(
             gsub("^lm$", "glm", analysis_type),
             tolower(attr(analysis_type, "family")$family),
@@ -308,11 +325,6 @@ extract_outcome_data <- function(
           analysis_type
         }
       }
-      names(fixed)[i] <- outnams[i]
-    }
-  }
-  list(fixed = fixed, outcomes = outcomes, outnams = outnams)
-}
 
 #' Convert a factor to an integer representation
 #'
@@ -440,6 +452,24 @@ outcomes_to_mat <- function(outcomes) {
   data.matrix(as.data.frame(outlist, check.names = FALSE))
 }
 
+#' Create data.frame from variable term and data
+#'
+#' @param varname character string giving the variable name or model term
+#' @param data a data.frame containing the variables mentioned in `varname`
+#'
+#' @return a `data.frame`
+#' @keywords internal
+#TODO: add unit tests
+varname_to_modelframe <- function(varname, data) {
+  varvec <- eval(parse(text = varname), envir = data)
+  if (inherits(varvec, "Surv")) {
+    mf <- as.data.frame.matrix(varvec, check.names = FALSE)
+  } else {
+    mf <- as.data.frame(varvec, check.names = FALSE)
+    names(mf) <- varname
+  }
+  return(mf)
+}
 
 # used in divide_matrices (2020-06-09)
 prep_covoutcomes <- function(dat) {
