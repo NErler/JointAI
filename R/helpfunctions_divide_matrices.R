@@ -214,7 +214,7 @@ extract_outcome_data <- function(
         errormsg("There are missing values in the survival time or status.")
       }
 
-      names(outcomes[[i]]) <- outnams[[i]]
+      names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c("time", "status")]
       outcomes[[i]] <- as.data.frame(lapply(outcomes[[i]], factor_to_integer))
 
       attr(fixed[[i]], "type") <- if (analysis_type == "coxph") {
