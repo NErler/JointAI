@@ -221,8 +221,23 @@ check_groups_vary_within_lvl <- function(lvl, grouping_df) {
 }
 
 
-# More efficient alternative to running check_varlevel for each column of a
-# data.frame separately
+#' Determine grouping level of data
+#'
+#' For each column in a `data.frame`-like object, identify the hierarchical
+#' level as the highest grouping level from `groups_df` for which the column is
+#' identical for all members of every group.
+#'
+#' @param data a `data.frame`
+#' @param groups_df the `data.frame` of (integer) grouping vectors of length
+#'   `nrow(data)`.
+#'
+#' @return A named character vector of length `ncol(data)`. Each element is the
+#'   name of the grouping level at which the corresponding data column is
+#'   constant.
+#'
+#' @seealso `get_grouping_levels`
+#' @keywords internal
+#'
 get_datlvls <- function(data, groups_df) {
   if (!inherits(data, "data.frame")) {
     data <- as.data.frame(data)
@@ -237,6 +252,7 @@ get_datlvls <- function(data, groups_df) {
   })
   clus <- do.call(cbind, clus)
 
+  # obtain the grouping level hierarchy
   lvl_rel <- get_grouping_levels(groups_df)
 
   apply(!clus[, names(lvl_rel), drop = FALSE], 1, function(k) {
