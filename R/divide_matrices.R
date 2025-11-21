@@ -46,13 +46,6 @@ divide_matrices <- function(
   group_lvls <- sort(group_lvls, decreasing = TRUE)
   groups <- groups[names(group_lvls)]
 
-  #FIXME: Continue refactoring functons here!
-  # in case of last-observation-carried forward: the value of the time-varying
-  # covariates at the event times is filled in
-  if (analysis_type == "coxph" && length(groups) > 1 && !is.null(timevar)) {
-    data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
-  }
-
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
   outcomes <- extract_outcome_data(
@@ -66,6 +59,13 @@ divide_matrices <- function(
   # name the elements of fixed:
   fixed <- outcomes$fixed
   names(random) <- names(fixed)
+
+  #FIXME: Continue refactoring functons here!
+  # in case of last-observation-carried forward: the value of the time-varying
+  # covariates at the event times is filled in
+  if (analysis_type == "coxph" && length(groups) > 1 && !is.null(timevar)) {
+    data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
+  }
 
   # * model types --------------------------------------------------------------
   models <- get_models(
