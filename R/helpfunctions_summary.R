@@ -1,7 +1,15 @@
 # used in various output/summary functions (2020-06-11)
-prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL,
-                      subset = NULL, exclude_chains = NULL, warn = TRUE,
-                      mess = TRUE, ...) {
+prep_MCMC <- function(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  subset = NULL,
+  exclude_chains = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
   # general processing of the MCMC sample for various output functions;
   # creating a subset of the sample wrt iterations, chains and parameters
   # - object: an object of class JointAI
@@ -13,7 +21,6 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL,
   #                   excluded from the output
   # - warn: logical, should warning messages be displayed?
   # - mess: logical, should messages be displayed?
-
 
   # set start, end and thin (or use values from MCMC sample)
   if (is.null(start)) {
@@ -28,8 +35,9 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL,
     end <- min(end, end(object$MCMC))
   }
 
-  if (is.null(thin))
+  if (is.null(thin)) {
     thin <- coda::thin(object$MCMC)
+  }
 
   # obtain subset of parameters of the MCMC samples
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
@@ -41,22 +49,22 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL,
   }
 
   # restrict MCMC sample to selected iterations and chains
-  MCMC <- do.call(rbind,
-                  window(MCMC[chains],
-                         start = start,
-                         end = end,
-                         thin = thin))
+  MCMC <- do.call(
+    rbind,
+    window(MCMC[chains], start = start, end = end, thin = thin)
+  )
   return(MCMC)
 }
-
 
 
 get_D_names <- function(params, varname, lvls) {
   nams <- nlapply(lvls, function(lvl) {
     params$coef[
       lvapply(params$outcome, function(x) varname %in% x) &
-        grepl(paste0("^D[[:digit:]]*_[", varname, "_]*", lvl, "\\["),
-              params$coef)
+        grepl(
+          paste0("^D[[:digit:]]*_[", varname, "_]*", lvl, "\\["),
+          params$coef
+        )
     ]
   })
 
@@ -65,6 +73,7 @@ get_D_names <- function(params, varname, lvls) {
 
 
 #' Extract the random effects variance covariance matrix
+#'
 #' Returns the posterior mean of the variance-covariance matrix/matrices of
 #' the random effects in a fitted JointAI object.
 #'
@@ -73,11 +82,16 @@ get_D_names <- function(params, varname, lvls) {
 #'                outcomes for which the random effects variance-covariance
 #'                matrix/matrices should be returned.
 #' @export
-rd_vcov <- function(object, outcome = NULL, start = NULL, end = NULL,
-                    thin = NULL,
-                    exclude_chains = NULL, mess = TRUE, warn = TRUE) {
-
-
+rd_vcov <- function(
+  object,
+  outcome = NULL,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  exclude_chains = NULL,
+  mess = TRUE,
+  warn = TRUE
+) {
   vars <- if (is.null(outcome)) {
     names(object$coef_list)
   } else {
@@ -85,8 +99,16 @@ rd_vcov <- function(object, outcome = NULL, start = NULL, end = NULL,
   }
 
   rd_vcov_list <- nlapply(vars, function(varname) {
-    get_Dmat(object, varname, start = start, end = end, thin = thin,
-             exclude_chains = exclude_chains, mess = mess, warn = warn)
+    get_Dmat(
+      object,
+      varname,
+      start = start,
+      end = end,
+      thin = thin,
+      exclude_chains = exclude_chains,
+      mess = mess,
+      warn = warn
+    )
   })
 
   if (length(rd_vcov_list) == 1L) {
@@ -97,12 +119,18 @@ rd_vcov <- function(object, outcome = NULL, start = NULL, end = NULL,
 }
 
 
-
-
 # used in print.JointAI() (2020-06-10)
-get_Dmat <- function(object, varname, start = NULL, end = NULL, thin = NULL,
-                     exclude_chains = NULL, mess = TRUE, warn = TRUE,
-                     lvls = "all") {
+get_Dmat <- function(
+  object,
+  varname,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  exclude_chains = NULL,
+  mess = TRUE,
+  warn = TRUE,
+  lvls = "all"
+) {
   # Return the posterior mean of the random effects variance matrices in
   # matrix form (one matrix per grouping level)
   # - object: object of class JointAI
@@ -113,37 +141,42 @@ get_Dmat <- function(object, varname, start = NULL, end = NULL, thin = NULL,
     lvls <- object$Mlist$idvar
   }
 
-    MCMC <- prep_MCMC(object, start = start, end = end, thin = thin,
-                      subset = NULL, exclude_chains = exclude_chains,
-                      warn = warn, mess = mess)
+  MCMC <- prep_MCMC(
+    object,
+    start = start,
+    end = end,
+    thin = thin,
+    subset = NULL,
+    exclude_chains = exclude_chains,
+    warn = warn,
+    mess = mess
+  )
 
-    Ds <- get_D_names(parameters(object), varname = varname, lvls = lvls)
+  Ds <- get_D_names(parameters(object), varname = varname, lvls = lvls)
 
-    Dpos <- lapply(Ds, function(d) {
-      t(sapply(strsplit(gsub("[[:print:]]+\\[|\\]", "", d), ","),
-               as.numeric))
-    })
+  Dpos <- lapply(Ds, function(d) {
+    t(sapply(strsplit(gsub("[[:print:]]+\\[|\\]", "", d), ","), as.numeric))
+  })
 
-    Dmat <- nlapply(names(Dpos), function(lvl) {
-      nam <- get_rdvcov_names(object, varname, lvl)
+  Dmat <- nlapply(names(Dpos), function(lvl) {
+    nam <- get_rdvcov_names(object, varname, lvl)
 
-      m <- matrix(nrow = max(Dpos[[lvl]][, 1]),
-                  ncol = max(Dpos[[lvl]][, 2]),
-                  dimnames = list(nam$nam, nam$nam))
-      structure(m,
-                class = "Dmat",
-                structure = nam
-      )
-    })
+    m <- matrix(
+      nrow = max(Dpos[[lvl]][, 1]),
+      ncol = max(Dpos[[lvl]][, 2]),
+      dimnames = list(nam$nam, nam$nam)
+    )
+    structure(m, class = "Dmat", structure = nam)
+  })
 
-
-    for (lvl in names(Dmat)) {
-      for (k in seq_along(Ds[[lvl]])) {
-        Dmat[[lvl]][Dpos[[lvl]][k, 1],
-                    Dpos[[lvl]][k, 2]] <- mean(MCMC[, Ds[[lvl]][k]])
-      }
-      Dmat[[lvl]][is.na(Dmat[[lvl]])] <- t(Dmat[[lvl]])[is.na(Dmat[[lvl]])]
+  for (lvl in names(Dmat)) {
+    for (k in seq_along(Ds[[lvl]])) {
+      Dmat[[lvl]][Dpos[[lvl]][k, 1], Dpos[[lvl]][k, 2]] <- mean(MCMC[, Ds[[
+        lvl
+      ]][k]])
     }
+    Dmat[[lvl]][is.na(Dmat[[lvl]])] <- t(Dmat[[lvl]])[is.na(Dmat[[lvl]])]
+  }
 
   Dmat
 }
@@ -154,19 +187,23 @@ get_Dmat <- function(object, varname, start = NULL, end = NULL, thin = NULL,
 #'                   values in fixed or exponential notation, by default the
 #'                   value obtained from `getOption("scipen")`
 #' @export
-print.Dmat <- function(x, digits = getOption("digits"),
-                       scientific = getOption("scipen"), ...) {
-
-  r <- rbind(c(rep("", 2), attr(x, "structure")$variable),
-             c(rep("", 2), colnames(x)),
-             cbind(attr(x, "structure")$variable,
-                   rownames(x),
-                   unname(format(x, digits = digits,
-                                 scientific = scientific, ...))
-             )
+print.Dmat <- function(
+  x,
+  digits = getOption("digits"),
+  scientific = getOption("scipen"),
+  ...
+) {
+  r <- rbind(
+    c(rep("", 2), attr(x, "structure")$variable),
+    c(rep("", 2), colnames(x)),
+    cbind(
+      attr(x, "structure")$variable,
+      rownames(x),
+      unname(format(x, digits = digits, scientific = scientific, ...))
+    )
   )
 
-  cat(format_Dmat(r), sep = c(rep(" ",  ncol(r) - 1), "\n"))
+  cat(format_Dmat(r), sep = c(rep(" ", ncol(r) - 1), "\n"))
 }
 
 
@@ -178,31 +215,33 @@ format_Dmat <- function(r) {
       ""
     }
   })
-  matrix(nrow = nrow(r), ncol = ncol(r), data = paste0(spaces, r)  )
-
+  matrix(nrow = nrow(r), ncol = ncol(r), data = paste0(spaces, r))
 }
 
 get_rdvcov_names <- function(object, varname, lvl) {
-
-  pos <- nlapply(attr(object$info_list[[varname]]$rd_vcov[[lvl]], "ranef_index"),
-                function(nr) eval(parse(text = nr)))
+  pos <- nlapply(
+    attr(object$info_list[[varname]]$rd_vcov[[lvl]], "ranef_index"),
+    function(nr) eval(parse(text = nr))
+  )
 
   if (length(pos) > 0L) {
     nam <- nlapply(names(pos), function(v) {
       attr(object$info_list[[v]]$hc_list$hcvars[[lvl]], "z_names")
     })
     melt_list(
-      Map(function(pos, nam) {
-        cbind(pos, nam)
-      }, pos = pos, nam = nam), varname = "variable"
+      Map(
+        function(pos, nam) {
+          cbind(pos, nam)
+        },
+        pos = pos,
+        nam = nam
+      ),
+      varname = "variable"
     )
-
   } else {
     nam <- attr(object$info_list[[varname]]$hc_list$hcvars[[lvl]], "z_names")
     if (!is.null(nam)) {
-      data.frame(pos = seq_along(nam),
-                 nam = nam,
-                 variable = varname)
+      data.frame(pos = seq_along(nam), nam = nam, variable = varname)
     }
   }
 }
@@ -214,40 +253,43 @@ print_type <- function(type, family = NULL, upper = FALSE) {
   # - type: model type
   # - family: family in case of a (extended) exponential family model
 
-  a <- switch(type,
-              # lm = "Linear model",
-              glm = switch(family,
-                           gaussian = 'linear model',
-                           binomial = 'binomial model',
-                           Gamma = 'Gamma model',
-                           poisson = 'poisson model',
-                           lognorm = 'log-normal model',
-                           beta = 'beta model'
-              ),
-              # lme = "Linear mixed model",
-              glmm = switch(family,
-                            gaussian = 'linear mixed model',
-                            binomial = 'binomial mixed model',
-                            Gamma = 'Gamma mixed model',
-                            poisson = 'poisson mixed model',
-                            lognorm = 'log-normal mixed model',
-                            beta = 'beta mixed model'
-                            ),
-              # glme = 'Generalized linear mixed model',
-              coxph = 'proportional hazards model',
-              survreg = 'weibull survival model',
-              clm = 'cumulative logit model',
-              clmm = 'cumulative logit mixed model',
-              mlogit = "multinomial logit model",
-              mlogitmm = "multinomial logit mixed model",
-              JM = "joint survival and longitudinal model"
+  a <- switch(
+    type,
+    # lm = "Linear model",
+    glm = switch(
+      family,
+      gaussian = 'linear model',
+      binomial = 'binomial model',
+      Gamma = 'Gamma model',
+      poisson = 'poisson model',
+      lognorm = 'log-normal model',
+      beta = 'beta model'
+    ),
+    # lme = "Linear mixed model",
+    glmm = switch(
+      family,
+      gaussian = 'linear mixed model',
+      binomial = 'binomial mixed model',
+      Gamma = 'Gamma mixed model',
+      poisson = 'poisson mixed model',
+      lognorm = 'log-normal mixed model',
+      beta = 'beta mixed model'
+    ),
+    # glme = 'Generalized linear mixed model',
+    coxph = 'proportional hazards model',
+    survreg = 'weibull survival model',
+    clm = 'cumulative logit model',
+    clmm = 'cumulative logit mixed model',
+    mlogit = "multinomial logit model",
+    mlogitmm = "multinomial logit mixed model",
+    JM = "joint survival and longitudinal model"
   )
 
-  if (upper)
+  if (upper) {
     substr(a, 1, 1) <- toupper(substr(a, 1, 1))
+  }
   a
 }
-
 
 
 # used in summary() (2020-06-10)
@@ -257,8 +299,11 @@ get_intercepts <- function(stats, varname, lvls, rev = FALSE) {
   # - varname: name of the ordinal outcome variable
   # - lvls: levels of the ordinal factor
 
-  interc <- stats[grep(paste0("gamma_", varname), rownames(stats)), ,
-                  drop = FALSE]
+  interc <- stats[
+    grep(paste0("gamma_", varname), rownames(stats)),
+    ,
+    drop = FALSE
+  ]
   attr(interc, "rownames_orig") <- rownames(interc)
 
   if (isTRUE(rev)) {

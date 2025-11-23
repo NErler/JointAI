@@ -1,6 +1,3 @@
-
-
-
 # input:
 # - data
 # - varname = k / varname = names(random)
@@ -17,10 +14,8 @@
 #   - goes into rd slope: just beta or beta and data
 #   - directly goes into linear predictor ("Z part")
 
-
 # used in get_model1_info() (2020-06-11)
 get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
-
   # - varname: variable name (unabbreviated form) of the outcome of the current
   #            sub-model
   # - resplvl: level of the response variable of the current sub-model,
@@ -29,7 +24,6 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
   # - parelmts: vector of parameter elements used in the current sub-model
   #             (from info_list)
   # - lp: linear predictor of the current sub-model (from info_list)
-
 
   all_lvls <- Mlist$group_lvls
 
@@ -43,12 +37,16 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
   # at the appropriate levels
   newrandom <- check_random_lvls(
     Mlist$random[[varname]],
-    rel_lvls = if (Mlist$models[varname] %in% c("coxph", "survreg", "JM") &
-                   length(rel_lvls_surv) > 1L) {
+    rel_lvls = if (
+      Mlist$models[varname] %in%
+        c("coxph", "survreg", "JM") &
+        length(rel_lvls_surv) > 1L
+    ) {
       rel_lvls_surv
     } else {
       rel_lvls
-    })
+    }
+  )
 
   if (length(newrandom) > 0) {
     hc_columns <- lapply(newrandom, get_hc_columns, Mlist = Mlist)
@@ -62,11 +60,14 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
         parelmts = parelmts,
         lp = lp
       ),
-      warnings = rescale_ranefs_warning(lapply(hc_columns, attr, "incomplete"),
-                                        Mlist$scale_pars, varname))
+      warnings = rescale_ranefs_warning(
+        lapply(hc_columns, attr, "incomplete"),
+        Mlist$scale_pars,
+        varname
+      )
+    )
   }
 }
-
 
 
 #' Create warning about not being able to re-scale the random effects
@@ -86,12 +87,18 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
 #' @noRd
 #'
 rescale_ranefs_warning <- function(incompl, scale_pars, varname) {
-
   nlapply(names(incompl), function(lvl) {
-    if (any(incompl[[lvl]]) &&
-        any(!is.na(do.call(rbind, unname(
-          scale_pars
-        )))[names(incompl[[lvl]]), ])) {
+    if (
+      any(incompl[[lvl]]) &&
+        any(
+          !is.na(do.call(
+            rbind,
+            unname(
+              scale_pars
+            )
+          ))[names(incompl[[lvl]]), ]
+        )
+    ) {
       w <- warnmsg(
         "There are missing values in a variable for which a random effect
           is specified (%s). It will not be possible to re-scale the
@@ -130,20 +137,21 @@ check_random_lvls <- function(random, rel_lvls) {
   }
 
   if (is.null(random)) {
-    nlapply(rel_lvls, function(x) ~ 1)
+    nlapply(rel_lvls, function(x) ~1)
   } else {
     rd <- rd_terms_by_grouping(random)
 
     if (any(!names(rd) %in% rel_lvls)) {
-      errormsg("You have specified random effects for levels on which there
+      errormsg(
+        "You have specified random effects for levels on which there
                should not be random effects (%s).",
-               dQuote(setdiff(names(rd), rel_lvls)))
+        dQuote(setdiff(names(rd), rel_lvls))
+      )
     } else {
       rd
     }
   }
 }
-
 
 
 #' Extract terms by grouping variables from a formula
@@ -160,8 +168,9 @@ check_random_lvls <- function(random, rel_lvls) {
 #' @keywords internal
 #'
 rd_terms_by_grouping <- function(formula) {
-
-  if (is.null(formula)) return(NULL)
+  if (is.null(formula)) {
+    return(NULL)
+  }
 
   if (!inherits(formula, "formula")) {
     errormsg("Input must be a formula.")
@@ -185,11 +194,9 @@ rd_terms_by_grouping <- function(formula) {
     split(rd_terms_df, rd_terms_df$grouping_variables),
     function(k) {
       reformulate(k$variable_terms)
-    })
+    }
+  )
 }
-
-
-
 
 
 #' Create list of column numbers containing the variables involved in the random
@@ -226,8 +233,9 @@ get_hc_columns <- function(rdfmla, Mlist) {
 
   # identify if there are elements of interaction in Z
   in_z <- if (length(inters) > 0L) {
-    nlapply(z_names, function(x)
-      lapply(lapply(inters, attr, 'elements'), `%in%`, x))
+    nlapply(z_names, function(x) {
+      lapply(lapply(inters, attr, 'elements'), `%in%`, x)
+    })
   }
 
   structure(
@@ -247,11 +255,12 @@ get_hc_columns <- function(rdfmla, Mlist) {
     }),
     rd_intercept = attr(terms(rdfmla), 'intercept'),
     z_names = z_names,
-    incomplete = lvapply(Mlist$data[, all_vars(rdfmla), drop = FALSE],
-                         function(x) any(is.na(x)))
+    incomplete = lvapply(
+      Mlist$data[, all_vars(rdfmla), drop = FALSE],
+      function(x) any(is.na(x))
+    )
   )
 }
-
 
 
 #' Obtain the column names of a design matrix
@@ -263,20 +272,22 @@ get_hc_columns <- function(rdfmla, Mlist) {
 #' @noRd
 
 get_dsgnmat_names <- function(formula, data, refs) {
-
   contr_list <- lapply(refs, attr, "contr_matrix")
 
   colnames(
-    model.matrix(formula, data,
-                 contrasts.arg = contr_list[intersect(all_vars(formula),
-                                                      names(contr_list))]))
+    model.matrix(
+      formula,
+      data,
+      contrasts.arg = contr_list[intersect(
+        all_vars(formula),
+        names(contr_list)
+      )]
+    )
+  )
 }
 
 
-
-
-#' Get info on the main effects in a random slope structure
-#' for a given level and sub-model
+#' Get info on main effects in a rd slope structure for a level and sub-model
 #'
 #' @param hc_cols list of lists (one per random effect), each containing a list
 #'                with elements "main" and "interact" that contain information
@@ -322,37 +333,35 @@ get_dsgnmat_names <- function(formula, data, refs) {
 #' @keywords internal
 
 hc_rdslope_info <- function(hc_cols, parelmts) {
-
   hc_cols <- hc_cols[names(hc_cols) != "(Intercept)"]
 
   rd_slope_list <- lapply(names(hc_cols), function(var) {
-
     M_lvl <- names(hc_cols[[var]]$main)
     elmts <- parelmts[[M_lvl]]
 
     if (is.list(elmts)) {
-      data.frame(rd_effect = var,
-                 term = var,
-                 matrix = M_lvl,
-                 cols = hc_cols[[var]]$main,
-                 parelmts = NA,
-                 stringsAsFactors = FALSE
+      data.frame(
+        rd_effect = var,
+        term = var,
+        matrix = M_lvl,
+        cols = hc_cols[[var]]$main,
+        parelmts = NA,
+        stringsAsFactors = FALSE
       )
     } else {
-      data.frame(rd_effect = var,
-                 term = var,
-                 matrix = M_lvl,
-                 cols = hc_cols[[var]]$main,
-                 parelmts = ifelse(is.null(elmts[var]), NA, unname(elmts[var])),
-                 stringsAsFactors = FALSE
+      data.frame(
+        rd_effect = var,
+        term = var,
+        matrix = M_lvl,
+        cols = hc_cols[[var]]$main,
+        parelmts = ifelse(is.null(elmts[var]), NA, unname(elmts[var])),
+        stringsAsFactors = FALSE
       )
     }
   })
 
   do.call(rbind, rd_slope_list)
 }
-
-
 
 
 #' Get info on the interactions with random slopes for a given level and sub-model
@@ -401,52 +410,57 @@ hc_rdslope_info <- function(hc_cols, parelmts) {
 #' @keywords internal
 
 hc_rdslope_interact <- function(hc_cols, parelmts, lvls) {
-
   hc_cols <- hc_cols[names(hc_cols) != "(Intercept)"]
 
   rd_slope_interact_coefs <- lapply(names(hc_cols), function(var) {
-
     if (any(lvapply(parelmts, is.list))) {
-      do.call(rbind,
-              lapply(hc_cols[[var]]$interact, function(x) {
-                data.frame(rd_effect = var,
-                           term = attr(x, 'interaction'),
-                           matrix = names(x$elmts[attr(x, 'elements') != var]),
-                           cols = x$elmts[attr(x, 'elements') != var],
-                           parelmts = NA,
-                           stringsAsFactors = FALSE
-                )
-              })
+      do.call(
+        rbind,
+        lapply(hc_cols[[var]]$interact, function(x) {
+          data.frame(
+            rd_effect = var,
+            term = attr(x, 'interaction'),
+            matrix = names(x$elmts[attr(x, 'elements') != var]),
+            cols = x$elmts[attr(x, 'elements') != var],
+            parelmts = NA,
+            stringsAsFactors = FALSE
+          )
+        })
       )
     } else {
-      do.call(rbind,
-              lapply(hc_cols[[var]]$interact, function(x) {
-                mat <- names(x$elmts)[attr(x, 'elements') != var]
+      do.call(
+        rbind,
+        lapply(hc_cols[[var]]$interact, function(x) {
+          mat <- names(x$elmts)[attr(x, 'elements') != var]
 
-                if (length(mat) > 1L) {
-                  elmt <- paste0(attr(x,"elements")[attr(x, 'elements') != var],
-                                 collapse = ":")
-                  mat <- unlist(lapply(names(parelmts), function(p) {
-                    if (elmt %in% names(parelmts[[p]])) p
-                  }))
-                  col <- if (!is.null(mat)) {
-                    which(names(parelmts[[mat]]) == elmt)
-                  }
-                } else {
-                  col <- x$elmts[attr(x, 'elements') != var]
-                }
+          if (length(mat) > 1L) {
+            elmt <- paste0(
+              attr(x, "elements")[attr(x, 'elements') != var],
+              collapse = ":"
+            )
+            mat <- unlist(lapply(names(parelmts), function(p) {
+              if (elmt %in% names(parelmts[[p]])) p
+            }))
+            col <- if (!is.null(mat)) {
+              which(names(parelmts[[mat]]) == elmt)
+            }
+          } else {
+            col <- x$elmts[attr(x, 'elements') != var]
+          }
 
-                if (!is.null(mat)) {
-                  data.frame(rd_effect = var,
-                             term = attr(x, 'interaction'),
-                             matrix = mat,
-                             cols = col,
-                             parelmts = unname(parelmts[[names(x$interterm)]][
-                               attr(x, "interaction")]),
-                             stringsAsFactors = FALSE
-                  )
-                }
-              })
+          if (!is.null(mat)) {
+            data.frame(
+              rd_effect = var,
+              term = attr(x, 'interaction'),
+              matrix = mat,
+              cols = col,
+              parelmts = unname(parelmts[[names(x$interterm)]][
+                attr(x, "interaction")
+              ]),
+              stringsAsFactors = FALSE
+            )
+          }
+        })
       )
     }
   })
@@ -459,27 +473,37 @@ hc_rdslope_interact <- function(hc_cols, parelmts, lvls) {
 }
 
 # used in get_hc_info() (2020-06-11)
-orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) {
+orga_hc_parelmts <- function(
+  resplvl,
+  lvls,
+  all_lvls,
+  hc_columns,
+  parelmts,
+  lp
+) {
   # - resplvl: level of the outcome variable of the current sub-model
   # - lvls: grouping levels in the current sub-model
   # - hc_columns: obtained from get_hc_columns()
   # - parelmts: vector of parameter elements (from info_list)
   # - lp: linear predictor (from info_list)
 
-
   hc_vars <- nlapply(lvls, function(lvl) {
-
     rd_slope_coefs <- hc_rdslope_info(hc_columns[[lvl]], parelmts)
-    rd_slope_interact_coefs <- hc_rdslope_interact(hc_columns[[lvl]],
-                                                   parelmts,
-                                                   lvls)
+    rd_slope_interact_coefs <- hc_rdslope_interact(
+      hc_columns[[lvl]],
+      parelmts,
+      lvls
+    )
 
     elmts <- parelmts[[paste0("M_", lvl)]][
       !parelmts[[paste0("M_", lvl)]] %in%
-        rbind(rd_slope_coefs, rd_slope_interact_coefs)$parelmts]
+        rbind(rd_slope_coefs, rd_slope_interact_coefs)$parelmts
+    ]
 
-    rd_intercept_coefs <- if (!is.null(elmts) &
-                              attr(hc_columns[[lvl]], 'rd_intercept') == 1) {
+    rd_intercept_coefs <- if (
+      !is.null(elmts) &
+        attr(hc_columns[[lvl]], 'rd_intercept') == 1
+    ) {
       if (is.list(elmts) | length(elmts) == 0) {
         # in case of a multinomial mixed model, there should not be
         # hierarchical centring of the random intercept.
@@ -499,9 +523,10 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
     }
 
     structure(
-      list(rd_intercept_coefs = rd_intercept_coefs,
-           rd_slope_coefs = rd_slope_coefs,
-           rd_slope_interact_coefs = rd_slope_interact_coefs
+      list(
+        rd_intercept_coefs = rd_intercept_coefs,
+        rd_slope_coefs = rd_slope_coefs,
+        rd_slope_interact_coefs = rd_slope_interact_coefs
       ),
       rd_intercept = "(Intercept)" %in% names(hc_columns[[lvl]]),
       incomplete = attr(hc_columns[[lvl]], "incomplete"),
@@ -509,37 +534,40 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
     )
   })
 
-
-
   used <- lapply(nlapply(hc_vars, do.call, what = rbind), "[[", "parelmts")
 
-
   othervars <- nlapply(
-    names(all_lvls)[all_lvls <= min(all_lvls[lvls])], function(lvl) {
-
+    names(all_lvls)[all_lvls <= min(all_lvls[lvls])],
+    function(lvl) {
       other <- get_othervars_mat(lvl, parelmts, lp)
-      nonprop <- get_othervars_mat(lvl, lapply(parelmts, 'attr', 'nonprop'),
-                                   attr(lp, 'nonprop'))
+      nonprop <- get_othervars_mat(
+        lvl,
+        lapply(parelmts, 'attr', 'nonprop'),
+        attr(lp, 'nonprop')
+      )
 
-      if (!inherits(other, 'list'))
+      if (!inherits(other, 'list')) {
         other <- other[!other$parelmts %in% unlist(used), ]
+      }
 
       list(
-        other = if (all(dim(other) > 0))
-          other,
+        other = if (all(dim(other) > 0)) {
+          other
+        },
         nonprop = nonprop
       )
-    })
+    }
+  )
 
-  list(hcvars = hc_vars,
-       othervars = lapply(othervars, "[[", "other"),
-       nonprop = lapply(othervars, "[[", "nonprop")
+  list(
+    hcvars = hc_vars,
+    othervars = lapply(othervars, "[[", "other"),
+    nonprop = lapply(othervars, "[[", "nonprop")
   )
 }
 
 
 get_othervars_mat <- function(lvl, parelmts, lp) {
-
   pe <- parelmts[[paste0("M_", lvl)]]
   linpred <- lp[[paste0("M_", lvl)]]
 
@@ -550,17 +578,21 @@ get_othervars_mat <- function(lvl, parelmts, lp) {
     # predictors with separate parameters.
     # In that case: return a list of data.frames
     lapply(pe, function(p) {
-      data.frame(term = names(p),
-                 matrix = if (!is.null(linpred)) paste0("M_", lvl),
-                 cols = linpred[names(p)],
-                 parelmts = p,
-                 stringsAsFactors = FALSE)
+      data.frame(
+        term = names(p),
+        matrix = if (!is.null(linpred)) paste0("M_", lvl),
+        cols = linpred[names(p)],
+        parelmts = p,
+        stringsAsFactors = FALSE
+      )
     })
   } else {
-    data.frame(term = names(pe),
-               matrix = if (!is.null(linpred)) paste0("M_", lvl),
-               cols = linpred,
-               parelmts = pe,
-               stringsAsFactors = FALSE)
+    data.frame(
+      term = names(pe),
+      matrix = if (!is.null(linpred)) paste0("M_", lvl),
+      cols = linpred,
+      parelmts = pe,
+      stringsAsFactors = FALSE
+    )
   }
 }
