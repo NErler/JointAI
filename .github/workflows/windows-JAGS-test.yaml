@@ -13,9 +13,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download tools-jags-4.3.1 \
-            --repo $env:GITHUB_REPOSITORY \
-            --pattern "JAGS-4.3.1.exe" \
+          gh release download tools-jags-4.3.1 `
+            --repo ${env:GITHUB_REPOSITORY} `
+            --pattern "JAGS-4.3.1.exe" `
             --dir .
           if (!(Test-Path "JAGS-4.3.1.exe")) { exit 1 }
 
