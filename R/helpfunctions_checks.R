@@ -20,12 +20,20 @@ prep_arglist <- function(
   call = match.call(),
   sframe = sys.frame(sys.nframe())
 ) {
-  thiscall <- as.list(call)[-1L]
+  # collect all arguments (defaults + user-specified)
+  arglist <- merge_call_args(formals, call, sframe)
 
-  arglist <- mget(names(formals), sframe)
-  arglist <- c(arglist, thiscall[!names(thiscall) %in% names(arglist)])
+  # check that data is provided as a data.frame
+  if (!inherits(arglist$data, "data.frame")) {
+    errormsg(
+      "Please provide a %s to the argument %s.",
+      sQuote("data.frame"),
+      dQuote("data")
+    )
+  }
 
-  arglist$thecall <- call
+  # add the analysis type to the argument list
+  arglist$analysis_type <- analysis_type
 
   # In case the a variable (containing a formula) was passed to formula or
   # fixed in *_imp(), overwrite the name of the variable in the original call
@@ -37,18 +45,13 @@ prep_arglist <- function(
     arglist$thecall$fixed <- arglist$fixed
   }
 
-  if (!inherits(arglist$data, "data.frame")) {
-    errormsg(
-      "Please provide a %s to the argument %s.",
-      sQuote("data.frame"),
-      dQuote("data")
-    )
-  }
-
-  arglist$analysis_type <- analysis_type
-
+  # resolve family object
   thefamily <- resolve_family_obj(family)
   attr(arglist$analysis_type, "family") <- thefamily
+
+  # normalize formula arguments into lists of formulas
+  normalize_formula_args(arglist)
+}
 
 #' Merge call arguments with default formals
 #'
@@ -72,23 +75,42 @@ merge_call_args <- function(formals, call, sframe) {
   arglist
 }
 
+
+#' Normalize formula arguments in arglist
+#'
+#' @param arglist A list containing at least `formula`, `fixed`, and `random`
+#'                elements.
+#' @returns The updated `arglist` with formulas converted to lists.
+#' @keywords internal
+#' @note Helper function used in [JointAI::prep_arglist()].
+#'
+normalize_formula_args <- function(arglist) {
   for (arg in c("formula", "fixed", "random")) {
-    if (is.null(arglist[[arg]]) || is.list(arglist[[arg]])) {
+    val <- arglist[[arg]]
+
+    # the following is needed for lme4 type formulas; random is then an empty
+    # symbol/name which causes problems later on
+    if (missing(val)) {
+      arglist[[arg]] <- NULL
+    }
+
+    if (missing(val) || is.null(val) || is.list(val)) {
       # do nothing; otherwise NULL would be converted to a list by as.formula()
       # below!
-    } else if (is.symbol(arglist[[arg]])) {
-      arglist[[arg]] <- try(eval(arglist[[arg]]), silent = TRUE)
-      if (inherits(arglist[[arg]], "try-error")) {
+      next
+    } else if (is.symbol(val)) {
+      evaluated <- try(eval(arglist[[arg]]), silent = TRUE)
+      if (inherits(evaluated, "try-error")) {
         arglist[[arg]] <- NULL
+      } else {
+        arglist[[arg]] <- evaluated
       }
     } else {
-      arglist[[arg]] <- check_formula_list(as.formula(arglist[[arg]]))
+      arglist[[arg]] <- check_formula_list(as.formula(val))
     }
   }
-
   arglist
 }
-
 
 #' Resolve family object
 #'
