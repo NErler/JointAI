@@ -229,3 +229,93 @@ test_that("fixed element with random effects moved to formula", {
   expect_null(res$random)
   expect_null(res$fixed)
 })
+
+
+# --- merge_call_args --- --- --- --- ---
+
+test_that("merge_call_args merges defaults with additional call args", {
+  formals <- list(a = NULL, b = NULL)
+  sframe <- new.env()
+  assign("a", 1, envir = sframe)
+  assign("b", 2, envir = sframe)
+
+  call <- quote(myfun(d = 4))
+  res <- merge_call_args(formals, call, sframe)
+
+  expect_equal(res$a, 1)
+  expect_equal(res$b, 2)
+  expect_equal(res$d, 4)
+  expect_equal(res$thecall, call)
+})
+
+test_that("objects in environment not part of formals are not included", {
+  formals <- list(a = NULL, b = NULL)
+  sframe <- new.env()
+  assign("a", 1, envir = sframe)
+  assign("b", 2, envir = sframe)
+  assign("c", 3, envir = sframe)
+
+  call <- quote(myfun(a = 1, d = 4))
+  res <- merge_call_args(formals, call, sframe)
+
+  expect_equal(res$a, 1)
+  expect_equal(res$b, 2)
+  # c is in environment, but not part of formals, so should not be included
+  expect_null(res$c)
+  # 'd' is appended from the call because it's not in formals/sframe
+  expect_equal(res$d, 4)
+  expect_equal(res$thecall, call)
+})
+
+test_that("missing names required by formals in sframe produce an error", {
+  formals <- list(x = NULL)
+  sframe <- new.env()
+  call <- quote(foo())
+
+  expect_error(merge_call_args(formals, call, sframe), "not found")
+})
+
+
+# --- normalize_formula_args --- --- --- ---
+
+test_that("NULL and list arguments are left unchanged", {
+  arglist <- list(
+    formula = NULL,
+    fixed = list(as.formula("y ~ x")),
+    random = list()
+  )
+
+  res <- normalize_formula_args(arglist)
+
+  expect_null(res$formula)
+  expect_true(is.list(res$fixed))
+  expect_true(is.list(res$random))
+  expect_equal(res$fixed[[1]], as.formula("y ~ x"))
+})
+
+test_that("symbol referencing an existing object is evaluated and substituted", {
+  f_list <- list(as.formula("y ~ x + z"))
+  arglist <- list(
+    formula = f_list,
+    fixed = NULL,
+    random = NULL
+  )
+
+  res <- normalize_formula_args(arglist)
+
+  expect_true(is.list(res$formula))
+  expect_equal(res$formula, f_list)
+})
+
+
+test_that("symbol referencing a non-existing object becomes NULL", {
+  arglist <- list(
+    formula = as.symbol("this_variable_does_not_exist_12345"),
+    fixed = NULL,
+    random = NULL
+  )
+
+  res <- normalize_formula_args(arglist)
+
+  expect_null(res$formula)
+})

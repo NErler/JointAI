@@ -53,7 +53,28 @@ prep_arglist <- function(
   thefamily <- resolve_family_obj(family)
   attr(arglist$analysis_type, "family") <- thefamily
 
-  # convert formulas (formula, fixed, random) to lists
+#' Merge call arguments with default formals
+#'
+#' @param formals List of formal arguments for `*_imp()`.
+#' @param call The matched call from `*_imp()` as returned by `match.call()`.
+#' @param sframe The environment within `*_imp()`
+#'               (obtained from `sys.frame(sys.nframe())`)
+#'
+#' @returns A list of arguments combining defaults and user-specified values.
+#' @keywords internal
+#' @note Helper function for [JointAI::prep_arglist].
+#'
+merge_call_args <- function(formals, call, sframe) {
+  arglist <- mget(names(formals), sframe)
+  call_list <- as.list(call)[-1L]
+
+  arglist <- c(arglist, call_list[!names(call_list) %in% names(arglist)])
+
+  arglist$thecall <- call
+
+  arglist
+}
+
   for (arg in c("formula", "fixed", "random")) {
     if (is.null(arglist[[arg]]) || is.list(arglist[[arg]])) {
       # do nothing; otherwise NULL would be converted to a list by as.formula()
