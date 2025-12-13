@@ -87,9 +87,9 @@ get_groups <- function(idvars, data) {
       match(data[, i], unique(data[, i]))
     })
 
+    check_na_groupings(groups)
     check_redundant_lvls(groups, nrow(data))
     check_duplicate_groupings(groups)
-    check_na_groupings(groups)
 
     # add lowest-level grouping "lvlone"
     groups$lvlone <- seq_len(nrow(data))
