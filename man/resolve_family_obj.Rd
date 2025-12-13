@@ -13,6 +13,10 @@ resolve_family_obj(family)
 A family object or NULL.
 }
 \description{
-Resolve family object
+Converts a family specification (character string, function, or family
+object) to a family object.
+}
+\note{
+Helper function used in \code{\link[=prep_arglist]{prep_arglist()}}.
 }
 \keyword{internal}

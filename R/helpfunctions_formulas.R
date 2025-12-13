@@ -51,7 +51,7 @@ extract_outcomes_list <- function(fixed) {
 #'          Returns `NULL` if the input is `NULL`.
 #'
 #' @keywords internal
-#' @seealso [extract_lhs_string()]
+#' @seealso [JointAI::extract_lhs_string()]
 
 extract_lhs_varnames <- function(formula) {
   if (is.null(formula)) return(NULL)
@@ -84,7 +84,7 @@ extract_lhs_varnames <- function(formula) {
 #'
 #' @returns A list of one-sided `formula` objects without the grouping part,
 #'          split by grouping variable
-#' @seealso [remove_grouping()]
+#' @seealso [JointAI::remove_grouping()]
 #' @keywords internal
 #'
 
@@ -115,7 +115,7 @@ remove_formula_grouping <- function(formula) {
 #' @param formulas A list of `formula` objects (or `NULL`)
 #'
 #' @returns A list of `formula` objects without the grouping part
-#' @seealso [remove_formula_grouping()]
+#' @seealso [JointAI::remove_formula_grouping()]
 #'
 #' @keywords internal
 remove_grouping <- function(formulas) {

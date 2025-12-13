@@ -2,9 +2,7 @@
 % Please edit documentation in R/helpfunctions_summary.R
 \name{rd_vcov}
 \alias{rd_vcov}
-\title{Extract the random effects variance covariance matrix
-Returns the posterior mean of the variance-covariance matrix/matrices of
-the random effects in a fitted JointAI object.}
+\title{Extract the random effects variance covariance matrix}
 \usage{
 rd_vcov(object, outcome = NULL, start = NULL, end = NULL, thin = NULL,
   exclude_chains = NULL, mess = TRUE, warn = TRUE)
@@ -37,7 +35,6 @@ should be excluded}
 \code{TRUE}.}
 }
 \description{
-Extract the random effects variance covariance matrix
 Returns the posterior mean of the variance-covariance matrix/matrices of
 the random effects in a fitted JointAI object.
 }

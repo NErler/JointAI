@@ -8,7 +8,7 @@ prep_arglist(analysis_type, family = NULL, formals = formals(),
   call = match.call(), sframe = sys.frame(sys.nframe()))
 }
 \arguments{
-\item{analysis_type}{Type of analysis to be performed.}
+\item{analysis_type}{Type of analysis to be performed (from \verb{*_imp()})}
 
 \item{family}{\code{family} object or character string specifying the error
 distribution and link function.}

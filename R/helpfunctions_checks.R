@@ -1,9 +1,6 @@
-# other functions --------------------------------------------------------------
-
 #' Prepare list of arguments for model_imp()
 #'
-#'
-#' @param analysis_type Type of analysis to be performed.
+#' @param analysis_type Type of analysis to be performed (from `*_imp()`)
 #' @param family `family` object or character string specifying the error
 #'                distribution and link function.
 #' @param formals List of formal arguments for the function.
@@ -95,10 +92,14 @@ merge_call_args <- function(formals, call, sframe) {
 
 #' Resolve family object
 #'
+#' Converts a family specification (character string, function, or family
+#' object) to a family object.
+#'
 #' @param family Family object, character string, or function.
 #'
 #' @returns A family object or NULL.
 #' @keywords internal
+#' @note Helper function used in [JointAI::prep_arglist()].
 #'
 
 resolve_family_obj <- function(family) {

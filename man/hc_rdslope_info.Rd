@@ -2,8 +2,7 @@
 % Please edit documentation in R/helpfunctions_ranefs.R
 \name{hc_rdslope_info}
 \alias{hc_rdslope_info}
-\title{Get info on the main effects in a random slope structure
-for a given level and sub-model}
+\title{Get info on main effects in a rd slope structure for a level and sub-model}
 \usage{
 hc_rdslope_info(hc_cols, parelmts)
 }
@@ -29,8 +28,7 @@ and one row per (main) random effect
 }
 }
 \description{
-Get info on the main effects in a random slope structure
-for a given level and sub-model
+Get info on main effects in a rd slope structure for a level and sub-model
 }
 \details{
 Argument \code{hc_cols} should have the structure:
