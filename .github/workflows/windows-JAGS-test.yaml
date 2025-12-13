@@ -1,5 +1,5 @@
 
-name: Test JAGS Install
+name: Test JAGS Install (manual)
 
 on:
   workflow_dispatch:
@@ -10,21 +10,56 @@ jobs:
 
     steps:
       - name: Download JAGS installer from release
+        shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release download tools-jags-4.3.1 `
-            --repo ${env:GITHUB_REPOSITORY} `
+            --repo $env:GITHUB_REPOSITORY `
             --pattern "JAGS-4.3.1.exe" `
             --dir .
-          if (!(Test-Path "JAGS-4.3.1.exe")) { exit 1 }
+          if (!(Test-Path ".\JAGS-4.3.1.exe")) { throw "Installer not found" }
 
-      - name: Install JAGS silently
+      # Use Windows PowerShell (v5) host to run the installer
+      - name: Install JAGS silently (robust flags)
+        shell: powershell
         run: |
-          Start-Process -FilePath ".\JAGS-4.3.1.exe" -ArgumentList "/SILENT" -Wait
+          $installer = Join-Path $PWD "JAGS-4.3.1.exe"
+          $args = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"
+          Write-Host "Running: $installer $args"
 
-      - name: Verify JAGS
+          # Short watchdog: fail if still running after 5 minutes
+          $p = Start-Process -FilePath $installer -ArgumentList $args -PassThru
+          if (-not $p) { throw "Failed to start installer" }
+          $deadline = (Get-Date).AddMinutes(5)
+          while (-not $p.HasExited) {
+            Start-Sleep -Seconds 5
+            if (Get-Date -gt $deadline) {
+              Write-Warning "Installer exceeded 5 minutes; terminating."
+              try { Stop-Process -Id $p.Id -Force } catch {}
+              throw "JAGS installer timed out"
+            }
+          }
+          if ($p.ExitCode -ne 0) {
+            throw "Installer exited with code $($p.ExitCode)"
+          }
+
+      - name: Locate jags-terminal.exe
+        shell: powershell
         run: |
-          $exe = Get-ChildItem "C:\Program Files\JAGS" -Recurse -Filter "jags-terminal.exe" | Select-Object -First 1
-          if (!$exe) { Write-Error "JAGS not found"; exit 1 }
-          Write-Host "Found JAGS at $($exe.FullName)"
+          $exe = Get-ChildItem "C:\Program Files\JAGS" -Recurse -Filter "jags-terminal.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (!$exe) { throw "Could not find jags-terminal.exe under C:\Program Files\JAGS" }
+          Write-Host "Found JAGS terminal at: $($exe.FullName)"
+          echo "JAGS_PATH=$($exe.FullName)" >> $env:GITHUB_ENV
+
+      - name: Verify JAGS (version/banner)
+        shell: powershell
+        run: |
+          $exe = "$env:JAGS_PATH"
+          $out = & $exe --version 2>&1
+          if ([string]::IsNullOrWhiteSpace($out)) { $out = & $exe 2>&1 }
+          Write-Host "---- JAGS output ----"
+          Write-Host $out
+          Write-Host "---------------------"
+          if ($out -notmatch "JAGS" -or $out -notmatch "4\.3") {
+                       throw "Unexpected JAGS output"
