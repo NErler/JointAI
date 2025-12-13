@@ -1,0 +1,96 @@
+
+name: Test JAGS install on Windows
+
+# Manual trigger only
+on:
+  workflow_dispatch:
+
+jobs:
+  jags-install-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout (not strictly needed, but keeps logs linked to repo)
+        uses: actions/checkout@v4
+
+      - name: Download JAGS installer (4.3.1) from SourceForge CDN
+        shell: powershell
+        run: |
+          $version = "4.3.1"
+          $uri = "https://downloads.sourceforge.net/project/mcmc-jags/JAGS/4.x/Windows/JAGS-$version.exe"
+          $out = "$env:USERPROFILE\Downloads\JAGS-$version.exe"
+
+          Write-Host "Downloading JAGS $version from $uri to $out"
+          Invoke-WebRequest `
+            -Uri $uri `
+            -OutFile $out `
+            -UserAgent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36" `
+            -UseBasicParsing
+
+          if (!(Test-Path $out)) {
+            Write-Error "Download failed: $out not found."
+            exit 1
+          }
+
+      - name: Silent install JAGS
+        shell: powershell
+        run: |
+          $installer = "$env:USERPROFILE\Downloads\JAGS-4.3.1.exe"
+
+          # Common silent switches for self-extracting installers include /quiet or /silent.
+          # JAGS installer supports silent install; we attempt /SILENT first, then /VERYSILENT as fallback.
+          # (If a vendor uses different switches, /? generally shows options.)
+          # Ref: Microsoft Self-Extractor and silent-install practices.
+          # https://learn.microsoft.com/en-us/troubleshoot/windows-client/installing-updates-features-roles/command-switches-supported-by-self-extractor-package
+          # https://www.pdq.com/blog/install-silent-finding-silent-parameters/
+          $args = "/SILENT"
+          Write-Host "Running: $installer $args"
+          Start-Process -FilePath $installer -ArgumentList $args -NoNewWindow -Wait
+
+          # Basic check: JAGS installs under 'C:\Program Files\JAGS' by default
+          $root = "C:\Program Files\JAGS"
+          if (!(Test-Path $root)) {
+            Write-Warning "Default install root not found at $root; listing 'Program Files' for clues."
+            Get-ChildItem "C:\Program Files" -Directory | Out-Host
+          }
+
+      - name: Locate jags-terminal.exe
+        shell: powershell
+        run: |
+          $exe = Get-ChildItem "C:\Program Files\JAGS" -Recurse -Filter "jags-terminal.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (!$exe) {
+            Write-Error "Could not find jags-terminal.exe under 'C:\Program Files\JAGS'."
+            exit 1
+          } else {
+            Write-Host "Found JAGS terminal at: $($exe.FullName)"
+            echo "JAGS_PATH=$($exe.FullName)" >> $env:GITHUB_ENV
+          }
+
+      - name: Verify JAGS (print version)
+        shell: powershell
+        run: |
+          $exe = "$env:JAGS_PATH"
+          if (!(Test-Path $exe)) { Write-Error "Environment variable JAGS_PATH not set or path does not exist."; exit 1 }
+
+          # Many builds accept '--version' or show a banner without args.
+          # Try --version first; if it fails, run without args.
+          $versionOutput = & $exe --version 2>&1
+          if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($versionOutput)) {
+            Write-Warning "Running with --version failed; trying without arguments."
+            $versionOutput = & $exe 2>&1
+          }
+
+          Write-Host "---- JAGS output ----"
+          Write-Host $versionOutput
+          Write-Host "---------------------"
+
+          # Add a simple positive check: output must contain 'JAGS' and the expected major version.
+          if ($versionOutput -notmatch "JAGS" -or $versionOutput -notmatch "4\.3") {
+            Write-Error "Unexpected version output from JAGS terminal."
+            exit 1
+          }
+
+      - name: Summary
+        shell: powershell
+        run: |
+          Write-Host "✅ JAGS appears to be installed and callable at $env:JAGS_PATH"
