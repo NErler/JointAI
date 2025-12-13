@@ -476,6 +476,8 @@ compare_data_structure <- function(data1, data2) {
 #' @keywords internal
 #'
 check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
+  data <- as.data.frame(data)
+
   check_vars_in_data(
     names(data),
     fixed = fixed,
