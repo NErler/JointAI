@@ -13,6 +13,10 @@
 #'
 
 # TODO: add tests for this function and/or refactor further
+# TODO: add type checks for main function arguments to create more meaningful
+# error messages when arguments are (accidentally) mis-used. Example: wrong
+# closing parenthesis in list of formulas shifted the second formula to the
+# df_basehaz argument in JM_imp()
 prep_arglist <- function(
   analysis_type,
   family = NULL,
