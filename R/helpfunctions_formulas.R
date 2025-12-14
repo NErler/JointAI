@@ -1,5 +1,3 @@
-
-
 # used in divide_matrices, get_models, and helpfunctions (2020-06-09)
 extract_outcomes_list <- function(fixed) {
   # Extract the names(s) of the outcome variable(s) from (a list of) fixed
@@ -35,8 +33,6 @@ extract_outcomes_list <- function(fixed) {
 }
 
 
-
-
 #' Extract variable names from the left-hand side of a formula
 #'
 #' This internal helper function extracts variable names from the left-hand
@@ -54,7 +50,9 @@ extract_outcomes_list <- function(fixed) {
 #' @seealso [JointAI::extract_lhs_string()]
 
 extract_lhs_varnames <- function(formula) {
-  if (is.null(formula)) return(NULL)
+  if (is.null(formula)) {
+    return(NULL)
+  }
 
   # if input is list, apply this function recursively to each element
   if (inherits(formula, "list")) {
@@ -70,10 +68,6 @@ extract_lhs_varnames <- function(formula) {
 
   all.vars(formula[[2]])
 }
-
-
-
-
 
 
 #' Remove grouping part from (random effects) formula
@@ -103,8 +97,11 @@ remove_formula_grouping <- function(formula) {
     formula[[2]]
   }
 
-  reformulate(new_terms, response = response,
-              intercept = attr(terms(formula), "intercept"))
+  reformulate(
+    new_terms,
+    response = response,
+    intercept = attr(terms(formula), "intercept")
+  )
 }
 
 #' Remove grouping part from (random effects) formulas
@@ -118,7 +115,6 @@ remove_formula_grouping <- function(formula) {
 #'
 #' @keywords internal
 remove_grouping <- function(formulas) {
-
   if (is.null(formulas)) {
     return(NULL)
   }
@@ -126,9 +122,6 @@ remove_grouping <- function(formulas) {
   formulas <- check_formula_list(formulas)
   lapply(formulas, remove_formula_grouping)
 }
-
-
-
 
 
 # # used in divide_matrices, get_models, and help functions (20120-06-09)
@@ -190,7 +183,6 @@ remove_grouping <- function(formulas) {
 #   if (length(fl) == 1L) fl[[1L]] else fl
 # }
 
-
 # can probably be deleted!!!
 # combi_rd_list <- function(fmlas) {
 #   # combine a list of rhs formulas into one rhs formula
@@ -202,14 +194,17 @@ remove_grouping <- function(formulas) {
 #   ))
 # }
 
-
-
-
 # functions in formulas --------------------------------------------------------
 
 # used in divide_matrices (2020-06-10)
-extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
-                         complete = FALSE, dsgn_mat_lvls) {
+extract_fcts <- function(
+  fixed,
+  data,
+  random = NULL,
+  auxvars = NULL,
+  complete = FALSE,
+  dsgn_mat_lvls
+) {
   # create a data.frame of all functions of variables used in the linear
   # predictors of the models
   # - fixed: list of fixed effects formulas or fixed effects formula
@@ -225,8 +220,12 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
   random <- check_formula_list(random)
 
   # identify all left hand sides of the non-survival fixed effects formulas
-  lh_sides <- if (any(unlist(lapply(fixed, attr, "type")) %in%
-                      c("survreg", "coxph"))) {
+  lh_sides <- if (
+    any(
+      unlist(lapply(fixed, attr, "type")) %in%
+        c("survreg", "coxph")
+    )
+  ) {
     lapply(
       fixed[!cvapply(fixed, attr, "type") %in% c("survreg", "coxph")],
       extract_lhs_string
@@ -237,18 +236,20 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
 
   # convert the lh_sides in RHSs formulas to be able to extract the functions
   # in the outcomes
-  fmla_outcomes <- if (!is.null(unlist(lh_sides)))
+  fmla_outcomes <- if (!is.null(unlist(lh_sides))) {
     as.formula(paste("~", paste0(unique(unlist(lh_sides)), collapse = " + ")))
+  }
 
   # if there are any functions in non-survival outcomes, give an error since
   # this cannot be handled by JAGS
-  if (any(names(identify_functions(fmla_outcomes)) != "identity"))
+  if (any(names(identify_functions(fmla_outcomes)) != "identity")) {
     errormsg("Functions in the outcome are not allowed.")
-
+  }
 
   # list of functions in covariates and random effects variables
-  funlist <- list(covars = identify_functions(remove_lhs(c(fixed, auxvars))),
-                  ranef = identify_functions(unlist(remove_grouping(random)))
+  funlist <- list(
+    covars = identify_functions(remove_lhs(c(fixed, auxvars))),
+    ranef = identify_functions(unlist(remove_grouping(random)))
   )
 
   fct_df_list <- nlapply(funlist, function(fl) {
@@ -261,32 +262,40 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
     fct_list <- get_fct_df_list(varlist = get_varlist(fl), data = data)
 
     # convert to data.frame
-    fct_df <- melt_data_frame_list(fct_list, id_vars = names(fct_list[[1]]),
-                                   lname = "type")
+    fct_df <- melt_data_frame_list(
+      fct_list,
+      id_vars = names(fct_list[[1]]),
+      lname = "type"
+    )
 
     # remove duplicates
-    subset(fct_df,
-           subset = !duplicated(
-             subset(fct_df, select = !names(fct_df) %in% c("type", "fct"))))
+    subset(
+      fct_df,
+      subset = !duplicated(
+        subset(fct_df, select = !names(fct_df) %in% c("type", "fct"))
+      )
+    )
   })
 
-
   if (any(!lvapply(fct_df_list, is.null))) {
-    fct_df <- melt_data_frame_list(fct_df_list,
-                                   id_vars = c("var", "colname", "fct", "type"))
+    fct_df <- melt_data_frame_list(
+      fct_df_list,
+      id_vars = c("var", "colname", "fct", "type")
+    )
     fct_df <- subset(fct_df, select = which(!names(fct_df) %in% "rowID"))
 
     # if chosen, remove functions only involving complete variables
     compl <- colSums(is.na(data[, fct_df$var, drop = FALSE])) == 0L
-    partners <- nlapply(fct_df$colname,
-                        function(x) which(fct_df$colname %in% x))
+    partners <- nlapply(fct_df$colname, function(x) {
+      which(fct_df$colname %in% x)
+    })
     anymis <- lvapply(partners, function(x) any(!compl[x]))
 
     fct_df$compl <- !anymis
 
-    if (complete == FALSE)
+    if (complete == FALSE) {
       fct_df <- if (any(anymis)) fct_df[anymis, , drop = FALSE]
-
+    }
 
     if (!is.null(fct_df)) {
       fct_df$matrix <- dsgn_mat_lvls[fct_df$var]
@@ -294,11 +303,21 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
       # look for functions that involve several variables and occur multiple
       # times in fct_df
       dupl <-
-        duplicated(fct_df[, -which(names(fct_df) %in%
-                                     c("var", "compl", "matrix"))]) |
-        duplicated(fct_df[, -which(names(fct_df) %in%
-                                     c("var", "compl", "matrix"))],
-                   fromLast = TRUE)
+        duplicated(fct_df[,
+          -which(
+            names(fct_df) %in%
+              c("var", "compl", "matrix")
+          )
+        ]) |
+        duplicated(
+          fct_df[,
+            -which(
+              names(fct_df) %in%
+                c("var", "compl", "matrix")
+            )
+          ],
+          fromLast = TRUE
+        )
 
       fct_df$dupl <- FALSE
 
@@ -306,20 +325,29 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
       p <- apply(
         fct_df[, -which(names(fct_df) %in% c("var", "compl", "matrix"))],
         1L,
-        paste, collapse = "")
+        paste,
+        collapse = ""
+      )
 
       for (k in which(dupl)) {
         eq <- which(p == p[k])
-        ord <- order(fct_df$matrix[eq],
-                     lvapply(data[fct_df$var[eq]], function(x) any(is.na(x))),
-                     decreasing = TRUE)
+        ord <- order(
+          fct_df$matrix[eq],
+          lvapply(data[fct_df$var[eq]], function(x) any(is.na(x))),
+          decreasing = TRUE
+        )
 
         fct_df$dupl[eq[ord]] <- duplicated(p[eq[ord]])
       }
 
-      p <- apply(fct_df[, -which(names(fct_df) %in% c("var", "dupl", "compl",
-                                                      "matrix"))],
-                 1L, paste, collapse = "")
+      p <- apply(
+        fct_df[,
+          -which(names(fct_df) %in% c("var", "dupl", "compl", "matrix"))
+        ],
+        1L,
+        paste,
+        collapse = ""
+      )
       fct_df$dupl_rows <- NA
       fct_df$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
         m <- unname(which(p == p[i]))
@@ -344,28 +372,31 @@ identify_functions <- function(formula) {
     return(NULL)
   }
 
-
   # get the term.labels from the formula and split by :
-  termlabs <- unlist(lapply(formula, function(x)
-    if (!is.null(x)) attr(terms(x), "term.labels")))
+  termlabs <- unlist(lapply(formula, function(x) {
+    if (!is.null(x)) attr(terms(x), "term.labels")
+  }))
   termlabs <- unique(unlist(strsplit(termlabs, ":")))
 
-
   # check for each element of the formula if it is a function
-  isfun <- lvapply(unique(unlist(lapply(formula, all.names, unique = TRUE))),
-                   function(x) {
-                     g <- try(get(x, envir = .GlobalEnv), silent = TRUE)
-                     if (!inherits(g, "try-error"))
-                       is.function(g)
-                     else
-                       FALSE
-                   })
-
+  isfun <- lvapply(
+    unique(unlist(lapply(formula, all.names, unique = TRUE))),
+    function(x) {
+      g <- try(get(x, envir = .GlobalEnv), silent = TRUE)
+      if (!inherits(g, "try-error")) {
+        is.function(g)
+      } else {
+        FALSE
+      }
+    }
+  )
 
   # select only functions that are not operators or variable names
-  funs <- isfun[!names(isfun) %in% c("~", "+", "-", ":", "*", "(", "^",
-                                     "/", "Surv",
-                                     all_vars(formula)) & isfun]
+  funs <- isfun[
+    !names(isfun) %in%
+      c("~", "+", "-", ":", "*", "(", "^", "/", "Surv", all_vars(formula)) &
+      isfun
+  ]
 
   if (length(funs) > 0L) {
     # for each function, extract formula elements containing it
@@ -393,7 +424,6 @@ identify_functions <- function(formula) {
 }
 
 
-
 # used in extract_fcts() (2020-06-10)
 get_varlist <- function(funlist) {
   # make a list per function type, listing all functions and their element
@@ -408,20 +438,21 @@ get_varlist <- function(funlist) {
 
 # used in extract_fcts() (2020-06-10)
 make_fct_df <- function(varlist_elmt, data) {
-
-  vars <- nlapply(names(varlist_elmt), function(k)
-    colnames(model.matrix(as.formula(paste0("~", k)), data))[-1L])
-
+  vars <- nlapply(names(varlist_elmt), function(k) {
+    colnames(model.matrix(as.formula(paste0("~", k)), data))[-1L]
+  })
 
   df <- melt_list(varlist_elmt, varname = "fct", valname = "var")
 
-  if (any(ivapply(vars, length) > ivapply(varlist_elmt, length)))
+  if (any(ivapply(vars, length) > ivapply(varlist_elmt, length))) {
     df <- df[match(rep(names(vars), ivapply(vars, length)), df$fct), ]
+  }
 
   # quick-and-dirty fix to avoid error when the same function (e.g., I()) is
   # used multiple times with a different number of variables:
-  if (any(ivapply(vars, length) < ivapply(varlist_elmt, length)))
+  if (any(ivapply(vars, length) < ivapply(varlist_elmt, length))) {
     vars <- vars[df$fct]
+  }
 
   df$colname <- unlist(vars)
 
@@ -437,8 +468,9 @@ get_fct_df_list <- function(varlist, data) {
   #            which contains a vector of all variable names involved in the
   #            function, output from get_varlist()
 
-  if (!unique(lvapply(varlist, is.list)))
+  if (!unique(lvapply(varlist, is.list))) {
     varlist <- list(varlist)
+  }
 
   nlapply(varlist, make_fct_df, data = data)
 }
