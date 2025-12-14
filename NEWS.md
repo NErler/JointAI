@@ -8,7 +8,11 @@
 * `all_vars()`: update of the function; can now handle an unspecified number of
   input objects and can extract variable names from formulas and character 
   strings that are valid variable names
-
+* objects provided to the `data` argument are now converted with
+  `as.data.frame()`, making it possible to provide a `tibble`
+* Elements of a list supplied to the `append_data_list` argument will now
+  overwrite existing elements of the `data_list` with the same name. This
+  enables a wider range of changes to the automatically generated JAGS model.
 
 --------------------------------------------------------------------------------
 

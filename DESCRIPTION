@@ -17,7 +17,7 @@ URL: https://nerler.github.io/JointAI/
 License: GPL (>= 2)
 BugReports: https://github.com/nerler/JointAI/issues/
 LazyData: TRUE
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Roxygen: list(old_usage = TRUE, markdown = TRUE)
 Imports: rjags, mcmcse, coda, rlang, future, mathjaxr, survival, MASS
 SystemRequirements: JAGS (https://mcmc-jags.sourceforge.io/)

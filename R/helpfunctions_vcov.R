@@ -1,4 +1,3 @@
-
 #' First validation for rd_vcov
 #'
 #' Checks if `rd_vcov` is a `list` with elements for all grouping levels or does
@@ -20,41 +19,45 @@
 #'        list specifying structures per (groups) of
 #'        variable(s) (e.g. `list(full = c("a", "b"), indep = "c")`)
 
-
 check_rd_vcov_list <- function(rd_vcov, idvar) {
-
   if (inherits(rd_vcov, "character")) {
     if (!rd_vcov %in% c("blockdiag", "full", "indep")) {
-      errormsg("The variance-covariance matrix for the random effects of the
+      errormsg(
+        "The variance-covariance matrix for the random effects of the
                different models (supplied to the argument %s) can only be of
                type \"blockdiag\", \"indep\", or \"full\".
                To specify different structures for different models or levels,
-               provide a list (details see documentation).", dQuote("rd_vcov"))
+               provide a list (details see documentation).",
+        dQuote("rd_vcov")
+      )
     }
 
     nlapply(idvar, function(x) rd_vcov)
-
   } else if (inherits(rd_vcov, "list")) {
-
     if (all(names(rd_vcov) %in% c("blockdiag", "full", "indep"))) {
       nlapply(idvar, function(x) rd_vcov)
     } else if (length(idvar) > 1L & any(!idvar %in% names(rd_vcov))) {
-      errormsg("Please provide information on the variance-covariance structure
-             of the random effects for all levels.")
+      errormsg(
+        "Please provide information on the variance-covariance structure
+             of the random effects for all levels."
+      )
     } else if (all(idvar %in% names(rd_vcov))) {
       rd_vcov
     } else {
-      errormsg("You provided %s in a way I didn't anticipate. Please contact
-               the package maintainer.", dQuote("rd_vcov"))
+      errormsg(
+        "You provided %s in a way I didn't anticipate. Please contact
+               the package maintainer.",
+        dQuote("rd_vcov")
+      )
     }
-
   } else {
-    errormsg("The argument %s should be specified as character string
-             or a list.", dQuote("rd_vcov"))
+    errormsg(
+      "The argument %s should be specified as character string
+             or a list.",
+      dQuote("rd_vcov")
+    )
   }
 }
-
-
 
 
 #' Expand rd_vcov using variable names in case "full" is used
@@ -78,33 +81,34 @@ expand_rd_vcov_full <- function(rd_vcov, rd_outnam) {
 
   nlapply(idvar, function(lvl) {
     if (is.character(rd_vcov[[lvl]]) & length(rd_vcov[[lvl]]) == 1L) {
-
       setNames(list(rd_outnam[[lvl]]), rd_vcov[[lvl]])
-
     } else if (inherits(rd_vcov[[lvl]], "list")) {
-
       if (setequal(unlist(rd_vcov[[lvl]]), rd_outnam[[lvl]])) {
         rd_vcov[[lvl]]
       } else {
-        errormsg("According to the random effects formulas, there are
+        errormsg(
+          "According to the random effects formulas, there are
                  random effects on the level %s for the models for %s but in
                  the structure specified for the random effects
                  variance-covariance matrices the variables %s have random
                  effects on this level.",
-                 dQuote(lvl), paste_and(dQuote(rd_outnam[[lvl]])),
-                 paste_and(dQuote(unlist(rd_vcov[[lvl]])))
+          dQuote(lvl),
+          paste_and(dQuote(rd_outnam[[lvl]])),
+          paste_and(dQuote(unlist(rd_vcov[[lvl]])))
         )
       }
-
     } else {
-      errormsg("%s should be a character string or a list.",
-               dQuote(paste0("rd_vcov[[\"", lvl, "\"]]")))
+      errormsg(
+        "%s should be a character string or a list.",
+        dQuote(paste0("rd_vcov[[\"", lvl, "\"]]"))
+      )
     }
   })
 }
 
 
 #' Replace a full with a block-diagonal variance covariance matrix
+#'
 #' Check if a full random effects variance covariance matrix is specified
 #' for a single variable. In that case, it is identical to a block-diagonal
 #' matrix. Change the `rd_vcov` specification to `blockdiag` for clarity
@@ -116,10 +120,12 @@ expand_rd_vcov_full <- function(rd_vcov, rd_outnam) {
 #' @keywords internal
 
 check_full_blockdiag <- function(rd_vcov) {
-
   if (!inherits(rd_vcov, "list") | any(!lvapply(rd_vcov, inherits, "list"))) {
-    errormsg("%s should be a list (by grouping level) of lists
-    (per covariance matrix).", dQuote("rd_vcov"))
+    errormsg(
+      "%s should be a list (by grouping level) of lists
+    (per covariance matrix).",
+      dQuote("rd_vcov")
+    )
   }
 
   nlapply(names(rd_vcov), function(lvl) {
@@ -139,22 +145,21 @@ check_full_blockdiag <- function(rd_vcov) {
 #' @keywords internal
 
 check_rd_vcov <- function(rd_vcov, nranef) {
-
   idvar <- names(nranef)
 
-  rd_vcov <- expand_rd_vcov_full(rd_vcov,
-                                 rd_outnam = nlapply(nranef, function(r) {
-                                   names(r)[r > 0L]}))
+  rd_vcov <- expand_rd_vcov_full(
+    rd_vcov,
+    rd_outnam = nlapply(nranef, function(r) {
+      names(r)[r > 0L]
+    })
+  )
 
   rd_vcov <- check_full_blockdiag(rd_vcov)
 
-
   if (any(unlist(lapply(rd_vcov, names)) == "full")) {
     for (lvl in idvar) {
-
       ## if a full vcov is used, determine the number of random effects
       for (k in which(names(rd_vcov[[lvl]]) == "full")) {
-
         nrd <- nranef[[lvl]][rd_vcov[[lvl]][[k]]]
 
         ranef_nr <- print_seq(
@@ -177,7 +182,6 @@ check_rd_vcov <- function(rd_vcov, nranef) {
   }
   rd_vcov
 }
-
 
 
 #' Extract the number of random effects
@@ -231,7 +235,6 @@ check_rd_vcov <- function(rd_vcov, nranef) {
 # }
 
 get_nranef <- function(random, data) {
-
   if (is.null(random)) {
     return(NULL)
   }
@@ -252,10 +255,6 @@ get_nranef <- function(random, data) {
     ncol(model.matrix(fmla, data = data))
   })
 }
-
-
-
-
 
 
 #' Get an element of a list, return a default value if it does not exist

@@ -294,7 +294,13 @@ get_data_list <- function(Mlist, info_list, hyperpars,
 
 
   if (!is.null(append_data_list)) {
-    l <- c(l, append_data_list)
+    if (is.null(names(append_data_list))) {
+      warnmsg("%s should be a named list but it seems it doesn't have names.",
+                        dQuote("append_data_list"))
+      l <- c(l, append_data_list)
+    } else {
+      l[names(append_data_list)] <- append_data_list
+    }
   }
 
   l[!lvapply(l, is.null)]

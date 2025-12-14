@@ -1,106 +1,209 @@
+#' Prepare list of arguments for model_imp()
+#'
+#' @param analysis_type Type of analysis to be performed (from `*_imp()`)
+#' @param family `family` object or character string specifying the error
+#'                distribution and link function.
+#' @param formals List of formal arguments for the function.
+#' @param call The matched call as returned by `match.call()`.
+#' @param sframe An environment (typically from `sys.frame(sys.nframe())`)
+#'
+#' @returns A list of arguments prepared for `model_imp()`, including the
+#'          analysis type, family, formulas, and other relevant parameters.
+#' @keywords internal
+#'
 
-# other functions --------------------------------------------------------------
-#TODO: document this function
-#TODO: check this function
-prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
-                         call = match.call(), sframe = sys.frame(sys.nframe())) {
-  arglist <- mget(names(formals), sframe)
+# TODO: add tests for this function and/or refactor further
+# TODO: add type checks for main function arguments to create more meaningful
+# error messages when arguments are (accidentally) mis-used. Example: wrong
+# closing parenthesis in list of formulas shifted the second formula to the
+# df_basehaz argument in JM_imp()
+prep_arglist <- function(
+  analysis_type,
+  family = NULL,
+  formals = formals(),
+  call = match.call(),
+  sframe = sys.frame(sys.nframe())
+) {
+  # collect all arguments (defaults + user-specified)
+  arglist <- merge_call_args(formals, call, sframe)
 
-  thiscall <- as.list(call)[-1L]
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  # check that data is provided as a data.frame
+  if (!inherits(arglist$data, "data.frame")) {
+    errormsg(
+      "Please provide a %s to the argument %s.",
+      sQuote("data.frame"),
+      dQuote("data")
+    )
+  }
 
-  arglist$thecall <- call
+  # add the analysis type to the argument list
+  arglist$analysis_type <- analysis_type
 
+  # In case the a variable (containing a formula) was passed to formula or
+  # fixed in *_imp(), overwrite the name of the variable in the original call
+  # with the actual formula
   if (inherits(arglist$thecall$formula, "name")) {
-    # arglist$thecall$formula <- eval(arglist$thecall$formula)
     arglist$thecall$formula <- arglist$formula
   }
   if (inherits(arglist$thecall$fixed, "name")) {
-    # arglist$thecall$fixed <- eval(arglist$thecall$fixed)
     arglist$thecall$fixed <- arglist$fixed
   }
 
+  # resolve family object
+  thefamily <- resolve_family_obj(family)
+  attr(arglist$analysis_type, "family") <- thefamily
 
-  if (!inherits(arglist$data, 'data.frame'))
-    errormsg("Please provide a %s to the argument %s.",
-             sQuote('data.frame'), dQuote('data'))
+  # normalize formula arguments into lists of formulas
+  normalize_formula_args(arglist)
+}
 
-  # analysis type
-  arglist$analysis_type <- analysis_type
+#' Merge call arguments with default formals
+#'
+#' @param formals List of formal arguments for `*_imp()`.
+#' @param call The matched call from `*_imp()` as returned by `match.call()`.
+#' @param sframe The environment within `*_imp()`
+#'               (obtained from `sys.frame(sys.nframe())`)
+#'
+#' @returns A list of arguments combining defaults and user-specified values.
+#' @keywords internal
+#' @note Helper function for [JointAI::prep_arglist].
+#'
+merge_call_args <- function(formals, call, sframe) {
+  arglist <- mget(names(formals), sframe)
+  call_list <- as.list(call)[-1L]
 
-  # family
-  if (!is.null(family)) {
-    if (is.character(family)) {
-      family <- get(family, mode = "function", envir = parent.frame())
-      thefamily <- family()
-    } else if (is.function(family)) {
-      thefamily <- family()
-    } else if (inherits(family, "family")) {
-      thefamily <- family
-    }
+  arglist <- c(arglist, call_list[!names(call_list) %in% names(arglist)])
 
-    if (!thefamily$link %in%
-        c("identity", "log", "logit", "probit", "log", "cloglog", "inverse"))
-      errormsg("%s is not an allowed link function.", dQuote(thefamily$link))
-
-    attr(arglist$analysis_type, "family") <- thefamily
-  }
-
-  # convert formulas (formula, fixed, random) to lists
-  for (arg in c('formula', 'fixed', 'random')) {
-    if (is.null(arglist[[arg]]) | is.list(arglist[[arg]])) {
-
-    } else if (is.symbol(arglist[[arg]])) {
-      arglist[[arg]] <- try(eval(arglist[[arg]]), silent = TRUE)
-      if (inherits(arglist[[arg]], "try-error")) {
-        arglist[[arg]] <- NULL
-      }
-    } else {
-      arglist[[arg]] <- check_formula_list(as.formula(arglist[[arg]]))
-    }
-  }
+  arglist$thecall <- call
 
   arglist
 }
 
 
-#TODO: document this function
-#TODO: check this function
+#' Normalize formula arguments in arglist
+#'
+#' @param arglist A list containing at least `formula`, `fixed`, and `random`
+#'                elements.
+#' @returns The updated `arglist` with formulas converted to lists.
+#' @keywords internal
+#' @note Helper function used in [JointAI::prep_arglist()].
+#'
+normalize_formula_args <- function(arglist) {
+  for (arg in c("formula", "fixed", "random")) {
+    val <- arglist[[arg]]
+
+    # the following is needed for lme4 type formulas; random is then an empty
+    # symbol/name which causes problems later on
+    if (missing(val)) {
+      arglist[[arg]] <- NULL
+    }
+
+    if (missing(val) || is.null(val) || is.list(val)) {
+      # do nothing; otherwise NULL would be converted to a list by as.formula()
+      # below!
+      next
+    } else if (is.symbol(val)) {
+      evaluated <- try(eval(arglist[[arg]]), silent = TRUE)
+      if (inherits(evaluated, "try-error")) {
+        arglist[[arg]] <- NULL
+      } else {
+        arglist[[arg]] <- evaluated
+      }
+    } else {
+      arglist[[arg]] <- check_formula_list(as.formula(val))
+    }
+  }
+  arglist
+}
+
+#' Resolve family object
+#'
+#' Converts a family specification (character string, function, or family
+#' object) to a family object.
+#'
+#' @param family Family object, character string, or function.
+#'
+#' @returns A family object or NULL.
+#' @keywords internal
+#' @note Helper function used in [JointAI::prep_arglist()].
+#'
+
+resolve_family_obj <- function(family) {
+  if (is.null(family)) {
+    return(NULL)
+  }
+
+  thefamily <- if (is.character(family)) {
+    get(family, mode = "function", envir = parent.frame())()
+  } else if (is.function(family)) {
+    family()
+  } else if (inherits(family, "family")) {
+    family
+  } else {
+    errormsg("Unsupported \"family\" specification.")
+  }
+
+  allowed_links <- c("identity", "log", "logit", "probit", "cloglog", "inverse")
+  if (!thefamily$link %in% allowed_links) {
+    errormsg("%s is not an allowed link function.", dQuote(thefamily$link))
+  }
+  return(thefamily)
+}
+
+#' Check wheather fixed or formula contains a random effects specification
+#'
+#' Checks if the objects provided to the `formula` and `fixed` arguments contain
+#' a random effects specification. This function is used in random effects
+#' models.
+#' In case the combined fixed and random effects formula is part of the `fixed`
+#' element, it is moved into the `formula` element.
+#'
+#' @param arglist A list containing 'fixed', 'random', and 'formula' elements.
+#'
+#' @returns The updated arglist.arglist
+#' @keywords internal
+#'
 check_fixed_random <- function(arglist) {
-
-  # if there is a "fixed" effects formula, but no "random" , check if "fixed"
-  # contains the fixed and random effects
-  if (!is.null(arglist$fixed) & is.null(arglist$random)) {
-    can_split <- try(split_formula_list(arglist$fixed))
-
-    if (!inherits(can_split, 'try-error') & !is.null(can_split$random[[1]])) {
+  if (!is.null(arglist$random)) {
+    return(arglist)
+  } else if (!is.null(arglist$formula)) {
+    can_split <- try(split_formula_list(arglist$formula))
+    if (inherits(can_split, 'try-error')) {
+      errormsg(
+        "I cannot split the %s into a fixed and random effects part.",
+        dQuote("formula")
+      )
+    } else if (is.null(can_split$random[[1]])) {
+      errormsg(
+        "I cannot extract a random effects formula from %s.",
+        dQuote("formula")
+      )
+    }
+  } else if (!is.null(arglist$fixed)) {
+    can_split <- try(split_formula_list(arglist$fixed), silent = TRUE)
+    if (inherits(can_split, "try-error")) {
+      errormsg(
+        "I cannot split %s into a fixed and random effects part.",
+        dQuote("fixed")
+      )
+    } else if (is.null(can_split$random[[1]])) {
+      errormsg(
+        "I cannot extract a random effects formula from %s.",
+        dQuote("fixed")
+      )
+    } else {
       arglist$formula <- arglist$fixed
       arglist$fixed <- NULL
       arglist$random <- NULL
     }
-  } else if (!is.null(arglist$formula) & is.null(arglist$random)) {
-    can_split <- try(split_formula_list(arglist$formula))
-
-    if (inherits(can_split, 'try-error')) {
-      errormsg("I cannot split the %s into a fixed and random effects part.",
-               dQuote("formula"))
-    } else if (is.null(can_split$random[[1]])) {
-      errormsg("I cannot extract a random effects formula from %s.",
-               dQuote("formula"))
-    }
   }
 
-
-  if (is.null(arglist$fixed) & length(arglist$formula) == 0)
+  if (length(arglist$fixed) == 0L && length(arglist$formula) == 0L) {
     errormsg("No fixed effects structure specified.")
-
-  if (is.null(arglist$random) & length(arglist$formula) == 0)
-    errormsg("No random effects structure specified.")
+  }
 
   arglist
 }
-
 
 
 #' Check that all variables in formulas are in the data
@@ -115,9 +218,13 @@ check_fixed_random <- function(arglist) {
 #' @keywords internal
 #' used in model_imp (2020-06-09)
 #'
-check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
-                               auxvars = NULL, timevar = NULL) {
-
+check_vars_in_data <- function(
+  datanames,
+  fixed = NULL,
+  random = NULL,
+  auxvars = NULL,
+  timevar = NULL
+) {
   # make vector of any variable occurring in the formulas
   allvars <- all_vars(fixed, random, auxvars, timevar)
 
@@ -151,24 +258,26 @@ check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
 #' @returns nothing, but throws an error if a variable is of an unknown class
 #' @keywords internal
 #'
-check_classes <- function(data,
-                          fixed = NULL,
-                          random = NULL,
-                          auxvars = NULL,
-                          timevar = NULL,
-                          mess = TRUE) {
-
+check_classes <- function(
+  data,
+  fixed = NULL,
+  random = NULL,
+  auxvars = NULL,
+  timevar = NULL,
+  mess = TRUE
+) {
   vars <- all_vars(fixed, remove_grouping(random), auxvars, timevar)
   classes <- unlist(sapply(data[vars], class))
   known_classes <- c("numeric", "ordered", "factor", "logical", "integer")
 
   # Throw an error for variables of unknown classes
   if (any(w <- which(!classes %in% known_classes))) {
-
     unknown_classes <- sapply(split(classes[w], classes[w]), function(x) {
       paste0(
         dQuote(unique(x)),
-        " (variables: ", paste0(names(x), collapse = ", "), ")"
+        " (variables: ",
+        paste0(names(x), collapse = ", "),
+        ")"
       )
     })
 
@@ -178,7 +287,6 @@ check_classes <- function(data,
     )
   }
 }
-
 
 
 #' Check for empty factor levels
@@ -201,7 +309,6 @@ check_classes <- function(data,
 #' @keywords internal
 #'
 drop_levels <- function(data, allvars, warn = TRUE) {
-
   data_orig <- data
   data[allvars] <- droplevels(data[allvars])
 
@@ -209,14 +316,16 @@ drop_levels <- function(data, allvars, warn = TRUE) {
     lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))
     lvl2 <- sapply(data[allvars], function(x) length(levels(x)))
 
-    if (any(lvl1 != lvl2))
-      warnmsg('The variable(s) %s has/have empty levels.
+    if (any(lvl1 != lvl2)) {
+      warnmsg(
+        'The variable(s) %s has/have empty levels.
               Use `droplevels()` on your input data to remove empty levels.',
-          paste_and(dQuote(names(lvl1)[which(lvl1 != lvl2)])))
+        paste_and(dQuote(names(lvl1)[which(lvl1 != lvl2)]))
+      )
+    }
   }
   return(data)
 }
-
 
 
 #' Replace ":" with "_" in a string
@@ -255,7 +364,6 @@ clean_names <- function(string) {
 #' @keywords internal
 #'
 convert_variables <- function(data, allvars, mess = TRUE) {
-
   data_orig <- data
 
   for (k in allvars) {
@@ -275,7 +383,6 @@ convert_variables <- function(data, allvars, mess = TRUE) {
 
   return(data)
 }
-
 
 
 #' Replace NaN values with NA
@@ -316,30 +423,35 @@ two_value_to_factor <- function(x) {
 #' @keywords internal
 #'
 compare_data_structure <- function(data1, data2) {
-
-  class_change <- mapply(function(x1, x2) any(x1 != x2),
-                         x1 = lapply(data1, class),
-                         x2 = lapply(data2, class)
+  class_change <- mapply(
+    function(x1, x2) any(x1 != x2),
+    x1 = lapply(data1, class),
+    x2 = lapply(data2, class)
   )
   class_change = Filter(isTRUE, class_change)
 
-  level_change <- mapply(function(x1, x2) !isTRUE(all.equal(x1, x2)),
-                         x1 = lapply(data1, levels),
-                         x2 = lapply(data2, levels)
+  level_change <- mapply(
+    function(x1, x2) !isTRUE(all.equal(x1, x2)),
+    x1 = lapply(data1, levels),
+    x2 = lapply(data2, levels)
   )
   level_change <- Filter(isTRUE, level_change)
 
   if (any(class_change)) {
-    msg("The variable(s) %s was/were changed to %s.",
-        paste_and(dQuote(names(class_change))),
-        paste_and(dQuote(sapply(data2[names(class_change)], class))))
+    msg(
+      "The variable(s) %s was/were changed to %s.",
+      paste_and(dQuote(names(class_change))),
+      paste_and(dQuote(sapply(data2[names(class_change)], class)))
+    )
   }
 
   if (any(level_change)) {
     for (k in names(level_change)) {
-      msg("The levels of the variable %s was/were changed to %s.",
-          dQuote(k),
-          paste0(levels(data2[[k]]), collapse = ", "))
+      msg(
+        "The levels of the variable %s was/were changed to %s.",
+        dQuote(k),
+        paste0(levels(data2[[k]]), collapse = ", ")
+      )
     }
   }
 }
@@ -368,21 +480,31 @@ compare_data_structure <- function(data1, data2) {
 #' @keywords internal
 #'
 check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
+  data <- as.data.frame(data)
 
-  check_vars_in_data(names(data), fixed = fixed, random = random,
-                     auxvars = auxvars, timevar = timevar)
+  check_vars_in_data(
+    names(data),
+    fixed = fixed,
+    random = random,
+    auxvars = auxvars,
+    timevar = timevar
+  )
 
   check_classes(data, fixed = fixed, random = random, auxvars = auxvars)
 
-  data <- drop_levels(data = data,
-                      allvars = all_vars(fixed, random, auxvars),
-                      warn = warn)
+  data <- drop_levels(
+    data = data,
+    allvars = all_vars(fixed, random, auxvars),
+    warn = warn
+  )
 
   # convert variable with 2 different values (continuous, character or logical)
   # to factors
-  data <- convert_variables(data = data,
-                            allvars = all_vars(fixed, random, auxvars),
-                            mess = mess)
+  data <- convert_variables(
+    data = data,
+    allvars = all_vars(fixed, random, auxvars),
+    mess = mess
+  )
 
   data
 }

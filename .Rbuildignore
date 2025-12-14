@@ -50,3 +50,5 @@ sim_mldata.R
 
 revdep/
 ^CRAN-SUBMISSION$
+^\.vscode$
+^[.]?air[.]toml$

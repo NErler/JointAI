@@ -91,7 +91,10 @@
 #'            \item{`append_data_list`}{list that will be appended to the list
 #'                 containing the data that is passed to **rjags**
 #'                 (`data_list`). This may be necessary if additional data /
-#'                 variables are needed for custom (covariate) models.}
+#'                 variables are needed for custom (covariate) models. Note:
+#'                 since version 1.0.7 elements of `append_data_list` will
+#'                 overwrite existing elements of the `data_list` with the same
+#'                 name.}
 #'            \item{`progress.bar`}{character string specifying the type of
 #'                 progress bar. Possible values are "text" (default), "gui",
 #'                 and "none" (see \code{\link[rjags]{update}}). Note: when

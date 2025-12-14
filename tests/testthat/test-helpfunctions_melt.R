@@ -7,7 +7,8 @@ test_that("melt_list() works as expected", {
 
   # Test that melt_list() ignores elements with length zero
   l <- list(a = c(1, 2), b = character(0))
-  expect_equal(nrow(melt_list(l)), 2)
+  expect_equal(nrow(suppressWarnings(melt_list(l))), 2)
+  expect_warning(melt_list(l))
 
   # Test that melt_list() throws an error if not all elements are atomic vectors
   l <- list(formula = y ~ b,

@@ -2,11 +2,7 @@
 % Please edit documentation in R/helpfunctions_vcov.R
 \name{check_full_blockdiag}
 \alias{check_full_blockdiag}
-\title{Replace a full with a block-diagonal variance covariance matrix
-Check if a full random effects variance covariance matrix is specified
-for a single variable. In that case, it is identical to a block-diagonal
-matrix. Change the \code{rd_vcov} specification to \code{blockdiag} for clarity
-(because then the variable name is used in the name of \code{b}, \code{D}, \code{invD}, ...)}
+\title{Replace a full with a block-diagonal variance covariance matrix}
 \usage{
 check_full_blockdiag(rd_vcov)
 }
@@ -18,7 +14,6 @@ specification (i.e., checked using \code{expand_rd_vcov_full()})}
 a valid random effects variance-covariance structure specification
 }
 \description{
-Replace a full with a block-diagonal variance covariance matrix
 Check if a full random effects variance covariance matrix is specified
 for a single variable. In that case, it is identical to a block-diagonal
 matrix. Change the \code{rd_vcov} specification to \code{blockdiag} for clarity

@@ -1,37 +1,47 @@
 find_dupl_parms <- function(mod) {
-  betas <- unlist(regmatches(mod$jagsmodel,
-                             gregexpr('beta[[[:digit:]]+]', mod$jagsmodel)))
-  alphas <- unlist(regmatches(mod$jagsmodel,
-                              gregexpr('alpha[[[:digit:]]+]', mod$jagsmodel)))
+  betas <- unlist(regmatches(
+    mod$jagsmodel,
+    gregexpr('beta[[[:digit:]]+]', mod$jagsmodel)
+  ))
+  alphas <- unlist(regmatches(
+    mod$jagsmodel,
+    gregexpr('alpha[[[:digit:]]+]', mod$jagsmodel)
+  ))
 
-  c(if (any(duplicated(betas)))
-    betas[duplicated(betas)],
+  c(
+    if (any(duplicated(betas))) {
+      betas[duplicated(betas)]
+    },
 
-    if (any(duplicated(alphas)))
+    if (any(duplicated(alphas))) {
       alphas[duplicated(alphas)]
+    }
   )
 }
 
 get_predprob <- function(mod, varname) {
   MCMC <- do.call(rbind, mod$MCMC)
   ps <- grep(paste0("^p_", varname, "\\b"), colnames(MCMC), value = TRUE)
-  cat <- gsub("\\]$", ")",
-              gsub(paste0("^p_", varname, "\\[[[:digit:]]+,"),
-              paste0("P(", varname, "="), ps)
+  cat <- gsub(
+    "\\]$",
+    ")",
+    gsub(
+      paste0("^p_", varname, "\\[[[:digit:]]+,"),
+      paste0("P(", varname, "="),
+      ps
+    )
   )
-
 
   problist <- lapply(split(ps, cat), function(n) {
     samp <- MCMC[, n]
-    cbind(fit = colMeans(samp),
-          t(apply(samp, 2, quantile, c(0.025, 0.975)))
-    )
+    cbind(fit = colMeans(samp), t(apply(samp, 2, quantile, c(0.025, 0.975))))
   })
 
-
-  array(dim = c(dim(problist[[1]]), length(problist)),
-        dimnames = list(NULL, colnames(problist[[1]]), names(problist)),
-        unlist(problist))
+  array(
+    dim = c(dim(problist[[1]]), length(problist)),
+    dimnames = list(NULL, colnames(problist[[1]]), names(problist)),
+    unlist(problist)
+  )
 }
 
 check_predprob <- function(mod) {
@@ -43,19 +53,18 @@ check_predprob <- function(mod) {
 }
 
 
-
 compare_modeltype <- function(mod) {
   call <- deparse(mod$call, width.cutoff = 500)
 
   type <- gsub("_[[:print:]]+", "", call)
-  fam <- gsub("family = |,", "",
-              regmatches(call,
-                         regexpr("family = [[:alpha:]]+\\([[:print:]]*\\),",
-                                 call)))
+  fam <- gsub(
+    "family = |,",
+    "",
+    regmatches(call, regexpr("family = [[:alpha:]]+\\([[:print:]]*\\),", call))
+  )
   family = eval(parse(text = fam))
 
   m <- mod$models[names(mod$fixed)[1]]
-
 
   c(
     list(
@@ -85,15 +94,23 @@ compare_modeltype <- function(mod) {
   )
 }
 
-print_output <- function(x, dir = 'testout', context = NULL, extra = NULL,
-                         type = "output") {
-
+print_output <- function(
+  x,
+  dir = 'testout',
+  context = NULL,
+  extra = NULL,
+  type = "output"
+) {
   call = as.list(match.call())$x
   input <- make.names(
     paste0(deparse(call, width.cutoff = 500), collapse = "")
   )
-  abbr <- abbreviate(gsub("\\.+", ".", input), minlength = 30,
-                     method = "both.sides", use.classes = FALSE)
+  abbr <- abbreviate(
+    gsub("\\.+", ".", input),
+    minlength = 30,
+    method = "both.sides",
+    use.classes = FALSE
+  )
 
   if (!is.null(extra)) {
     extra <- paste0("_", extra)
@@ -102,13 +119,10 @@ print_output <- function(x, dir = 'testout', context = NULL, extra = NULL,
   testthat::local_edition(2)
   if (type == "value") {
     nam <- paste0(context, "_", abbr, extra, ".rds")
-    testthat::expect_known_value(x,
-                                 file = file.path(dir, nam))
-
+    testthat::expect_known_value(x, file = file.path(dir, nam))
   } else {
     nam <- paste0(context, "_", abbr, extra, ".txt")
-    testthat::expect_known_output(x, print = TRUE,
-                                  file = file.path(dir, nam))
+    testthat::expect_known_output(x, print = TRUE, file = file.path(dir, nam))
   }
   testthat::local_edition(3)
 }
@@ -121,8 +135,10 @@ set0 <- function(object) {
   object$comp_info$start_time <- 0
   object$comp_info$JointAI_version <- 0
 
-  rm_attr <- setdiff(names(attr(object$analysis_type, "family")),
-                     c("family", "link"))
+  rm_attr <- setdiff(
+    names(attr(object$analysis_type, "family")),
+    c("family", "link")
+  )
   attr(object$analysis_type, "family")[rm_attr] <- NULL
 
   object
@@ -130,4 +146,17 @@ set0 <- function(object) {
 
 set0_list <- function(lst) {
   lapply(lst, set0)
+}
+
+normalize_numeric <- function(x, digits = 14) {
+  if (is.numeric(x)) {
+    round(x, digits)
+  } else if (is.data.frame(x)) {
+    x[] <- lapply(x, normalize_numeric, digits = digits)
+    x
+  } else if (is.list(x)) {
+    lapply(x, normalize_numeric, digits = digits)
+  } else {
+    x
+  }
 }

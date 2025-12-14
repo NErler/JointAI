@@ -88,36 +88,48 @@ test_that("returns input unchanged if not converted", {
 })
 
 
-
 # compare_data_structure ------------------------------------------------------
 test_that("detects class changes between data.frames", {
   df1 <- data.frame(a = 1:3, b = factor(c("x", "y", "x")))
   df2 <- data.frame(a = as.character(1:3), b = factor(c("x", "y", "x")))
 
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = paste0("The variable\\(s\\) ", dQuote("a"),
-                                 " was/were changed to ", dQuote("character")))
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = paste0(
+      "The variable\\(s\\) ",
+      dQuote("a"),
+      " was/were changed to ",
+      dQuote("character")
+    )
+  )
 })
 
 test_that("detects level changes in factor variables", {
   df1 <- data.frame(a = factor(c("x", "y", "x")))
   df2 <- data.frame(a = factor(c("x", "y", "z"), levels = c("x", "y", "z")))
 
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = "The levels of the variable")
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = "The levels of the variable"
+  )
 })
 
 test_that("detects both class and level changes", {
   df1 <- data.frame(a = 1:3, b = factor(c("x", "y", "x")))
-  df2 <- data.frame(a = as.character(1:3), b = factor(c("x", "y", "z"),
-                                                      levels = c("x", "y", "z")))
+  df2 <- data.frame(
+    a = as.character(1:3),
+    b = factor(c("x", "y", "z"), levels = c("x", "y", "z"))
+  )
 
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = "The variable\\(s\\)")
-  expect_message(compare_data_structure(df1, df2),
-                 regexp = "The levels of the variable")
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = "The variable\\(s\\)"
+  )
+  expect_message(
+    compare_data_structure(df1, df2),
+    regexp = "The levels of the variable"
+  )
 })
-
 
 
 test_that("no message when data.frames are structurally identical", {
@@ -132,4 +144,178 @@ test_that("handles non-factor variables without error", {
   df2 <- data.frame(a = 1:3, b = letters[1:3])
 
   expect_silent(compare_data_structure(df1, df2))
+})
+
+
+# --- resolve_family_obj -----
+
+test_that("NULL family returns NULL", {
+  expect_null(resolve_family_obj(NULL))
+})
+
+test_that("passing a family object returns the same object", {
+  fam <- gaussian()
+  res <- resolve_family_obj(fam)
+  expect_s3_class(res, "family")
+  expect_identical(res, fam)
+})
+
+test_that("passing a family function is invoked and returns a family object", {
+  res <- resolve_family_obj(binomial)
+  expect_s3_class(res, "family")
+  expect_equal(res$family, "binomial")
+  expect_equal(res$link, "logit")
+})
+
+test_that("passing a string returns the corresponding family object", {
+  expect_equal(resolve_family_obj("poisson"), poisson())
+  expect_equal(resolve_family_obj("gaussian"), gaussian())
+})
+
+test_that("unsupported family specification throws an error", {
+  expect_error(resolve_family_obj(list(a = 1)), "Unsupported")
+  expect_error(resolve_family_obj(42))
+  expect_error(resolve_family_obj("abc"))
+})
+
+test_that("family with disallowed link triggers an error", {
+  fam <- gaussian()
+  fam$link <- "not_a_real_link"
+  expect_error(resolve_family_obj(fam), "not an allowed link function")
+})
+
+
+# --- check_fixed_random -----
+test_that("returns arglist unchanged when random is provided", {
+  arg <- list(random = ~ 1 | id, fixed = NULL, formula = NULL)
+  expect_identical(check_fixed_random(arg), arg)
+})
+
+test_that("returns arglist unchanged when random is provided even if other elements exist", {
+  arg <- list(
+    random = list(~ 1 | id),
+    fixed = list(~ x + z),
+    formula = list(~y)
+  )
+  expect_identical(check_fixed_random(arg), arg)
+})
+
+
+test_that("errors when no fixed or formula structure is specified", {
+  expect_error(
+    check_fixed_random(list(fixed = NULL, formula = NULL, random = NULL))
+  )
+  expect_error(
+    check_fixed_random(list(fixed = y ~ a + b))
+  )
+  expect_error(
+    check_fixed_random(list(formula = y ~ x + z))
+  )
+})
+
+
+test_that("formula element with rd effects moves splits formula", {
+  arg <- list(formula = y ~ x + (1 | id), fixed = NULL, random = NULL)
+  res <- check_fixed_random(arg)
+
+  expect_equal(res, arg)
+})
+
+test_that("fixed element with random effects moved to formula", {
+  arg <- list(fixed = y ~ x + (1 | id), formula = NULL, random = NULL)
+  res <- check_fixed_random(arg)
+
+  expect_equal(arg$fixed, res$formula)
+  expect_null(res$random)
+  expect_null(res$fixed)
+})
+
+
+# --- merge_call_args --- --- --- --- ---
+
+test_that("merge_call_args merges defaults with additional call args", {
+  formals <- list(a = NULL, b = NULL)
+  sframe <- new.env()
+  assign("a", 1, envir = sframe)
+  assign("b", 2, envir = sframe)
+
+  call <- quote(myfun(d = 4))
+  res <- merge_call_args(formals, call, sframe)
+
+  expect_equal(res$a, 1)
+  expect_equal(res$b, 2)
+  expect_equal(res$d, 4)
+  expect_equal(res$thecall, call)
+})
+
+test_that("objects in environment not part of formals are not included", {
+  formals <- list(a = NULL, b = NULL)
+  sframe <- new.env()
+  assign("a", 1, envir = sframe)
+  assign("b", 2, envir = sframe)
+  assign("c", 3, envir = sframe)
+
+  call <- quote(myfun(a = 1, d = 4))
+  res <- merge_call_args(formals, call, sframe)
+
+  expect_equal(res$a, 1)
+  expect_equal(res$b, 2)
+  # c is in environment, but not part of formals, so should not be included
+  expect_null(res$c)
+  # 'd' is appended from the call because it's not in formals/sframe
+  expect_equal(res$d, 4)
+  expect_equal(res$thecall, call)
+})
+
+test_that("missing names required by formals in sframe produce an error", {
+  formals <- list(x = NULL)
+  sframe <- new.env()
+  call <- quote(foo())
+
+  expect_error(merge_call_args(formals, call, sframe), "not found")
+})
+
+
+# --- normalize_formula_args --- --- --- ---
+
+test_that("NULL and list arguments are left unchanged", {
+  arglist <- list(
+    formula = NULL,
+    fixed = list(as.formula("y ~ x")),
+    random = list()
+  )
+
+  res <- normalize_formula_args(arglist)
+
+  expect_null(res$formula)
+  expect_true(is.list(res$fixed))
+  expect_true(is.list(res$random))
+  expect_equal(res$fixed[[1]], as.formula("y ~ x"))
+})
+
+test_that("symbol referencing an existing object is evaluated and substituted", {
+  f_list <- list(as.formula("y ~ x + z"))
+  arglist <- list(
+    formula = f_list,
+    fixed = NULL,
+    random = NULL
+  )
+
+  res <- normalize_formula_args(arglist)
+
+  expect_true(is.list(res$formula))
+  expect_equal(res$formula, f_list)
+})
+
+
+test_that("symbol referencing a non-existing object becomes NULL", {
+  arglist <- list(
+    formula = as.symbol("this_variable_does_not_exist_12345"),
+    fixed = NULL,
+    random = NULL
+  )
+
+  res <- normalize_formula_args(arglist)
+
+  expect_null(res$formula)
 })
