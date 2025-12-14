@@ -355,7 +355,10 @@ that replace the model for the given variable.</p></dd>
 <dd><p>list that will be appended to the list
 containing the data that is passed to <strong>rjags</strong>
 (<code>data_list</code>). This may be necessary if additional data /
-variables are needed for custom (covariate) models.</p></dd>
+variables are needed for custom (covariate) models. Note:
+since version 1.0.7 elements of <code>append_data_list</code> will
+overwrite existing elements of the <code>data_list</code> with the same
+name.</p></dd>
 
 <dt><code>progress.bar</code></dt>
 <dd><p>character string specifying the type of

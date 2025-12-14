@@ -108,6 +108,9 @@
 <h3 id="small-improvements-development-version">Small improvements<a class="anchor" aria-label="anchor" href="#small-improvements-development-version"></a></h3>
 <ul><li>
 <code><a href="../reference/all_vars.html">all_vars()</a></code>: update of the function; can now handle an unspecified number of input objects and can extract variable names from formulas and character strings that are valid variable names</li>
+<li>objects provided to the <code>data</code> argument are now converted with <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>, making it possible to provide a <code>tibble</code>
+</li>
+<li>Elements of a list supplied to the <code>append_data_list</code> argument will now overwrite existing elements of the <code>data_list</code> with the same name. This enables a wider range of changes to the automatically generated JAGS model.</li>
 </ul><hr></div>
 </div>
     <div class="section level2">
