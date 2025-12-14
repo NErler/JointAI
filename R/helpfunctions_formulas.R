@@ -98,7 +98,6 @@ remove_formula_grouping <- function(formula) {
 
   terms <- attr(terms(formula), "term.labels")
   new_terms <- gsub(" *\\|[[:print:]]*$", "", terms)
-  new_terms <- new_terms[new_terms != "1"]
 
   response <- if (length(formula) == 3L) {
     formula[[2]]
