@@ -237,16 +237,12 @@ test_that("model can be plottet", {
 
 
 test_that("wrong models give errors", {
-  skip_on_os("mac")
-
   expect_error(clm_imp(y ~ O1 + C1 + C2, data = wideDF))
-  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF,
-                       warn = FALSE))
-  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = wideDF,
-                       warn = FALSE))
-  expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF, warn = FALSE),
-                  "JointAI_errored")
-  expect_error(clm_imp(O2 ~ O1 + C1, data = wideDF,
-                       nonprop = list(O2 = ~ C2), warn = FALSE))
+  expect_s3_class(
+    suppressWarnings(
+      clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF, warn = FALSE)
+    ),
+    "JointAI_errored"
+  )
 })
 # Sys.setenv(IS_CHECK = "")

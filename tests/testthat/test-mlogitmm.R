@@ -233,8 +233,15 @@ test_that("wrong models give errors", {
   expect_error(mlogitmm_imp(m2 ~ O1 + C1 + C2 + (1 | id), data = wideDF))
 
   # model formula that can't be used
-  expect_s3_class(mlogitmm_imp(m2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE,
-                               data = longDF), "JointAI_errored")
-
+  expect_s3_class(
+    suppressWarnings(
+      mlogitmm_imp(
+        m2 ~ I(O1^2) + C1 + C2 + (1 | id),
+        warn = FALSE,
+        data = longDF
+      )
+    ),
+    "JointAI_errored"
+  )
 })
 # Sys.setenv(IS_CHECK = "")

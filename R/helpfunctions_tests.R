@@ -131,3 +131,16 @@ set0 <- function(object) {
 set0_list <- function(lst) {
   lapply(lst, set0)
 }
+
+normalize_numeric <- function(x, digits = 14) {
+  if (is.numeric(x)) {
+    round(x, digits)
+  } else if (is.data.frame(x)) {
+    x[] <- lapply(x, normalize_numeric, digits = digits)
+    x
+  } else if (is.list(x)) {
+    lapply(x, normalize_numeric, digits = digits)
+  } else {
+    x
+  }
+}

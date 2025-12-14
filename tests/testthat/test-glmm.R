@@ -342,8 +342,8 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("data_list remains the same", {
-    skip_on_os("linux")
-    expect_snapshot(lapply(models, "[[", "data_list"))
+    # skip_on_os("linux")
+    expect_snapshot(normalize_numeric(lapply(models, "[[", "data_list")))
   })
 
   test_that("jagsmodel remains the same", {

@@ -176,11 +176,11 @@ test_that("MCMC samples can be plotted", {
 })
 
 
-test_that("data_list remains the same", {
-  skip_on_cran()
-  testthat::skip_on_os("linux")
-  expect_snapshot(lapply(models, "[[", "data_list"))
-})
+  test_that("data_list remains the same", {
+    skip_on_cran()
+    #testthat::skip_on_os("linux")
+    expect_snapshot(normalize_numeric(lapply(models, "[[", "data_list")))
+  })
 
 test_that("jagsmodel remains the same", {
   skip_on_cran()
@@ -194,26 +194,25 @@ test_that("GRcrit and MCerror give same result", {
   expect_snapshot(lapply(models0, MC_error))
 })
 
-test_that("summary output remained the same on Windows", {
-  skip_on_cran()
-  skip_on_os(c("mac", "linux", "solaris"))
-  expect_snapshot(lapply(models0, print))
-  expect_snapshot(lapply(models0, coef))
-  expect_snapshot(lapply(models0, confint))
-  expect_snapshot(lapply(models0, summary))
-  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
-})
+  # test_that("summary output remained the same on Windows", {
+  #   skip_on_cran()
+  #   skip_on_os(c("mac", "linux", "solaris"))
+  #   expect_snapshot(lapply(models0, print))
+  #   expect_snapshot(lapply(models0, coef))
+  #   expect_snapshot(lapply(models0, confint))
+  #   expect_snapshot(lapply(models0, summary))
+  #   expect_snapshot(lapply(models0, function(x) coef(summary(x))))
+  # })
 
-test_that("summary output remained the same on non-Windows", {
-  skip_on_cran()
-  skip_on_os(c("windows"))
-  expect_snapshot(lapply(models0, print))
-  expect_snapshot(lapply(models0, coef))
-  expect_snapshot(lapply(models0, confint))
-  expect_snapshot(lapply(models0, summary))
-  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
-})
-
+  test_that("summary output remained the same", {
+    skip_on_cran()
+    # skip_on_os(c("windows"))
+    expect_snapshot(lapply(models0, print))
+    expect_snapshot(lapply(models0, coef))
+    expect_snapshot(lapply(models0, confint))
+    expect_snapshot(lapply(models0, summary))
+    expect_snapshot(lapply(models0, function(x) coef(summary(x))))
+  })
 
 test_that("prediction works", {
 
@@ -304,8 +303,12 @@ test_that("model can be plottet", {
     expect_error(clmm_imp(o2 ~ O1 + C1 + C2 + (1 | id), data = wideDF,
                           warn = FALSE))
     # model formula that can't be used
-    expect_s3_class(clmm_imp(o2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE,
-                             data = longDF), "JointAI_errored")
+    expect_s3_class(
+      suppressWarnings(
+        clmm_imp(o2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE, data = longDF)
+      ),
+      "JointAI_errored"
+    )
     # # non-proportional effect not in main formula
     expect_error(clmm_imp(o2 ~ O1 + C1 + (1 | id), data = longDF,
                           nonprop = list(o2 = ~ C2), warn = FALSE))
