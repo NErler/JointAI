@@ -147,6 +147,36 @@ test_that('remove_grouping works', {
   )
 })
 
+# remove_formula_grouping - - - - - - - - -
+
+test_that("remove_formula_grouping works", {
+  expect_equal(
+    remove_formula_grouping(~ time | id),
+    ~time,
+    ignore_formula_env = TRUE
+  )
+
+  expect_equal(
+    remove_formula_grouping(~ 1 | id),
+    ~1,
+    ignore_formula_env = TRUE
+  )
+
+  expect_equal(
+    remove_formula_grouping(~ (time | id) + (1 | cluster)),
+    ~ time + 1,
+    ignore_formula_env = TRUE
+  )
+})
+
+test_that("remove_formula_grouping returns NULL for NULL", {
+  expect_null(remove_formula_grouping(NULL))
+})
+
+test_that("remove_formula_grouping returns error for non-formula objects", {
+  expect_error(remove_formula_grouping(list(~ 1 | id)))
+})
+
 
 # identify_functions -----------------------------------------------------------
 library(splines)
