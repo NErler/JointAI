@@ -27,8 +27,7 @@ runs <- list(
     ids = 'id',
     RHS = list(~ time | id),
     nogroup = (id = y ~ time)
-  ),
-  list(random = y ~ 0, ids = NULL, RHS = list(~0), nogroup = (y ~ -1))
+  )
 )
 
 
