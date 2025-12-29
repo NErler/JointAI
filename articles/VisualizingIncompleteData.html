@@ -160,7 +160,7 @@ obtained.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
-<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-1-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-1-1.png" class="r-plt" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Note:</strong> Here, we are looking at the marginal
@@ -197,7 +197,7 @@ or <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/barplot.
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">NHANES</span>, allNA <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">'#e30f41'</span>, border <span class="op">=</span> <span class="st">'#34111b'</span>, ncol <span class="op">=</span> <span class="fl">3</span>, breaks <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
-<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="multi-level-data">Multi-level data<a class="anchor" aria-label="anchor" href="#multi-level-data"></a>
@@ -211,7 +211,7 @@ variables) via the argument <code>idvars</code>.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">simLong</span>, allNA <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">'#e30f41'</span>, border <span class="op">=</span> <span class="st">'#34111b'</span>,</span>
 <span>         ncol <span class="op">=</span> <span class="fl">3</span>, breaks <span class="op">=</span> <span class="fl">30</span>, idvars <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="100%" style="display: block; margin: auto;">
+<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="100%" style="display: block; margin: auto;">
 The information to which level a variable belongs is added to the title
 of each plot (“lvlone” refers to the first level, for which there is no
 grouping variable). Variables belonging to higher levels (e.g.,
@@ -229,7 +229,7 @@ in the <code>simLong</code> data.</p>
 <code><a href="../reference/md_pattern.html">md_pattern()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
-<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>In the resulting plot, variables are given in the columns and each
 row corresponds to one pattern of missingness across the variables. The
 numbers on the right margin give the number of cases per pattern.
@@ -293,12 +293,12 @@ title, but keep the number of observations per missing data pattern.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span><span class="op">)</span>, border <span class="op">=</span> <span class="st">'white'</span>,</span>
 <span>           legend.position <span class="op">=</span> <span class="st">'none'</span>, print_xaxis <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>           ylab <span class="op">=</span> <span class="st">'Alternative axis title'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p><br></p>
 <p>For the <code>simLong</code> data, the missing data pattern is:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">simLong</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>
