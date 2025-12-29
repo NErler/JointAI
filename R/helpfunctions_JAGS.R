@@ -190,7 +190,7 @@ run_parallel <- function(
         })
       })
 
-      res <- lapply(out, future::value)
+      res <- future::value(out)
 
       mcmc <- try(coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1L]])))
       time_adapt <- do.call(c, lapply(res, "[[", "time_adapt"))
