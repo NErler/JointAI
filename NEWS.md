@@ -3,6 +3,9 @@
 ## Bug fixes
 * Error when using the same function twice in a model formula with different 
   number of variables (e.g., I(x^2) and I(a/b)) fixed.
+* Fix in identifying the number of workers used in parallel computation
+  with the **future** package.
+* Fix `summary()` printout showing the wrong MCMC settings when using thinning.
 
 ## Small improvements
 * `all_vars()`: update of the function; can now handle an unspecified number of
