@@ -27,6 +27,7 @@ Suggests:
     bookdown,
     foreign,
     ggplot2,
+	corrplot,
     ggpubr,
     testthat,
     covr

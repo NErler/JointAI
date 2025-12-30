@@ -1,11 +1,8 @@
 # JointAI (development version)
 
-## Bug fixes
-* Error when using the same function twice in a model formula with different 
-  number of variables (e.g., I(x^2) and I(a/b)) fixed.
-* Fix in identifying the number of workers used in parallel computation
-  with the **future** package.
-* Fix `summary()` printout showing the wrong MCMC settings when using thinning.
+## New features
+* Added functions `crosscorr()`, `crosscorr_plot()`, `autocorr()` and `autocorr_plot()`
+  to assess cross-correlation and autocorrelation of MCMC samples.
 
 ## Small improvements
 * `all_vars()`: update of the function; can now handle an unspecified number of
@@ -16,6 +13,14 @@
 * Elements of a list supplied to the `append_data_list` argument will now
   overwrite existing elements of the `data_list` with the same name. This
   enables a wider range of changes to the automatically generated JAGS model.
+
+## Bug fixes
+* Error when using the same function twice in a model formula with different 
+  number of variables (e.g., I(x^2) and I(a/b)) fixed.
+* Fix in identifying the number of workers used in parallel computation
+  with the **future** package.
+* Fix `summary()` printout showing the wrong MCMC settings when using thinning.
+
 
 --------------------------------------------------------------------------------
 

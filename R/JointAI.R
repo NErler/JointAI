@@ -173,7 +173,6 @@
 Surv <- survival::Surv
 
 
-
 #' Generate a Basis Matrix for Natural Cubic Splines
 #'
 #' This function just calls \code{ns()} from the
@@ -197,16 +196,26 @@ ns <- splines::ns
 #' @keywords internal
 # bs <- splines::bs
 
-bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
-               Boundary.knots = range(x), warn.outside = TRUE) {
-
+bs <- function(
+  x,
+  df = NULL,
+  knots = NULL,
+  degree = 3,
+  intercept = FALSE,
+  Boundary.knots = range(x),
+  warn.outside = TRUE
+) {
   defargs <- formals(splines::bs)
-  args <- sapply(names(defargs), function(k)
-    get(k), simplify = FALSE)
+  args <- sapply(
+    names(defargs),
+    function(k) {
+      get(k)
+    },
+    simplify = FALSE
+  )
 
   do.call(splines::bs, args)
 }
-
 
 
 .onLoad <- function(libname, pkgname) {
@@ -220,7 +229,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
 }
 
 
-utils::globalVariables(c("i", "value", "chain", "iteration"))
+utils::globalVariables(c("i", "value", "chain", "iteration", "L1"))
 
 
 #' Parameters used by several functions in JointAI
@@ -301,4 +310,3 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'                names that belong to the respective structure.
 #' @name sharedParams
 NULL
-
