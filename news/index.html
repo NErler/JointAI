@@ -101,10 +101,8 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="jointai-development-version">JointAI (development version)<a class="anchor" aria-label="anchor" href="#jointai-development-version"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Error when using the same function twice in a model formula with different number of variables (e.g., I(x^2) and I(a/b)) fixed.</li>
-<li>Fix in identifying the number of workers used in parallel computation with the <strong>future</strong> package.</li>
-<li>Fix <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> printout showing the wrong MCMC settings when using thinning.</li>
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>Added functions <code><a href="../reference/crosscorr.html">crosscorr()</a></code>, <code><a href="../reference/crosscorr.html">crosscorr_plot()</a></code>, <code><a href="../reference/autocorr.html">autocorr()</a></code> and <code><a href="../reference/autocorr.html">autocorr_plot()</a></code> to assess cross-correlation and autocorrelation of MCMC samples.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="small-improvements-development-version">Small improvements<a class="anchor" aria-label="anchor" href="#small-improvements-development-version"></a></h3>
@@ -113,6 +111,12 @@
 <li>objects provided to the <code>data</code> argument are now converted with <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>, making it possible to provide a <code>tibble</code>
 </li>
 <li>Elements of a list supplied to the <code>append_data_list</code> argument will now overwrite existing elements of the <code>data_list</code> with the same name. This enables a wider range of changes to the automatically generated JAGS model.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>Error when using the same function twice in a model formula with different number of variables (e.g., I(x^2) and I(a/b)) fixed.</li>
+<li>Fix in identifying the number of workers used in parallel computation with the <strong>future</strong> package.</li>
+<li>Fix <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> printout showing the wrong MCMC settings when using thinning.</li>
 </ul><hr></div>
 </div>
     <div class="section level2">
