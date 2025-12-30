@@ -58,6 +58,7 @@ autocorr <- function(
     thin <- coda::thin(object$MCMC)
   }
 
+  #TODO add validation of input to "outcome" to avoid unclear error messages
   coefs <- with(object$coef_list[[outcome]], setNames(varnam_print, coef))
 
   MCMC <- window(object$MCMC, start = start, end = end, thin = thin)
@@ -94,6 +95,10 @@ autocorr_plot <- function(
 ) {
   if (!inherits(object, "JointAI")) {
     stop("object must be of class 'JointAI'")
+  }
+
+  if (!requireNamespace('ggplot2', quietly = TRUE)) {
+    errormsg("This function requires the 'ggplot2' package to be installed.")
   }
 
   auto_corr <- autocorr(
