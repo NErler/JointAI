@@ -220,7 +220,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
 }
 
 
-utils::globalVariables(c("i", "value", "chain", "iteration"))
+utils::globalVariables(c("i", "value", "chain", "iteration", "L1"))
 
 
 #' Parameters used by several functions in JointAI
