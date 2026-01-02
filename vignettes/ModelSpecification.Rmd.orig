@@ -1,6 +1,6 @@
 ---
 title: "Model Specification"
-date: "2020-06-20"
+date: replace_with_today
 output:
   rmarkdown::html_vignette:
     toc: true

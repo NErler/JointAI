@@ -1,7 +1,7 @@
 ---
 title: "After Fitting"
 subtitle: "Summary, visualization and evaluation of the results"
-date: "2020-06-22"
+date: January 02, 2026
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -48,14 +48,17 @@ iterations. It allows us to evaluate convergence and mixing of the chains
 visually, and can be obtained with the function
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html):
 
-```r
+``` r
 mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500,
                  seed = 2020)
 
 traceplot(mod13a)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-1</p>
+</div>
 
 
 When the sampler has converged the chains show one horizontal band, as in the above figure.
@@ -71,14 +74,17 @@ rows and columns for the layout of the grid of plots.
 With the argument `use_ggplot` it is possible to get a [**ggplot2**](https://CRAN.R-project.org/package=ggplot2)
 version of the traceplot. It can be extended using standard **ggplot2** syntax.
 
-```r
+``` r
 library(ggplot2)
 traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
   theme(legend.position = 'bottom') +
   scale_color_brewer(palette = 'Dark2')
 ```
 
-<img src="figures_AfterFitting/ggtrace15a-1.png" alt="plot of chunk ggtrace15a" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/ggtrace15a-1.png" alt="plot of chunk ggtrace15a" width="100%" />
+<p class="caption">plot of chunk ggtrace15a</p>
+</div>
 
 
 ### Density plot
@@ -91,16 +97,19 @@ which plots the empirical density per node per chain, or combining chains
 The argument `vlines` takes a list of lists, containing specifications passed
 to `abline`, and allows us to add (vertical) lines to the plot, e.g., marking zero:
 
-```r
+``` r
 densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
          vlines = list(list(v = c(rep(0, length(coef(mod13a)$SBP)), NA),
                             col = grey(0.8))))
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-3</p>
+</div>
 or marking the posterior mean and 2.5% and 97.5% quantiles:
 
-```r
+``` r
 res <- rbind(summary(mod13a)$res$SBP$regcoef[, c('Mean', '2.5%', '97.5%')],
              summary(mod13a)$res$SBP$sigma[, c('Mean', '2.5%', '97.5%')])
 
@@ -113,14 +122,17 @@ densplot(mod13a, ncol = 3,
 )
 ```
 
-<img src="figures_AfterFitting/densplot15a-1.png" alt="plot of chunk densplot15a" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/densplot15a-1.png" alt="plot of chunk densplot15a" width="100%" />
+<p class="caption">plot of chunk densplot15a</p>
+</div>
 
 
 Like with `traceplot()` it is possible to use the **ggplot2** version of `densplot()`
 when setting `use_ggplot = TRUE`. Here, vertical lines can be added as additional
 layers:
 
-```r
+``` r
 # fit the complete-case version of the model
 mod13a_cc <- lm(formula(mod13a), data = NHANES, na.action = na.omit)
 
@@ -167,7 +179,10 @@ p13a +
                      labels = c('JointAI', 'compl.case'))
 ```
 
-<img src="figures_AfterFitting/ggdens15a-1.png" alt="plot of chunk ggdens15a" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/ggdens15a-1.png" alt="plot of chunk ggdens15a" width="100%" />
+<p class="caption">plot of chunk ggdens15a</p>
+</div>
 
 
 ## Model Summary
@@ -187,7 +202,7 @@ summary is based is given. This includes the range and number of iterations
 Furthermore, the number of observations (number of rows in the data) is given.
 
 
-```r
+``` r
 summary(mod13a)
 #> 
 #> Bayesian linear model fitted with JointAI
@@ -224,7 +239,7 @@ random effects covariance matrix `D` and the number of groups. The argument
 `missinfo = TRUE` will add information on the missing values in the variables
 involved in the model:
 
-```r
+``` r
 library(splines)
 mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
                   random = ~ 1 | ID,
@@ -232,7 +247,7 @@ mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
                   n.iter = 500, no_model = 'age', seed = 2020)
 ```
 
-```r
+``` r
 summary(mod13b, missinfo = TRUE)
 #> 
 #> Bayesian linear mixed model fitted with JointAI
@@ -304,7 +319,10 @@ estimated posterior distribution.
 The figure visualizes three examples of posterior distributions
 and the corresponding minimum of $Pr(\theta > 0)$ and $Pr(\theta < 0)$
 (shaded area):
-<img src="figures_AfterFitting/tailprob-1.png" alt="plot of chunk tailprob" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/tailprob-1.png" alt="plot of chunk tailprob" width="100%" />
+<p class="caption">plot of chunk tailprob</p>
+</div>
 
 
 ## Evaluation criteria
@@ -330,7 +348,7 @@ which is based on the function `gelman.diag()` from the package
 [**coda**](https://CRAN.R-project.org/package=coda).
 The upper limit of the confidence interval should not be much larger than 1.
 
-```r
+``` r
 GR_crit(mod13a)
 #> Potential scale reduction factors:
 #> 
@@ -363,7 +381,7 @@ standard deviation^[Lesaffre, E. M. and A. B. Lawson (2012).
 Besides the arguments explained [below](#sec:subset), `MC_error()`
 takes the arguments of `mcmcse.mat()`.
 
-```r
+``` r
 MC_error(mod13a)
 #>                est   MCSE    SD MCSE/SD
 #> (Intercept)  81.08 0.2502 9.692   0.026
@@ -387,13 +405,16 @@ deviation ratio, plotting of an object of class `MCElist` using `plot()` shows
 this ratio for each (selected) node and automatically adds a vertical line at
 the desired cut-off (by default 5%).
 
-```r
+``` r
 par(mar = c(3, 5, 0.5, 0.5), mgp = c(2, 0.6, 0), mfrow = c(1, 2))
 plot(MC_error(mod13a))  # left panel: all iterations 101:600
 plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 ```
 
-<img src="figures_AfterFitting/MCE15a-1.png" alt="plot of chunk MCE15a" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/MCE15a-1.png" alt="plot of chunk MCE15a" width="100%" />
+<p class="caption">plot of chunk MCE15a</p>
+</div>
 
 
 ## Subset of output {#sec:subset}
@@ -420,11 +441,11 @@ To display only the parameters of the imputation models, we set `subset =
 c(analysis_main = FALSE, other_models = TRUE)` (after re-estimating the model
 with the monitor for these parameters switched on):
 
-```r
+``` r
 mod13c <- update(mod13a, monitor_params = c(other_models = TRUE))
 ```
 
-```r
+``` r
 summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> 
 #> Bayesian joint model fitted with JointAI 
@@ -489,21 +510,24 @@ summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
 
-```r
+``` r
 densplot(mod13c, subset = list(analysis_main = FALSE,
                                other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="70%" />
+<p class="caption">plot of chunk unnamed-chunk-11</p>
+</div>
 
 This also works when a subset of the imputed values should be displayed:
 
-```r
+``` r
 # re-fit the model and monitor the imputed values
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 ```
 
-```r
+``` r
 # select all imputed values for 'WC' (4th column of M_lvlone)
 sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d)$coef, value = TRUE)
 sub3
@@ -513,19 +537,22 @@ sub3
 traceplot(mod13d, subset = list(analysis_main = FALSE, other = sub3), ncol = 2)
 ```
 
-<img src="figures_AfterFitting/trace15d-1.png" alt="plot of chunk trace15d" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/trace15d-1.png" alt="plot of chunk trace15d" width="70%" />
+<p class="caption">plot of chunk trace15d</p>
+</div>
 
 When the number of imputed values is large or in order to check convergence
 of random effects, it may not be feasible to plot and inspect all trace plots.
 In that case a random subset of, for instance the random effects, can be selected
 (output not shown):
 
-```r
+``` r
 # re-fit the model monitoring the random effects
 mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 ```
 
-```r
+``` r
 # extract random intercepts
 ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
@@ -534,7 +561,10 @@ traceplot(mod13e, subset = list(analysis_main = FALSE,
                                 other = sample(ri, size = 12)), ncol = 4)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-14</p>
+</div>
 
 
 ### Subset of MCMC samples
@@ -549,39 +579,54 @@ summary or plot using the argument `exclude_chains`. This argument takes a
 numeric vector identifying chains to be excluded, for example:
 
 
-```r
+``` r
 mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
                 progress.bar = 'none', n.chains = 5)
 
 densplot(mod14, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" width="90%" />
+<p class="caption">plot of chunk unnamed-chunk-15</p>
+</div>
 
-```r
+``` r
 densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-15-2.png" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-15-2.png" alt="plot of chunk unnamed-chunk-15" width="90%" />
+<p class="caption">plot of chunk unnamed-chunk-15</p>
+</div>
 
 
-```r
+``` r
 traceplot(mod14, thin = 10, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" width="90%" />
+<p class="caption">plot of chunk unnamed-chunk-16</p>
+</div>
 
-```r
+``` r
 traceplot(mod14, start = 150, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-16-2.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-16-2.png" alt="plot of chunk unnamed-chunk-16" width="90%" />
+<p class="caption">plot of chunk unnamed-chunk-16</p>
+</div>
 
-```r
+``` r
 traceplot(mod14, end = 120, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-16-3.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-16-3.png" alt="plot of chunk unnamed-chunk-16" width="90%" />
+<p class="caption">plot of chunk unnamed-chunk-16</p>
+</div>
 
 
 
@@ -606,7 +651,7 @@ Arguments `start`, `end`, `thin` and `exclude_chains` control the subset of MCMC
 
 
 
-```r
+``` r
 predict(mod13a, newdata = NHANES[27, ])
 #> $newdata
 #>          SBP gender age             race   WC alc educ creat albu
@@ -635,7 +680,7 @@ all other continuous and categorical variables.
 
 
 
-```r
+``` r
 # create dataset for prediction
 newDF <- predDF(mod13b, var = ~ age)
 
@@ -652,13 +697,16 @@ matplot(pred$newdata$age, pred$fitted,
         xlab = 'age in months', ylab = 'predicted value')
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19" width="90%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19" width="90%" />
+<p class="caption">plot of chunk unnamed-chunk-19</p>
+</div>
 
 It is possible to have multiple variables vary and to set values for these
 variables:
 
 
-```r
+``` r
 # create dataset for prediction
 newDF <- predDF(mod13b, var = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
 
@@ -668,6 +716,7 @@ pred <- predict(mod13b, newdata = newDF)
 #> Prediction in multi-level settings currently only takes into
 #> account the fixed effects, i.e., assumes that the random
 #> effect realizations are equal to zero.
+#> Error in MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], : subscript out of bounds
 
 
 # plot predicted values and credible interval
@@ -684,7 +733,10 @@ ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
   scale_y_continuous(name = 'Expected BMI', breaks = seq(15, 18, 0.5))
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20" width="90%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20" width="90%" />
+<p class="caption">plot of chunk unnamed-chunk-20</p>
+</div>
 
 
 
@@ -721,16 +773,19 @@ id variable for each observation in cross-sectional data (multi-level data shoul
 already contain an id variable).
 
 
-```r
+``` r
 impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 ```
 
 The function `plot_imp_distr()` allows us to visually compare the distribution
 of the observed and imputed values.
 
-```r
+``` r
 plot_imp_distr(impDF, nrow = 1)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_AfterFitting/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-22</p>
+</div>
 

@@ -2,7 +2,7 @@
 title: "Minimal Example"
 description: "A minimal example to demonstrate the usage of the R package JointAI."
 author: "Nicole Erler"
-date: "2020-06-20"
+date: replace_with_today
 resource_files:
   - man/figures/JointAI_square.png
 opengraph:
@@ -15,6 +15,7 @@ opengraph:
 output:
   rmarkdown::html_vignette:
     toc: true
+    fig.align: 'center'
 vignette: >
   %\VignetteIndexEntry{Minimal Example}
   %\VignetteEngine{knitr::rmarkdown}
@@ -27,6 +28,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 7,
   fig.align = 'center',
+  out.width = '100%',
+  dpi = 600,
   fig.path = "figures_MinimalExample/"
 )
 
@@ -52,7 +55,7 @@ Fitting a linear regression model with **JointAI** is straightforward with the
 function [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
 ```{r fit_lm1, message = FALSE}
 lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
-              data = NHANES, n.iter = 500)
+              data = NHANES, n.iter = 500, progress.bar = "none")
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
@@ -75,7 +78,7 @@ One important criterion is that the Markov chains need to have converged.
 Convergence can be evaluated visually with a trace plot.
 
 ## Traceplot
-```{r results_lm1, fig.width = 8, fig.height = 5, out.width = '100%'}
+```{r results_lm1, fig.width = 8, fig.height = 5}
 traceplot(lm1)
 ```
 
@@ -124,7 +127,7 @@ $$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
 
 In the following graphics, the shaded areas represent the minimum of
 $Pr(\theta > 0)$ and $Pr(\theta < 0)$:
-```{r, echo = F, fig.width = 8, fig.height = 2}
+```{r tailprob, echo = F, fig.width = 8, fig.height = 2}
 op <- par(mfrow = c(1, 3), mgp = c(1, 0.6, 0), mar = c(2.5, 1, 2, 1))
 mus <- c(1, -1.5, -2.5)
 
@@ -191,7 +194,7 @@ be added to the summary by setting `missinfo = TRUE`.
 
 ## Plot of the posterior distributions
 The posterior distributions can be visualized using the function `densplot()`:
-```{r, fig.width = 8, fig.height = 5}
+```{r densplot, fig.width = 8, fig.height = 5}
 densplot(lm1)
 ```
 

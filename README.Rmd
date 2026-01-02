@@ -108,30 +108,41 @@ data and missing values, export of imputed values and prediction.
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 ```
 
-```{r, fig.width = 8, fig.height = 4, message = FALSE, collapse=TRUE}
+```{r, fig.width = 8, fig.height = 4, message = FALSE, collapse=TRUE, dpi = 600}
 library(JointAI)
 
-plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#D10E3B', border = '#460E1B', ncol = 4, breaks = 30)
+plot_all(
+  NHANES[c(1, 5:6, 8:12)],
+  fill = '#D10E3B',
+  border = '#460E1B',
+  ncol = 4,
+  breaks = 30
+)
 ```
 
 
-```{r, fig.height = 5}
+```{r, fig.height = 5, dpi = 600}
 md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ```
 
 ### Fit a linear regression model with incomplete covariates
 
 ```{r fit_lm1, message = F}
-lm1 <- lm_imp(SBP ~ gender + age + WC + alc + educ + bili,
-              data = NHANES, n.iter = 500, progress.bar = 'none', seed = 2020)
+lm1 <- lm_imp(
+  SBP ~ gender + age + WC + alc + educ + bili,
+  data = NHANES,
+  n.iter = 500,
+  progress.bar = 'none',
+  seed = 2020
+)
 ```
 
 ### Visualize the MCMC sample
-```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 300}
+```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 450}
 traceplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4)
 ```
 
-```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 300}
+```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 450}
 densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
 ```
 
