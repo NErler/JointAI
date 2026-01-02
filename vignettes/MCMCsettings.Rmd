@@ -167,7 +167,8 @@ mod2 <- lm_imp(
   n.iter = 100,
   progress.bar = 'none'
 )
-```
+``
+`
 Specifying `n.adapt = 10` results in a warning message. The relevant part of the
 model summary from the resulting model is:
 ```{r, echo = FALSE}
@@ -284,7 +285,8 @@ mod4b <- lm_imp(SBP ~ gender + age + WC, data = NHANES, progress.bar = 'none',
                 inits = inits_fun)
 
 mod4b$mcmc_settings$inits
-```
+`
+``
 When a function is supplied, the function will be evaluated once per chain and
 the resulting list is stored.
 
@@ -432,8 +434,7 @@ specified; this is the specification that determines if sampling is performed
 sequentially or in parallel. For example,
 ```{r, eval = FALSE}
 future::plan(future::multisession, workers = 4)
-``
-`
+```
 specifies that the different MCMC chains are sampled in 4 different R sessions.
 
 This specification has to be done before the **JointAI** model function is
@@ -442,8 +443,7 @@ called and remains in place until it is overwritten.
 To re-set to sequential evaluation,
 ```{r, eval = FALSE}
 future::plan(future::sequential())
-`
-``
+```
 can be used.
 
 More information on parallel computation can be found in the help files and the
