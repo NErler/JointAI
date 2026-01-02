@@ -14,15 +14,29 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Download JAGS Windows
+      # Cache JAGS installation (Windows)
+      - name: Cache JAGS (Windows)
         if: runner.os == 'Windows'
-        run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.1.exe', 'C:\JAGS-4.3.1.exe')
-        shell: powershell
-
-      - name: Install JAGS Windows
+        uses: actions/cache@v3
+        with:
+          path: C:\Program Files\JAGS
+          key: ${{ runner.os }}-jags-4.3.1
+          restore-keys: |
+            ${{ runner.os }}-jags-
+            
+      # Install JAGS on Windows
+      - name: Install JAGS (Windows)
         if: runner.os == 'Windows'
-        run: C:\JAGS-4.3.1.exe /S
         shell: cmd
+        run: |
+          if not exist "C:\Program Files\JAGS\JAGS-4.3.1\bin\jags-terminal.exe" (
+            echo "JAGS not found in cache, downloading and installing..."
+            curl -o jags-installer.exe -L https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.1.exe/download
+            jags-installer.exe /S
+            del jags-installer.exe
+          ) else (
+            echo "JAGS found in cache, skipping installation"
+          )
 
       - name: Install rmarkdown, remotes, and the local package
         run: |

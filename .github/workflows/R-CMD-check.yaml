@@ -42,22 +42,6 @@ jobs:
           use-public-rspm: true
 
 
-
-      # - name: Query dependencies
-      #   run: |
-      #     install.packages('remotes')
-      #     saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-      #     writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-      #   shell: Rscript {0}
-      #
-      # - name: Cache R packages
-      #   if: runner.os != 'Windows'
-      #   uses: actions/cache@v1
-      #   with:
-      #     path: ${{ env.R_LIBS_USER }}
-      #     key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-      #     restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
       - name: Install JAGS macOS
         if: runner.os == 'macOS'
         run: |
@@ -109,42 +93,3 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-
-      # - name: Install dependencies
-      #   run: |
-      #     remotes::install_deps(dependencies = TRUE)
-      #     remotes::install_cran("rcmdcheck")
-      #   shell: Rscript {0}
-
-      # - name: Session info
-      #   run: |
-      #     options(width = 100)
-      #     pkgs <- installed.packages()[, "Package"]
-      #     sessioninfo::session_info(pkgs, include_base = TRUE)
-      #   shell: Rscript {0}
-
-      # - name: Check
-      #   env:
-      #     _R_CHECK_CRAN_INCOMING_: false
-      #     _R_CHECK_FORCE_SUGGESTS_: false
-      #     _R_CHECK_SYSTEM_CLOCK_: false
-      #     IS_CHECK: true
-      #   run: |
-      #     os = .Platform$OS.type
-      #     if (os == "windows" & R.version$major == 3) {remotes::install_version("rjags", version = "4-10")}
-      #     jagshome = if (os == "windows") {readRegistry("SOFTWARE\\JAGS", maxdepth = 2, view = "32-bit")}
-      #     if (os == "windows"){Sys.setenv(JAGS_HOME = try(jagshome[["JAGS-4.3.0"]][["InstallDir"]]))}
-      #     rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), build_args = "--no-manual", error_on = "warning", check_dir = "check")
-      #   shell: Rscript {0}
-
-      # - name: Show testthat output
-      #   if: always()
-      #   run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
-      #   shell: bash
-      #
-      # - name: Upload check results
-      #   if: failure()
-      #   uses: actions/upload-artifact@main
-      #   with:
-      #     name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-      #     path: check
