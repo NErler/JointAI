@@ -40,29 +40,42 @@ predDF <- function(object, ...) {
 #' @rdname predDF
 #' @export
 predDF.JointAI <- function(object, vars, length = 100L, ...) {
-
-  if (!inherits(object, "JointAI"))
+  if (!inherits(object, "JointAI")) {
     stop("Use only with 'JointAI' objects.\n")
+  }
 
-  predDF.list(object = c(object$fixed,
-                         object$random,
-                         object$Mlist$auxvars,
-                         if (!is.null(object$Mlist$timevar))
-                           as.formula(paste0("~", object$Mlist$timevar))
-  ),
-  data = object$data, vars = vars,
-  length = length, idvar = object$Mlist$idvar, ...)
+  predDF.list(
+    object = c(
+      object$fixed,
+      object$random,
+      object$Mlist$auxvars,
+      if (!is.null(object$Mlist$timevar)) {
+        as.formula(paste0("~", object$Mlist$timevar))
+      }
+    ),
+    data = object$data,
+    vars = vars,
+    length = length,
+    idvar = object$Mlist$idvar,
+    ...
+  )
 }
 
 
 #' @rdname predDF
 #' @export
 predDF.formula <- function(object, data, vars, length = 100L, ...) {
-  if (!inherits(object, "formula"))
+  if (!inherits(object, "formula")) {
     stop("Use only with 'formula' objects.\n")
+  }
 
-  predDF(object = check_formula_list(object), data = data, vars = vars,
-         length = length, ...)
+  predDF(
+    object = check_formula_list(object),
+    data = data,
+    vars = vars,
+    length = length,
+    ...
+  )
 }
 
 #' @rdname predDF
@@ -70,12 +83,12 @@ predDF.formula <- function(object, data, vars, length = 100L, ...) {
 #' @keywords internal
 #' @export
 predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
-
   id_vars <- extract_grouping(vars, warn = FALSE)
   varying <- all_vars(vars)
 
-  if (is.null(idvar))
+  if (is.null(idvar)) {
     idvar <- "id"
+  }
 
   allvars <- all_vars(object)
 
@@ -95,16 +108,21 @@ predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
         if (k %in% names(list(...))) {
           list(...)[[k]]
         } else {
-          seq(min(data[, k], na.rm = TRUE),
-              max(data[, k], na.rm = TRUE), length = length)
+          seq(
+            min(data[, k], na.rm = TRUE),
+            max(data[, k], na.rm = TRUE),
+            length = length
+          )
         }
       }
     } else {
       if (is.factor(data[, k])) {
         factor(levels(data[, k])[1L], levels = levels(data[, k]))
       } else if (is.logical(data[, k]) | is.character(data[, k])) {
-        factor(levels(as.factor(data[, k]))[1L],
-               levels = levels(as.factor(data[, k])))
+        factor(
+          levels(as.factor(data[, k]))[1L],
+          levels = levels(as.factor(data[, k]))
+        )
       } else if (is.numeric(data[, k])) {
         median(data[, k], na.rm = TRUE)
       }
@@ -116,15 +134,10 @@ predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
   if (!is.null(id_vars)) {
     id_df <- unique(subset(ndf, select = id_vars))
     id_df[, idvar] <- seq_len(nrow(id_df))
-    ndf <- merge(subset(ndf, select = !names(ndf) %in% idvar),
-                 id_df)
+    ndf <- merge(subset(ndf, select = !names(ndf) %in% idvar), id_df)
   }
   ndf
 }
-
-
-
-
 
 
 #' Predict values from an object of class JointAI
@@ -193,83 +206,112 @@ predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
 #'
 
 #' @export
-predict.JointAI <- function(object, outcome = 1L, newdata,
-                            quantiles = c(0.025, 0.975),
-                            type = "lp",
-                            start = NULL, end = NULL, thin = NULL,
-                            exclude_chains = NULL, mess = TRUE,
-                            warn = TRUE, return_sample = FALSE, ...) {
-
-
-  if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
+predict.JointAI <- function(
+  object,
+  outcome = 1L,
+  newdata,
+  quantiles = c(0.025, 0.975),
+  type = "lp",
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  exclude_chains = NULL,
+  mess = TRUE,
+  warn = TRUE,
+  return_sample = FALSE,
+  ...
+) {
+  if (!inherits(object, "JointAI")) {
+    errormsg("Use only with 'JointAI' objects.")
+  }
 
   if (missing(newdata)) {
     newdata <- object$data
   } else {
-    newdata <- convert_variables(data = newdata,
-                                 allvars = unique(c(all_vars(object$fixed),
-                                                    all_vars(object$random),
-                                                    all_vars(object$auxvars))),
-                                 mess = FALSE
-                                 #data_orig = object$data
-                                 )
+    newdata <- convert_variables(
+      data = newdata,
+      allvars = unique(c(
+        all_vars(object$fixed),
+        all_vars(object$random),
+        all_vars(object$auxvars)
+      )),
+      mess = FALSE
+      #data_orig = object$data
+    )
     #TODO: new version of convert_variables does no longer have "data_orig" argument
     #Maybe this check should be done by the new "compare_data_structure()".
   }
 
-
-  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin,
-                    subset = FALSE, exclude_chains = exclude_chains,
-                    mess = mess, ...)
-
+  MCMC <- prep_MCMC(
+    object,
+    start = start,
+    end = end,
+    thin = thin,
+    subset = FALSE,
+    exclude_chains = exclude_chains,
+    mess = mess,
+    ...
+  )
 
   if (length(type) == 1L & length(outcome == 1L)) {
-    types <- setNames(rep(type, length(object$fixed)),
-                      names(object$fixed))
+    types <- setNames(rep(type, length(object$fixed)), names(object$fixed))
   } else {
     if (any(!names(type) %in% names(object$fixed))) {
-      errormsg("When %s is a named vector, the names must match outcome
-               variables, i.e., %s.", dQuote("type"),
-               dQuote(names(object$fixed)))
-
-
+      errormsg(
+        "When %s is a named vector, the names must match outcome
+               variables, i.e., %s.",
+        dQuote("type"),
+        dQuote(names(object$fixed))
+      )
     }
-    types <- setNames(rep(type, length(object$fixed)),
-                      names(object$fixed))
+    types <- setNames(rep(type, length(object$fixed)), names(object$fixed))
     types[names(type)] <- type
   }
 
   preds <- lapply(names(object$fixed)[outcome], function(varname) {
-
     if (!is.null(object$info_list[[varname]]$hc_list) & warn) {
-      warnmsg("Prediction in multi-level settings currently only takes into
+      warnmsg(
+        "Prediction in multi-level settings currently only takes into
                account the fixed effects, i.e., assumes that the random effect
-               realizations are equal to zero.")
+               realizations are equal to zero."
+      )
     }
 
-    predict_fun <- switch(object$info_list[[varname]]$modeltype,
-                          glm = predict_glm,
-                          glmm = predict_glm,
-                          clm = predict_clm,
-                          mlogit = predict_mlogit,
-                          clmm = predict_clm,
-                          mlogitmm = predict_mlogit,
-                          survreg = predict_survreg,
-                          coxph = predict_coxph,
-                          JM = predict_jm
+    predict_fun <- switch(
+      object$info_list[[varname]]$modeltype,
+      glm = predict_glm,
+      glmm = predict_glm,
+      clm = predict_clm,
+      mlogit = predict_mlogit,
+      clmm = predict_clm,
+      mlogitmm = predict_mlogit,
+      survreg = predict_survreg,
+      coxph = predict_coxph,
+      JM = predict_jm
     )
     if (!is.null(predict_fun)) {
-      predict_fun(formula = object$fixed[[varname]],
-                  newdata = newdata, type = types[varname], data = object$data,
-                  MCMC = MCMC, varname = varname,
-                  Mlist = get_Mlist(object), srow = object$data_list$srow,
-                  coef_list = object$coef_list, info_list = object$info_list,
-                  quantiles = quantiles, mess = mess, warn = warn,
-                  contr_list = lapply(object$Mlist$refs, attr, "contr_matrix"),
-                  return_sample = return_sample)
+      predict_fun(
+        formula = object$fixed[[varname]],
+        newdata = newdata,
+        type = types[varname],
+        data = object$data,
+        MCMC = MCMC,
+        varname = varname,
+        Mlist = get_Mlist(object),
+        srow = object$data_list$srow,
+        coef_list = object$coef_list,
+        info_list = object$info_list,
+        quantiles = quantiles,
+        mess = mess,
+        warn = warn,
+        contr_list = lapply(object$Mlist$refs, attr, "contr_matrix"),
+        return_sample = return_sample
+      )
     } else {
-      errormsg("Prediction is not yet implemented for a model of type %s.",
-               dQuote(object$info_list[[varname]]$modeltype))
+      errormsg(
+        "Prediction is not yet implemented for a model of type %s.",
+        dQuote(object$info_list[[varname]]$modeltype)
+      )
     }
   })
   names(preds) <- names(object$fixed)[outcome]
@@ -280,16 +322,15 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
   outlist <- list(
     newdata = if (length(preds) == 1L) {
       cbind(newdata, pred_df[[1L]])
-
     } else {
       cbind(newdata, unlist(pred_df, recursive = FALSE))
     },
-    fitted = if (length(preds) == 1L)  {
+    fitted = if (length(preds) == 1L) {
       pred_df[[1L]]
     } else {
       pred_df
     },
-    sample = if (length(preds) == 1L)  {
+    sample = if (length(preds) == 1L) {
       sample[[1L]]
     } else {
       sample
@@ -299,18 +340,32 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
 }
 
 
-predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
-                        data, MCMC, varname, coef_list, info_list,
-                        quantiles = c(0.025, 0.975), warn = TRUE,
-                        contr_list, Mlist, return_sample = FALSE, ...) {
-
+predict_glm <- function(
+  formula,
+  newdata,
+  type = c("link", "response", "lp"),
+  data,
+  MCMC,
+  varname,
+  coef_list,
+  info_list,
+  quantiles = c(0.025, 0.975),
+  warn = TRUE,
+  contr_list,
+  Mlist,
+  return_sample = FALSE,
+  ...
+) {
   type <- match.arg(type)
 
-  if (type == "lp")
+  if (type == "lp") {
     type <- "link"
+  }
 
-  linkinv <- if (info_list[[varname]]$family %in%
-                 c("gaussian", "binomial", "Gamma", "poisson")) {
+  linkinv <- if (
+    info_list[[varname]]$family %in%
+      c("gaussian", "binomial", "Gamma", "poisson")
+  ) {
     get(info_list[[varname]]$family)(link = info_list[[varname]]$link)$linkinv
   } else if (info_list[[varname]]$family %in% "lognorm") {
     gaussian(link = "log")$linkinv
@@ -328,35 +383,43 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
     scale_pars
   }
 
-
-  mf <- model.frame(as.formula(paste(formula[-2L], collapse = " ")),
-                    data, na.action = na.pass)
+  mf <- model.frame(
+    as.formula(paste(formula[-2L], collapse = " ")),
+    data,
+    na.action = na.pass
+  )
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
 
-  desgn_mat <- model.matrix(mt, data = newdata,
-                            contrasts.arg = contr_list[intersect(
-                              names(contr_list),
-                              cvapply(attr(mt, "variables")[-1L], deparse,
-                                      width.cutoff = 500L)
-                            )]
+  desgn_mat <- model.matrix(
+    mt,
+    data = newdata,
+    contrasts.arg = contr_list[intersect(
+      names(contr_list),
+      cvapply(attr(mt, "variables")[-1L], deparse, width.cutoff = 500L)
+    )]
   )
 
-
-  if (warn & any(is.na(desgn_mat)))
-    warnmsg("Prediction for cases with missing covariates is not yet
+  if (warn & any(is.na(desgn_mat))) {
+    warnmsg(
+      "Prediction for cases with missing covariates is not yet
         implemented.
         I will report %s instead of predicted values for those cases.",
-            dQuote("NA"), exdent = 6L)
-
+      dQuote("NA"),
+      exdent = 6L
+    )
+  }
 
   # linear predictor values for the selected iterations of the MCMC sample
   pred <- calc_lp(
-    regcoefs = MCMC[, coefs$coef[match(colnames(desgn_mat),
-                                       coefs$varname)], drop = FALSE],
+    regcoefs = MCMC[,
+      coefs$coef[match(colnames(desgn_mat), coefs$varname)],
+      drop = FALSE
+    ],
     design_mat = desgn_mat,
-    scale_pars)
+    scale_pars
+  )
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == "response") {
@@ -373,10 +436,10 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   quants <- if (!is.null(quantiles)) {
     if (type == "response") {
       t(apply(pred, 2L, function(q) {
-        quantile(linkinv(q), probs = quantiles, na.rm  = TRUE)
+        quantile(linkinv(q), probs = quantiles, na.rm = TRUE)
       }))
     } else {
-      t(apply(pred, 2L, quantile, quantiles, na.rm  = TRUE))
+      t(apply(pred, 2L, quantile, quantiles, na.rm = TRUE))
     }
   }
 
@@ -398,8 +461,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   on.exit(options(op))
 
   res_df <- if (!is.null(quantiles)) {
-    cbind(data.frame(fit = fit),
-          as.data.frame(quants))
+    cbind(data.frame(fit = fit), as.data.frame(quants))
   } else {
     data.frame(fit = fit)
   }
@@ -408,48 +470,69 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 }
 
 
-
-predict_survreg <- function(formula, newdata, type = c("response", "link",
-                                                       "lp",
-                                                       "linear"),
-                            data, MCMC, varname, coef_list, info_list,
-                            quantiles = c(0.025, 0.975), warn = TRUE,
-                            contr_list, return_sample = FALSE, ...) {
-
+predict_survreg <- function(
+  formula,
+  newdata,
+  type = c("response", "link", "lp", "linear"),
+  data,
+  MCMC,
+  varname,
+  coef_list,
+  info_list,
+  quantiles = c(0.025, 0.975),
+  warn = TRUE,
+  contr_list,
+  return_sample = FALSE,
+  ...
+) {
   type <- match.arg(type)
 
-  if (type == "link")
+  if (type == "link") {
     type <- "lp"
+  }
 
-  if (type == "linear")
+  if (type == "linear") {
     type <- "lp"
+  }
 
   coefs <- coef_list[[varname]]
 
-  mf <- model.frame(as.formula(paste(formula[-2L], collapse = " ")),
-                    data, na.action = na.pass)
+  mf <- model.frame(
+    as.formula(paste(formula[-2L], collapse = " ")),
+    data,
+    na.action = na.pass
+  )
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  desgn_mat <- model.matrix(mt, data = newdata,
-                            contr_list[intersect(
-                              names(contr_list),
-                              cvapply(attr(mt, "variables")[-1L], deparse,
-                                      width.cutoff = 500L)
-                            )]
+  desgn_mat <- model.matrix(
+    mt,
+    data = newdata,
+    contr_list[intersect(
+      names(contr_list),
+      cvapply(attr(mt, "variables")[-1L], deparse, width.cutoff = 500L)
+    )]
   )
 
-
-  if (warn & any(is.na(desgn_mat)))
-    warnmsg("Prediction for cases with missing covariates is not yet
-            implemented.")
-
+  if (warn & any(is.na(desgn_mat))) {
+    warnmsg(
+      "Prediction for cases with missing covariates is not yet
+            implemented."
+    )
+  }
 
   # linear predictor values for the selected iterations of the MCMC sample
-  pred <- vapply(seq_len(nrow(desgn_mat)), function(i) {
-    MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)],
-         drop = FALSE] %*% desgn_mat[i, ]
-  }, FUN.VALUE = numeric(nrow(MCMC)))
+  pred <- vapply(
+    seq_len(nrow(desgn_mat)),
+    function(i) {
+      MCMC[,
+        coefs$coef[match(colnames(desgn_mat), coefs$varname)],
+        drop = FALSE
+      ] %*%
+        desgn_mat[i, ]
+    },
+    FUN.VALUE = numeric(nrow(MCMC))
+  )
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == "response") {
@@ -462,11 +545,12 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
   quants <- if (!is.null(quantiles)) {
     if (type == "response") {
       t(apply(pred, 2L, function(q) {
-        quantile(exp(q), probs = quantiles, na.rm  = TRUE)
+        quantile(exp(q), probs = quantiles, na.rm = TRUE)
       }))
     } else {
-      t(apply(pred, 2L, quantile, quantiles, na.rm  = TRUE))
-    }}
+      t(apply(pred, 2L, quantile, quantiles, na.rm = TRUE))
+    }
+  }
 
   sample <- if (return_sample) {
     s <- if (type == "response") {
@@ -482,8 +566,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
   on.exit(options(op))
 
   res_df <- if (!is.null(quantiles)) {
-    cbind(data.frame(fit = fit),
-          as.data.frame(quants))
+    cbind(data.frame(fit = fit), as.data.frame(quants))
   } else {
     data.frame(fit = fit)
   }
@@ -492,47 +575,65 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
 }
 
 
-
-predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
-                          type = c("lp", "risk", "expected", "survival"),
-                          varname, quantiles = c(0.025, 0.975),
-                          srow = NULL, warn = TRUE, contr_list,
-                          return_sample = FALSE, ...) {
+predict_coxph <- function(
+  Mlist,
+  coef_list,
+  MCMC,
+  newdata,
+  data,
+  info_list,
+  type = c("lp", "risk", "expected", "survival"),
+  varname,
+  quantiles = c(0.025, 0.975),
+  srow = NULL,
+  warn = TRUE,
+  contr_list,
+  return_sample = FALSE,
+  ...
+) {
   type <- match.arg(type)
 
   coefs <- coef_list[[varname]]
 
   survinfo <- get_survinfo(info_list, Mlist)[varname]
 
-
   resp_mat <- info_list[[varname]]$resp_mat[2L]
   surv_lvl <- survinfo[[1L]]$surv_lvl
 
-  mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]][-2L],
-                                     collapse = " ")),
-                    data, na.action = na.pass)
+  mf <- model.frame(
+    as.formula(paste(Mlist$fixed[[varname]][-2L], collapse = " ")),
+    data,
+    na.action = na.pass
+  )
   mt <- attr(mf, "terms")
-
 
   op <- options(na.action = na.pass)
 
-  desgn_mat_sub <- model.matrix(mt, data = newdata,
-                                contr_list[intersect(
-                                  names(contr_list),
-                                  cvapply(attr(mt, "variables")[-1L], deparse,
-                                          width.cutoff = 500L)
-                                )]
+  desgn_mat_sub <- model.matrix(
+    mt,
+    data = newdata,
+    contr_list[intersect(
+      names(contr_list),
+      cvapply(attr(mt, "variables")[-1L], deparse, width.cutoff = 500L)
+    )]
   )[, -1L, drop = FALSE]
 
-  desgn_mat <- setNames(lapply(names(Mlist$M), function(lvl) {
-    desgn_mat_sub[, colnames(desgn_mat_sub) %in% colnames(Mlist$M[[lvl]]),
-                  drop = FALSE]
-  }), names(Mlist$M))
+  desgn_mat <- setNames(
+    lapply(names(Mlist$M), function(lvl) {
+      desgn_mat_sub[,
+        colnames(desgn_mat_sub) %in% colnames(Mlist$M[[lvl]]),
+        drop = FALSE
+      ]
+    }),
+    names(Mlist$M)
+  )
 
-
-  if (warn & any(is.na(desgn_mat)))
-    warnmsg("Prediction for cases with missing covariates is not yet
-            implemented.")
+  if (warn & any(is.na(desgn_mat))) {
+    warnmsg(
+      "Prediction for cases with missing covariates is not yet
+            implemented."
+    )
+  }
 
   scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
   if (!is.null(scale_pars)) {
@@ -544,35 +645,32 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
       MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
         (t(x) - scale_pars$center[match(colnames(x), rownames(scale_pars))])
     } else {
-      t(x) %*% MCMC[, coefs$coef[match(colnames(x), coefs$varname)],
-                    drop = FALSE]
+      t(x) %*%
+        MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE]
     }
   })
 
+  eta_surv <- if (
+    any(Mlist$group_lvls >= Mlist$group_lvls[gsub("M_", "", resp_mat)])
+  ) {
+    lvls <- names(which(
+      Mlist$group_lvls >= Mlist$group_lvls[gsub("M_", "", resp_mat)]
+    ))
 
-  eta_surv <- if (any(Mlist$group_lvls >=
-                      Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
-
-    lvls <- names(which(Mlist$group_lvls >=
-                          Mlist$group_lvls[gsub("M_", "", resp_mat)]))
-
-    Reduce(function(x1, x2) x1 + x2,
-           lp_list[paste0("M_", lvls)])
-
+    Reduce(function(x1, x2) x1 + x2, lp_list[paste0("M_", lvls)])
   } else {
     0L
   }
 
-  eta_surv_long <- if (any(Mlist$group_lvls <
-                           Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
-                       survinfo[[1L]]$haslong) {
+  eta_surv_long <- if (
+    any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
+      survinfo[[1L]]$haslong
+  ) {
+    lvls <- names(which(
+      Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)]
+    ))
 
-    lvls <- names(which(Mlist$group_lvls <
-                          Mlist$group_lvls[gsub("M_", "", resp_mat)]))
-
-    Reduce(function(x1, x2) x1 + x2,
-           lp_list[paste0("M_", lvls)])
-
+    Reduce(function(x1, x2) x1 + x2, lp_list[paste0("M_", lvls)])
   } else {
     0L
   }
@@ -581,89 +679,125 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   ordgkx <- order(gkx)
   gkw <- gauss_kronrod()$gkw[ordgkx]
 
-
   srow <- if (is.null(Mlist$timevar)) {
     seq_len(nrow(Mlist$M[[resp_mat]]))
   } else {
-    which(Mlist$M$M_lvlone[, Mlist$timevar] ==
-            Mlist$M[[resp_mat]][Mlist$groups[[surv_lvl]],
-                                survinfo[[1L]]$time_name])
+    which(
+      Mlist$M$M_lvlone[, Mlist$timevar] ==
+        Mlist$M[[resp_mat]][Mlist$groups[[surv_lvl]], survinfo[[1L]]$time_name]
+    )
   }
 
-
-  h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4L,
-                          Time = survinfo[[1L]]$survtime,
-                          event = NULL, gkx = gkx)
+  h0knots <- get_knots_h0(
+    nkn = Mlist$df_basehaz - 4L,
+    Time = survinfo[[1L]]$survtime,
+    event = NULL,
+    gkx = gkx
+  )
 
   if (type %in% c("expected", "survival")) {
-
     Bsh0 <-
-      splines::splineDesign(h0knots,
-                            c(t(outer(newdata[, survinfo[[1L]]$time_name] / 2L,
-                                      gkx + 1L))),
-                            ord = 4L, outer.ok = TRUE)
+      splines::splineDesign(
+        h0knots,
+        c(t(outer(newdata[, survinfo[[1L]]$time_name] / 2L, gkx + 1L))),
+        ord = 4L,
+        outer.ok = TRUE
+      )
 
+    mcmc_cols <- grep(
       paste0("\\bbeta_Bh0_", internal_clean_survname(varname), "\\b"),
       colnames(MCMC)
+    )
 
     logh0s <- lapply(seq_len(nrow(MCMC)), function(m) {
-      matrix(Bsh0 %*% MCMC[m, mcmc_cols],
-             ncol = 15L, nrow = nrow(newdata), byrow = TRUE)
+      matrix(
+        Bsh0 %*% MCMC[m, mcmc_cols],
+        ncol = 15L,
+        nrow = nrow(newdata),
+        byrow = TRUE
+      )
     })
 
+    tvpred <- if (
+      any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
+        survinfo[[1L]]$haslong
+    ) {
+      mat_gk <- do.call(
+        rbind,
+        get_matgk(
+          Mlist,
+          gkx,
+          surv_lvl = gsub("M_", "", resp_mat),
+          survinfo = survinfo,
+          data = newdata,
+          rows = seq_len(nrow(newdata)),
+          td_cox = unique(
+            cvapply(survinfo, "[[", "modeltype")
+          ) ==
+            "coxph"
+        )
+      )
 
-    tvpred <- if (any(Mlist$group_lvls <
-                      Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
-                  survinfo[[1L]]$haslong) {
-      mat_gk <- do.call(rbind,
-                        get_matgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
-                                  survinfo = survinfo, data = newdata,
-                                  rows = seq_len(nrow(newdata)),
-                                  td_cox = unique(
-                                    cvapply(survinfo, "[[", "modeltype")
-                                  ) == "coxph"))
-
-      vars <- coefs$varname[na.omit(match(dimnames(mat_gk)[[2L]], coefs$varname))]
+      vars <- coefs$varname[na.omit(match(
+        dimnames(mat_gk)[[2L]],
+        coefs$varname
+      ))]
 
       lapply(seq_len(nrow(MCMC)), function(m) {
         if (!is.null(scale_pars)) {
-          matrix((mat_gk[, vars, drop = FALSE] -
-                    outer(rep(1L, prod(dim(mat_gk)[-2L])),
-                          scale_pars$center[match(vars,
-                                                  rownames(scale_pars))])) %*%
-                   MCMC[m, coefs$coef[match(vars, coefs$varname)]],
-                 nrow = nrow(newdata), ncol = length(gkx))
+          matrix(
+            (mat_gk[, vars, drop = FALSE] -
+              outer(
+                rep(1L, prod(dim(mat_gk)[-2L])),
+                scale_pars$center[match(vars, rownames(scale_pars))]
+              )) %*%
+              MCMC[m, coefs$coef[match(vars, coefs$varname)]],
+            nrow = nrow(newdata),
+            ncol = length(gkx)
+          )
         } else {
-          matrix(mat_gk[, vars, drop = FALSE] %*%
-                   MCMC[m, coefs$coef[match(vars, coefs$varname)]],
-                 nrow = nrow(newdata), ncol = length(gkx))
+          matrix(
+            mat_gk[, vars, drop = FALSE] %*%
+              MCMC[m, coefs$coef[match(vars, coefs$varname)]],
+            nrow = nrow(newdata),
+            ncol = length(gkx)
+          )
         }
       })
     } else {
       0L
     }
 
-    surv <- Map(function(logh0s, tvpred) {
-      exp(logh0s + tvpred) %*% gkw
-    }, logh0s = logh0s, tvpred = tvpred)
+    surv <- Map(
+      function(logh0s, tvpred) {
+        exp(logh0s + tvpred) %*% gkw
+      },
+      logh0s = logh0s,
+      tvpred = tvpred
+    )
 
-    log_surv <- -exp(t(eta_surv)) * do.call(cbind, surv) *
-      outer(newdata[, survinfo[[1L]]$time_name],
-            rep(1L, nrow(MCMC))) / 2L
-
+    log_surv <- -exp(t(eta_surv)) *
+      do.call(cbind, surv) *
+      outer(newdata[, survinfo[[1L]]$time_name], rep(1L, nrow(MCMC))) /
+      2L
   } else {
+    Bh0 <- splines::splineDesign(
+      h0knots,
+      newdata[, survinfo[[1L]]$time_name],
+      ord = 4L,
+      outer.ok = TRUE
+    )
 
-    Bh0 <- splines::splineDesign(h0knots, newdata[, survinfo[[1L]]$time_name],
-                                 ord = 4L, outer.ok = TRUE)
-
-    logh0 <- vapply(seq_len(nrow(Bh0)), function(i) {
-      MCMC[, grep("beta_Bh0", colnames(MCMC))] %*% Bh0[i, ]
-    }, FUN.VALUE = numeric(nrow(MCMC)))
-
+    logh0 <- vapply(
+      seq_len(nrow(Bh0)),
+      function(i) {
+        MCMC[, grep("beta_Bh0", colnames(MCMC))] %*% Bh0[i, ]
+      },
+      FUN.VALUE = numeric(nrow(MCMC))
+    )
 
     logh <- logh0 + eta_surv + eta_surv_long
   }
-
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == "risk") {
@@ -679,16 +813,15 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   # quantiles
   quants <- if (!is.null(quantiles)) {
     if (type == "risk") {
-      t(apply(exp(logh), 2L, quantile, quantiles, na.rm  = TRUE))
+      t(apply(exp(logh), 2L, quantile, quantiles, na.rm = TRUE))
     } else if (type == "lp") {
-      t(apply(logh, 2L, quantile, quantiles, na.rm  = TRUE))
+      t(apply(logh, 2L, quantile, quantiles, na.rm = TRUE))
     } else if (type == "expected") {
-      t(apply(-log_surv, 1L, quantile, quantiles, na.rm  = TRUE))
+      t(apply(-log_surv, 1L, quantile, quantiles, na.rm = TRUE))
     } else if (type == "survival") {
-      t(apply(exp(log_surv), 1L, quantile, quantiles, na.rm  = TRUE))
+      t(apply(exp(log_surv), 1L, quantile, quantiles, na.rm = TRUE))
     }
   }
-
 
   sample <- if (return_sample) {
     s <- if (type == "risk") {
@@ -708,28 +841,36 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   on.exit(options(op))
 
   res_df <- if (!is.null(quantiles)) {
-    cbind(data.frame(fit = fit),
-          as.data.frame(quants))
+    cbind(data.frame(fit = fit), as.data.frame(quants))
   } else {
     data.frame(fit = fit)
   }
-
 
   list(res_df = res_df, sample = sample)
 }
 
 
-predict_clm <- function(formula, newdata,
-                        type = c("prob", "lp", "class", "response"),
-                        data, MCMC, varname, coef_list, info_list,
-                        quantiles = c(0.025, 0.975), warn = TRUE,
-                        contr_list, Mlist, return_sample = FALSE, ...) {
-
+predict_clm <- function(
+  formula,
+  newdata,
+  type = c("prob", "lp", "class", "response"),
+  data,
+  MCMC,
+  varname,
+  coef_list,
+  info_list,
+  quantiles = c(0.025, 0.975),
+  warn = TRUE,
+  contr_list,
+  Mlist,
+  return_sample = FALSE,
+  ...
+) {
   type <- match.arg(type)
 
-  if (type == "response")
+  if (type == "response") {
     type <- "class"
-
+  }
 
   coefs <- coef_list[[varname]]
 
@@ -738,63 +879,76 @@ predict_clm <- function(formula, newdata,
     scale_pars$center[is.na(scale_pars$center)] <- 0L
   }
 
-  mf <- model.frame(as.formula(paste(formula[-2L], collapse = " ")),
-                    data, na.action = na.pass)
+  mf <- model.frame(
+    as.formula(paste(formula[-2L], collapse = " ")),
+    data,
+    na.action = na.pass
+  )
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  desgn_mat <- model.matrix(mt,
-                            data = newdata,
-                            contrasts.arg = contr_list[intersect(
-                              names(contr_list),
-                              cvapply(attr(mt, "variables")[-1L], deparse,
-                                      width.cutoff = 500L)
-                            )]
+  desgn_mat <- model.matrix(
+    mt,
+    data = newdata,
+    contrasts.arg = contr_list[intersect(
+      names(contr_list),
+      cvapply(attr(mt, "variables")[-1L], deparse, width.cutoff = 500L)
+    )]
   )[, -1L, drop = FALSE]
 
-  if (warn & any(is.na(desgn_mat)))
-    warnmsg("Prediction for cases with missing covariates is not yet
-            implemented.")
+  if (warn & any(is.na(desgn_mat))) {
+    warnmsg(
+      "Prediction for cases with missing covariates is not yet
+            implemented."
+    )
+  }
 
   # multiply MCMC sample with design matrix to get linear predictor
-  coefs_prop <- coefs[is.na(coefs$outcat) &
-                        coefs$varname %in% colnames(desgn_mat), ]
-  coefs_nonprop <- coefs[!is.na(coefs$outcat) &
-                           coefs$varname %in% colnames(desgn_mat), ]
+  coefs_prop <- coefs[
+    is.na(coefs$outcat) &
+      coefs$varname %in% colnames(desgn_mat),
+  ]
+  coefs_nonprop <- coefs[
+    !is.na(coefs$outcat) &
+      coefs$varname %in% colnames(desgn_mat),
+  ]
   coefs_nonprop <- split(coefs_nonprop, coefs_nonprop$outcat)
 
-
-  eta <- calc_lp(regcoefs = MCMC[, coefs_prop$coef, drop = FALSE],
-                 design_mat = desgn_mat[, coefs_prop$varname, drop = FALSE],
-                 scale_pars)
+  eta <- calc_lp(
+    regcoefs = MCMC[, coefs_prop$coef, drop = FALSE],
+    design_mat = desgn_mat[, coefs_prop$varname, drop = FALSE],
+    scale_pars
+  )
 
   eta_nonprop <- if (length(coefs_nonprop) > 0L) {
     lapply(coefs_nonprop, function(c_np_k) {
-      calc_lp(regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
-              design_mat = desgn_mat[, c_np_k$varname, drop = FALSE],
-              scale_pars = scale_pars)
+      calc_lp(
+        regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
+        design_mat = desgn_mat[, c_np_k$varname, drop = FALSE],
+        scale_pars = scale_pars
+      )
     })
   }
 
-
   gammas <- lapply(
     grep(paste0("gamma_", varname), colnames(MCMC), value = TRUE),
-    function(k)
-      matrix(nrow = nrow(eta), ncol = ncol(eta),
-             data = rep(MCMC[, k], ncol(eta)),
-             byrow = FALSE)
+    function(k) {
+      matrix(
+        nrow = nrow(eta),
+        ncol = ncol(eta),
+        data = rep(MCMC[, k], ncol(eta)),
+        byrow = FALSE
+      )
+    }
   )
-
 
   # add the category specific intercepts to the linear predictor
   lp <- lapply(seq_along(gammas), function(k) {
-    gammas[[k]] + eta +
-      if (is.null(eta_nonprop)) 0L else eta_nonprop[[k]]
+    gammas[[k]] + eta + if (is.null(eta_nonprop)) 0L else eta_nonprop[[k]]
   })
 
   mat1 <- matrix(nrow = nrow(eta), ncol = ncol(eta), data = 1L)
   mat0 <- mat1 * 0L
-
 
   if (info_list[[varname]]$rev) {
     names(lp) <- paste0("logOdds(", varname, "<=", seq_along(lp), ")")
@@ -804,12 +958,18 @@ predict_clm <- function(formula, newdata,
       minmax_mat(pred[[k]] - pred[[k - 1L]])
     })
 
-    probs <- c(probs,
-               list(
-                 1L - minmax_mat(
-                   apply(array(dim = c(dim(probs[[1L]]), length(probs)),
-                               unlist(probs)), c(1L, 2L), sum)
-                 ))
+    probs <- c(
+      probs,
+      list(
+        1L -
+          minmax_mat(
+            apply(
+              array(dim = c(dim(probs[[1L]]), length(probs)), unlist(probs)),
+              c(1L, 2L),
+              sum
+            )
+          )
+      )
     )
   } else {
     names(lp) <- paste0("logOdds(", varname, ">", seq_along(lp), ")")
@@ -819,16 +979,21 @@ predict_clm <- function(formula, newdata,
       minmax_mat(pred[[k - 1L]] - pred[[k]])
     })
 
-    probs <- c(list(
-      1L - minmax_mat(
-        apply(array(dim = c(dim(probs[[1L]]), length(probs)),
-                    unlist(probs)), c(1L, 2L), sum)
-      )),
-      probs)
+    probs <- c(
+      list(
+        1L -
+          minmax_mat(
+            apply(
+              array(dim = c(dim(probs[[1L]]), length(probs)), unlist(probs)),
+              c(1L, 2L),
+              sum
+            )
+          )
+      ),
+      probs
+    )
   }
-  names(probs) <- paste0("P(", varname, "=",
-                         levels(data[, varname]),
-                         ")")
+  names(probs) <- paste0("P(", varname, "=", levels(data[, varname]), ")")
 
   if (type == "lp") {
     fit <- lapply(lp, colMeans)
@@ -847,32 +1012,41 @@ predict_clm <- function(formula, newdata,
     }
     s <- probs
   } else if (type == "class") {
-    fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1L,
-                 function(x) if (all(is.na(x))) NA else which.max(x))
+    fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1L, function(x) {
+      if (all(is.na(x))) NA else which.max(x)
+    })
     quants <- NULL
     s <- NULL
   }
 
   res_df <- if (!is.null(quants)) {
-    res <- Map(function(fit, quants) {
-      cbind(fit = fit, quants)
-    }, fit = fit, quants = quants)
+    res <- Map(
+      function(fit, quants) {
+        cbind(fit = fit, quants)
+      },
+      fit = fit,
+      quants = quants
+    )
 
-    array(dim = c(dim(res[[1L]]), length(res)),
-          dimnames = list(NULL, colnames(res[[1L]]), names(res)),
-          unlist(res))
+    array(
+      dim = c(dim(res[[1L]]), length(res)),
+      dimnames = list(NULL, colnames(res[[1L]]), names(res)),
+      unlist(res)
+    )
   } else {
     data.frame(fit, check.names = FALSE)
   }
 
   sample <- if (return_sample) {
-    errormsg("Returning the sample of predicted values is not yet possible for
-             a %s.", dQuote("clm(m)"))
+    errormsg(
+      "Returning the sample of predicted values is not yet possible for
+             a %s.",
+      dQuote("clm(m)")
+    )
     # s <- melt_data_frame(cbind(newdata, t(s)), id_vars = names(newdata))
     # names(s) <- gsub("^variable$", "iteration", names(s))
     # s
   }
-
 
   on.exit(options(op))
 
@@ -880,19 +1054,27 @@ predict_clm <- function(formula, newdata,
 }
 
 
-
-
-predict_mlogit <- function(formula, newdata,
-                           type = c("prob", "lp", "class", "response"),
-                           data, MCMC, varname, coef_list, info_list,
-                           quantiles = c(0.025, 0.975), warn = TRUE,
-                           contr_list, Mlist, return_sample = FALSE, ...) {
-
+predict_mlogit <- function(
+  formula,
+  newdata,
+  type = c("prob", "lp", "class", "response"),
+  data,
+  MCMC,
+  varname,
+  coef_list,
+  info_list,
+  quantiles = c(0.025, 0.975),
+  warn = TRUE,
+  contr_list,
+  Mlist,
+  return_sample = FALSE,
+  ...
+) {
   type <- match.arg(type)
 
-  if (type == "response")
+  if (type == "response") {
     type <- "class"
-
+  }
 
   coefs <- coef_list[[varname]]
 
@@ -901,48 +1083,56 @@ predict_mlogit <- function(formula, newdata,
     scale_pars$center[is.na(scale_pars$center)] <- 0L
   }
 
-  mf <- model.frame(as.formula(paste(formula[-2L], collapse = " ")),
-                    data, na.action = na.pass)
+  mf <- model.frame(
+    as.formula(paste(formula[-2L], collapse = " ")),
+    data,
+    na.action = na.pass
+  )
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  desgn_mat <- model.matrix(mt,
-                            data = newdata,
-                            contrasts.arg = contr_list[intersect(
-                              names(contr_list),
-                              cvapply(attr(mt, "variables")[-1L], deparse,
-                                      width.cutoff = 500L)
-                            )]
+  desgn_mat <- model.matrix(
+    mt,
+    data = newdata,
+    contrasts.arg = contr_list[intersect(
+      names(contr_list),
+      cvapply(attr(mt, "variables")[-1L], deparse, width.cutoff = 500L)
+    )]
   )
 
-  if (warn & any(is.na(desgn_mat)))
-    warnmsg("Prediction for cases with missing covariates is not yet
-            implemented.")
+  if (warn & any(is.na(desgn_mat))) {
+    warnmsg(
+      "Prediction for cases with missing covariates is not yet
+            implemented."
+    )
+  }
 
   # multiply MCMC sample with design matrix to get linear predictor
   coefs_nonprop <- split(coefs, coefs$outcat)
 
   etas <- lapply(coefs_nonprop, function(c_np_k) {
-    calc_lp(regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
-            design_mat = desgn_mat[, c_np_k$varname, drop = FALSE],
-            scale_pars = NULL)
+    calc_lp(
+      regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
+      design_mat = desgn_mat[, c_np_k$varname, drop = FALSE],
+      scale_pars = NULL
+    )
   })
-
 
   mat0 <- matrix(nrow = nrow(etas[[1L]]), ncol = ncol(etas[[1L]]), data = 0L)
   lp <- c(list(mat0), etas)
 
   phis <- lapply(lp, exp)
-  sum_phis <- apply(array(dim = c(dim(phis[[1L]]), length(phis)),
-                          unlist(phis)), c(1L, 2L), sum)
+  sum_phis <- apply(
+    array(dim = c(dim(phis[[1L]]), length(phis)), unlist(phis)),
+    c(1L, 2L),
+    sum
+  )
 
   probs <- lapply(seq_along(phis), function(k) {
     minmax_mat(phis[[k]] / sum_phis)
   })
 
-  names(probs) <- paste0("P(", varname, "=",
-                         levels(data[, varname]),
-                         ")")
+  names(probs) <- paste0("P(", varname, "=", levels(data[, varname]), ")")
 
   if (type == "lp") {
     fit <- lapply(lp, colMeans)
@@ -961,61 +1151,75 @@ predict_mlogit <- function(formula, newdata,
     }
     s <- probs
   } else if (type == "class") {
-    fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1L,
-                 function(x) if (all(is.na(x))) NA else which.max(x))
+    fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1L, function(x) {
+      if (all(is.na(x))) NA else which.max(x)
+    })
     quants <- NULL
   }
 
   res_df <- if (!is.null(quants)) {
-    res <- Map(function(fit, quants) {
-      cbind(fit = fit, quants)
-    }, fit = fit, quants = quants)
+    res <- Map(
+      function(fit, quants) {
+        cbind(fit = fit, quants)
+      },
+      fit = fit,
+      quants = quants
+    )
 
-    array(dim = c(dim(res[[1L]]), length(res)),
-          dimnames = list(NULL, colnames(res[[1L]]), names(res)),
-          unlist(res))
+    array(
+      dim = c(dim(res[[1L]]), length(res)),
+      dimnames = list(NULL, colnames(res[[1L]]), names(res)),
+      unlist(res)
+    )
   } else {
     data.frame(fit, check.names = FALSE)
   }
 
   sample <- if (return_sample) {
-    errormsg("Returning the sample of predicted values is not yet possible for
-             a %s or %s.", dQuote("mlogit"), dQuote("mlogitmm"))
+    errormsg(
+      "Returning the sample of predicted values is not yet possible for
+             a %s or %s.",
+      dQuote("mlogit"),
+      dQuote("mlogitmm")
+    )
     # s <- melt_data_frame(cbind(newdata, t(s)), id_vars = names(newdata))
     # names(s) <- gsub("^variable$", "iteration", names(s))
     # s
   }
 
-
   on.exit(options(op))
   list(res_df = res_df, sample = sample)
-
 }
-
 
 
 predict_jm <- function(...) {
-  errormsg("Prediction is not yet implemented for models for joint models for
-           longitudinal and survival data.")
+  errormsg(
+    "Prediction is not yet implemented for models for joint models for
+           longitudinal and survival data."
+  )
 }
 
 
-
 fitted_values <- function(object, ...) {
-
   types <- cvapply(names(object$fixed), function(k) {
-    switch(object$info_list[[k]]$modeltype,
-           glm = "response",
-           glmm = "response",
-           clm = "prob",
-           clmm = "prob",
-           survreg = "response",
-           coxph = "lp")
+    switch(
+      object$info_list[[k]]$modeltype,
+      glm = "response",
+      glmm = "response",
+      clm = "prob",
+      clmm = "prob",
+      survreg = "response",
+      coxph = "lp"
+    )
   })
 
-
-  fit <- predict(object, outcome = seq_along(object$fixed), quantiles = NULL,
-                 type = types, ...)$fitted
+  fit <- predict(
+    object,
+    outcome = seq_along(object$fixed),
+    quantiles = NULL,
+    type = types,
+    ...
+  )$fitted
 
   if (length(fit) == 1L) {
     c(fit$fit)

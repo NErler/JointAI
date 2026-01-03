@@ -1,4 +1,3 @@
-
 #' Parameter names of an JointAI object
 #'
 #' Returns the names of the parameters/nodes of an object of class 'JointAI' for
@@ -19,39 +18,54 @@
 #'
 #' @export
 #'
-parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
-                       ...) {
-
-  if (!inherits(object, "JointAI"))
+parameters <- function(
+  object,
+  expand_ranef = FALSE,
+  mess = TRUE,
+  warn = TRUE,
+  ...
+) {
+  if (!inherits(object, "JointAI")) {
     errormsg("Use only with 'JointAI' objects.")
+  }
 
   args <- as.list(match.call())
 
-  if (is.null(object$MCMC) & mess)
+  if (is.null(object$MCMC) & mess) {
     msg("Note: %s does not contain MCMC samples.", dQuote(args$object))
+  }
 
   # the variable.names that were passed to JAGS
   vnam <- object$mcmc_settings$variable.names
   # expand baseline hazard parameters
-  vnam <- expand_params(pattern = "^beta_Bh0",
-                        vnam = vnam,
-                        n = object$Mlist$df_basehaz)
-
+  vnam <- expand_params(
+    pattern = "^beta_Bh0",
+    vnam = vnam,
+    n = object$Mlist$df_basehaz
+  )
 
   # expand random effects
   if (expand_ranef) {
-    vnam <- expand_ranefs(pattern = paste0("^b[[:print:]]*_", object$Mlist$idvar,
-                                           "$", collapse = "|"),
-                          vnam = vnam,
-                          MCMC_names = colnames(object$MCMC[[1]]))
+    vnam <- expand_ranefs(
+      pattern = paste0(
+        "^b[[:print:]]*_",
+        object$Mlist$idvar,
+        "$",
+        collapse = "|"
+      ),
+      vnam = vnam,
+      MCMC_names = colnames(object$MCMC[[1]])
+    )
   }
 
   # expand ordinal intercepts
   gammas <- grep("^gamma_", vnam, value = TRUE)
   for (k in gammas) {
-    vnam <- expand_params(pattern = k,
-                          vnam = vnam,
-                          n = object$info_list[[gsub("gamma_", "", k)]]$ncat - 1)
+    vnam <- expand_params(
+      pattern = k,
+      vnam = vnam,
+      n = object$info_list[[gsub("gamma_", "", k)]]$ncat - 1
+    )
   }
 
   # the coef_list, containing the regression coefficient info
@@ -64,9 +78,6 @@ parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
     !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
   })
 
-
-
-
   df_names <- if (is.null(coefs)) {
     c("outcome", "outcat", "varname", "coef")
   } else {
@@ -77,20 +88,30 @@ parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
 
   pat_full <- unlist(
     lapply(names(object$Mlist$rd_vcov), function(lvl) {
-        lapply(which(names(object$Mlist$rd_vcov[[lvl]]) == "full"), function(k) {
-          list(
-            pattern = paste0("^", c("D", "invD", "RinvD", "KinvD", "b"),
-                             attr(object$Mlist$rd_vcov[[lvl]][[k]], "name"),
-                             "_", lvl),
-            vars = as.character(object$Mlist$rd_vcov[[lvl]][[k]])
-          )
-        })
-    }), recursive = FALSE)
+      lapply(which(names(object$Mlist$rd_vcov[[lvl]]) == "full"), function(k) {
+        list(
+          pattern = paste0(
+            "^",
+            c("D", "invD", "RinvD", "KinvD", "b"),
+            attr(object$Mlist$rd_vcov[[lvl]][[k]], "name"),
+            "_",
+            lvl
+          ),
+          vars = as.character(object$Mlist$rd_vcov[[lvl]][[k]])
+        )
+      })
+    }),
+    recursive = FALSE
+  )
 
   # identify which outcome the remaining parameters belong to by matching the
   # outcome names with the parameter names
+  patterns <- lapply(
     internal_clean_survname(names(object$coef_list)),
     function(out) {
+      paste0("_", out, "$|_", out, "_|_", out, "\\[")
+    }
+  )
 
   matches <- regexpr(paste0(patterns, collapse = "|"), add_pars$coef)
   out_match <- regmatches(add_pars$coef, matches)
@@ -104,8 +125,6 @@ parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
     r <- unlist(lapply(x$pattern, grep, add_pars$coef))
     add_pars$outcome[r] <- list(x$vars)
   }
-
-
 
   params <- if (any(add)) {
     add_df <- as.data.frame(add_pars[-which(names(add_pars) == "outcome")])
@@ -122,11 +141,13 @@ parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
 
   # has to be sorted so that the additional parameters are together with the
   # regression coefficients
+  params[
+    order(match(
+      params$outcome,
       internal_clean_survname(names(object$coef_list))
     )),
+  ]
 }
-
-
 
 
 expand_params <- function(pattern, vnam, n) {
@@ -146,8 +167,10 @@ expand_ranefs <- function(pattern, vnam, MCMC_names) {
     pos <- grep(pattern, vnam)
 
     for (k in pos) {
-      vnam <- c(vnam,
-                grep(paste0("^", vnam[k], "\\["), MCMC_names, value = TRUE))
+      vnam <- c(
+        vnam,
+        grep(paste0("^", vnam[k], "\\["), MCMC_names, value = TRUE)
+      )
     }
     vnam <- vnam[-pos]
   }
