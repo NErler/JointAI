@@ -1,6 +1,6 @@
 ---
 title: "Model Specification"
-date: January 02, 2026
+date: January 03, 2026
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -561,7 +561,8 @@ ilogit <- plogis
 
 # Use ilogit in the model formula
 mod5a <- lm_imp(SBP ~ age + gender + ilogit(creat), data = NHANES)
-#> Error in ilogit(creat): could not find function "ilogit"
+#> Error in `ilogit()`:
+#> ! could not find function "ilogit"
 ```
 
 
@@ -589,7 +590,8 @@ ilogit <- plogis
 
 # nest ilogit inside cloglog
 mod6a <- lm_imp(SBP ~ age + gender + cloglog(ilogit(creat)), data = NHANES)
-#> Error in cloglog(ilogit(creat)): could not find function "cloglog"
+#> Error in `cloglog()`:
+#> ! could not find function "cloglog"
 ```
 
 
@@ -1104,7 +1106,28 @@ a number.
 
 ``` r
 refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
-#> Error in set_refcat(NHANES, formula = formula(mod10b)): object 'extract_outcome' not found
+#> Warning in JointAI:::extract_outcome(formula): 'JointAI:::extract_outcome' is deprecated.
+#> Use 'extract_outcomes_list ' instead.
+#> See help("Deprecated") and help("JointAI-deprecated").
+#> Warning in extract_lhs(x): 'extract_lhs' is deprecated.
+#> Use 'extract_lhs_string ' instead.
+#> See help("Deprecated") and help("JointAI-deprecated").
+#> Warning in FUN(X[[i]], ...): 'FUN' is deprecated.
+#> Use 'extract_lhs_string ' instead.
+#> See help("Deprecated") and help("JointAI-deprecated").
+#> The categorical variables are:
+#> - "gender"
+#> - "race"
+#> - "educ"
+#> - "occup"
+#> - "smoke"
+#> 
+#> How do you want to specify the reference categories?
+#> 
+#> 1: Use the first category for each variable.
+#> 2: Use the last category for each variabe.
+#> 3: Use the largest category for each variable.
+#> 4: Specify the reference categories individually.
 ```
 
 

@@ -1,7 +1,7 @@
 ---
 title: "After Fitting"
 subtitle: "Summary, visualization and evaluation of the results"
-date: January 02, 2026
+date: January 03, 2026
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -56,8 +56,8 @@ traceplot(mod13a)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="100%" />
-<p class="caption">plot of chunk unnamed-chunk-1</p>
+<img src="figures_AfterFitting/trace13a-1.svg" alt="plot of chunk trace13a" width="100%" />
+<p class="caption">plot of chunk trace13a</p>
 </div>
 
 
@@ -82,7 +82,7 @@ traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/ggtrace15a-1.png" alt="plot of chunk ggtrace15a" width="100%" />
+<img src="figures_AfterFitting/ggtrace15a-1.svg" alt="plot of chunk ggtrace15a" width="100%" />
 <p class="caption">plot of chunk ggtrace15a</p>
 </div>
 
@@ -104,8 +104,8 @@ densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%" />
-<p class="caption">plot of chunk unnamed-chunk-3</p>
+<img src="figures_AfterFitting/dens13a-2-1.svg" alt="plot of chunk dens13a-2" width="100%" />
+<p class="caption">plot of chunk dens13a-2</p>
 </div>
 or marking the posterior mean and 2.5% and 97.5% quantiles:
 
@@ -123,7 +123,7 @@ densplot(mod13a, ncol = 3,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/densplot15a-1.png" alt="plot of chunk densplot15a" width="100%" />
+<img src="figures_AfterFitting/densplot15a-1.svg" alt="plot of chunk densplot15a" width="100%" />
 <p class="caption">plot of chunk densplot15a</p>
 </div>
 
@@ -180,7 +180,7 @@ p13a +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/ggdens15a-1.png" alt="plot of chunk ggdens15a" width="100%" />
+<img src="figures_AfterFitting/ggdens15a-1.svg" alt="plot of chunk ggdens15a" width="100%" />
 <p class="caption">plot of chunk ggdens15a</p>
 </div>
 
@@ -320,7 +320,7 @@ The figure visualizes three examples of posterior distributions
 and the corresponding minimum of $Pr(\theta > 0)$ and $Pr(\theta < 0)$
 (shaded area):
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/tailprob-1.png" alt="plot of chunk tailprob" width="100%" />
+<img src="figures_AfterFitting/tailprob-1.svg" alt="plot of chunk tailprob" width="100%" />
 <p class="caption">plot of chunk tailprob</p>
 </div>
 
@@ -412,7 +412,7 @@ plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/MCE15a-1.png" alt="plot of chunk MCE15a" width="100%" />
+<img src="figures_AfterFitting/MCE15a-1.svg" alt="plot of chunk MCE15a" width="100%" />
 <p class="caption">plot of chunk MCE15a</p>
 </div>
 
@@ -516,8 +516,8 @@ densplot(mod13c, subset = list(analysis_main = FALSE,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="70%" />
-<p class="caption">plot of chunk unnamed-chunk-11</p>
+<img src="figures_AfterFitting/densplot13c-1.svg" alt="plot of chunk densplot13c" width="70%" />
+<p class="caption">plot of chunk densplot13c</p>
 </div>
 
 This also works when a subset of the imputed values should be displayed:
@@ -538,7 +538,7 @@ traceplot(mod13d, subset = list(analysis_main = FALSE, other = sub3), ncol = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/trace15d-1.png" alt="plot of chunk trace15d" width="70%" />
+<img src="figures_AfterFitting/trace15d-1.svg" alt="plot of chunk trace15d" width="70%" />
 <p class="caption">plot of chunk trace15d</p>
 </div>
 
@@ -562,8 +562,8 @@ traceplot(mod13e, subset = list(analysis_main = FALSE,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" width="100%" />
-<p class="caption">plot of chunk unnamed-chunk-14</p>
+<img src="figures_AfterFitting/ri-1.svg" alt="plot of chunk ri" width="100%" />
+<p class="caption">plot of chunk ri</p>
 </div>
 
 
@@ -587,8 +587,8 @@ densplot(mod14, ncol = 3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" width="90%" />
-<p class="caption">plot of chunk unnamed-chunk-15</p>
+<img src="figures_AfterFitting/mod14-1.svg" alt="plot of chunk mod14" width="90%" />
+<p class="caption">plot of chunk mod14</p>
 </div>
 
 ``` r
@@ -596,8 +596,8 @@ densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-15-2.png" alt="plot of chunk unnamed-chunk-15" width="90%" />
-<p class="caption">plot of chunk unnamed-chunk-15</p>
+<img src="figures_AfterFitting/mod14-2.svg" alt="plot of chunk mod14" width="90%" />
+<p class="caption">plot of chunk mod14</p>
 </div>
 
 
@@ -606,8 +606,8 @@ traceplot(mod14, thin = 10, ncol = 3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" width="90%" />
-<p class="caption">plot of chunk unnamed-chunk-16</p>
+<img src="figures_AfterFitting/trace14-1.svg" alt="plot of chunk trace14" width="90%" />
+<p class="caption">plot of chunk trace14</p>
 </div>
 
 ``` r
@@ -615,8 +615,8 @@ traceplot(mod14, start = 150, ncol = 3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-16-2.png" alt="plot of chunk unnamed-chunk-16" width="90%" />
-<p class="caption">plot of chunk unnamed-chunk-16</p>
+<img src="figures_AfterFitting/trace14-2.svg" alt="plot of chunk trace14" width="90%" />
+<p class="caption">plot of chunk trace14</p>
 </div>
 
 ``` r
@@ -624,8 +624,8 @@ traceplot(mod14, end = 120, ncol = 3)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-16-3.png" alt="plot of chunk unnamed-chunk-16" width="90%" />
-<p class="caption">plot of chunk unnamed-chunk-16</p>
+<img src="figures_AfterFitting/trace14-3.svg" alt="plot of chunk trace14" width="90%" />
+<p class="caption">plot of chunk trace14</p>
 </div>
 
 
@@ -698,8 +698,8 @@ matplot(pred$newdata$age, pred$fitted,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19" width="90%" />
-<p class="caption">plot of chunk unnamed-chunk-19</p>
+<img src="figures_AfterFitting/predplot-1.svg" alt="plot of chunk predplot" width="90%" />
+<p class="caption">plot of chunk predplot</p>
 </div>
 
 It is possible to have multiple variables vary and to set values for these
@@ -716,7 +716,8 @@ pred <- predict(mod13b, newdata = newDF)
 #> Prediction in multi-level settings currently only takes into
 #> account the fixed effects, i.e., assumes that the random
 #> effect realizations are equal to zero.
-#> Error in MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], : subscript out of bounds
+#> Error in `MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], drop = FALSE]`:
+#> ! subscript out of bounds
 
 
 # plot predicted values and credible interval
@@ -734,8 +735,8 @@ ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20" width="90%" />
-<p class="caption">plot of chunk unnamed-chunk-20</p>
+<img src="figures_AfterFitting/predplotgg-1.svg" alt="plot of chunk predplotgg" width="90%" />
+<p class="caption">plot of chunk predplotgg</p>
 </div>
 
 
@@ -785,7 +786,7 @@ plot_imp_distr(impDF, nrow = 1)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22" width="100%" />
-<p class="caption">plot of chunk unnamed-chunk-22</p>
+<img src="figures_AfterFitting/plotimpdistr-1.svg" alt="plot of chunk plotimpdistr" width="100%" />
+<p class="caption">plot of chunk plotimpdistr</p>
 </div>
 

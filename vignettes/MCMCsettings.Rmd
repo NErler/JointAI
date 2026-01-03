@@ -16,6 +16,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  devt = "svglite",
   fig.width = 7,
   fig.align = 'center'
   # fig.path = "figures_MCMCsettings/"
