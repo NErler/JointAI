@@ -29,6 +29,7 @@ Suggests:
     ggplot2,
 	corrplot,
     ggpubr,
+	svglite,
     testthat,
     covr
 VignetteBuilder: knitr
