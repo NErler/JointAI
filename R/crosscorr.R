@@ -25,13 +25,13 @@
 #' @export
 #' @examples
 #' fit <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 200)
-#' autocorr(fit)
-#' autocorr_plot(fit)
+#' auto_corr(fit)
+#' auto_corr_plot(fit)
 #'
 #TODO: add unit tests
 #TODO: refactor to make use of a general MCMC preparation function
 #TODO: include cross- and autocorrelation in vignettes
-autocorr <- function(
+auto_corr <- function(
   object,
   lags = 0:30,
   by_chain = TRUE,
@@ -82,9 +82,9 @@ autocorr <- function(
 }
 
 
-#' @rdname autocorr
+#' @rdname auto_corr
 #' @export
-autocorr_plot <- function(
+auto_corr_plot <- function(
   object,
   lags = 0:30,
   by_chain = TRUE,
@@ -101,7 +101,7 @@ autocorr_plot <- function(
     errormsg("This function requires the 'ggplot2' package to be installed.")
   }
 
-  auto_corr <- autocorr(
+  auto_corr <- auto_corr(
     object,
     lags = lags,
     by_chain = by_chain,
@@ -161,11 +161,11 @@ autocorr_plot <- function(
 #' @export
 #' @examples
 #' fit <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 200)
-#' crosscorr(fit)
-#' crosscorr_plot(fit, type = "coda")
+#' cross_corr(fit)
+#' cross_corr_plot(fit, type = "coda")
 
 #TODO: add unit tests
-crosscorr <- function(
+cross_corr <- function(
   object,
   outcome = 1L,
   start = NULL,
@@ -205,9 +205,9 @@ crosscorr <- function(
 }
 
 
-#' @rdname crosscorr
+#' @rdname cross_corr
 #' @export
-crosscorr_plot <- function(
+cross_corr_plot <- function(
   object,
   outcome = 1L,
   start = NULL,
