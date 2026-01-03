@@ -380,7 +380,6 @@ divide_matrices <- function(
 #' Re-create the full `Mlist` from a "JointAI" object
 #' @param object object of class "JointAI"
 #' @keywords internal
-#' @export
 get_Mlist <- function(object) {
   if (!(inherits(object, "JointAI") || inherits(object, "JointAI_errored"))) {
     errormsg(

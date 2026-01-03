@@ -72,3 +72,19 @@ run_seq <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
 
   list(adapt = adapt, mcmc = mcmc)
 }
+#' Convert a survival outcome to a model name
+#'
+#' A helper function that converts the "name of a survival model"
+#' (the \code{"Surv(time, status)"} specification) into a valid variable name
+#' so that it can be used in the JAGS model syntax.
+#'
+#' @param x a character string or vector of character strings
+#'
+#' @export
+clean_survname <- function(x) {
+  warning(
+    "clean_survname() is retained for backward compatibility only and may be removed in a future release.",
+    call. = FALSE
+  )
+  internal_clean_survname(x)
+}
