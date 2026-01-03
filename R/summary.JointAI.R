@@ -476,9 +476,8 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   params <- parameters(object)
 
   nlapply(names(object$fixed), function(k) {
-    x <- params[params$outcome == clean_survname(k), , drop = FALSE]
+    x <- params[params$outcome == internal_clean_survname(k), , drop = FALSE]
     rev <- object$info_list[[k]]$rev
-
 
     cols <- unlist(
       lapply(x$coef, function(var) {
@@ -560,7 +559,7 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
   params <- parameters(object)
 
   nlapply(names(object$fixed), function(k) {
-    x <- params[params$outcome == clean_survname(k), , drop = FALSE]
+    x <- params[params$outcome == internal_clean_survname(k), , drop = FALSE]
     rev <- object$info_list[[k]]$rev
 
     cols <- unlist(

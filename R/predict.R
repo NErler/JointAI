@@ -603,8 +603,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                                       gkx + 1L))),
                             ord = 4L, outer.ok = TRUE)
 
-    mcmc_cols <- grep(paste0("\\bbeta_Bh0_", clean_survname(varname), "\\b"),
-                      colnames(MCMC))
+      paste0("\\bbeta_Bh0_", internal_clean_survname(varname), "\\b"),
+      colnames(MCMC)
 
     logh0s <- lapply(seq_len(nrow(MCMC)), function(m) {
       matrix(Bsh0 %*% MCMC[m, mcmc_cols],

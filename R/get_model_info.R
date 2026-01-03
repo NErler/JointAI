@@ -235,7 +235,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   # collect all info ---------------------------------------------------------
   list(
     varname = if (modeltype %in% c("survreg", "coxph", "JM")) {
-      clean_survname(k)
+      internal_clean_survname(k)
     } else {
       k
     },

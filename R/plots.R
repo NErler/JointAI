@@ -316,7 +316,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
   if (!is.null(outcome)) {
-    outcomes <- clean_survname(names(object$fixed)[outcome])
+    outcomes <- internal_clean_survname(names(object$fixed)[outcome])
     params <- parameters(object, expand_ranef = TRUE)
     selected_params <- params$coef[lvapply(params$outcome,
                                            function(x) any(outcomes %in% x))]

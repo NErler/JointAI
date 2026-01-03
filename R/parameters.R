@@ -89,10 +89,8 @@ parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
 
   # identify which outcome the remaining parameters belong to by matching the
   # outcome names with the parameter names
-  patterns <- lapply(clean_survname(names(object$coef_list)), function(out) {
-    paste0("_", out, "$|_", out, "_|_", out, "\\[")
-  })
-
+    internal_clean_survname(names(object$coef_list)),
+    function(out) {
 
   matches <- regexpr(paste0(patterns, collapse = "|"), add_pars$coef)
   out_match <- regmatches(add_pars$coef, matches)
@@ -124,8 +122,8 @@ parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
 
   # has to be sorted so that the additional parameters are together with the
   # regression coefficients
-  params[order(match(params$outcome,
-                     clean_survname(names(object$coef_list)))), ]
+      internal_clean_survname(names(object$coef_list))
+    )),
 }
 
 
