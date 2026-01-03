@@ -308,7 +308,14 @@ check_classes <- function(
 #' @returns the `data.frame` (unchanged)
 #' @keywords internal
 #'
-drop_levels <- function(data, allvars, warn = TRUE) {
+drop_levels <- function(data, allvars, warn = TRUE, mess = NULL) {
+  if (!is.null(mess)) {
+    warning(
+      "Argument 'mess' is deprecated in 'drop_levels()' and ignored.",
+      call. = FALSE
+    )
+  }
+
   data_orig <- data
   data[allvars] <- droplevels(data[allvars])
 
