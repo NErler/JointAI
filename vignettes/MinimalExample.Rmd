@@ -2,7 +2,7 @@
 title: "Minimal Example"
 description: "A minimal example to demonstrate the usage of the R package JointAI."
 author: "Nicole Erler"
-date: "2020-06-20"
+date: January 02, 2026
 resource_files:
   - man/figures/JointAI_square.png
 opengraph:
@@ -15,6 +15,7 @@ opengraph:
 output:
   rmarkdown::html_vignette:
     toc: true
+    fig.align: 'center'
 vignette: >
   %\VignetteIndexEntry{Minimal Example}
   %\VignetteEngine{knitr::rmarkdown}
@@ -40,10 +41,9 @@ in which the NHANES data is explored.
 Fitting a linear regression model with **JointAI** is straightforward with the
 function [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
 
-```r
+``` r
 lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
-              data = NHANES, n.iter = 500)
-#>   |                                                          |                                                  |   0%  |                                                          |*                                                 |   2%  |                                                          |**                                                |   4%  |                                                          |***                                               |   6%  |                                                          |****                                              |   8%  |                                                          |*****                                             |  10%  |                                                          |******                                            |  12%  |                                                          |*******                                           |  14%  |                                                          |********                                          |  16%  |                                                          |*********                                         |  18%  |                                                          |**********                                        |  20%  |                                                          |***********                                       |  22%  |                                                          |************                                      |  24%  |                                                          |*************                                     |  26%  |                                                          |**************                                    |  28%  |                                                          |***************                                   |  30%  |                                                          |****************                                  |  32%  |                                                          |*****************                                 |  34%  |                                                          |******************                                |  36%  |                                                          |*******************                               |  38%  |                                                          |********************                              |  40%  |                                                          |*********************                             |  42%  |                                                          |**********************                            |  44%  |                                                          |***********************                           |  46%  |                                                          |************************                          |  48%  |                                                          |*************************                         |  50%  |                                                          |**************************                        |  52%  |                                                          |***************************                       |  54%  |                                                          |****************************                      |  56%  |                                                          |*****************************                     |  58%  |                                                          |******************************                    |  60%  |                                                          |*******************************                   |  62%  |                                                          |********************************                  |  64%  |                                                          |*********************************                 |  66%  |                                                          |**********************************                |  68%  |                                                          |***********************************               |  70%  |                                                          |************************************              |  72%  |                                                          |*************************************             |  74%  |                                                          |**************************************            |  76%  |                                                          |***************************************           |  78%  |                                                          |****************************************          |  80%  |                                                          |*****************************************         |  82%  |                                                          |******************************************        |  84%  |                                                          |*******************************************       |  86%  |                                                          |********************************************      |  88%  |                                                          |*********************************************     |  90%  |                                                          |**********************************************    |  92%  |                                                          |***********************************************   |  94%  |                                                          |************************************************  |  96%  |                                                          |************************************************* |  98%  |                                                          |**************************************************| 100%
+              data = NHANES, n.iter = 500, progress.bar = "none")
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
@@ -67,11 +67,14 @@ Convergence can be evaluated visually with a trace plot.
 
 ## Traceplot
 
-```r
+``` r
 traceplot(lm1)
 ```
 
-<img src="figures_MinimalExample/results_lm1-1.png" alt="plot of chunk results_lm1" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_MinimalExample/results_lm1-1.png" alt="plot of chunk results_lm1" width="100%" />
+<p class="caption">plot of chunk results_lm1</p>
+</div>
 
 The function [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
 produces a plot of the sampled values across
@@ -90,34 +93,34 @@ Results from a model fitted with **JointAI** can be printed using `summary()`:
 
 
 
-```r
+``` r
 summary(lm1)
 #> 
 #> Bayesian linear model fitted with JointAI
 #> 
 #> Call:
 #> lm_imp(formula = SBP ~ gender + age + race + WC + alc + educ + 
-#>     albu + bili, data = NHANES, n.iter = 500)
+#>     albu + bili, data = NHANES, n.iter = 500, progress.bar = "none")
 #> 
 #> 
 #> Posterior summary:
 #>                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)            61.928 22.0386  20.6177 104.822    0.00400    1.00 0.0264
-#> genderfemale           -3.116  2.2651  -7.4493   1.407    0.16267    1.00 0.0258
-#> age                     0.364  0.0733   0.2248   0.511    0.00000    1.00 0.0258
-#> raceOther Hispanic      0.469  5.0392  -9.1897  10.436    0.90667    1.00 0.0258
-#> raceNon-Hispanic White -1.615  3.0196  -7.5193   4.246    0.58267    1.00 0.0258
-#> raceNon-Hispanic Black  8.793  3.6753   1.7979  15.790    0.01467    1.00 0.0258
-#> raceother               3.734  3.4810  -2.9797  10.729    0.30133    1.00 0.0265
-#> WC                      0.238  0.0825   0.0847   0.404    0.01200    1.00 0.0258
-#> alc>=1                  7.244  2.2752   2.6597  11.601    0.00133    1.00 0.0293
-#> educhigh               -3.535  2.0936  -7.5238   0.489    0.08267    1.01 0.0258
-#> albu                    5.087  3.9275  -2.7394  12.826    0.20400    1.00 0.0280
-#> bili                   -5.545  4.7804 -14.9430   3.511    0.24000    1.01 0.0282
+#> (Intercept)            60.147 23.6729  12.7761 107.442    0.00400    1.00 0.0280
+#> genderfemale           -2.997  2.2716  -7.3756   1.285    0.19733    1.00 0.0258
+#> age                     0.361  0.0726   0.2190   0.506    0.00000    1.01 0.0258
+#> raceOther Hispanic      0.985  5.0243  -8.8285  10.820    0.83733    1.00 0.0258
+#> raceNon-Hispanic White -1.284  3.1324  -7.6806   4.907    0.67867    1.01 0.0258
+#> raceNon-Hispanic Black  9.058  3.6791   1.9579  16.140    0.01467    1.00 0.0258
+#> raceother               3.898  3.5429  -2.8957  10.563    0.27867    1.00 0.0258
+#> WC                      0.244  0.0825   0.0721   0.399    0.00533    1.02 0.0258
+#> alc>=1                  7.230  2.2933   2.8481  11.754    0.00267    1.01 0.0305
+#> educhigh               -3.514  2.2154  -7.9494   0.908    0.10800    1.01 0.0258
+#> albu                    5.324  4.1432  -2.9429  13.562    0.20533    1.00 0.0278
+#> bili                   -5.441  4.8612 -14.9945   4.273    0.26133    1.00 0.0262
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 13.2 0.739 11.8  14.7       1 0.0277
+#> sigma_SBP 13.2 0.735 11.9  14.7    1.03 0.0274
 #> 
 #> 
 #> MCMC settings:
@@ -152,7 +155,10 @@ $$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
 
 In the following graphics, the shaded areas represent the minimum of
 $Pr(\theta > 0)$ and $Pr(\theta < 0)$:
-<img src="figures_MinimalExample/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_MinimalExample/tailprob-1.png" alt="plot of chunk tailprob" width="100%" />
+<p class="caption">plot of chunk tailprob</p>
+</div>
 
 #### Gelman-Rubin criterion
 The Gelman-Rubin^[Gelman, A and Rubin, DB (1992) Inference from iterative
@@ -196,11 +202,14 @@ be added to the summary by setting `missinfo = TRUE`.
 ## Plot of the posterior distributions
 The posterior distributions can be visualized using the function `densplot()`:
 
-```r
+``` r
 densplot(lm1)
 ```
 
-<img src="figures_MinimalExample/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_MinimalExample/densplot-1.png" alt="plot of chunk densplot" width="100%" />
+<p class="caption">plot of chunk densplot</p>
+</div>
 
 By default, `densplot()` plots the empirical distribution of each of the chains
 separately. When `joined = TRUE` the distributions of the combined chains

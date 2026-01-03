@@ -1,7 +1,7 @@
 ---
 title: "Parameter Selection"
 subtitle: "How to specify which parameters to monitor and display in the results"
-date: "2020-06-22"
+date: replace_with_today
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -18,6 +18,8 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  dpi = 600,
+  out.width = "100%",
   fig.width = 7,
   fig.align = 'center',
   fig.path = "figures_SelectingParameters/"

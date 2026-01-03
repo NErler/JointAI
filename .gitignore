@@ -17,3 +17,5 @@ sh.exe.stackdump
 
 revdep
 .DS_Store
+
+/.quarto/

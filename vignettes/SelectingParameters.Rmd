@@ -1,7 +1,7 @@
 ---
 title: "Parameter Selection"
 subtitle: "How to specify which parameters to monitor and display in the results"
-date: "2020-06-22"
+date: January 02, 2026
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -49,6 +49,7 @@ have an argument `monitor_params`.
 the following possible entries:
 
 
+
 |name/key word     |what is monitored                                                                                                                                                                          |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |`analysis_main`   |`betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models) |
@@ -74,6 +75,8 @@ the following possible entries:
 |`RinvD_other`     |scale matrix in Wishart prior for `invD_other`                                                                                                                                             |
 |`other`           |additional parameters                                                                                                                                                                      |
 
+
+
 Each of the key words works as a switch, except for `other`, which should be
 a vector of character strings.
 
@@ -97,7 +100,7 @@ followed (even for models where no MCMC sampling was performed, i.e. when
 
 For example:
 
-```r
+``` r
 lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,  n.adapt = 0)
 
 parameters(lm1)
@@ -121,7 +124,7 @@ the imputed values need to be monitored. This can be done by setting
 `monitor_params = c(imps = TRUE)`.
 
 
-```r
+``` r
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
               data = NHANES, n.adapt = 0,
               monitor_params = c(imps = TRUE, analysis_main = FALSE)
@@ -212,7 +215,7 @@ dummy variables are stored in the matrices. The same is the case for interaction
 terms and transformations of variables.
 
 
-```r
+``` r
 head(lm2$data_list$M_lvlone)
 #>          SBP alc occup smoke    WC (Intercept) age alc>=1 smokeformer smokecurrent
 #> 10  108.0000  NA     1     1  99.0           1  35     NA          NA           NA
@@ -238,7 +241,7 @@ regression coefficients (`alpha`) and other parameters, such as precision
 logit models.
 
 
-```r
+``` r
 lm3 <- lm_imp(SBP ~ age + WC + alc + smoke + occup, data = NHANES, n.adapt = 0,
               monitor_params = c(other_models = TRUE, analysis_main = FALSE)
 )
@@ -275,7 +278,7 @@ parameters(lm3)
 An overview of all models that form part of the joint model, including the
 names of the parameters and the hyper-parameters can be obtained with
 
-```r
+``` r
 list_models(lm2)
 #> Linear model for "SBP" 
 #>    family: gaussian 
@@ -349,6 +352,7 @@ already contain an id variable).
 
 `get_MIdat()` takes the arguments:
 
+
 |argument         |explanation                                                                                                                                                                 |
 |:----------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |`object`         |'an object of class 'JointAI'                                                                                                                                               |
@@ -361,11 +365,13 @@ already contain an id variable).
 |`resdir`         |directory the files are exported to                                                                                                                                         |
 |`filename`       |the name of the .txt and .sps files                                                                                                                                         |
 
+
+
 ### Random effects
 For mixed models, `analysis_main` also includes the random effects covariance
 matrix `D`:
 
-```r
+``` r
 lme1 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0)
 
 parameters(lme1)
@@ -386,7 +392,7 @@ inverse of the random effects covariance matrix (`invD`) and the diagonal of the
 scale matrix of the Wishart-prior of `invD` (`RinvD`).
 
 
-```r
+``` r
 lme2 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_random = TRUE))
 
@@ -412,7 +418,7 @@ parameters(lme2)
 It is possible to select only a subset of the random effects parameters by
 specifying them directly, e.g.
 
-```r
+``` r
 lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                  monitor_params = c(analysis_main = TRUE, RinvD_main = TRUE))
 
@@ -433,7 +439,7 @@ parameters(lme3a)
 or by switching unwanted parts of `analysis_random` off, e.g.
 
 
-```r
+``` r
 lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_main = TRUE,
                                    analysis_random = TRUE,
@@ -471,7 +477,7 @@ subject. (This may not make a lot of sense here but being able to monitor
 any node in a JAGS model can be quite useful when investigating convergence
 issues.)
 
-```r
+``` r
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,
               monitor_params = list(analysis_main = FALSE,
                                     other = c('p_alc[1:3]', "mu_creat[1]")))
@@ -503,7 +509,7 @@ For more details about these functions, see also the vignette
 By default, only the parameters of the main analysis model are displayed if they
 were monitored:
 
-```r
+``` r
 # Run a model monitoring analysis parameters and imputation parameters
 lm5 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
               progress.bar = 'none', monitor_params = c(other_models = TRUE))
@@ -519,16 +525,16 @@ summary(lm5)
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.088 9.4594 62.852 97.814      0.000    1.02 0.0577
-#> genderfemale  0.315 2.5308 -4.366  5.680      0.933    1.02 0.0577
-#> WC            0.311 0.0721  0.173  0.455      0.000    1.00 0.0577
-#> alc>=1        6.288 2.3944  1.946 10.938      0.000    1.07 0.0657
-#> creat         7.239 8.1750 -7.610 25.142      0.387    1.00 0.0577
+#>                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.839 9.8948 62.439 100.569      0.000    1.06 0.0577
+#> genderfemale  0.282 2.6286 -4.796   5.287      0.940    1.13 0.0577
+#> WC            0.304 0.0733  0.145   0.461      0.000    1.02 0.0577
+#> alc>=1        6.370 2.4988  1.469  11.342      0.020    1.02 0.0712
+#> creat         7.194 7.9657 -8.222  22.800      0.327    1.06 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.789 12.9  15.9       1 0.0577
+#> sigma_SBP 14.4 0.766 13.1    16    1.14 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -543,49 +549,55 @@ summary(lm5)
 traceplot(lm5)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_SelectingParameters/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-9</p>
+</div>
 
-```r
+``` r
 
 # density plot of the MCMC sample
 densplot(lm5)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-9-2.png" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_SelectingParameters/unnamed-chunk-9-2.png" alt="plot of chunk unnamed-chunk-9" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-9</p>
+</div>
 
-```r
+``` r
 
 # Gelman-Rubin criterion
 GR_crit(lm5)
 #> Potential scale reduction factors:
 #> 
 #>              Point est. Upper C.I.
-#> (Intercept)       1.008       1.02
-#> genderfemale      1.005       1.02
-#> WC                1.000       1.00
-#> alc>=1            1.018       1.07
-#> creat             0.999       1.00
-#> sigma_SBP         0.999       1.00
+#> (Intercept)        1.01       1.06
+#> genderfemale       1.04       1.13
+#> WC                 1.00       1.02
+#> alc>=1             1.01       1.02
+#> creat              1.02       1.06
+#> sigma_SBP          1.04       1.14
 #> 
 #> Multivariate psrf
 #> 
-#> 1.03
+#> 1.05
 
 # Monte Carlo Error of the MCMC sample
 MC_error(lm5)
 #>                est   MCSE    SD MCSE/SD
-#> (Intercept)  81.09 0.5461 9.459   0.058
-#> genderfemale  0.32 0.1461 2.531   0.058
-#> WC            0.31 0.0042 0.072   0.058
-#> alc>=1        6.29 0.1573 2.394   0.066
-#> creat         7.24 0.4720 8.175   0.058
-#> sigma_SBP    14.35 0.0456 0.789   0.058
+#> (Intercept)  81.84 0.5713 9.895   0.058
+#> genderfemale  0.28 0.1518 2.629   0.058
+#> WC            0.30 0.0042 0.073   0.058
+#> alc>=1        6.37 0.1779 2.499   0.071
+#> creat         7.19 0.4599 7.966   0.058
+#> sigma_SBP    14.38 0.0442 0.766   0.058
 ```
 
 When `analysis_main` was not switched on the default behaviour is that all
 parameters are displayed:
 
-```r
+``` r
 # Re-run the model from above, now creating MCMC samples
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
               data = NHANES, n.iter = 100, progress.bar = 'none',
@@ -595,38 +607,41 @@ lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
 traceplot(lm4, ncol = 4)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="100%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_SelectingParameters/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-10</p>
+</div>
 
 ### Select a subset of the variables to display
 To display other parts of the MCMC sample, `subset` needs to be specified:
 
-```r
+``` r
 # we use lm5 from above
 GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> Potential scale reduction factors:
 #> 
 #>                     Point est. Upper C.I.
-#> alc: (Intercept)          1.02       1.06
-#> alc: genderfemale         1.03       1.07
-#> alc: WC                   1.02       1.05
-#> alc: creat                1.03       1.07
-#> creat: (Intercept)        1.00       1.00
-#> creat: genderfemale       1.00       1.01
-#> creat: WC                 1.00       1.01
-#> WC: (Intercept)           1.00       1.00
-#> WC: genderfemale          1.01       1.01
-#> sigma_creat               1.00       1.02
-#> sigma_WC                  1.01       1.03
+#> alc: (Intercept)         1.055      1.191
+#> alc: genderfemale        1.097      1.306
+#> alc: WC                  1.027      1.061
+#> alc: creat               1.055      1.183
+#> creat: (Intercept)       1.011      1.034
+#> creat: genderfemale      1.003      1.007
+#> creat: WC                1.009      1.029
+#> WC: (Intercept)          1.004      1.009
+#> WC: genderfemale         0.997      0.998
+#> sigma_creat              1.003      1.008
+#> sigma_WC                 1.006      1.016
 #> 
 #> Multivariate psrf
 #> 
-#> 1.06
+#> 1.08
 ```
 
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`:
 
-```r
+``` r
 summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> Bayesian linear model fitted with JointAI
@@ -637,16 +652,16 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.088 9.4594 62.852 97.814      0.000    1.02 0.0577
-#> genderfemale  0.315 2.5308 -4.366  5.680      0.933    1.02 0.0577
-#> WC            0.311 0.0721  0.173  0.455      0.000    1.00 0.0577
-#> alc>=1        6.288 2.3944  1.946 10.938      0.000    1.07 0.0657
-#> creat         7.239 8.1750 -7.610 25.142      0.387    1.00 0.0577
+#>                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.839 9.8948 62.439 100.569      0.000    1.06 0.0577
+#> genderfemale  0.282 2.6286 -4.796   5.287      0.940    1.13 0.0577
+#> WC            0.304 0.0733  0.145   0.461      0.000    1.02 0.0577
+#> alc>=1        6.370 2.4988  1.469  11.342      0.020    1.02 0.0712
+#> creat         7.194 7.9657 -8.222  22.800      0.327    1.06 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.789 12.9  15.9       1 0.0577
+#> sigma_SBP 14.4 0.766 13.1    16    1.14 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -663,7 +678,7 @@ regression coefficients from different models are monitored.
 
 This also works when a subset of the imputed values should be displayed:
 
-```r
+``` r
 # Re-run the model from above, now creating MCMC samples
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
               data = NHANES, n.iter = 100, progress.bar = 'none',
@@ -678,7 +693,10 @@ sub3
 traceplot(lm2, subset = list(other = sub3), ncol = 2)
 ```
 
-<img src="figures_SelectingParameters/lm2_2-1.png" alt="plot of chunk lm2_2" width="50%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_SelectingParameters/lm2_2-1.png" alt="plot of chunk lm2_2" width="50%" />
+<p class="caption">plot of chunk lm2_2</p>
+</div>
 
 
 ### Random subset of subject-specific values
@@ -686,7 +704,7 @@ When the number of imputed values is larger, or in order to check convergence
 of random effects, it may not be feasible to plot all trace plots.
 In that case, a random subset of, for instance, the random effects can be selected:
 
-```r
+``` r
 lme4 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
                 data = simLong, n.iter = 100, progress.bar = 'none',
                 monitor_params = c(analysis_main = FALSE, ranef_main = TRUE))
@@ -701,13 +719,19 @@ rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T
 traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_SelectingParameters/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-11</p>
+</div>
 
-```r
+``` r
 
 # plot the chains of 8 randomly selected random slopes
 traceplot(lme4, subset = list(other = sample(rs, size = 8)), ncol = 4)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-11-2.png" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures_SelectingParameters/unnamed-chunk-11-2.png" alt="plot of chunk unnamed-chunk-11" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-11</p>
+</div>
 

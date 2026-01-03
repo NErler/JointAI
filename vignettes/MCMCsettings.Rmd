@@ -1,6 +1,6 @@
 ---
 title: "MCMC Settings"
-date: "2020-06-22"
+date: "2025-12-30"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -155,26 +155,37 @@ shows that the first 100 iterations
 posterior sample. Thinning was set to 1 and there are 3 chains.
 ```{r, echo = FALSE}
 a1 <- capture.output(print(summary(mod1)))
-cat(paste0('[...]', '\n',
-    paste(a1[18:22], collapse = "\n")))
+cat(paste0('[...]', '\n', paste(a1[18:22], collapse = "\n")))
 ```
 
 #### Insufficient adaptation phase
 ```{r, message = FALSE}
-mod2 <- lm_imp(SBP ~ alc, data = NHANES, n.adapt = 10, n.iter = 100, progress.bar = 'none')
+mod2 <- lm_imp(
+  SBP ~ alc,
+  data = NHANES,
+  n.adapt = 10,
+  n.iter = 100,
+  progress.bar = 'none'
+)
 ```
+
 Specifying `n.adapt = 10` results in a warning message. The relevant part of the
 model summary from the resulting model is:
 ```{r, echo = FALSE}
 a2 <- capture.output(print(summary(mod2)))
-cat(paste0('[...]', '\n',
-    paste(a2[19:23], collapse = "\n")))
+cat(paste0('[...]', '\n', paste(a2[19:23], collapse = "\n")))
 ```
 
 
 #### Thinning
 ```{r, message = FALSE}
-mod3 <- lm_imp(SBP ~ alc, data = NHANES, n.iter = 500, thin = 10, progress.bar = 'none')
+mod3 <- lm_imp(
+  SBP ~ alc,
+  data = NHANES,
+  n.iter = 500,
+  thin = 10,
+  progress.bar = 'none'
+)
 ```
 
 Here, iterations 110 until 600 are used in the output, but due to thinning
@@ -184,8 +195,7 @@ chains contain only 50 samples instead of 500, that is, the samples from iterati
 
 ```{r, echo = FALSE}
 a3 <- capture.output(print(summary(mod3)))
-cat(paste0('[...]', '\n',
-    paste(a3[19:23], collapse = "\n")))
+cat(paste0('[...]', '\n', paste(a3[19:23], collapse = "\n")))
 ```
 
 ## Parameters to follow
@@ -244,8 +254,7 @@ For example, to create initial values for the parameter vector `beta` and
 the precision parameter `tau_SBP` for three chains:
 ```{r, message = FALSE}
 init_list <- lapply(1:3, function(i) {
-  list(beta = rnorm(4),
-       tau_SBP = rgamma(1, 1, 1))
+  list(beta = rnorm(4), tau_SBP = rgamma(1, 1, 1))
 })
 
 init_list
@@ -254,8 +263,12 @@ init_list
 The list is then passed to the argument `inits`. The amended version of the user
 provided lists of initial values are stored in the JointAI object:
 ```{r, message = FALSE}
-mod4a <- lm_imp(SBP ~ gender + age + WC, data = NHANES, progress.bar = 'none',
-                inits = init_list)
+mod4a <- lm_imp(
+  SBP ~ gender + age + WC,
+  data = NHANES,
+  progress.bar = 'none',
+  inits = init_list
+)
 
 mod4a$mcmc_settings$inits
 ```
@@ -268,18 +281,22 @@ supplies values for one chain.
 For example, to create initial values for the parameter vectors `beta` and `alpha`:
 ```{r, message = FALSE}
 inits_fun <- function() {
-  list(beta = rnorm(4),
-       alpha = rnorm(3))
+  list(beta = rnorm(4), alpha = rnorm(3))
 }
 
 inits_fun()
 
 
-mod4b <- lm_imp(SBP ~ gender + age + WC, data = NHANES, progress.bar = 'none',
-                inits = inits_fun)
+mod4b <- lm_imp(
+  SBP ~ gender + age + WC,
+  data = NHANES,
+  progress.bar = 'none',
+  inits = inits_fun
+)
 
 mod4b$mcmc_settings$inits
 ```
+
 When a function is supplied, the function will be evaluated once per chain and
 the resulting list is stored.
 
@@ -304,15 +321,25 @@ We are using a longitudinal model and the `simLong` data in this example.
 The output is abbreviated to show the relevant parts.
 
 ```{r, message = FALSE, warning = FALSE}
-mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
-                 data = simLong, no_model = 'time', progress.bar = 'none')
+mod4c <- lme_imp(
+  bmi ~ time + HEIGHT_M + hc + SMOKE,
+  random = ~ time | ID,
+  data = simLong,
+  no_model = 'time',
+  progress.bar = 'none'
+)
 
 str(coef(mod4c$model))
 ```
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
-mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
-                 data = simLong, no_model = 'time', progress.bar = 'none')
+mod4c <- lme_imp(
+  bmi ~ time + HEIGHT_M + hc + SMOKE,
+  random = ~ time | ID,
+  data = simLong,
+  no_model = 'time',
+  progress.bar = 'none'
+)
 
 options(max.print = 1e5)
 a4 <- capture.output(coef(mod4c$model))
@@ -335,10 +362,11 @@ head(mod4c$data_list$M_ID, 8)
 
 ```{r, echo = FALSE}
 mat <- mod4c$data_list$M_ID[1:8, ]
-colnames(mat) <- gsub("SMOKEsmoked until pregnancy was known",
-                      "SMOKEsmoked until[...]",
-                      gsub("SMOKEcontinued smoking in pregnancy",
-                           "SMOKEcontin[...]", colnames(mat)))
+colnames(mat) <- gsub(
+  "SMOKEsmoked until pregnancy was known",
+  "SMOKEsmoked until[...]",
+  gsub("SMOKEcontinued smoking in pregnancy", "SMOKEcontin[...]", colnames(mat))
+)
 mat
 ```
 
@@ -363,11 +391,13 @@ and the matrix of initial values.
 
 The corresponding part of the JAGS model is:
 ```{r, echo = FALSE}
-cat(paste0('[...]\n',
-           paste0(a4mod[58:60], collapse = "\n"),
-           '\n\n[...]\n',
-           paste0(a4mod[69:72], collapse = "\n"),
-           '\n\n[...]'))
+cat(paste0(
+  '[...]\n',
+  paste0(a4mod[58:60], collapse = "\n"),
+  '\n\n[...]\n',
+  paste0(a4mod[69:72], collapse = "\n"),
+  '\n\n[...]'
+))
 ```
 
 
@@ -415,6 +445,7 @@ sequentially or in parallel. For example,
 ```{r, eval = FALSE}
 future::plan(future::multisession, workers = 4)
 ```
+
 specifies that the different MCMC chains are sampled in 4 different R sessions.
 
 This specification has to be done before the **JointAI** model function is
@@ -424,6 +455,7 @@ To re-set to sequential evaluation,
 ```{r, eval = FALSE}
 future::plan(future::sequential())
 ```
+
 can be used.
 
 More information on parallel computation can be found in the help files and the

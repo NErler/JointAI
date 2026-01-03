@@ -1,7 +1,7 @@
 ---
 title: "After Fitting"
 subtitle: "Summary, visualization and evaluation of the results"
-date: "2020-06-22"
+date: replace_with_today
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 7,
+  out.width = '100%',
+  dpi = 600,
   fig.align = 'center',
   fig.path = "figures_AfterFitting/"
 )
@@ -338,7 +340,7 @@ summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
 
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
-```{r message = FALSE}
+```{r message = FALSE, fig.height = 3.5, out.width = "70%"}
 densplot(mod13c, subset = list(analysis_main = FALSE,
                                other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
@@ -348,7 +350,7 @@ This also works when a subset of the imputed values should be displayed:
 # re-fit the model and monitor the imputed values
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 ```
-```{r trace15d, message = FALSE}
+```{r trace15d, message = FALSE, fig.height = 3.5, out.width = "70%"}
 # select all imputed values for 'WC' (4th column of M_lvlone)
 sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d)$coef, value = TRUE)
 sub3
@@ -365,7 +367,7 @@ In that case a random subset of, for instance the random effects, can be selecte
 # re-fit the model monitoring the random effects
 mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 ```
-```{r}
+```{r, fig.height = 5.5}
 # extract random intercepts
 ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
@@ -386,7 +388,7 @@ If a particular chain does not have converged it can be excluded from the
 summary or plot using the argument `exclude_chains`. This argument takes a
 numeric vector identifying chains to be excluded, for example:
 
-```{r}
+```{r, fig.height = 4.5, out.width = "90%"}
 mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
                 progress.bar = 'none', n.chains = 5)
 
@@ -394,7 +396,7 @@ densplot(mod14, ncol = 3)
 densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
-```{r}
+```{r, fig.height = 4.5, out.width = "90%"}
 traceplot(mod14, thin = 10, ncol = 3)
 traceplot(mod14, start = 150, ncol = 3)
 traceplot(mod14, end = 120, ncol = 3)

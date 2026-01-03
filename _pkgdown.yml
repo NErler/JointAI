@@ -1,52 +1,29 @@
-development:
-  mode: auto
-  destination: ./
-
-home:
-  title: JointAI
-  description: An R package for Bayesian analysis of incomplete data.
-
+url: ~
 template:
-  opengraph:
-    image:
-      src: man/figures/JointAI_191.png
-      alt: "JointAI: An R package for Joint Analysis and Imputation"
-    twitter:
-      creator: "@N_Erler"
-      card: summary_large_image
-  params:
-    bootswatch: flatly
-    ganalytics: UA-127879026-4
-    docsearch:
-      api_key: 0d21d69e7c3eb00e029f5b8d9424cd56
-      index_name: jointal
+  bootstrap: 5
+  light-switch: true
+  theme: arrow-light
+  theme-dark: nord
+  bslib:
+    fg: "#000000"
+    bg: "#FFFFFF"
+    navbar-bg: "#D10E3B"
+    primary: "#D10E3B"
+    link-color: "#D10E3B"
+    code-color: "#991433"
+    code-color-dark: "#D10E3B"
+    link-color-dark: "#D10E3B"
 
 navbar:
   structure:
-    left:
-    - home
-    - intro
-    - reference
-    - articles
-    - tutorials
-    - news
-    right:
-    - github
-    - twitter
+    left:  [home, reference, articles, news]
+    right: [search, github, lightswitch]
   components:
     home:
-      icon: fas fa-home fa-lg
+      icon: fa-home
       href: index.html
-    reference:
-      text: Reference
-      href: reference/index.html
-    news:
-      text: Changelog
-      href: news/index.html
-    github:
-      icon: fab fa-github fa-lg
-      href: https://github.com/nerler/JointAI/
-    twitter:
-      icon: fa-twitter fa-lg
-      href: https://twitter.com/N_Erler
-url: https://nerler.github.io/JointAI/
+      aria-label: home
+      
+
+figures:
+  dev: grDevices::png
