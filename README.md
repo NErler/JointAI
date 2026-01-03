@@ -95,7 +95,13 @@ of the data and missing values, export of imputed values and prediction.
 ``` r
 library(JointAI)
 
-plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#D10E3B', border = '#460E1B', ncol = 4, breaks = 30)
+plot_all(
+  NHANES[c(1, 5:6, 8:12)],
+  fill = '#D10E3B',
+  border = '#460E1B',
+  ncol = 4,
+  breaks = 30
+)
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
@@ -109,8 +115,13 @@ md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ### Fit a linear regression model with incomplete covariates
 
 ``` r
-lm1 <- lm_imp(SBP ~ gender + age + WC + alc + educ + bili,
-              data = NHANES, n.iter = 500, progress.bar = 'none', seed = 2020)
+lm1 <- lm_imp(
+  SBP ~ gender + age + WC + alc + educ + bili,
+  data = NHANES,
+  n.iter = 500,
+  progress.bar = 'none',
+  seed = 2020
+)
 ```
 
 ### Visualize the MCMC sample
