@@ -4,10 +4,11 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r knitr, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  dev = "svglite",
   fig.path = "man/figures/README-",
   fig.align = 'center'
 )
@@ -51,7 +52,7 @@ functions to summarize and visualize results and incomplete data.
 ## Installation
 
 **JointAI** can be installed from [CRAN](https://cran.r-project.org/):
-```{r CRAN-instalation, eval = FALSE}
+```{r CRAN-installation, eval = FALSE}
 install.packages('JointAI')
 ```
 
@@ -104,11 +105,11 @@ data and missing values, export of imputed values and prediction.
 
 ## Minimal Example
 ### Visualize the observed data and missing data pattern
-```{r, echo = FALSE}
+```{r par, echo = FALSE}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 ```
 
-```{r, fig.width = 8, fig.height = 4, message = FALSE, collapse=TRUE, dpi = 600}
+```{r plotall, fig.width = 8, fig.height = 4, message = FALSE, collapse=TRUE}
 library(JointAI)
 
 plot_all(
@@ -121,7 +122,7 @@ plot_all(
 ```
 
 
-```{r, fig.height = 5, dpi = 600}
+```{r mdpattern, fig.height = 5}
 md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ```
 
@@ -138,20 +139,20 @@ lm1 <- lm_imp(
 ```
 
 ### Visualize the MCMC sample
-```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 450}
+```{r traceplot, fig.width = 8, fig.height = 4, out.width = '100%'}
 traceplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4)
 ```
 
-```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 450}
+```{r densplot, fig.width = 8, fig.height = 4, out.width = '100%'}
 densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
 ```
 
 ### Summarize the Result
-```{r}
+```{r summary}
 summary(lm1)
 ```
 
-```{r}
+```{r coef}
 coef(lm1)
 
 confint(lm1)

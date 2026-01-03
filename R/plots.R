@@ -51,68 +51,104 @@ traceplot <- function(object, ...) {
 
 #' @export
 #' @keywords internal
-traceplot.mcmc.list <- function(object, start = NULL, end = NULL,
-                                thin = NULL, ...) {
+traceplot.mcmc.list <- function(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  ...
+) {
+  if (is.null(start)) {
+    start <- start(object)
+  }
+  if (is.null(end)) {
+    end <- end(object)
+  }
+  if (is.null(thin)) {
+    thin <- coda::thin(object)
+  }
 
-  if (is.null(start)) start <- start(object)
-  if (is.null(end)) end <- end(object)
-  if (is.null(thin)) thin <- coda::thin(object)
-
-  coda::traceplot(window(object, start = start, end = end,
-                         thin = thin), ...)
+  coda::traceplot(window(object, start = start, end = end, thin = thin), ...)
 }
 
 
 #' @rdname traceplot
 #' @export
-traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                              subset = c(analysis_main = TRUE),
-                              outcome = NULL, exclude_chains = NULL,
-                              nrow = NULL, ncol = NULL, use_ggplot = FALSE,
-                              warn = TRUE, mess = TRUE, ...) {
-
-
+traceplot.JointAI <- function(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  subset = c(analysis_main = TRUE),
+  outcome = NULL,
+  exclude_chains = NULL,
+  nrow = NULL,
+  ncol = NULL,
+  use_ggplot = FALSE,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
   # prepare the MCMC sample and obtain plotting parameters
-  prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, outcome = outcome,
-                    exclude_chains = exclude_chains,
-                    nrow = nrow, ncol = ncol, warn = warn, mess = mess)
+  prep <- plot_prep(
+    object,
+    start = start,
+    end = end,
+    thin = thin,
+    subset = subset,
+    outcome = outcome,
+    exclude_chains = exclude_chains,
+    nrow = nrow,
+    ncol = ncol,
+    warn = warn,
+    mess = mess
+  )
 
   # get the variable names to use for each sub-plot
   plotnams <- get_plotmain(object, colnames(prep$MCMC[[1]]))
 
-
   # if ggplot is used, the data needs to be converted to long format and
   # variable names are used as facet labels
   if (use_ggplot) {
-    meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
-                                 varnames = c('iteration', 'variable'))
+    meltMCMC <- melt_matrix_list(
+      lapply(prep$MCMC, as.matrix),
+      varnames = c('iteration', 'variable')
+    )
     meltMCMC$chain <- factor(meltMCMC$L1)
 
     labels <- setNames(plotnams, colnames(prep$MCMC[[1]]))
 
-    ggplot2::ggplot(meltMCMC,
-                    ggplot2::aes(iteration, value, color = chain)) +
+    ggplot2::ggplot(meltMCMC, ggplot2::aes(iteration, value, color = chain)) +
       ggplot2::geom_line() +
-      ggplot2::facet_wrap('variable', scales = 'free',
-                          ncol = prep$ncol, nrow = prep$nrow,
-                          labeller = ggplot2::as_labeller(labels))
+      ggplot2::facet_wrap(
+        'variable',
+        scales = 'free',
+        ncol = prep$ncol,
+        nrow = prep$nrow,
+        labeller = ggplot2::as_labeller(labels)
+      )
   } else {
     # for base plots, set graphics parameters
-    op <- par(mfrow = c(prep$nrow, prep$ncol),
-              mar = c(3.2, 2.5, ifelse(length(object$fixed) == 1, 2, 3), 1),
-              mgp = c(2, 0.6, 0))
+    op <- par(
+      mfrow = c(prep$nrow, prep$ncol),
+      mar = c(3.2, 2.5, ifelse(length(object$fixed) == 1, 2, 3), 1),
+      mgp = c(2, 0.6, 0)
+    )
 
     for (i in seq_len(coda::nvar(prep$MCMC))) {
-      matplot(x = as.numeric(prep$time),
-              y = as.array(prep$MCMC, drop = FALSE)[, i, ], type = "l",
-              xlab = "Iterations", ylab = "",
-              main = plotnams[i], ...)
+      matplot(
+        x = as.numeric(prep$time),
+        y = as.array(prep$MCMC, drop = FALSE)[, i, ],
+        type = "l",
+        xlab = "Iterations",
+        ylab = "",
+        main = plotnams[i],
+        ...
+      )
     }
     on.exit(par(op))
   }
 }
-
 
 
 #' Plot the posterior density from object of class JointAI
@@ -182,40 +218,67 @@ densplot <- function(object, ...) {
 
 #' @export
 #' @keywords internal
-densplot.mcmc.list <- function(object, start = NULL, end = NULL,
-                               thin = NULL, ...) {
+densplot.mcmc.list <- function(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  ...
+) {
+  if (is.null(start)) {
+    start <- start(object)
+  }
+  if (is.null(end)) {
+    end <- end(object)
+  }
+  if (is.null(thin)) {
+    thin <- coda::thin(object)
+  }
 
-  if (is.null(start)) start <- start(object)
-  if (is.null(end)) end <- end(object)
-  if (is.null(thin)) thin <- coda::thin(object)
-
-  coda::densplot(window(object, start = start, end = end,
-                        thin = thin), ...)
+  coda::densplot(window(object, start = start, end = end, thin = thin), ...)
 }
 
 
 #' @rdname densplot
 #' @export
-densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                             subset = c(analysis_main = TRUE),
-                             outcome = NULL,
-                             exclude_chains = NULL, vlines = NULL, nrow = NULL,
-                             ncol = NULL, joined = FALSE, use_ggplot = FALSE,
-                             warn = TRUE, mess = TRUE, ...) {
-
+densplot.JointAI <- function(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  subset = c(analysis_main = TRUE),
+  outcome = NULL,
+  exclude_chains = NULL,
+  vlines = NULL,
+  nrow = NULL,
+  ncol = NULL,
+  joined = FALSE,
+  use_ggplot = FALSE,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
   # prepare the MCMC sample and obtain plotting parameters
-  prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, outcome = outcome,
-                    exclude_chains = exclude_chains,
-                    nrow = nrow, ncol = ncol, warn = warn,
-                    mess = mess)
+  prep <- plot_prep(
+    object,
+    start = start,
+    end = end,
+    thin = thin,
+    subset = subset,
+    outcome = outcome,
+    exclude_chains = exclude_chains,
+    nrow = nrow,
+    ncol = ncol,
+    warn = warn,
+    mess = mess
+  )
 
   # if MCMC chains should be combined, combine the samples of the chains.
   # Set the resulting object as mcmc.list so that the rest of the syntax
   # works for either case
-  if (joined)
+  if (joined) {
     prep$MCMC <- coda::as.mcmc.list(coda::as.mcmc(do.call(rbind, prep$MCMC)))
-
+  }
 
   # obtain the variable names to be used as names for the sub-plots
   plotnams <- get_plotmain(object, colnames(prep$MCMC[[1]]))
@@ -223,23 +286,30 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     colnames(prep$MCMC[[k]]) <- plotnams
   }
 
-
   if (use_ggplot) {
     # if ggplot is used, the data needs to be converted to long format and
     # variable names are used as facet labels
 
-    meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
-                                 varnames = c('iteration', 'variable'))
+    meltMCMC <- melt_matrix_list(
+      lapply(prep$MCMC, as.matrix),
+      varnames = c('iteration', 'variable')
+    )
     meltMCMC$chain <- factor(meltMCMC$L1)
 
-    if (joined)
+    if (joined) {
       p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value))
-    else
+    } else {
       p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value, color = chain))
+    }
 
-    p + ggplot2::geom_density() +
-      ggplot2::facet_wrap('variable', scales = 'free', ncol = prep$ncol,
-                          nrow = prep$nrow)
+    p +
+      ggplot2::geom_density() +
+      ggplot2::facet_wrap(
+        'variable',
+        scales = 'free',
+        ncol = prep$ncol,
+        nrow = prep$nrow
+      )
   } else {
     args <- as.list(match.call())
 
@@ -250,32 +320,34 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       col <- seq_len(length(prep$MCMC))
     }
 
-
-    op <- par(mfrow = c(prep$nrow, prep$ncol),
-              mar = c(2, 3, ifelse(length(object$fixed) == 1, 2, 3), 1),
-              mgp = c(2, 0.6, 0))
+    op <- par(
+      mfrow = c(prep$nrow, prep$ncol),
+      mar = c(2, 3, ifelse(length(object$fixed) == 1, 2, 3), 1),
+      mgp = c(2, 0.6, 0)
+    )
 
     for (i in seq_len(ncol(prep$MCMC[[1]]))) {
       dens <- lapply(prep$MCMC[, i], density)
       vline_range <- if (is.list(vlines[[1]])) {
         lapply(lapply(vlines, "[[", "v"), "[", i)
-      }else{
+      } else {
         vlines$v
       }
 
-      plot(NULL,
-           xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = TRUE),
-           ylim = range(lapply(dens, "[[", "y"), na.rm = TRUE),
-           main = plotnams[i],
-           xlab = "", ylab = "density", ...
+      plot(
+        NULL,
+        xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = TRUE),
+        ylim = range(lapply(dens, "[[", "y"), na.rm = TRUE),
+        main = plotnams[i],
+        xlab = "",
+        ylab = "density",
+        ...
       )
 
       for (j in seq_len(length(prep$MCMC))) {
-        args_lines <- c(list(x = dens[[j]]$x,
-                             y = dens[[j]]$y,
-                             type = 'l',
-                             col = col[j]),
-                        args[names(args) %in% names(formals(plot.xy))]
+        args_lines <- c(
+          list(x = dens[[j]]$x, y = dens[[j]]$y, type = 'l', col = col[j]),
+          args[names(args) %in% names(formals(plot.xy))]
         )
         do.call(lines, args_lines)
       }
@@ -296,41 +368,61 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 # used in traceplot and densplot (2020-06-13)
-plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
-                      subset = NULL, outcome = NULL, exclude_chains = NULL,
-                      nrow = NULL, ncol = NULL, warn = TRUE, mess = TRUE,
-                      ...) {
-
+plot_prep <- function(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  subset = NULL,
+  outcome = NULL,
+  exclude_chains = NULL,
+  nrow = NULL,
+  ncol = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
   # Help function for densityplot and traceplot
 
-
-  if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
+  if (is.null(object$MCMC)) {
+    errormsg("There is no MCMC sample.")
+  }
 
   # set first and last iteration to be used and thinning interval
-  if (is.null(start)) start <- start(object$MCMC)
-  if (is.null(end)) end <- end(object$MCMC)
-  if (is.null(thin)) thin <- coda::thin(object$MCMC)
+  if (is.null(start)) {
+    start <- start(object$MCMC)
+  }
+  if (is.null(end)) {
+    end <- end(object$MCMC)
+  }
+  if (is.null(thin)) {
+    thin <- coda::thin(object$MCMC)
+  }
 
   # create a subset of the MCMC sample based on the user-selected set of
   # parameters
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
   if (!is.null(outcome)) {
-    outcomes <- clean_survname(names(object$fixed)[outcome])
+    outcomes <- internal_clean_survname(names(object$fixed)[outcome])
     params <- parameters(object, expand_ranef = TRUE)
-    selected_params <- params$coef[lvapply(params$outcome,
-                                           function(x) any(outcomes %in% x))]
+    selected_params <- params$coef[lvapply(params$outcome, function(x) {
+      any(outcomes %in% x)
+    })]
 
     if (any(!selected_params %in% colnames(object$MCMC[[1]]))) {
-      errormsg("Not all of the parameters that were selected are present in the
+      errormsg(
+        "Not all of the parameters that were selected are present in the
                 MCMC sample (%s). Please contact the package maintainer.",
-               paste_and(dQuote(
-                 selected_params[!selected_params %in% colnames(MCMC[[1]])]
-               ))
+        paste_and(dQuote(
+          selected_params[!selected_params %in% colnames(MCMC[[1]])]
+        ))
       )
     } else {
-      MCMC <- MCMC[, intersect(selected_params, colnames(MCMC[[1]])),
-                   drop = FALSE]
+      MCMC <- MCMC[,
+        intersect(selected_params, colnames(MCMC[[1]])),
+        drop = FALSE
+      ]
     }
   }
 
@@ -358,17 +450,22 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
       grDevices::n2mfrow(ncol(MCMC[[1]]))
     }
   } else if (is.null(nrow) & !is.null(ncol)) {
-    dims <- c(ceiling(ncol(MCMC[[1]])/ncol), ncol)
+    dims <- c(ceiling(ncol(MCMC[[1]]) / ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
-    dims <- c(nrow, ceiling(ncol(MCMC[[1]])/nrow))
+    dims <- c(nrow, ceiling(ncol(MCMC[[1]]) / nrow))
   } else {
     dims <- c(nrow, ncol)
   }
 
-  return(list(MCMC = MCMC, nrow = dims[1], ncol = dims[2],
-              thin = thin, time = time, subset = subset))
+  return(list(
+    MCMC = MCMC,
+    nrow = dims[1],
+    ncol = dims[2],
+    thin = thin,
+    time = time,
+    subset = subset
+  ))
 }
-
 
 
 get_plotmain <- function(object, plotnams, ylab = FALSE) {
@@ -384,26 +481,30 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
 
   coef_set <- coefs[na.omit(match(plotnams, coefs$coef)), ]
 
-
   if (length(unique(coef_set$outcome)) == 1) {
     plotnams[na.omit(match(coefs$coef, plotnams))] <-
       coefs$varnam_print[na.omit(match(plotnams, coefs$coef))]
   } else {
     if (ylab) {
       plotnams[na.omit(match(coefs$coef, plotnams))] <-
-        paste0(coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))], ": ",
-               coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))])
+        paste0(
+          coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))],
+          ": ",
+          coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))]
+        )
     } else {
       plotnams[na.omit(match(coefs$coef, plotnams))] <-
-        paste0(coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))],
-               "\n",
-               "(", coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))],
-               ")")
+        paste0(
+          coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))],
+          "\n",
+          "(",
+          coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))],
+          ")"
+        )
     }
   }
   plotnams
 }
-
 
 
 #' Visualize the distribution of all variables in the dataset
@@ -430,11 +531,18 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
 #'
 #' @export
 
-plot_all <- function(data, nrow = NULL, ncol = NULL,
-                     fill = grDevices::grey(0.8),
-                     border = 'black', allNA = FALSE, idvars = NULL,
-                     xlab = '', ylab = 'frequency', ...) {
-
+plot_all <- function(
+  data,
+  nrow = NULL,
+  ncol = NULL,
+  fill = grDevices::grey(0.8),
+  border = 'black',
+  allNA = FALSE,
+  idvars = NULL,
+  xlab = '',
+  ylab = 'frequency',
+  ...
+) {
   args <- as.list(match.call())
   args <- args[!names(args) %in% names(formals(plot_all))]
   args_hist <- unlist(args[names(args) %in% names(formals(hist.default))])
@@ -448,13 +556,12 @@ plot_all <- function(data, nrow = NULL, ncol = NULL,
       grDevices::n2mfrow(ncol(data))
     }
   } else if (is.null(nrow) & !is.null(ncol)) {
-    dims <- c(ceiling(ncol(data)/ncol), ncol)
+    dims <- c(ceiling(ncol(data) / ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
-    dims <- c(nrow, ceiling(ncol(data)/nrow))
+    dims <- c(nrow, ceiling(ncol(data) / nrow))
   } else {
     dims <- c(nrow, ncol)
   }
-
 
   op <- par(mfrow = dims)
   if (!is.null(idvars)) {
@@ -467,9 +574,11 @@ plot_all <- function(data, nrow = NULL, ncol = NULL,
   for (i in names(data)) {
     if (!is.null(idvars)) {
       x <- data[match(unique(groups[, varlvls[i]]), groups[, varlvls[i]]), i]
-    } else x <- data[, i]
+    } else {
+      x <- data[, i]
+    }
 
-    pNA <- round(mean(is.na(x))*100, 1)
+    pNA <- round(mean(is.na(x)) * 100, 1)
 
     main <- if (any(is.na(data[, i])) | allNA) {
       paste0(i, " (", pNA, "% NA)")
@@ -477,9 +586,9 @@ plot_all <- function(data, nrow = NULL, ncol = NULL,
       i
     }
 
-    if (!is.null(idvars))
+    if (!is.null(idvars)) {
       main <- paste0(main, "\n", "(", varlvls[i], ")")
-
+    }
 
     if (is.factor(x) | is.logical(x)) {
       if (any(is.na(x))) {
@@ -487,44 +596,101 @@ plot_all <- function(data, nrow = NULL, ncol = NULL,
         x[is.na(x)] <- "NA"
       }
       if (is.null(args_barplot)) {
-        barplot(table(x), ylab = ylab, main = main, col = fill,
-                border = border, xlab = xlab)
+        barplot(
+          table(x),
+          ylab = ylab,
+          main = main,
+          col = fill,
+          border = border,
+          xlab = xlab
+        )
       } else {
-        barplot(table(x), ylab = ylab, main = main, col = fill,
-                border = border, xlab = xlab, args_barplot)
+        barplot(
+          table(x),
+          ylab = ylab,
+          main = main,
+          col = fill,
+          border = border,
+          xlab = xlab,
+          args_barplot
+        )
       }
     } else if (is.character(x)) {
-      plot(0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "",
-           main = main, bty = 'n')
-      text(1, 0, paste0(i,
-                        " \nis coded as character\nand cannot be plotted."),
-           xpd = TRUE)
+      plot(
+        0,
+        type = "n",
+        xaxt = "n",
+        yaxt = "n",
+        xlab = "",
+        ylab = "",
+        main = main,
+        bty = 'n'
+      )
+      text(
+        1,
+        0,
+        paste0(i, " \nis coded as character\nand cannot be plotted."),
+        xpd = TRUE
+      )
     } else if (class(x) %in% c('Date', 'POSIXt')) {
       if (is.null(args_hist)) {
-        breaks <-  seq(min(x, na.rm  = TRUE), max(x, na.rm = TRUE),
-                       length.out = 10 + 1)
-        hist(as.numeric(x), ylab = ylab, main = main, xaxt = 'n',
-             col = fill, border = border, xlab = xlab,
-             breaks = as.numeric(breaks))
+        breaks <- seq(
+          min(x, na.rm = TRUE),
+          max(x, na.rm = TRUE),
+          length.out = 10 + 1
+        )
+        hist(
+          as.numeric(x),
+          ylab = ylab,
+          main = main,
+          xaxt = 'n',
+          col = fill,
+          border = border,
+          xlab = xlab,
+          breaks = as.numeric(breaks)
+        )
         axis(side = 1, at = as.numeric(breaks), labels = breaks)
       } else {
         nclass <- ifelse(is.na(args_hist['nclass']), 10, args_hist['nclass'])
-        breaks <- seq(min(x, na.rm  = TRUE),
-                      max(x, na.rm = TRUE),
-                      length.out = nclass + 1)
+        breaks <- seq(
+          min(x, na.rm = TRUE),
+          max(x, na.rm = TRUE),
+          length.out = nclass + 1
+        )
 
-        hist(as.numeric(x), ylab = ylab, main = main, xaxt = 'n',
-             col = fill, border = border, xlab = xlab, args_hist,
-             breaks = as.numeric(breaks))
+        hist(
+          as.numeric(x),
+          ylab = ylab,
+          main = main,
+          xaxt = 'n',
+          col = fill,
+          border = border,
+          xlab = xlab,
+          args_hist,
+          breaks = as.numeric(breaks)
+        )
         axis(side = 1, at = as.numeric(breaks), labels = breaks, args_hist)
       }
     } else {
       if (is.null(args_hist)) {
-        hist(x, ylab = ylab, main = main,
-             col = fill, border = border, xlab = xlab)
+        hist(
+          x,
+          ylab = ylab,
+          main = main,
+          col = fill,
+          border = border,
+          xlab = xlab
+        )
       } else {
-        hist(x, ylab = ylab, main = main,
-             col = fill, border = border, xlab = xlab, args_hist)
+        hist(
+          x,
+          ylab = ylab,
+          main = main,
+          col = fill,
+          border = border,
+          xlab = xlab,
+          args_hist
+        )
       }
     }
   }

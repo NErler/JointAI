@@ -223,7 +223,6 @@ extract_lhs_string <- function(formula) {
 #'
 #' @param ... `formula` objects, lists of formulas or character strings that are
 #'            valid variable names (in the sense of `make.vars()`)
-#' @export
 #'
 #' @keywords internal
 

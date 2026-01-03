@@ -19,14 +19,11 @@ melt_list <- function(l, varname = "L1", valname = "value") {
     errormsg("In melt_list(): The input has to be a list.")
   }
 
-
   if (any(lapply(l, length) == 0)) {
     warnmsg(
       "In melt_list(): Element(s) %s has/have length zero.
              I will ignore this.",
-      paste_and(names(Filter(function(x) length(x) == 0, x = l)),
-                dQ = TRUE
-      )
+      paste_and(names(Filter(function(x) length(x) == 0, x = l)), dQ = TRUE)
     )
     l <- Filter(Negate(function(x) length(x) == 0), l)
   }
@@ -36,8 +33,9 @@ melt_list <- function(l, varname = "L1", valname = "value") {
   if (any(lvapply(l, function(x) !is.atomic(x) | !is.vector(x)))) {
     errormsg(
       "In melt_list(): Not all elements are atomic vectors (%s).",
-      paste_and(names(Filter(function(x) !is.atomic(x) | !is.vector(x), l)),
-                dQ = TRUE
+      paste_and(
+        names(Filter(function(x) !is.atomic(x) | !is.vector(x), l)),
+        dQ = TRUE
       )
     )
   }
@@ -45,9 +43,10 @@ melt_list <- function(l, varname = "L1", valname = "value") {
   do.call(
     rbind,
     lapply(seq_along(l), function(k) {
-      df <- as.data.frame(list(l[[k]]),
-                          col.names = valname,
-                          stringsAsFactors = FALSE
+      df <- as.data.frame(
+        list(l[[k]]),
+        col.names = valname,
+        stringsAsFactors = FALSE
       )
 
       df[, varname] <- names(l)[k]
@@ -55,7 +54,6 @@ melt_list <- function(l, varname = "L1", valname = "value") {
     })
   )
 }
-
 
 
 #' Melt a `matrix` into a `data.frame`
@@ -76,8 +74,10 @@ melt_list <- function(l, varname = "L1", valname = "value") {
 
 melt_matrix <- function(x, varnames = NULL, valname = "value") {
   if (!inherits(x, "matrix")) {
-    errormsg("In melt_matrix():
-             This function has to be used with matrices.")
+    errormsg(
+      "In melt_matrix():
+             This function has to be used with matrices."
+    )
   }
 
   # if no varnames are given, use the names of the dimension names of x
@@ -109,8 +109,6 @@ melt_matrix <- function(x, varnames = NULL, valname = "value") {
 }
 
 
-
-
 #' Melt a list of matrices into a `data.frame`
 #'
 #'
@@ -126,17 +124,21 @@ melt_matrix <- function(x, varnames = NULL, valname = "value") {
 
 melt_matrix_list <- function(l, varnames = NULL) {
   if (!inherits(l, "list") || !all(sapply(l, inherits, "matrix"))) {
-    errormsg("This function may not work for objects that are not a list
-             of matrices.")
+    errormsg(
+      "This function may not work for objects that are not a list
+             of matrices."
+    )
   }
 
-
-  if (is.null(varnames) &&
-      length(unique(lapply(l, function(x) names(dimnames(x))))) > 1L) {
+  if (
+    is.null(varnames) &&
+      length(unique(lapply(l, function(x) names(dimnames(x))))) > 1L
+  ) {
     errormsg(
       "In melt_matrix_list(): When the argument %s is not provided,
              all matrices must have the same names of their %s.",
-      dQuote("varnames"), dQuote("dimnames")
+      dQuote("varnames"),
+      dQuote("dimnames")
     )
   }
 
@@ -149,7 +151,6 @@ melt_matrix_list <- function(l, varnames = NULL) {
   lnew <- lapply(names(l), function(k) {
     cbind(melt_matrix(l[[k]], varnames = varnames), L1 = k)
   })
-
 
   # check if there are differences in variable classes between data.frames
   types <- ivapply(names(lnew[[1]]), function(n) {
@@ -186,11 +187,17 @@ melt_matrix_list <- function(l, varnames = NULL) {
 #' @keywords internal
 #' @noRd
 
-melt_data_frame <- function(data, id_vars = NULL, varname = "variable",
-                            valname = "value") {
+melt_data_frame <- function(
+  data,
+  id_vars = NULL,
+  varname = "variable",
+  valname = "value"
+) {
   if (!inherits(data, "data.frame")) {
-    errormsg("In melt_data_frame:
-             This function requires a data.frame as input.")
+    errormsg(
+      "In melt_data_frame:
+             This function requires a data.frame as input."
+    )
   }
 
   if (setequal(id_vars, names(data))) {
@@ -207,30 +214,23 @@ melt_data_frame <- function(data, id_vars = NULL, varname = "variable",
     )
   }
 
-
   # subset without the id variables
   d <- subset(data, select = setdiff(names(data), id_vars))
-
 
   out <- if (is.null(id_vars)) {
     data.frame(matrix(nrow = nrow(d) * ncol(d), ncol = 0))
   } else {
     do.call(
       rbind,
-      replicate(ncol(d), subset(data, select = id_vars),
-                simplify = FALSE
-      )
+      replicate(ncol(d), subset(data, select = id_vars), simplify = FALSE)
     )
   }
-
 
   out[[varname]] <- rep(names(d), each = nrow(d))
   out[[valname]] <- unlist(d, recursive = FALSE)
 
   out
 }
-
-
 
 
 #' Melt a list of `data.frame`s
@@ -254,17 +254,32 @@ melt_data_frame <- function(data, id_vars = NULL, varname = "variable",
 #' @keywords internal
 #' @noRd
 
-melt_data_frame_list <- function(l, id_vars = NULL, varname = NULL,
-                                 valname = "value", lname = "L1") {
-  if (!inherits(l, "list") || !all(sapply(l, inherits, "data.frame") |
-                                   sapply(l, inherits, "NULL"))) {
-    errormsg("This function may not work for objects that are not a
-             list of data frames.")
+melt_data_frame_list <- function(
+  l,
+  id_vars = NULL,
+  varname = NULL,
+  valname = "value",
+  lname = "L1"
+) {
+  if (
+    !inherits(l, "list") ||
+      !all(
+        sapply(l, inherits, "data.frame") |
+          sapply(l, inherits, "NULL")
+      )
+  ) {
+    errormsg(
+      "This function may not work for objects that are not a
+             list of data frames."
+    )
   }
 
-  lnew <- lapply(l[!sapply(l, is.null)],
-                 melt_data_frame, valname = valname,
-                 varname = varname, id_vars = id_vars
+  lnew <- lapply(
+    l[!sapply(l, is.null)],
+    melt_data_frame,
+    valname = valname,
+    varname = varname,
+    id_vars = id_vars
   )
 
   if (is.null(names(lnew))) {
@@ -280,49 +295,35 @@ melt_data_frame_list <- function(l, id_vars = NULL, varname = NULL,
 }
 
 
-
-# old version of the function; included for reverse dependency remiod;
-# re-introduced 2 April 2024
-#
-melt_data.frame <- function(data, id.vars = NULL, varnames = NULL,
-                            valname = 'value') {
-  if (!inherits(data, 'data.frame'))
-    errormsg("This function may not work for objects that are not data.frames.")
-
-  data$rowID <- paste0('rowID', seq_len(nrow(data)))
-  X <- data[, !names(data) %in% c('rowID', id.vars), drop = FALSE]
-
-  g <- list(rowID = data$rowID,
-            variable = if (ncol(X) > 0) names(X)
-  )
-
-  out <- expand.grid(Filter(Negate(is.null), g), stringsAsFactors = FALSE)
-
-  if (length(unique(sapply(X, class))) > 1) {
-    out[, valname] <- unlist(lapply(X, as.character))
-  } else {
-    out[, valname] <- unlist(X)
+melt_data.frame_list <- function(
+  X,
+  id.vars = NULL,
+  varnames = NULL,
+  valname = 'value'
+) {
+  if (
+    !inherits(X, 'list') ||
+      !all(
+        sapply(X, inherits, 'data.frame') |
+          sapply(X, inherits, 'NULL')
+      )
+  ) {
+    errormsg(
+      "This function may not work for objects that are not a
+             list of data frames."
+    )
   }
 
-  mout <- merge(data[, c("rowID", id.vars)], out)
+  Xnew <- lapply(
+    X[!sapply(X, is.null)],
+    melt_data.frame,
+    varnames = varnames,
+    id.vars = id.vars
+  )
 
-  attr(mout, 'out.attrs') <- NULL
-
-  if (ncol(X) > 0) mout[order(mout$variable), -1] else mout
-}
-
-melt_data.frame_list <- function(X, id.vars = NULL, varnames = NULL,
-                                 valname = 'value') {
-  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame') |
-                                   sapply(X, inherits, 'NULL')))
-    errormsg("This function may not work for objects that are not a
-             list of data frames.")
-
-  Xnew <- lapply(X[!sapply(X, is.null)],
-                 melt_data.frame, varnames = varnames, id.vars = id.vars)
-
-  if (is.null(names(Xnew)))
+  if (is.null(names(Xnew))) {
     names(Xnew) <- seq_along(Xnew)
+  }
 
   Xnew <- lapply(names(Xnew), function(k) {
     cbind(Xnew[[k]], L1 = k, stringsAsFactors = FALSE)

@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 7,
   out.width = '100%',
-  dpi = 600,
+  dev = "svglite",
   fig.align = 'center',
   fig.path = "figures_AfterFitting/"
 )
@@ -59,7 +59,7 @@ A trace plot shows the sampled values per chain and node throughout
 iterations. It allows us to evaluate convergence and mixing of the chains
 visually, and can be obtained with the function
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html):
-```{r, message = FALSE, fig.width = 7, fig.height = 4, out.width = '100%', results='hide'}
+```{r trace13a, message = FALSE, fig.width = 7, fig.height = 4, out.width = '100%', results='hide'}
 mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500,
                  seed = 2020)
 
@@ -92,13 +92,13 @@ The posterior distributions can also be visualized using the function
 [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.html),
 which plots the empirical density per node per chain, or combining chains
 (when `joined = TRUE`).
-```{r, echo = F, eval = F, fig.width = 7, fig.height = 3.5, out.width = '100%'}
+```{r dens13a, echo = F, eval = F, fig.width = 7, fig.height = 3.5, out.width = '100%'}
 densplot(mod13a, joined = TRUE, ncol = 3)
 ```
 
 The argument `vlines` takes a list of lists, containing specifications passed
 to `abline`, and allows us to add (vertical) lines to the plot, e.g., marking zero:
-```{r, fig.width = 7, fig.height = 3.5, out.width = '100%'}
+```{r dens13a-2, fig.width = 7, fig.height = 3.5, out.width = '100%'}
 densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
          vlines = list(list(v = c(rep(0, length(coef(mod13a)$SBP)), NA),
                             col = grey(0.8))))
@@ -186,7 +186,7 @@ summary is based is given. This includes the range and number of iterations
 ("Sample size per chain"), thinning interval, and number of chains.
 Furthermore, the number of observations (number of rows in the data) is given.
 
-```{r, message = FALSE}
+```{r smry13a, message = FALSE}
 summary(mod13a)
 ```
 
@@ -194,14 +194,14 @@ For mixed models, `summary()` also returns the posterior summary of the
 random effects covariance matrix `D` and the number of groups. The argument
 `missinfo = TRUE` will add information on the missing values in the variables
 involved in the model:
-```{r, message = FALSE, results = 'hide'}
+```{r mod13b, message = FALSE, results = 'hide'}
 library(splines)
 mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
                   random = ~ 1 | ID,
                   data = subset(simLong, !is.na(bmi)),
                   n.iter = 500, no_model = 'age', seed = 2020)
 ```
-```{r}
+```{r smry13b}
 summary(mod13b, missinfo = TRUE)
 ```
 
@@ -266,7 +266,7 @@ It is implemented for `JointAI` objects in the function
 which is based on the function `gelman.diag()` from the package
 [**coda**](https://CRAN.R-project.org/package=coda).
 The upper limit of the confidence interval should not be much larger than 1.
-```{r}
+```{r GRcrit13a}
 GR_crit(mod13a)
 ```
 
@@ -285,7 +285,7 @@ standard deviation^[Lesaffre, E. M. and A. B. Lawson (2012).
 *Bayesian Biostatistics*. John Wiley & Sons. doi: 10.1002/9781119942412.].
 Besides the arguments explained [below](#sec:subset), `MC_error()`
 takes the arguments of `mcmcse.mat()`.
-```{r}
+```{r MCE13a}
 MC_error(mod13a)
 ```
 
@@ -331,22 +331,22 @@ or for a subset of nodes, the argument `subset` needs to be specified.
 To display only the parameters of the imputation models, we set `subset =
 c(analysis_main = FALSE, other_models = TRUE)` (after re-estimating the model
 with the monitor for these parameters switched on):
-```{r, message = FALSE, results = 'hide'}
+```{r mod13c, message = FALSE, results = 'hide'}
 mod13c <- update(mod13a, monitor_params = c(other_models = TRUE))
 ```
-```{r, message = FALSE}
+```{r smry13c, message = FALSE}
 summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
 ```
 
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
-```{r message = FALSE, fig.height = 3.5, out.width = "70%"}
+```{r densplot13c, message = FALSE, fig.height = 3.5, out.width = "70%"}
 densplot(mod13c, subset = list(analysis_main = FALSE,
                                other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
 This also works when a subset of the imputed values should be displayed:
-```{r, message = FALSE, results = 'hide'}
+```{r mod13d, message = FALSE, results = 'hide'}
 # re-fit the model and monitor the imputed values
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 ```
@@ -363,11 +363,11 @@ When the number of imputed values is large or in order to check convergence
 of random effects, it may not be feasible to plot and inspect all trace plots.
 In that case a random subset of, for instance the random effects, can be selected
 (output not shown):
-```{r, results = 'hide'}
+```{r mod13e, results = 'hide'}
 # re-fit the model monitoring the random effects
 mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 ```
-```{r, fig.height = 5.5}
+```{r ri, fig.height = 5.5}
 # extract random intercepts
 ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
@@ -388,7 +388,7 @@ If a particular chain does not have converged it can be excluded from the
 summary or plot using the argument `exclude_chains`. This argument takes a
 numeric vector identifying chains to be excluded, for example:
 
-```{r, fig.height = 4.5, out.width = "90%"}
+```{r mod14, fig.height = 4.5, out.width = "90%"}
 mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
                 progress.bar = 'none', n.chains = 5)
 
@@ -396,7 +396,7 @@ densplot(mod14, ncol = 3)
 densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
-```{r, fig.height = 4.5, out.width = "90%"}
+```{r trace14, fig.height = 4.5, out.width = "90%"}
 traceplot(mod14, thin = 10, ncol = 3)
 traceplot(mod14, start = 150, ncol = 3)
 traceplot(mod14, end = 120, ncol = 3)
@@ -422,11 +422,11 @@ quantiles of the posterior sample that are used to obtain the credible interval
 (by default the 2.5% and 97.5% quantile).
 Arguments `start`, `end`, `thin` and `exclude_chains` control the subset of MCMC samples that is used.
 
-```{r, echo = FALSE}
+```{r opt, echo = FALSE}
 options(width = 70)
 ```
 
-```{r}
+```{r pred13a}
 predict(mod13a, newdata = NHANES[27, ])
 ```
 
@@ -445,7 +445,7 @@ covariate specified by the argument `vars`, and the median or reference value fo
 all other continuous and categorical variables.
 
 
-```{r, fig.width = 7, fig.height = 4.5, out.width = '90%'}
+```{r predplot, fig.width = 7, fig.height = 4.5, out.width = '90%'}
 # create dataset for prediction
 newDF <- predDF(mod13b, var = ~ age)
 
@@ -462,7 +462,7 @@ matplot(pred$newdata$age, pred$fitted,
 It is possible to have multiple variables vary and to set values for these
 variables:
 
-```{r, fig.width = 7, fig.height = 4.5, out.width = '90%'}
+```{r predplotgg, fig.width = 7, fig.height = 4.5, out.width = '90%'}
 # create dataset for prediction
 newDF <- predDF(mod13b, var = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
 
@@ -518,13 +518,13 @@ is given in the variable `Imputation_`, column `.id` contains a newly created
 id variable for each observation in cross-sectional data (multi-level data should
 already contain an id variable).
 
-```{r}
+```{r impDF}
 impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 ```
 
 The function `plot_imp_distr()` allows us to visually compare the distribution
 of the observed and imputed values.
-```{r, fig.width = 7, fig.height = 2.5, out.width = '100%', error = TRUE}
+```{r plotimpdistr, fig.width = 7, fig.height = 2.5, out.width = '100%', error = TRUE}
 plot_imp_distr(impDF, nrow = 1)
 ```
 

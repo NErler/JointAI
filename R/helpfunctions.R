@@ -433,12 +433,8 @@ replace_interaction <- function(nam, interactions) {
 #'
 #' @param x a character string or vector of character strings
 #'
-#' @examples
-#' clean_survname("Surv(eventtime, event != 'censored')")
-#'
-#' @export
 
-clean_survname <- function(x) {
+internal_clean_survname <- function(x) {
   # use cvapply in case x is a vector of variable names
   cvapply(x, function(z) {
     is_surv <- grepl("^Surv\\(", z)

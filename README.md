@@ -104,13 +104,13 @@ plot_all(
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-plotall-1.png" alt="" style="display: block; margin: auto;" />
 
 ``` r
 md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-mdpattern-1.png" alt="" style="display: block; margin: auto;" />
 
 ### Fit a linear regression model with incomplete covariates
 
@@ -130,13 +130,13 @@ lm1 <- lm_imp(
 traceplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-traceplot-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
 ``` r
 densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-densplot-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
 ### Summarize the Result
 

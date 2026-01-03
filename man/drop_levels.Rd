@@ -4,7 +4,7 @@
 \alias{drop_levels}
 \title{Check for empty factor levels}
 \usage{
-drop_levels(data, allvars, warn = TRUE)
+drop_levels(data, allvars, warn = TRUE, mess = NULL)
 }
 \arguments{
 \item{data}{a \code{data.frame}}
