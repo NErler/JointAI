@@ -4,18 +4,16 @@
 
 ### New features
 
-- Added functions [`crosscorr()`](../reference/crosscorr.md),
-  [`crosscorr_plot()`](../reference/crosscorr.md),
-  [`autocorr()`](../reference/autocorr.md) and
-  [`autocorr_plot()`](../reference/autocorr.md) to assess
-  cross-correlation and autocorrelation of MCMC samples.
+- Added functions `crosscorr()`, `crosscorr_plot()`, `autocorr()` and
+  `autocorr_plot()` to assess cross-correlation and autocorrelation of
+  MCMC samples.
 
 ### Small improvements
 
-- [`all_vars()`](../reference/all_vars.md): update of the function; can
-  now handle an unspecified number of input objects and can extract
-  variable names from formulas and character strings that are valid
-  variable names
+- [`all_vars()`](https://nerler.github.io/JointAI/reference/all_vars.md):
+  update of the function; can now handle an unspecified number of input
+  objects and can extract variable names from formulas and character
+  strings that are valid variable names
 - objects provided to the `data` argument are now converted with
   [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html), making
   it possible to provide a `tibble`
@@ -51,8 +49,9 @@ CRAN release: 2023-04-27
 
 (update request by CRAN)
 
-- use a wrapper for [`bs()`](../reference/bs.md) to avoid warning in CMD
-  check when run on older version of R where
+- use a wrapper for
+  [`bs()`](https://nerler.github.io/JointAI/reference/bs.md) to avoid
+  warning in CMD check when run on older version of R where
   [`splines::bs()`](https://rdrr.io/r/splines/bs.html) did not yet have
   the argument `warn.outside`.
 
@@ -64,32 +63,36 @@ CRAN release: 2022-09-03
 
 ### New features
 
-- [`md_pattern()`](../reference/md_pattern.md) has an additional
-  argument `sort_columns` to provide the option to switch off the
-  sorting of columns by number of missing values.
-- [`sum_duration()`](../reference/sum_duration.md): new function to get
-  sum of computational time across chains, phases, runs, …
+- [`md_pattern()`](https://nerler.github.io/JointAI/reference/md_pattern.md)
+  has an additional argument `sort_columns` to provide the option to
+  switch off the sorting of columns by number of missing values.
+- [`sum_duration()`](https://nerler.github.io/JointAI/reference/sum_duration.md):
+  new function to get sum of computational time across chains, phases,
+  runs, …
 
 ### Bug fixes
 
 - [`formula()`](https://rdrr.io/r/stats/formula.html) now also return
-  the model formula when [`add_samples()`](../reference/add_samples.md)
+  the model formula when
+  [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
   is used.
-- [`JM_imp()`](../reference/model_imp.md) with ordinal longitudinal
-  outcome is not using the correct version of the linear predictor in
-  the quadrature procedure approximating the integral in the survival.
+- [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  with ordinal longitudinal outcome is not using the correct version of
+  the linear predictor in the quadrature procedure approximating the
+  integral in the survival.
 - Bug causing the wrong elements of the data matrix to be monitored when
   `monitor_params(imps = TRUE)` in survival models fixed.
-- [`predDF()`](../reference/predDF.md): bugfix for models including
-  auxiliary variables (which were previously not included into the
-  data)  
+- [`predDF()`](https://nerler.github.io/JointAI/reference/predDF.md):
+  bugfix for models including auxiliary variables (which were previously
+  not included into the data)  
 - `nonprop`: bugfix for non-proportional effects in covariate models
 
 ### Small improvements
 
-- Use of [`add_samples()`](../reference/add_samples.md) will now result
-  in the `call` element of a `JointAI` object being a `list` and no
-  longer a nested list.
+- Use of
+  [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
+  will now result in the `call` element of a `JointAI` object being a
+  `list` and no longer a nested list.
 - Re-structuring of the JAGS model code for proportional hazards models
   to reduce computational time.
 - change in how parallel computation is done: does not rely on
@@ -131,10 +134,13 @@ CRAN release: 2021-11-28
 - Bug fix in generating the names of random effect nodes to monitor when
   there are multiple analysis models and some do not have random
   effects.
-- Bug fix in [`plot_all()`](../reference/plot_all.md) not displaying the
-  variable name in the message shown for character string variables.
-- Bug fix in [`set_refcat()`](../reference/set_refcat.md): wasn’t
-  displaying the factor labels correctly
+- Bug fix in
+  [`plot_all()`](https://nerler.github.io/JointAI/reference/plot_all.md)
+  not displaying the variable name in the message shown for character
+  string variables.
+- Bug fix in
+  [`set_refcat()`](https://nerler.github.io/JointAI/reference/set_refcat.md):
+  wasn’t displaying the factor labels correctly
 - `print.JointAI`: bugfix for multivariate mixed models with full
   variance-covariance matrix of the random effects that had the same
   number of random effects for each outcome, for which the printing of
@@ -151,8 +157,9 @@ CRAN release: 2021-01-13
 
 ### New features
 
-- [`rd_vcov()`](../reference/rd_vcov.md): new function added to extract
-  the random effect variance- covariance matrices (posterior means)
+- [`rd_vcov()`](https://nerler.github.io/JointAI/reference/rd_vcov.md):
+  new function added to extract the random effect variance- covariance
+  matrices (posterior means)
 
 ### Minor improvements and bug fixes
 
@@ -176,12 +183,12 @@ CRAN release: 2020-11-16
   level; before `pos_*` was excluded for only one of them
 - random effects: it is now possible to use different grouping levels in
   different sub-models (when providing a list of model formulas)
-- [`add_samples()`](../reference/add_samples.md): remove unnecessary
-  call to `doFuture::registerDoFuture()`
-- [`predDF()`](../reference/predDF.md) bug fix: the parameter for all
-  methods is now called `object`
-- [`list_models()`](../reference/list_models.md) now also works for
-  errored JointAI objects
+- [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md):
+  remove unnecessary call to `doFuture::registerDoFuture()`
+- [`predDF()`](https://nerler.github.io/JointAI/reference/predDF.md) bug
+  fix: the parameter for all methods is now called `object`
+- [`list_models()`](https://nerler.github.io/JointAI/reference/list_models.md)
+  now also works for errored JointAI objects
 - Bug fix for models with an interaction between a repeatedly measured
   variable and a random slope variable. (The term was wrongly written in
   the mean structure for the random effect instead of the main linear
@@ -201,15 +208,20 @@ possible to assure backward compatibility.
 
 #### New analysis model types
 
-- [`betareg_imp()`](../reference/model_imp.md): beta regression
-- [`betamm_imp()`](../reference/model_imp.md): beta mixed model
-- [`lognorm_imp()`](../reference/model_imp.md): log-normal regression
-  model
-- [`lognormmm_imp()`](../reference/model_imp.md): log-normal mixed model
-- [`mlogit_imp()`](../reference/model_imp.md): multinomial logit model
-- [`mlogitmm_imp()`](../reference/model_imp.md): multinomial mixed model
-- [`JM_imp()`](../reference/model_imp.md): joint model for longitudinal
-  and survival data
+- [`betareg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  beta regression
+- [`betamm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  beta mixed model
+- [`lognorm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  log-normal regression model
+- [`lognormmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  log-normal mixed model
+- [`mlogit_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  multinomial logit model
+- [`mlogitmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  multinomial mixed model
+- [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  joint model for longitudinal and survival data
 
 #### Hierarchical models with multiple levels of grouping
 
@@ -225,12 +237,13 @@ hierarchical structure, e.g., in a multi-centre setting.
 
 #### Proportional hazards model with time-dependent covariates
 
-[`coxph_imp()`](../reference/model_imp.md) can now handle
-**time-dependent covariates** using last-observation-carried-forward.
-This requires to add `(1 | <id variable>)` to the model formula to
-identify which rows belong to the same subject, and to specify the
-argument `timevar` to identify the variable that contains the
-observation time of the longitudinal measurements.
+[`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+can now handle **time-dependent covariates** using
+last-observation-carried-forward. This requires to add
+`(1 | <id variable>)` to the model formula to identify which rows belong
+to the same subject, and to specify the argument `timevar` to identify
+the variable that contains the observation time of the longitudinal
+measurements.
 
 #### Multivariate models
 
@@ -254,19 +267,24 @@ file](https://nerler.github.io/JointAI/reference/model_imp.html).
 
 #### Other new features
 
-- The functions [`lmer_imp()`](../reference/model_imp.md) and
-  [`glmer_imp()`](../reference/model_imp.md) are aliases for
-  [`lme_imp()`](../reference/model_imp.md) and
-  [`glme_imp()`](../reference/model_imp.md).
+- The functions
+  [`lmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`glmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  are aliases for
+  [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md).
 - All mixed models can be specified using the **nlme** type
   specification (using `fixed` and `random`) as well as using
   specification as in **lme4** (with a combined model formula for fixed
   and random effects).
 - The argument `df_basehaz` in
-  [`coxph_imp()`](../reference/model_imp.md) and
-  [`JM_imp()`](../reference/model_imp.md) allows setting the number of
-  degrees of freedom in the B-spline basis used to model the baseline
-  hazard.
+  [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  allows setting the number of degrees of freedom in the B-spline basis
+  used to model the baseline hazard.
 - The global setting `options("contrasts")` is no longer ignored. For
   completely observed covariates, any of the contrasts available in base
   R are possible and `options("contrasts")` is used to determine which
@@ -280,23 +298,27 @@ file](https://nerler.github.io/JointAI/reference/model_imp.html).
 
 - Within [`summary()`](https://rdrr.io/r/base/summary.html), the
   argument `multivariate` to the function
-  [`GR_crit()`](../reference/GR_crit.md) is now set to `FALSE` to avoid
-  issues. The multivariate version can still be obtained by using
-  [`GR_crit()`](../reference/GR_crit.md) directly.
+  [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
+  is now set to `FALSE` to avoid issues. The multivariate version can
+  still be obtained by using
+  [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
+  directly.
 - The parameters of the baseline hazard for
-  [`coxph_imp()`](../reference/model_imp.md) and
-  [`JM_imp()`](../reference/model_imp.md) are monitored automatically
-  when “analysis_main = TRUE”.
+  [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  are monitored automatically when “analysis_main = TRUE”.
 - The function `get_models()` is no longer exported because it now
   requires more input variables and is no longer convenient to use. To
   obtain the default specification of the model types use one of the
   main functions (`*_imp()`), set `n.adapt = 0` (and `n.iter = 0`), and
   obtain the model types as `<mymodel>$models`.
-- [`list_models()`](../reference/list_models.md) now returns information
-  on all sub-models, including the main analysis models (previously it
-  included only information on covariates).
-- The output of [`parameters()`](../reference/parameters.md) has
-  changed. The function returns a list of matrices, one per analysis
+- [`list_models()`](https://nerler.github.io/JointAI/reference/list_models.md)
+  now returns information on all sub-models, including the main analysis
+  models (previously it included only information on covariates).
+- The output of
+  [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
+  has changed. The function returns a list of matrices, one per analysis
   model, with information on the response variable, response category,
   name of the regression coefficient and its associated covariate.
 - The argument `missinfo = TRUE` in `summar()` adds information on the
@@ -308,23 +330,26 @@ file](https://nerler.github.io/JointAI/reference/model_imp.html).
   coefficients in all sub-models. If a vector of response variable names
   is provided to `shinkage`, ridge priors are only used for the
   coefficients in these models.
-- [`default_hyperpars()`](../reference/default_hyperpars.md): The
-  default hyper-parameters for random effects are no longer provided as
-  a function but more consistently with the hyper-parameters for other
-  model parts, as a vector (within the list of all hyper-parameters).
-- [`default_hyperpars()`](../reference/default_hyperpars.md): **the
-  default number of degrees of freedom in the Wishart distribution used
-  for the inverse of the random effects covariance matrix is now the
-  number of random effects + 1 (was the number of random effects
+- [`default_hyperpars()`](https://nerler.github.io/JointAI/reference/default_hyperpars.md):
+  The default hyper-parameters for random effects are no longer provided
+  as a function but more consistently with the hyper-parameters for
+  other model parts, as a vector (within the list of all
+  hyper-parameters).
+- [`default_hyperpars()`](https://nerler.github.io/JointAI/reference/default_hyperpars.md):
+  **the default number of degrees of freedom in the Wishart distribution
+  used for the inverse of the random effects covariance matrix is now
+  the number of random effects + 1 (was the number of random effects
   before).**
 - The effect of using a `seed` in **JointAI** is now only local, i.e.,
   in functions in which
   [`set.seed()`](https://rdrr.io/r/base/Random.html) is called, the
   random number generator state `.Random.seed` before setting the seed
   is recorded, and re-set to that value on exiting the function.
-- In [`predDF()`](../reference/predDF.md) the argument `var` has changed
-  to `vars` and expects a formula. This extends the functionality of
-  [`predDF()`](../reference/predDF.md) to let multiple variables vary.
+- In [`predDF()`](https://nerler.github.io/JointAI/reference/predDF.md)
+  the argument `var` has changed to `vars` and expects a formula. This
+  extends the functionality of
+  [`predDF()`](https://nerler.github.io/JointAI/reference/predDF.md) to
+  let multiple variables vary.
 - Some of the elements of a `JointAI` object have changed. Potentially
   relevant for users:
   - `JointAI` objects now contain information on the computational time
@@ -364,8 +389,9 @@ CRAN release: 2020-02-12
 - enable `newdata` for
   [`predict()`](https://rdrr.io/r/stats/predict.html) that does not
   contain the outcome variable
-- [`add_samples()`](../reference/add_samples.md): calculation of
-  [`end()`](https://rdrr.io/r/stats/start.html) of MCMC samples fixed
+- [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md):
+  calculation of [`end()`](https://rdrr.io/r/stats/start.html) of MCMC
+  samples fixed
 
 ------------------------------------------------------------------------
 
@@ -375,8 +401,9 @@ CRAN release: 2019-08-31
 
 ### Bug fixes
 
-- bug in [`add_samples()`](../reference/add_samples.md) when used in
-  parallel with thinning fixed
+- bug in
+  [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
+  when used in parallel with thinning fixed
 - bug fixed that occurred when a complete longitudinal categorical
   variable was used in a model that did not contain any incomplete
   baseline variables
@@ -386,9 +413,11 @@ CRAN release: 2019-08-31
   `newdata` with missing outcome values; predicted values for cases with
   missing covariates are `NA` (prediction with incomplete covariates is
   planned to be implemented in the future)
-- bug-fix for [`get_MIdat()`](../reference/get_MIdat.md) and
-  [`plot_imp_distr()`](../reference/plot_imp_distr.md) when only one
-  variable has missing values
+- bug-fix for
+  [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md)
+  and
+  [`plot_imp_distr()`](https://nerler.github.io/JointAI/reference/plot_imp_distr.md)
+  when only one variable has missing values
 - bug-fix for longitudinal model with interaction with random slope
   variable
 - bug-fix for model with multiple longitudinal ordinal incomplete
@@ -402,9 +431,9 @@ CRAN release: 2019-08-31
 - “:” in factor labels are automatically replaced by “\_”
 - argument `ncores` has changed to `n.cores` for consistency with
   `n.iter`, `n.chains`, etc.
-- [`coxph_imp()`](../reference/model_imp.md) does no longer use a
-  counting process implementation but uses the likelihood in JAGS
-  directly via the zeros trick
+- [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  does no longer use a counting process implementation but uses the
+  likelihood in JAGS directly via the zeros trick
 
 ### New Features / Extensions
 
@@ -412,11 +441,12 @@ CRAN release: 2019-08-31
   argument `length` to change number of evaluation points
 - [`summary()`](https://rdrr.io/r/base/summary.html),
   [`predict()`](https://rdrr.io/r/stats/predict.html),
-  [`traceplot()`](../reference/traceplot.md),
-  [`densplot()`](../reference/densplot.md),
-  [`GR_crit()`](../reference/GR_crit.md),
-  [`MC_error()`](../reference/MC_error.md) now have an argument
-  `exclude_chains` that allows to specify chains that should be omitted
+  [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
+  [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md),
+  [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md),
+  [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
+  now have an argument `exclude_chains` that allows to specify chains
+  that should be omitted
 - [`citation()`](https://rdrr.io/r/utils/citation.html) now refers to a
   manuscript on arXiv
 - `glmm_lognorm` available to impute level-1 covariates with a
@@ -468,8 +498,9 @@ CRAN release: 2019-05-07
 ### Minor changes
 
 - [`summary()`](https://rdrr.io/r/base/summary.html) calls
-  [`GR_crit()`](../reference/GR_crit.md) with argument
-  `autoburnin = FALSE` unless specified otherwise via `...`
+  [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
+  with argument `autoburnin = FALSE` unless specified otherwise via
+  `...`
 - when `inits` is specified as a function, the function is evaluated and
   the resulting list passed to JAGS (previously the function was passed
   to JAGS)
@@ -493,49 +524,54 @@ CRAN release: 2019-03-08
 
 ### Bug fixes
 
-- [`add_samples()`](../reference/add_samples.md): bug that copied the
-  last chain to all other chains fixed
+- [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md):
+  bug that copied the last chain to all other chains fixed
 - bug-fix for the order of columns in the matrix `Xc`, so that
   specification of functions of covariates in auxiliary variables works
   better
-- adding vertical lines to a [`densplot()`](../reference/densplot.md)
+- adding vertical lines to a
+  [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
   issue (all plots showed all lines) fixed
 - nested functions involving powers made possible
 - typo causing issue in poisson glm and glme removed
 
 ### Minor changes
 
-- [`plot_all()`](../reference/plot_all.md),
-  [`densplot()`](../reference/densplot.md), and
-  [`traceplot()`](../reference/traceplot.md) limit the number of plots
-  on one page to 64 when rows and columns of the layout are not user
-  specified (to avoid the ‘figure margins too large’ error)
+- [`plot_all()`](https://nerler.github.io/JointAI/reference/plot_all.md),
+  [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md),
+  and
+  [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md)
+  limit the number of plots on one page to 64 when rows and columns of
+  the layout are not user specified (to avoid the ‘figure margins too
+  large’ error)
 - change in `longDF` example data: new version containing complete and
   incomplete categorical longitudinal variables (and variable names L1
   and L2 changed to c1 and c2)
 - Some minor changes in notes, warnings and error messages
 - The function `list_impmodels()` changed to
-  [`list_models()`](../reference/list_models.md) (but `list_impmodels()`
-  is kept as an alias for now)
+  [`list_models()`](https://nerler.github.io/JointAI/reference/list_models.md)
+  (but `list_impmodels()` is kept as an alias for now)
 - improved handling of functional forms of covariates (also in
   longitudinal covariates and random effects)
 
 ### New Features / Extensions
 
-- [`clm_imp()`](../reference/model_imp.md) and
-  [`clmm_imp()`](../reference/model_imp.md): new functions for analysis
-  of **ordinal (mixed) models**
+- [`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  new functions for analysis of **ordinal (mixed) models**
 - It is now possible to impute **incomplete longitudinal covariates**
   (continuous, binary and ordered factors).
-- [`coxph_imp()`](../reference/model_imp.md): new function to fit Cox
-  proportional hazards models with incomplete (baseline) covariates
+- [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  new function to fit Cox proportional hazards models with incomplete
+  (baseline) covariates
 - Argument `no_model` allows to specify names of completely observed
   variables for which no model should be specified (e.g., “time” in a
   mixed model)
 - **Shrinkage:** argument `ridge = TRUE` allows to use shrinkage priors
   on the precision of the regression coefficients in the analysis model
-- [`plot_all()`](../reference/plot_all.md) can now handle variables from
-  classes `Date` and `POSIXt`
+- [`plot_all()`](https://nerler.github.io/JointAI/reference/plot_all.md)
+  can now handle variables from classes `Date` and `POSIXt`
 - new argument `parallel` allows different MCMC chains to be sampled in
   parallel
 - new argument `ncores` allows to specify the maximum number of cores to
@@ -544,8 +580,8 @@ CRAN release: 2019-03-08
   (`.RNG.name`) and seed value for the sampler (`.RNG.seed`) are set or
   added to user-provided initial values (necessary for parallel sampling
   and reproducibility of results)
-- [`plot_imp_distr()`](../reference/plot_imp_distr.md): new function to
-  plot distribution of observed and imputed values
+- [`plot_imp_distr()`](https://nerler.github.io/JointAI/reference/plot_imp_distr.md):
+  new function to plot distribution of observed and imputed values
 
 ------------------------------------------------------------------------
 
@@ -567,12 +603,13 @@ CRAN release: 2018-12-04
 - continuous variables with two distinct values are converted to factor
 - argument `meth` now uses default values if only specified for subset
   of incomplete variables
-- [`get_MIdat()`](../reference/get_MIdat.md): argument `minspace` added
-  to ensure spacing of iterations selected as imputations
-- [`densplot()`](../reference/densplot.md): accepts additional options,
-  e.g., `lwd`, `col`, …
-- [`list_models()`](../reference/list_models.md) replaces the function
-  `list_impmodels()` (which is now an alias)
+- [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md):
+  argument `minspace` added to ensure spacing of iterations selected as
+  imputations
+- [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md):
+  accepts additional options, e.g., `lwd`, `col`, …
+- [`list_models()`](https://nerler.github.io/JointAI/reference/list_models.md)
+  replaces the function `list_impmodels()` (which is now an alias)
 
 ### Extensions
 
@@ -582,10 +619,10 @@ CRAN release: 2018-12-04
   `JointAI` object
 - [`print()`](https://rdrr.io/r/base/print.html) method added for
   `JointAI` object
-- [`survreg_imp()`](../reference/model_imp.md) added to perform analysis
-  of parametric (Weibull) survival models
-- [`glme_imp()`](../reference/model_imp.md) added to perform generalized
-  linear mixed modelling
+- [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  added to perform analysis of parametric (Weibull) survival models
+- [`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  added to perform generalized linear mixed modelling
 - extended documentation; two new vignettes on MCMC parameters and
   functions for after the model is estimated; added messages about
   coding of ordinal variables
@@ -596,9 +633,10 @@ CRAN release: 2018-12-04
 
 ### Bug fixes
 
-- [`traceplot()`](../reference/traceplot.md),
-  [`densplot()`](../reference/densplot.md): specification of `nrow` AND
-  `ncol` possible; fixed bug when only `nrow` specified
+- [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
+  [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md):
+  specification of `nrow` AND `ncol` possible; fixed bug when only
+  `nrow` specified
 
 ## JointAI 0.3.3
 
@@ -609,11 +647,11 @@ CRAN release: 2018-12-04
 - fixed problem identifying non-linear functions in formula when the
   name of another variable contains the function name
 
-| \# JointAI 0.3.2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| \# JointAI 0.3.1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| \## Bug fixes \* [`plot_all()`](../reference/plot_all.md) uses correct level-2 %NA in title \* `simWide`: case with no observed `bmi` values removed \* [`traceplot()`](../reference/traceplot.md), [`densplot()`](../reference/densplot.md): `ncol` and `nrow` now work with `use_ggplot = TRUE` \* [`traceplot()`](../reference/traceplot.md), [`densplot()`](../reference/densplot.md): error in specification of `nrow` fixed \* [`densplot()`](../reference/densplot.md): use of color fixed \* functions with argument `subset` now return random effects covariance matrix correctly \* [`summary()`](https://rdrr.io/r/base/summary.html) displays output with row name when only one node is returned and fixed display of `D` matrix \* [`GR_crit()`](../reference/GR_crit.md): Literature reference corrected \* [`predict()`](https://rdrr.io/r/stats/predict.html): prediction with varying factor fixed \* no scaling for variables involved in a function to avoid problems with re-scaling |
-| \## Minor changes \* [`plot_all()`](../reference/plot_all.md) uses `xpd = TRUE` when printing text for character variables \* `list_impmodels()` uses line break when output of predictor variables exceeds `getOption("width")` \* [`summary()`](https://rdrr.io/r/base/summary.html) now displays tail-probabilities for off-diagonal elements of `D` \* added option to show/hide constant effects of auxiliary variables in plots \* [`predict()`](https://rdrr.io/r/stats/predict.html): now also returns `newdata` extended with prediction                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| \# JointAI 0.3.2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| \# JointAI 0.3.1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| \## Bug fixes \* [`plot_all()`](https://nerler.github.io/JointAI/reference/plot_all.md) uses correct level-2 %NA in title \* `simWide`: case with no observed `bmi` values removed \* [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md), [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md): `ncol` and `nrow` now work with `use_ggplot = TRUE` \* [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md), [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md): error in specification of `nrow` fixed \* [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md): use of color fixed \* functions with argument `subset` now return random effects covariance matrix correctly \* [`summary()`](https://rdrr.io/r/base/summary.html) displays output with row name when only one node is returned and fixed display of `D` matrix \* [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md): Literature reference corrected \* [`predict()`](https://rdrr.io/r/stats/predict.html): prediction with varying factor fixed \* no scaling for variables involved in a function to avoid problems with re-scaling |
+| \## Minor changes \* [`plot_all()`](https://nerler.github.io/JointAI/reference/plot_all.md) uses `xpd = TRUE` when printing text for character variables \* `list_impmodels()` uses line break when output of predictor variables exceeds `getOption("width")` \* [`summary()`](https://rdrr.io/r/base/summary.html) now displays tail-probabilities for off-diagonal elements of `D` \* added option to show/hide constant effects of auxiliary variables in plots \* [`predict()`](https://rdrr.io/r/stats/predict.html): now also returns `newdata` extended with prediction                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ## JointAI 0.3.0
 
@@ -636,45 +674,52 @@ CRAN release: 2018-08-14
 
 - `md.pattern()` now uses ggplot, which scales better than the previous
   version
-- [`lm_imp()`](../reference/model_imp.md),
-  [`glm_imp()`](../reference/model_imp.md) and
-  [`lme_imp()`](../reference/model_imp.md) now ask about overwriting a
-  model file
+- [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  now ask about overwriting a model file
 - `analysis_main = T` stays selected when other parameters are followed
   as well
-- [`get_MIdat()`](../reference/get_MIdat.md): argument `include` added
-  to select if original data are included and id variable `.id` is added
-  to the dataset
+- [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md):
+  argument `include` added to select if original data are included and
+  id variable `.id` is added to the dataset
 - `subset` argument uses same logit as `monitor_params` argument
 - added switch to hide messages; distinction between messages and
   warnings
-- [`lm_imp()`](../reference/model_imp.md),
-  [`glm_imp()`](../reference/model_imp.md) and
-  [`lme_imp()`](../reference/model_imp.md) now take argument `trunc` in
-  order to truncate the distribution of incomplete variables
+- [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  now take argument `trunc` in order to truncate the distribution of
+  incomplete variables
 - [`summary()`](https://rdrr.io/r/base/summary.html) now omits auxiliary
   variables from the output
 - `imp_par_list` is now returned from JointAI models
 - `cat_vars` is no longer returned from
-  [`lm_imp()`](../reference/model_imp.md),
-  [`glm_imp()`](../reference/model_imp.md) and
-  [`lme_imp()`](../reference/model_imp.md), because it is contained in
-  `Mlist$refs`
+  [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  because it is contained in `Mlist$refs`
 
 ### Extensions
 
-- [`plot_all()`](../reference/plot_all.md) function added
-- [`densplot()`](../reference/densplot.md) and
-  [`traceplot()`](../reference/traceplot.md) optional with ggplot
-- [`densplot()`](../reference/densplot.md) option to combine chains
-  before plotting
+- [`plot_all()`](https://nerler.github.io/JointAI/reference/plot_all.md)
+  function added
+- [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
+  and
+  [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md)
+  optional with ggplot
+- [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
+  option to combine chains before plotting
 - example datasets `NHANES`, `simLong` and `simWide` added
 - `list_impmodels` to print information on the imputation models and
   hyper-parameters
-- [`parameters()`](../reference/parameters.md) added to display the
-  parameters to be/that were monitored
-- [`set_refcat()`](../reference/set_refcat.md) added to guide
-  specification of reference categories
+- [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
+  added to display the parameters to be/that were monitored
+- [`set_refcat()`](https://nerler.github.io/JointAI/reference/set_refcat.md)
+  added to guide specification of reference categories
 - extension of possible functions of variables in model formula to
   (almost all) functions that are available in JAGS
 - added vignettes *Minimal Example*, *Visualizing Incomplete Data*,
@@ -688,19 +733,21 @@ CRAN release: 2018-07-05
 
 ### Bug fixes
 
-- [`md_pattern()`](../reference/md_pattern.md): does not generate
-  duplicate plot any more
+- [`md_pattern()`](https://nerler.github.io/JointAI/reference/md_pattern.md):
+  does not generate duplicate plot any more
 - corrected names of imputation methods in help file
 - scaling when no continuous covariates are in the model or scaling is
   deselected fixed
 - initial value specification for coefficient for auxiliary variables
   fixed
-- [`get_MIdat()`](../reference/get_MIdat.md): imputed values are now
-  filled in in the correct order
-- [`get_MIdat()`](../reference/get_MIdat.md): variables imputed with
-  `lognorm` are now included when extracting an imputed dataset
-- [`get_MIdat()`](../reference/get_MIdat.md): imputed values of
-  transformed variables are now included in imputed datasets
+- [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md):
+  imputed values are now filled in in the correct order
+- [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md):
+  variables imputed with `lognorm` are now included when extracting an
+  imputed dataset
+- [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md):
+  imputed values of transformed variables are now included in imputed
+  datasets
 - problem with non valid names of factor labels fixed
 - data matrix is now ordered according to order in user-specified `meth`
   argument

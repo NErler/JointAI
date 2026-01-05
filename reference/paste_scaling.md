@@ -2,7 +2,7 @@
 
 Identifies if a data element of a linear predictor should be scaled
 (based on whether scaling parameters are given) and then calls
-[`paste_scale()`](paste_scale.md).
+[`paste_scale()`](https://nerler.github.io/JointAI/reference/paste_scale.md).
 
 ## Usage
 
@@ -32,4 +32,6 @@ paste_scaling(x, rows, scale_pars, scalemat)
 
 ## Details
 
-Calls [`paste_scale()`](paste_scale.md) on each element of `x`.
+Calls
+[`paste_scale()`](https://nerler.github.io/JointAI/reference/paste_scale.md)
+on each element of `x`.

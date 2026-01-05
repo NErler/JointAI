@@ -18,7 +18,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Joint Analysis and Imputation of Incomplete Data">
 <meta name="description" content="Joint analysis and imputation of incomplete data in the Bayesian framework, using (generalized) linear (mixed) models and extensions there of, survival models, or joint models for longitudinal and survival data, as described in Erler, Rizopoulos and Lesaffre (2021) &lt;doi:10.18637/jss.v100.i20&gt;. Incomplete covariates, if present, are automatically imputed. The package performs some preprocessing of the data and creates a JAGS model, which will then automatically be passed to JAGS &lt;https://mcmc-jags.sourceforge.io/&gt; with the help of the package rjags.">
 <meta property="og:description" content="Joint analysis and imputation of incomplete data in the Bayesian framework, using (generalized) linear (mixed) models and extensions there of, survival models, or joint models for longitudinal and survival data, as described in Erler, Rizopoulos and Lesaffre (2021) &lt;doi:10.18637/jss.v100.i20&gt;. Incomplete covariates, if present, are automatically imputed. The package performs some preprocessing of the data and creates a JAGS model, which will then automatically be passed to JAGS &lt;https://mcmc-jags.sourceforge.io/&gt; with the help of the package rjags.">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://nerler.github.io/JointAI/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -127,7 +127,7 @@
 <h3 id="visualize-the-observed-data-and-missing-data-pattern">Visualize the observed data and missing data pattern<a class="anchor" aria-label="anchor" href="#visualize-the-observed-data-and-missing-data-pattern"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nerler.github.io/JointAI/" class="external-link">JointAI</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nerler.github.io/JointAI/">JointAI</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/plot_all.html">plot_all</a></span><span class="op">(</span></span>
 <span>  <span class="va">NHANES</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">8</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span><span class="op">]</span>,</span>
@@ -136,10 +136,10 @@
 <span>  ncol <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  breaks <span class="op">=</span> <span class="fl">30</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-plotall-1.png" alt="" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#460E1B'</span>, <span class="st">'#D10E3B'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-mdpattern-1.png" alt="" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="fit-a-linear-regression-model-with-incomplete-covariates">Fit a linear regression model with incomplete covariates<a class="anchor" aria-label="anchor" href="#fit-a-linear-regression-model-with-incomplete-covariates"></a>
@@ -158,10 +158,10 @@
 </h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#d4af37'</span>, <span class="st">'#460E1B'</span>, <span class="st">'#D10E3B'</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-traceplot-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">lm1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#d4af37'</span>, <span class="st">'#460E1B'</span>, <span class="st">'#D10E3B'</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-densplot-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="summarize-the-result">Summarize the Result<a class="anchor" aria-label="anchor" href="#summarize-the-result"></a>

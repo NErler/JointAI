@@ -15,11 +15,3 @@ clean_survname(x)
 - x:
 
   a character string or vector of character strings
-
-## Examples
-
-``` r
-clean_survname("Surv(eventtime, event != 'censored')")
-#> Surv(eventtime, event != 'censored') 
-#>                    "Srv_vnttm_vnt_c" 
-```

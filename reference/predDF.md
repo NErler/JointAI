@@ -48,8 +48,10 @@ predDF(object, data, vars, length = 100L, idvar = NULL, ...)
 
 ## See also
 
-[`predict.JointAI`](predict.JointAI.md), [`lme_imp`](model_imp.md),
-[`glm_imp`](model_imp.md), [`lm_imp`](model_imp.md)
+[`predict.JointAI`](https://nerler.github.io/JointAI/reference/predict.JointAI.md),
+[`lme_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`glm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`lm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
 
 ## Examples
 

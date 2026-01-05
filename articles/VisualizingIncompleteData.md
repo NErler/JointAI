@@ -19,9 +19,10 @@ Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm).
 
 ## Visualize the distribution of each variable
 
-Using [`plot_all()`](../reference/plot_all.md), an array of histograms
-(for continuous variables and dates) and bar plots (for categorical
-variables) can be obtained.
+Using
+[`plot_all()`](https://nerler.github.io/JointAI/reference/plot_all.md),
+an array of histograms (for continuous variables and dates) and bar
+plots (for categorical variables) can be obtained.
 
 ``` r
 op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
@@ -99,7 +100,7 @@ instance, will sum up to the number of subjects in the `simLong` data.
 ## Missing Data Pattern
 
 The pattern of the missing data can be visualized with the function
-[`md_pattern()`](../reference/md_pattern.md):
+[`md_pattern()`](https://nerler.github.io/JointAI/reference/md_pattern.md):
 
 ``` r
 md_pattern(NHANES)

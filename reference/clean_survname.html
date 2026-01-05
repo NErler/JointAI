@@ -3,7 +3,7 @@
 (the "Surv(time, status)" specification) into a valid variable name
 so that it can be used in the JAGS model syntax.'><meta property="og:description" content='A helper function that converts the "name of a survival model"
 (the "Surv(time, status)" specification) into a valid variable name
-so that it can be used in the JAGS model syntax.'><meta property="og:image" content="/logo.png"></head><body>
+so that it can be used in the JAGS model syntax.'><meta property="og:image" content="https://nerler.github.io/JointAI/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -49,7 +49,7 @@ so that it can be used in the JAGS model syntax.'><meta property="og:image" cont
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Convert a survival outcome to a model name</h1>
-      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/R/helpfunctions.R" class="external-link"><code>R/helpfunctions.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/R/deprecated.R" class="external-link"><code>R/deprecated.R</code></a></small>
       <div class="d-none name"><code>clean_survname.Rd</code></div>
     </div>
 
@@ -73,14 +73,6 @@ so that it can be used in the JAGS model syntax.</p>
 
 </dl></div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">clean_survname</span><span class="op">(</span><span class="st">"Surv(eventtime, event != 'censored')"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Surv(eventtime, event != 'censored') </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    "Srv_vnttm_vnt_c" </span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -35,6 +35,7 @@ prep_arglist(analysis_type, family = NULL, formals = formals(),
 
 ## Value
 
-A list of arguments prepared for [`model_imp()`](model_imp.md),
+A list of arguments prepared for
+[`model_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
 including the analysis type, family, formulas, and other relevant
 parameters.

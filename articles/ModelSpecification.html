@@ -77,7 +77,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Model Specification</h1>
             
-            <h4 data-toc-skip class="date">January 02, 2026</h4>
+            <h4 data-toc-skip class="date">January 03, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/ModelSpecification.Rmd" class="external-link"><code>vignettes/ModelSpecification.Rmd</code></a></small>
       <div class="d-none name"><code>ModelSpecification.Rmd</code></div>
@@ -85,15 +85,15 @@
 
     
     
-<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html" class="external-link">NHANES</a>
-data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html" class="external-link">simLong</a>
+<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a>
+data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a>
 for examples in longitudinal data. For more info on these datasets,
-check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html" class="external-link"><em>Visualizing
+check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing
 Incomplete Data</em></a>, in which the distributions of variables and
 missing values in both sets is explored.</p>
 <p>To learn more about the theoretical background of the statistical
 approach implemented in <strong>JointAI</strong>, check out the vignette
-<a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html" class="external-link">Theoretical
+<a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html">Theoretical
 Background</a>.</p>
 <p><strong>Note:</strong><br> In some of the examples we use
 <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the
@@ -271,7 +271,7 @@ parentheses:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod2a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">*</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span>,</span>
 <span>                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html" class="external-link"><code>parameters()</code></a>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code>parameters()</code></a>
 returns a matrix off all parameters that are specified to be followed
 (column <code>coef</code>) and, for regression coefficients, the name of
 the variable the coefficient relates to (<code>varname</code>), the
@@ -465,7 +465,7 @@ used as predictor for <code>SBP</code>, but in the imputation model for
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
 <span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/list_models.html" class="external-link"><code>list_models()</code></a>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/list_models.html"><code>list_models()</code></a>
 prints information on all sub-models specified in a <code>JointAI</code>
 object. This includes the model(s) specified by the user via the model
 formula and all models for covariates that <strong>JointAI</strong> has
@@ -636,7 +636,8 @@ available as the distribution function of the logistic distribution
 <span></span>
 <span><span class="co"># Use ilogit in the model formula</span></span>
 <span><span class="va">mod5a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in ilogit(creat): could not find function "ilogit"</span></span></code></pre></div>
+<span><span class="co">#&gt; Error in `ilogit()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "ilogit"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="nested-functions">Nested functions<a class="anchor" aria-label="anchor" href="#nested-functions"></a>
@@ -663,7 +664,8 @@ R, we first need to define it:</p>
 <span></span>
 <span><span class="co"># nest ilogit inside cloglog</span></span>
 <span><span class="va">mod6a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">cloglog</span><span class="op">(</span><span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in cloglog(ilogit(creat)): could not find function "cloglog"</span></span></code></pre></div>
+<span><span class="co">#&gt; Error in `cloglog()`:</span></span>
+<span><span class="co">#&gt; ! could not find function "cloglog"</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1235,7 +1237,7 @@ the list the default is used.</p>
 <span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates. I</span></span>
 <span><span class="co">#&gt; will use "contr.treatment" instead.  You can specify (globally) which types of contrasts</span></span>
 <span><span class="co">#&gt; are used by changing "options('contrasts')".</span></span></code></pre></div>
-<p>To help to specify the reference category, the function <a href="https://nerler.github.io/JointAI/reference/set_refcat.html" class="external-link"><code>set_refcat()</code></a>
+<p>To help to specify the reference category, the function <a href="https://nerler.github.io/JointAI/reference/set_refcat.html"><code>set_refcat()</code></a>
 can be used. It prints the names of the categorical variables that are
 selected by</p>
 <ul>
@@ -1248,7 +1250,28 @@ provided, and asks a number of questions which the user needs to reply
 to by input of a number.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">refs_mod10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_refcat.html">set_refcat</a></span><span class="op">(</span><span class="va">NHANES</span>, formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">mod10b</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in set_refcat(NHANES, formula = formula(mod10b)): object 'extract_outcome' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in JointAI:::extract_outcome(formula): 'JointAI:::extract_outcome' is deprecated.</span></span>
+<span><span class="co">#&gt; Use 'extract_outcomes_list ' instead.</span></span>
+<span><span class="co">#&gt; See help("Deprecated") and help("JointAI-deprecated").</span></span>
+<span><span class="co">#&gt; Warning in extract_lhs(x): 'extract_lhs' is deprecated.</span></span>
+<span><span class="co">#&gt; Use 'extract_lhs_string ' instead.</span></span>
+<span><span class="co">#&gt; See help("Deprecated") and help("JointAI-deprecated").</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): 'FUN' is deprecated.</span></span>
+<span><span class="co">#&gt; Use 'extract_lhs_string ' instead.</span></span>
+<span><span class="co">#&gt; See help("Deprecated") and help("JointAI-deprecated").</span></span>
+<span><span class="co">#&gt; The categorical variables are:</span></span>
+<span><span class="co">#&gt; - "gender"</span></span>
+<span><span class="co">#&gt; - "race"</span></span>
+<span><span class="co">#&gt; - "educ"</span></span>
+<span><span class="co">#&gt; - "occup"</span></span>
+<span><span class="co">#&gt; - "smoke"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; How do you want to specify the reference categories?</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 1: Use the first category for each variable.</span></span>
+<span><span class="co">#&gt; 2: Use the last category for each variable.</span></span>
+<span><span class="co">#&gt; 3: Use the largest category for each variable.</span></span>
+<span><span class="co">#&gt; 4: Specify the reference categories individually.</span></span></code></pre></div>
 <p>When option 4 is chosen, a question for each categorical variable is
 asked, for example:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">

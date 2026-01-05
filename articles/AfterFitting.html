@@ -79,7 +79,7 @@
             <h3 data-toc-skip class="subtitle">Summary, visualization
 and evaluation of the results</h3>
             
-            <h4 data-toc-skip class="date">January 02, 2026</h4>
+            <h4 data-toc-skip class="date">January 03, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/AfterFitting.Rmd" class="external-link"><code>vignettes/AfterFitting.Rmd</code></a></small>
       <div class="d-none name"><code>AfterFitting.Rmd</code></div>
@@ -88,10 +88,10 @@ and evaluation of the results</h3>
     
     
 <p>This vignette describes how the results from a <code>JointAI</code>
-model can be visualized, summarized and evaluated. We use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html" class="external-link">NHANES</a>
-data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html" class="external-link">simLong</a>
+model can be visualized, summarized and evaluated. We use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a>
+data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a>
 for examples in longitudinal data. For more info on these datasets,
-check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html" class="external-link"><em>Visualizing
+check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing
 Incomplete Data</em></a>, in which the distributions of variables and
 missing values in both sets is explored.</p>
 <p>The functions described in this section use, by default, the full
@@ -99,8 +99,8 @@ MCMC sample and show only the parameters of the analysis model. A number
 of arguments are available to select a subset of the MCMC samples that
 is used to calculate the summary. The argument <code>subset</code>
 allows controlling which part of the MCMC sample is returned and follows
-the same logic as the argument <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html" class="external-link"><code>monitor_params</code></a>
-in <a href="https://nerler.github.io/JointAI/reference/model_imp.html" class="external-link"><code>*_imp()</code></a>.
+the same logic as the argument <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html"><code>monitor_params</code></a>
+in <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>*_imp()</code></a>.
 The use of these arguments is further explained <a href="#sec:subset">below</a>.</p>
 <div class="section level2">
 <h2 id="visualizing-the-posterior-sample">Visualizing the posterior sample<a class="anchor" aria-label="anchor" href="#visualizing-the-posterior-sample"></a>
@@ -113,21 +113,21 @@ empirical density of the posterior sample.</p>
 </h3>
 <p>A trace plot shows the sampled values per chain and node throughout
 iterations. It allows us to evaluate convergence and mixing of the
-chains visually, and can be obtained with the function <a href="https://nerler.github.io/JointAI/reference/traceplot.html" class="external-link"><code>traceplot()</code></a>:</p>
+chains visually, and can be obtained with the function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code>traceplot()</code></a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod13a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.iter <span class="op">=</span> <span class="fl">500</span>,</span>
 <span>                 seed <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-1
+<img src="figures_AfterFitting/trace13a-1.svg" alt="plot of chunk trace13a" width="100%"><p class="caption">
+plot of chunk trace13a
 </p>
 </div>
 <p>When the sampler has converged the chains show one horizontal band,
 as in the above figure. Consequently, when traces show a trend
 convergence has not been reached and more iterations are necessary
-(e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html" class="external-link"><code>add_samples()</code></a>).</p>
+(e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code>add_samples()</code></a>).</p>
 <p>Graphical aspects of the traceplot can be controlled by specifying
 standard graphical arguments via the dots argument <code>"..."</code>,
 which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html" class="external-link"><code>matplot()</code></a>.
@@ -144,7 +144,7 @@ version of the traceplot. It can be extended using standard
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">'Dark2'</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/ggtrace15a-1.png" alt="plot of chunk ggtrace15a" width="100%"><p class="caption">
+<img src="figures_AfterFitting/ggtrace15a-1.svg" alt="plot of chunk ggtrace15a" width="100%"><p class="caption">
 plot of chunk ggtrace15a
 </p>
 </div>
@@ -153,7 +153,7 @@ plot of chunk ggtrace15a
 <h3 id="density-plot">Density plot<a class="anchor" aria-label="anchor" href="#density-plot"></a>
 </h3>
 <p>The posterior distributions can also be visualized using the function
-<a href="https://nerler.github.io/JointAI/reference/densplot.html" class="external-link"><code>densplot()</code></a>,
+<a href="https://nerler.github.io/JointAI/reference/densplot.html"><code>densplot()</code></a>,
 which plots the empirical density per node per chain, or combining
 chains (when <code>joined = TRUE</code>).</p>
 <p>The argument <code>vlines</code> takes a list of lists, containing
@@ -164,8 +164,8 @@ specifications passed to <code>abline</code>, and allows us to add
 <span>         vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">SBP</span><span class="op">)</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>                            col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-3
+<img src="figures_AfterFitting/dens13a-2-1.svg" alt="plot of chunk dens13a-2" width="100%"><p class="caption">
+plot of chunk dens13a-2
 </p>
 </div>
 <p>or marking the posterior mean and 2.5% and 97.5% quantiles:</p>
@@ -181,7 +181,7 @@ plot of chunk unnamed-chunk-3
 <span>         <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/densplot15a-1.png" alt="plot of chunk densplot15a" width="100%"><p class="caption">
+<img src="figures_AfterFitting/densplot15a-1.svg" alt="plot of chunk densplot15a" width="100%"><p class="caption">
 plot of chunk densplot15a
 </p>
 </div>
@@ -235,7 +235,7 @@ additional layers:</p>
 <span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'JointAI'</span>, <span class="st">'compl.case'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/ggdens15a-1.png" alt="plot of chunk ggdens15a" width="100%"><p class="caption">
+<img src="figures_AfterFitting/ggdens15a-1.svg" alt="plot of chunk ggdens15a" width="100%"><p class="caption">
 plot of chunk ggdens15a
 </p>
 </div>
@@ -374,7 +374,7 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo>&lt;</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Pr(\theta &lt; 0)</annotation></semantics></math>
 (shaded area):
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/tailprob-1.png" alt="plot of chunk tailprob" width="100%"><p class="caption">
+<img src="figures_AfterFitting/tailprob-1.svg" alt="plot of chunk tailprob" width="100%"><p class="caption">
 plot of chunk tailprob
 </p>
 </div>
@@ -400,7 +400,7 @@ with the posterior standard deviation.</p>
 <p>The Gelman-Rubin criterion evaluates convergence by comparing within
 and between chain variability and, thus, requires at least two MCMC
 chains to be calculated. It is implemented for <code>JointAI</code>
-objects in the function <a href="https://nerler.github.io/JointAI/reference/GR_crit.html" class="external-link"><code>GR_crit()</code></a>,
+objects in the function <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code>GR_crit()</code></a>,
 which is based on the function <code>gelman.diag()</code> from the
 package <a href="https://CRAN.R-project.org/package=coda" class="external-link"><strong>coda</strong></a>.
 The upper limit of the confidence interval should not be much larger
@@ -427,7 +427,7 @@ arguments of <code>gelman.diag()</code>.</p>
 <div class="section level3">
 <h3 id="sec:mcerror">Monte Carlo Error<a class="anchor" aria-label="anchor" href="#sec:mcerror"></a>
 </h3>
-<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html" class="external-link"><code>MC_error()</code></a>.
+<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code>MC_error()</code></a>.
 It uses the function <code>mcmcse::mcmcse.mat()</code> from the package
 <a href="https://CRAN.R-project.org/package=mcmcse" class="external-link"><strong>mcmcse</strong></a>
 to calculate the Monte Carlo error (the error that is made since the
@@ -464,7 +464,7 @@ cut-off (by default 5%).</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">)</span>  <span class="co"># left panel: all iterations 101:600</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">mod13a</span>, end <span class="op">=</span> <span class="fl">250</span><span class="op">)</span><span class="op">)</span>  <span class="co"># right panel: iterations 101:250</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/MCE15a-1.png" alt="plot of chunk MCE15a" width="100%"><p class="caption">
+<img src="figures_AfterFitting/MCE15a-1.svg" alt="plot of chunk MCE15a" width="100%"><p class="caption">
 plot of chunk MCE15a
 </p>
 </div>
@@ -569,8 +569,8 @@ by name via the <code>other</code> element of <code>subset</code>.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod13c</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                               other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'beta[4]'</span>, <span class="st">'beta[5]'</span><span class="op">)</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="70%"><p class="caption">
-plot of chunk unnamed-chunk-11
+<img src="figures_AfterFitting/densplot13c-1.svg" alt="plot of chunk densplot13c" width="70%"><p class="caption">
+plot of chunk densplot13c
 </p>
 </div>
 <p>This also works when a subset of the imputed values should be
@@ -587,7 +587,7 @@ displayed:</p>
 <span><span class="co"># pass "sub3" to "subset" via "other", for example in a traceplot:</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13d</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>, other <span class="op">=</span> <span class="va">sub3</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/trace15d-1.png" alt="plot of chunk trace15d" width="70%"><p class="caption">
+<img src="figures_AfterFitting/trace15d-1.svg" alt="plot of chunk trace15d" width="70%"><p class="caption">
 plot of chunk trace15d
 </p>
 </div>
@@ -606,8 +606,8 @@ the random effects, can be selected (output not shown):</p>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13e</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">ri</span>, size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-14
+<img src="figures_AfterFitting/ri-1.svg" alt="plot of chunk ri" width="100%"><p class="caption">
+plot of chunk ri
 </p>
 </div>
 </div>
@@ -632,36 +632,36 @@ example:</p>
 <span></span>
 <span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod14</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" width="90%"><p class="caption">
-plot of chunk unnamed-chunk-15
+<img src="figures_AfterFitting/mod14-1.svg" alt="plot of chunk mod14" width="90%"><p class="caption">
+plot of chunk mod14
 </p>
 </div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod14</span>, exclude_chains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-15-2.png" alt="plot of chunk unnamed-chunk-15" width="90%"><p class="caption">
-plot of chunk unnamed-chunk-15
+<img src="figures_AfterFitting/mod14-2.svg" alt="plot of chunk mod14" width="90%"><p class="caption">
+plot of chunk mod14
 </p>
 </div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, thin <span class="op">=</span> <span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" width="90%"><p class="caption">
-plot of chunk unnamed-chunk-16
+<img src="figures_AfterFitting/trace14-1.svg" alt="plot of chunk trace14" width="90%"><p class="caption">
+plot of chunk trace14
 </p>
 </div>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, start <span class="op">=</span> <span class="fl">150</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-16-2.png" alt="plot of chunk unnamed-chunk-16" width="90%"><p class="caption">
-plot of chunk unnamed-chunk-16
+<img src="figures_AfterFitting/trace14-2.svg" alt="plot of chunk trace14" width="90%"><p class="caption">
+plot of chunk trace14
 </p>
 </div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, end <span class="op">=</span> <span class="fl">120</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-16-3.png" alt="plot of chunk unnamed-chunk-16" width="90%"><p class="caption">
-plot of chunk unnamed-chunk-16
+<img src="figures_AfterFitting/trace14-3.svg" alt="plot of chunk trace14" width="90%"><p class="caption">
+plot of chunk trace14
 </p>
 </div>
 </div>
@@ -672,7 +672,7 @@ plot of chunk unnamed-chunk-16
 <p>Often, the aim of an analysis is not only to estimate the association
 between outcome and covariates but to predict future outcomes or
 outcomes for new subjects.</p>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/predict.JointAI.html" class="external-link"><code>predict()</code></a>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/predict.JointAI.html"><code>predict()</code></a>
 allows us to obtain predicted values and corresponding credible
 intervals from <code>JointAI</code> objects. Note that for mixed models,
 currently, only marginal prediction but not prediction conditional on
@@ -706,7 +706,7 @@ the predicted values and quantiles that form the credible interval.</p>
 </h3>
 <p>Another reason to obtain predicted values is the visualization of
 non-linear effects, i.e., to create an effect plot. To facilitate the
-generation of a dataset for such a prediction, the function <a href="https://nerler.github.io/JointAI/reference/predDF.html" class="external-link"><code>predDF()</code></a>
+generation of a dataset for such a prediction, the function <a href="https://nerler.github.io/JointAI/reference/predDF.html"><code>predDF()</code></a>
 can be used. It generates a <code>data.frame</code> that contains a
 sequence of values through the range of observed values for a covariate
 specified by the argument <code>vars</code>, and the median or reference
@@ -727,8 +727,8 @@ value for all other continuous and categorical variables.</p>
 <span>        lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">'l'</span>, col <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>        xlab <span class="op">=</span> <span class="st">'age in months'</span>, ylab <span class="op">=</span> <span class="st">'predicted value'</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19" width="90%"><p class="caption">
-plot of chunk unnamed-chunk-19
+<img src="figures_AfterFitting/predplot-1.svg" alt="plot of chunk predplot" width="90%"><p class="caption">
+plot of chunk predplot
 </p>
 </div>
 <p>It is possible to have multiple variables vary and to set values for
@@ -743,7 +743,8 @@ these variables:</p>
 <span><span class="co">#&gt; Prediction in multi-level settings currently only takes into</span></span>
 <span><span class="co">#&gt; account the fixed effects, i.e., assumes that the random</span></span>
 <span><span class="co">#&gt; effect realizations are equal to zero.</span></span>
-<span><span class="co">#&gt; Error in MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], : subscript out of bounds</span></span>
+<span><span class="co">#&gt; Error in `MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], drop = FALSE]`:</span></span>
+<span><span class="co">#&gt; ! subscript out of bounds</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># plot predicted values and credible interval</span></span>
@@ -759,8 +760,8 @@ these variables:</p>
 <span>                       aesthetics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'colour'</span>, <span class="st">'fill'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'Expected BMI'</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">18</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20" width="90%"><p class="caption">
-plot of chunk unnamed-chunk-20
+<img src="figures_AfterFitting/predplotgg-1.svg" alt="plot of chunk predplotgg" width="90%"><p class="caption">
+plot of chunk predplotgg
 </p>
 </div>
 </div>
@@ -770,7 +771,7 @@ plot of chunk unnamed-chunk-20
 </h2>
 <p>Imputed datasets can be extracted from a <code>JointAI</code> object
 (in which a monitor for the imputed values has been set, i.e.,
-<code>monitor_params = c(imps = TRUE)</code>), with the function <a href="https://nerler.github.io/JointAI/reference/get_MIdat.html" class="external-link"><code>get_MIdat()</code></a>.</p>
+<code>monitor_params = c(imps = TRUE)</code>), with the function <a href="https://nerler.github.io/JointAI/reference/get_MIdat.html"><code>get_MIdat()</code></a>.</p>
 <p>A completed dataset is created by taking the imputed values from a
 randomly chosen iteration of the MCMC sample, transforming them back to
 the original scale if scaling had been performed before the MCMC
@@ -805,8 +806,8 @@ compare the distribution of the observed and imputed values.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_imp_distr.html">plot_imp_distr</a></span><span class="op">(</span><span class="va">impDF</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_AfterFitting/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-22
+<img src="figures_AfterFitting/plotimpdistr-1.svg" alt="plot of chunk plotimpdistr" width="100%"><p class="caption">
+plot of chunk plotimpdistr
 </p>
 </div>
 </div>

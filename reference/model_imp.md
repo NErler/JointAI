@@ -167,7 +167,8 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   "largest" (chooses the category with the most observations). Default
   is "first". If reference categories are specified for a subset of the
   categorical variables the default will be used for the remaining
-  variables. (See also [`set_refcat`](set_refcat.md))
+  variables. (See also
+  [`set_refcat`](https://nerler.github.io/JointAI/reference/set_refcat.md))
 
 - models:
 
@@ -229,7 +230,7 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   `hyperpars`
 
   :   list of hyper-parameters, as obtained by
-      [`default_hyperpars()`](default_hyperpars.md)
+      [`default_hyperpars()`](https://nerler.github.io/JointAI/reference/default_hyperpars.md)
 
   `scale_vars`
 
@@ -361,7 +362,8 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
 
 ## Value
 
-An object of class [JointAI](JointAIObject.md).
+An object of class
+[JointAI](https://nerler.github.io/JointAI/reference/JointAIObject.md).
 
 ## Model formulas
 
@@ -799,13 +801,18 @@ linear predictor.
 
 ## See also
 
-[`set_refcat`](set_refcat.md), [`traceplot`](traceplot.md),
-[`densplot`](densplot.md), [`summary.JointAI`](summary.JointAI.md),
-[`MC_error`](MC_error.md), [`GR_crit`](GR_crit.md),
-[`predict.JointAI`](predict.JointAI.md),
-[`add_samples`](add_samples.md), [`JointAIObject`](JointAIObject.md),
-[`add_samples`](add_samples.md), [`parameters`](parameters.md),
-[`list_models`](list_models.md)
+[`set_refcat`](https://nerler.github.io/JointAI/reference/set_refcat.md),
+[`traceplot`](https://nerler.github.io/JointAI/reference/traceplot.md),
+[`densplot`](https://nerler.github.io/JointAI/reference/densplot.md),
+[`summary.JointAI`](https://nerler.github.io/JointAI/reference/summary.JointAI.md),
+[`MC_error`](https://nerler.github.io/JointAI/reference/MC_error.md),
+[`GR_crit`](https://nerler.github.io/JointAI/reference/GR_crit.md),
+[`predict.JointAI`](https://nerler.github.io/JointAI/reference/predict.JointAI.md),
+[`add_samples`](https://nerler.github.io/JointAI/reference/add_samples.md),
+[`JointAIObject`](https://nerler.github.io/JointAI/reference/JointAIObject.md),
+[`add_samples`](https://nerler.github.io/JointAI/reference/add_samples.md),
+[`parameters`](https://nerler.github.io/JointAI/reference/parameters.md),
+[`list_models`](https://nerler.github.io/JointAI/reference/list_models.md)
 
 Vignettes
 

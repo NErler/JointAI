@@ -26,13 +26,15 @@ lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
               data = NHANES, n.iter = 500, progress.bar = "none")
 ```
 
-The specification of [`lm_imp()`](../reference/model_imp.md) is similar
-to the specification of a linear regression model for complete data
-using [`lm()`](https://rdrr.io/r/stats/lm.html). In this minimal
+The specification of
+[`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md) is
+similar to the specification of a linear regression model for complete
+data using [`lm()`](https://rdrr.io/r/stats/lm.html). In this minimal
 example, the only difference is that for
-[`lm_imp()`](../reference/model_imp.md) the number of iterations
-`n.iter` has to be specified. Of course, there are many more parameters
-that can (and sometimes should) be specified. In the vignette [*Model
+[`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+the number of iterations `n.iter` has to be specified. Of course, there
+are many more parameters that can (and sometimes should) be specified.
+In the vignette [*Model
 Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html),
 many of these parameters are explained in detail.
 
@@ -52,7 +54,7 @@ converged. Convergence can be evaluated visually with a trace plot.
 traceplot(lm1)
 ```
 
-![plot of chunk results_lm1](figures_MinimalExample/results_lm1-1.png)
+![plot of chunk results_lm1](figures_MinimalExample/results_lm1-1.svg)
 
 plot of chunk results_lm1
 
@@ -87,22 +89,22 @@ summary(lm1)
 #> 
 #> Posterior summary:
 #>                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)            60.147 23.6729  12.7761 107.442    0.00400    1.00 0.0280
-#> genderfemale           -2.997  2.2716  -7.3756   1.285    0.19733    1.00 0.0258
-#> age                     0.361  0.0726   0.2190   0.506    0.00000    1.01 0.0258
-#> raceOther Hispanic      0.985  5.0243  -8.8285  10.820    0.83733    1.00 0.0258
-#> raceNon-Hispanic White -1.284  3.1324  -7.6806   4.907    0.67867    1.01 0.0258
-#> raceNon-Hispanic Black  9.058  3.6791   1.9579  16.140    0.01467    1.00 0.0258
-#> raceother               3.898  3.5429  -2.8957  10.563    0.27867    1.00 0.0258
-#> WC                      0.244  0.0825   0.0721   0.399    0.00533    1.02 0.0258
-#> alc>=1                  7.230  2.2933   2.8481  11.754    0.00267    1.01 0.0305
-#> educhigh               -3.514  2.2154  -7.9494   0.908    0.10800    1.01 0.0258
-#> albu                    5.324  4.1432  -2.9429  13.562    0.20533    1.00 0.0278
-#> bili                   -5.441  4.8612 -14.9945   4.273    0.26133    1.00 0.0262
+#> (Intercept)            59.667 22.5323  13.8296 104.999    0.00800    1.00 0.0263
+#> genderfemale           -3.088  2.2801  -7.3085   1.497    0.18533    1.00 0.0258
+#> age                     0.367  0.0730   0.2256   0.512    0.00000    1.01 0.0262
+#> raceOther Hispanic      0.857  5.1357  -8.8799  10.758    0.88933    1.00 0.0258
+#> raceNon-Hispanic White -1.286  3.0295  -6.9351   4.658    0.66267    1.00 0.0258
+#> raceNon-Hispanic Black  9.061  3.4765   2.3074  15.679    0.01067    1.01 0.0258
+#> raceother               3.919  3.4728  -2.6699  11.094    0.25467    1.00 0.0258
+#> WC                      0.243  0.0811   0.0835   0.401    0.00267    1.00 0.0258
+#> alc>=1                  7.249  2.2744   2.5975  11.650    0.00000    1.00 0.0325
+#> educhigh               -3.392  2.2355  -8.0464   0.830    0.10400    1.01 0.0267
+#> albu                    5.390  4.1032  -2.9169  13.239    0.18133    1.01 0.0260
+#> bili                   -5.456  4.8697 -14.3350   4.293    0.25467    1.01 0.0285
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 13.2 0.735 11.9  14.7    1.03 0.0274
+#> sigma_SBP 13.2 0.716 11.9  14.7       1 0.0281
 #> 
 #> 
 #> MCMC settings:
@@ -141,7 +143,7 @@ $\theta$ is the parameter of interest).
 In the following graphics, the shaded areas represent the minimum of
 $Pr(\theta > 0)$ and $Pr(\theta < 0)$:
 
-![plot of chunk tailprob](figures_MinimalExample/tailprob-1.png)
+![plot of chunk tailprob](figures_MinimalExample/tailprob-1.svg)
 
 plot of chunk tailprob
 
@@ -186,19 +188,20 @@ can be added to the summary by setting `missinfo = TRUE`.
 ## Plot of the posterior distributions
 
 The posterior distributions can be visualized using the function
-[`densplot()`](../reference/densplot.md):
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md):
 
 ``` r
 densplot(lm1)
 ```
 
-![plot of chunk densplot](figures_MinimalExample/densplot-1.png)
+![plot of chunk densplot](figures_MinimalExample/densplot-1.svg)
 
 plot of chunk densplot
 
-By default, [`densplot()`](../reference/densplot.md) plots the empirical
-distribution of each of the chains separately. When `joined = TRUE` the
-distributions of the combined chains are plotted.
+By default,
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
+plots the empirical distribution of each of the chains separately. When
+`joined = TRUE` the distributions of the combined chains are plotted.
 
 ## Other types of models
 

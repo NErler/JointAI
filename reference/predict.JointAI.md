@@ -115,7 +115,8 @@ Functionality will be extended in the future.
 
 ## See also
 
-[`predDF.JointAI`](predDF.md), [`*_imp`](model_imp.md)
+[`predDF.JointAI`](https://nerler.github.io/JointAI/reference/predDF.md),
+[`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
 
 ## Examples
 

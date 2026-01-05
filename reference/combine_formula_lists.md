@@ -26,4 +26,4 @@ combine_formula_lists(fixed, random, warn = TRUE)
 ## Details
 
 Internal function. Lists of formulas can be named or unnamed. Uses
-[`combine_formulas()`](combine_formulas.md).
+[`combine_formulas()`](https://nerler.github.io/JointAI/reference/combine_formulas.md).

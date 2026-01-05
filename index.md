@@ -72,14 +72,15 @@ and [`survival::coxph()`](https://rdrr.io/pkg/survival/man/coxph.html)
 
 Functions [`summary()`](https://rdrr.io/r/base/summary.html),
 [`coef()`](https://rdrr.io/r/stats/coef.html),
-[`traceplot()`](reference/traceplot.md) and
-[`densplot()`](reference/densplot.md) provide a summary of the posterior
-distribution and its visualization.
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md)
+and
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
+provide a summary of the posterior distribution and its visualization.
 
-[`GR_crit()`](reference/GR_crit.md) and
-[`MC_error()`](reference/MC_error.md) implement the Gelman-Rubin
-diagnostic for convergence and the Monte Carlo error of the MCMC sample,
-respectively.
+[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md) and
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
+implement the Gelman-Rubin diagnostic for convergence and the Monte
+Carlo error of the MCMC sample, respectively.
 
 **JointAI** also provides functions for exploration of the distribution
 of the data and missing values, export of imputed values and prediction.
@@ -100,13 +101,13 @@ plot_all(
 )
 ```
 
-![](reference/figures/README-unnamed-chunk-3-1.png)
+![](reference/figures/README-plotall-1.png)
 
 ``` r
 md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ```
 
-![](reference/figures/README-unnamed-chunk-4-1.png)
+![](reference/figures/README-mdpattern-1.png)
 
 ### Fit a linear regression model with incomplete covariates
 
@@ -126,13 +127,13 @@ lm1 <- lm_imp(
 traceplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4)
 ```
 
-![](reference/figures/README-unnamed-chunk-5-1.png)
+![](reference/figures/README-traceplot-1.png)
 
 ``` r
 densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
 ```
 
-![](reference/figures/README-unnamed-chunk-6-1.png)
+![](reference/figures/README-densplot-1.png)
 
 ### Summarize the Result
 

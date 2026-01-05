@@ -30,4 +30,5 @@ A list of arguments combining defaults and user-specified values.
 
 ## Note
 
-Helper function for [prep_arglist](prep_arglist.md).
+Helper function for
+[prep_arglist](https://nerler.github.io/JointAI/reference/prep_arglist.md).

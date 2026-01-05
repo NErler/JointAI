@@ -71,11 +71,12 @@ the variable `.id` is added as subject identifier.
 
 In order to be able to extract (multiple) imputed datasets the imputed
 values must have been monitored, i.e., `imps = TRUE` had to be specified
-in the argument `monitor_params` in [`*_imp`](model_imp.md).
+in the argument `monitor_params` in
+[`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
 
 ## See also
 
-[`plot_imp_distr`](plot_imp_distr.md)
+[`plot_imp_distr`](https://nerler.github.io/JointAI/reference/plot_imp_distr.md)
 
 ## Examples
 

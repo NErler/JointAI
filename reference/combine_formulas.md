@@ -22,4 +22,4 @@ combine_formulas(fixed, random)
 ## Details
 
 Internal function, used in
-[`combine_formula_lists()`](combine_formula_lists.md).
+[`combine_formula_lists()`](https://nerler.github.io/JointAI/reference/combine_formula_lists.md).

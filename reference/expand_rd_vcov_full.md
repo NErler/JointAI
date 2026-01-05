@@ -13,7 +13,8 @@ expand_rd_vcov_full(rd_vcov, rd_outnam)
 - rd_vcov:
 
   the random effects variance covariance structure provided by the user
-  ([`check_rd_vcov_list()`](check_rd_vcov_list.md) is called internally)
+  ([`check_rd_vcov_list()`](https://nerler.github.io/JointAI/reference/check_rd_vcov_list.md)
+  is called internally)
 
 - rd_outnam:
 

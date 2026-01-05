@@ -76,9 +76,11 @@ the main models, the shape parameter in a parametric Weibull survival
 model, and the coefficients used in the spline specification of the
 baseline hazard of proportional hazards survival models.
 
-The function [`parameters()`](../reference/parameters.md) returns the
-parameters that are specified to be followed (even for models where no
-MCMC sampling was performed, i.e. when `n.iter = 0` and `n.adapt = 0`).
+The function
+[`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
+returns the parameters that are specified to be followed (even for
+models where no MCMC sampling was performed, i.e. when `n.iter = 0` and
+`n.adapt = 0`).
 
 For example:
 
@@ -327,14 +329,15 @@ randomly chosen iteration of the MCMC sample (transforming them back to
 the original scale, if scaling had been performed during the MCMC
 sampling) and filling them into the original, incomplete data.
 
-[`get_MIdat()`](../reference/get_MIdat.md) returns a long-format
-`data.frame` containing the imputed datasets (and possibly the original
-data) stacked onto each other. The imputation number is given in the
-variable `Imputation_`, column `.id` contains a newly created id
-variable for each observation in cross-sectional data (multi-level data
-should already contain an id variable).
+[`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md)
+returns a long-format `data.frame` containing the imputed datasets (and
+possibly the original data) stacked onto each other. The imputation
+number is given in the variable `Imputation_`, column `.id` contains a
+newly created id variable for each observation in cross-sectional data
+(multi-level data should already contain an id variable).
 
-[`get_MIdat()`](../reference/get_MIdat.md) takes the arguments:
+[`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md)
+takes the arguments:
 
 | argument         | explanation                                                                                                                                                                 |
 |:-----------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -504,16 +507,16 @@ summary(lm5)
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.839 9.8948 62.439 100.569      0.000    1.06 0.0577
-#> genderfemale  0.282 2.6286 -4.796   5.287      0.940    1.13 0.0577
-#> WC            0.304 0.0733  0.145   0.461      0.000    1.02 0.0577
-#> alc>=1        6.370 2.4988  1.469  11.342      0.020    1.02 0.0712
-#> creat         7.194 7.9657 -8.222  22.800      0.327    1.06 0.0577
+#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577
+#> genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577
+#> WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577
+#> alc>=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689
+#> creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.766 13.1    16    1.14 0.0577
+#> sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -529,7 +532,7 @@ traceplot(lm5)
 ```
 
 ![plot of chunk
-unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-1.png)
+unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-1.svg)
 
 plot of chunk unnamed-chunk-9
 
@@ -540,7 +543,7 @@ densplot(lm5)
 ```
 
 ![plot of chunk
-unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-2.png)
+unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-2.svg)
 
 plot of chunk unnamed-chunk-9
 
@@ -551,26 +554,26 @@ GR_crit(lm5)
 #> Potential scale reduction factors:
 #> 
 #>              Point est. Upper C.I.
-#> (Intercept)        1.01       1.06
-#> genderfemale       1.04       1.13
+#> (Intercept)        1.00       1.01
+#> genderfemale       1.00       1.00
 #> WC                 1.00       1.02
-#> alc>=1             1.01       1.02
-#> creat              1.02       1.06
-#> sigma_SBP          1.04       1.14
+#> alc>=1             1.00       1.02
+#> creat              1.03       1.07
+#> sigma_SBP          1.00       1.02
 #> 
 #> Multivariate psrf
 #> 
-#> 1.05
+#> 1.03
 
 # Monte Carlo Error of the MCMC sample
 MC_error(lm5)
-#>                est   MCSE    SD MCSE/SD
-#> (Intercept)  81.84 0.5713 9.895   0.058
-#> genderfemale  0.28 0.1518 2.629   0.058
-#> WC            0.30 0.0042 0.073   0.058
-#> alc>=1        6.37 0.1779 2.499   0.071
-#> creat         7.19 0.4599 7.966   0.058
-#> sigma_SBP    14.38 0.0442 0.766   0.058
+#>                est  MCSE   SD MCSE/SD
+#> (Intercept)  81.10 0.560 9.70   0.058
+#> genderfemale  0.68 0.147 2.55   0.058
+#> WC            0.30 0.004 0.07   0.058
+#> alc>=1        6.64 0.158 2.30   0.069
+#> creat         8.21 0.473 8.19   0.058
+#> sigma_SBP    14.42 0.047 0.81   0.058
 ```
 
 When `analysis_main` was not switched on the default behaviour is that
@@ -587,7 +590,7 @@ traceplot(lm4, ncol = 4)
 ```
 
 ![plot of chunk
-unnamed-chunk-10](figures_SelectingParameters/unnamed-chunk-10-1.png)
+unnamed-chunk-10](figures_SelectingParameters/unnamed-chunk-10-1.svg)
 
 plot of chunk unnamed-chunk-10
 
@@ -602,21 +605,21 @@ GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> Potential scale reduction factors:
 #> 
 #>                     Point est. Upper C.I.
-#> alc: (Intercept)         1.055      1.191
-#> alc: genderfemale        1.097      1.306
-#> alc: WC                  1.027      1.061
-#> alc: creat               1.055      1.183
-#> creat: (Intercept)       1.011      1.034
-#> creat: genderfemale      1.003      1.007
-#> creat: WC                1.009      1.029
-#> WC: (Intercept)          1.004      1.009
-#> WC: genderfemale         0.997      0.998
-#> sigma_creat              1.003      1.008
-#> sigma_WC                 1.006      1.016
+#> alc: (Intercept)         1.081      1.268
+#> alc: genderfemale        1.104      1.327
+#> alc: WC                  1.015      1.061
+#> alc: creat               1.061      1.210
+#> creat: (Intercept)       1.015      1.056
+#> creat: genderfemale      0.996      0.998
+#> creat: WC                1.018      1.060
+#> WC: (Intercept)          1.003      1.021
+#> WC: genderfemale         1.001      1.013
+#> sigma_creat              1.006      1.022
+#> sigma_WC                 1.007      1.010
 #> 
 #> Multivariate psrf
 #> 
-#> 1.08
+#> 1.1
 ```
 
 To select only some of the parameters, they can be specified directly by
@@ -633,16 +636,16 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.839 9.8948 62.439 100.569      0.000    1.06 0.0577
-#> genderfemale  0.282 2.6286 -4.796   5.287      0.940    1.13 0.0577
-#> WC            0.304 0.0733  0.145   0.461      0.000    1.02 0.0577
-#> alc>=1        6.370 2.4988  1.469  11.342      0.020    1.02 0.0712
-#> creat         7.194 7.9657 -8.222  22.800      0.327    1.06 0.0577
+#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577
+#> genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577
+#> WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577
+#> alc>=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689
+#> creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.766 13.1    16    1.14 0.0577
+#> sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -674,7 +677,7 @@ sub3
 traceplot(lm2, subset = list(other = sub3), ncol = 2)
 ```
 
-![plot of chunk lm2_2](figures_SelectingParameters/lm2_2-1.png)
+![plot of chunk lm2_2](figures_SelectingParameters/lm2_2-1.svg)
 
 plot of chunk lm2_2
 
@@ -701,7 +704,7 @@ traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
 ```
 
 ![plot of chunk
-unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-1.png)
+unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-1.svg)
 
 plot of chunk unnamed-chunk-11
 
@@ -712,6 +715,6 @@ traceplot(lme4, subset = list(other = sample(rs, size = 8)), ncol = 4)
 ```
 
 ![plot of chunk
-unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-2.png)
+unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-2.svg)
 
 plot of chunk unnamed-chunk-11

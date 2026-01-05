@@ -35,7 +35,9 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
 - monitor_params:
 
   named list or vector specifying which parameters should be monitored.
-  For details, see [`*_imp`](model_imp.md) and the vignette [Parameter
+  For details, see
+  [`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md) and
+  the vignette [Parameter
   Selection](https://nerler.github.io/JointAI/articles/SelectingParameters.html).
   Ignored when `add = TRUE`.
 
@@ -52,7 +54,7 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
 
 ## See also
 
-[`*_imp`](model_imp.md)
+[`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
 
 The vignette [Parameter
 Selection](https://nerler.github.io/JointAI/articles/SelectingParameters.html)

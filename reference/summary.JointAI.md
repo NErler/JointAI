@@ -80,7 +80,7 @@ print(x, digits = max(4, getOption("digits") - 4), ...)
 
   subset of parameters/variables/nodes (columns in the MCMC sample).
   Follows the same principle as the argument `monitor_params` in
-  [`*_imp`](model_imp.md).
+  [`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
 
 - exclude_chains:
 
@@ -116,11 +116,16 @@ print(x, digits = max(4, getOption("digits") - 4), ...)
 
 ## See also
 
-The model fitting functions [`lm_imp`](model_imp.md),
-[`glm_imp`](model_imp.md), [`clm_imp`](model_imp.md),
-[`lme_imp`](model_imp.md), [`glme_imp`](model_imp.md),
-[`survreg_imp`](model_imp.md) and [`coxph_imp`](model_imp.md), and the
-vignette [Parameter
+The model fitting functions
+[`lm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`glm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`clm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`lme_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`glme_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`survreg_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+and
+[`coxph_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+and the vignette [Parameter
 Selection](https://nerler.github.io/JointAI/articles/SelectingParameters.html)
 for examples how to specify the parameter `subset`.
 

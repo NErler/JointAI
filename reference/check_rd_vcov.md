@@ -18,4 +18,5 @@ check_rd_vcov(rd_vcov, nranef)
 - nranef:
 
   list by level with named vectors of number of random effects per
-  variable (obtained by [`get_nranef()`](get_nranef.md))
+  variable (obtained by
+  [`get_nranef()`](https://nerler.github.io/JointAI/reference/get_nranef.md))

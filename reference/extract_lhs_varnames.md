@@ -25,4 +25,4 @@ if the input is `NULL`.
 
 ## See also
 
-[`extract_lhs_string()`](extract_lhs_string.md)
+[`extract_lhs_string()`](https://nerler.github.io/JointAI/reference/extract_lhs_string.md)

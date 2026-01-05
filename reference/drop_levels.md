@@ -6,7 +6,7 @@ the model.
 ## Usage
 
 ``` r
-drop_levels(data, allvars, warn = TRUE)
+drop_levels(data, allvars, warn = TRUE, mess = NULL)
 ```
 
 ## Arguments

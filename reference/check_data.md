@@ -53,4 +53,6 @@ the cleaned `data.frame`
 
 ## Details
 
-used in [`model_imp()`](model_imp.md) (2025-09-04)
+used in
+[`model_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+(2025-09-04)

@@ -2,7 +2,8 @@
 
 The function is a helper function that asks questions and, depending on
 the answers given by the user, returns the input for the argument
-`refcats` in the main analysis functions [`*_imp`](model_imp.md).
+`refcats` in the main analysis functions
+[`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
 
 ## Usage
 

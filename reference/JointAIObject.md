@@ -1,6 +1,7 @@
 # Fitted object of class 'JointAI'
 
-An object returned by one of the main functions [`*_imp`](model_imp.md).
+An object returned by one of the main functions
+[`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
 
 ## Value
 

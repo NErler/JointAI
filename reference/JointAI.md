@@ -12,39 +12,51 @@ the R package [**rjags**](https://CRAN.R-project.org/package=rjags).
 **JointAI** provides the following main functions that facilitate
 analysis with different models:
 
-- [`lm_imp`](model_imp.md) for linear regression
+- [`lm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for linear regression
 
-- [`glm_imp`](model_imp.md) for generalized linear regression
+- [`glm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for generalized linear regression
 
-- [`betareg_imp`](model_imp.md) for regression using a beta distribution
+- [`betareg_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for regression using a beta distribution
 
-- [`lognorm_imp`](model_imp.md) for regression using a log-normal
-  distribution
+- [`lognorm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for regression using a log-normal distribution
 
-- [`clm_imp`](model_imp.md) for (ordinal) cumulative logit models
+- [`clm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for (ordinal) cumulative logit models
 
-- [`mlogit_imp`](model_imp.md) for multinomial models
+- [`mlogit_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for multinomial models
 
-- [`lme_imp`](model_imp.md) or [`lmer_imp`](model_imp.md) for linear
-  mixed models
+- [`lme_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  or
+  [`lmer_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for linear mixed models
 
-- [`glme_imp`](model_imp.md) or [`glmer_imp`](model_imp.md) for
-  generalized linear mixed models
+- [`glme_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  or
+  [`glmer_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for generalized linear mixed models
 
-- [`betamm_imp`](model_imp.md) for mixed models using a beta
-  distribution
+- [`betamm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for mixed models using a beta distribution
 
-- [`lognormmm_imp`](model_imp.md) for mixed models using a log-normal
-  distribution
+- [`lognormmm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for mixed models using a log-normal distribution
 
-- [`clmm_imp`](model_imp.md) for (ordinal) cumulative logit mixed models
+- [`clmm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for (ordinal) cumulative logit mixed models
 
-- [`survreg_imp`](model_imp.md) for parametric (Weibull) survival models
+- [`survreg_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for parametric (Weibull) survival models
 
-- [`coxph_imp`](model_imp.md) for (Cox) proportional hazard models
+- [`coxph_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for (Cox) proportional hazard models
 
-- [`JM_imp`](model_imp.md) for joint models of longitudinal and survival
-  data
+- [`JM_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  for joint models of longitudinal and survival data
 
 As far as possible, the specification of these functions is analogous to
 the specification of widely used functions for the analysis of complete
@@ -64,37 +76,50 @@ involved, and hyper-parameters can be changed via the argument
 `hyperpars`.
 
 To obtain summaries of the results, the functions
-[`summary()`](summary.JointAI.md), [`coef()`](summary.JointAI.md) and
-[`confint()`](summary.JointAI.md) are available, and results can be
-visualized with the help of [`traceplot()`](traceplot.md) or
-[`densplot()`](densplot.md).
+[`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.md),
+[`coef()`](https://nerler.github.io/JointAI/reference/summary.JointAI.md)
+and
+[`confint()`](https://nerler.github.io/JointAI/reference/summary.JointAI.md)
+are available, and results can be visualized with the help of
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md)
+or
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md).
 
-The function [`predict()`](predict.JointAI.md) allows prediction
-(including credible intervals) from `JointAI` models.
+The function
+[`predict()`](https://nerler.github.io/JointAI/reference/predict.JointAI.md)
+allows prediction (including credible intervals) from `JointAI` models.
 
 ## Evaluation and export
 
 Two criteria for evaluation of convergence and precision of the
 posterior estimate are available:
 
-- [`GR_crit`](GR_crit.md) implements the Gelman-Rubin criterion
-  ('potential scale reduction factor') for convergence
+- [`GR_crit`](https://nerler.github.io/JointAI/reference/GR_crit.md)
+  implements the Gelman-Rubin criterion ('potential scale reduction
+  factor') for convergence
 
-- [`MC_error`](MC_error.md) calculates the Monte Carlo error to evaluate
-  the precision of the MCMC sample
+- [`MC_error`](https://nerler.github.io/JointAI/reference/MC_error.md)
+  calculates the Monte Carlo error to evaluate the precision of the MCMC
+  sample
 
 Imputed data can be extracted (and exported to SPSS) using
-[`get_MIdat()`](get_MIdat.md). The function
-[`plot_imp_distr()`](plot_imp_distr.md) allows visual comparison of the
-distribution of observed and imputed values.
+[`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md).
+The function
+[`plot_imp_distr()`](https://nerler.github.io/JointAI/reference/plot_imp_distr.md)
+allows visual comparison of the distribution of observed and imputed
+values.
 
 ## Other useful functions
 
-- [`parameters`](parameters.md) and [`list_models`](list_models.md) to
-  gain insight in the specified model
+- [`parameters`](https://nerler.github.io/JointAI/reference/parameters.md)
+  and
+  [`list_models`](https://nerler.github.io/JointAI/reference/list_models.md)
+  to gain insight in the specified model
 
-- [`plot_all`](plot_all.md) and [`md_pattern`](md_pattern.md) to
-  visualize the distribution of the data and the missing data pattern
+- [`plot_all`](https://nerler.github.io/JointAI/reference/plot_all.md)
+  and
+  [`md_pattern`](https://nerler.github.io/JointAI/reference/md_pattern.md)
+  to visualize the distribution of the data and the missing data pattern
 
 ## Vignettes
 
@@ -102,33 +127,46 @@ The following vignettes are available
 
 - [*Minimal
   Example*](https://nerler.github.io/JointAI/articles/MinimalExample.html):  
-  A minimal example demonstrating the use of [`lm_imp`](model_imp.md),
-  [`summary.JointAI`](summary.JointAI.md), [`traceplot`](traceplot.md)
-  and [`densplot`](densplot.md).
+  A minimal example demonstrating the use of
+  [`lm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  [`summary.JointAI`](https://nerler.github.io/JointAI/reference/summary.JointAI.md),
+  [`traceplot`](https://nerler.github.io/JointAI/reference/traceplot.md)
+  and
+  [`densplot`](https://nerler.github.io/JointAI/reference/densplot.md).
 
 - [*Visualizing Incomplete
   Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html):  
-  Demonstrations of the options in [`plot_all`](plot_all.md) (plotting
-  histograms and bar plots for all variables in the data) and
-  [`md_pattern`](md_pattern.md) (plotting or printing the missing data
-  pattern).
+  Demonstrations of the options in
+  [`plot_all`](https://nerler.github.io/JointAI/reference/plot_all.md)
+  (plotting histograms and bar plots for all variables in the data) and
+  [`md_pattern`](https://nerler.github.io/JointAI/reference/md_pattern.md)
+  (plotting or printing the missing data pattern).
 
 - [*Model
   Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html):  
   Explanation and demonstration of all parameters that are required or
-  optional to specify the model structure in [`lm_imp`](model_imp.md),
-  [`glm_imp`](model_imp.md) and [`lme_imp`](model_imp.md). Among others,
-  the functions [`parameters`](parameters.md),
-  [`list_models`](list_models.md) and [`set_refcat`](set_refcat.md) are
-  used.
+  optional to specify the model structure in
+  [`lm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  [`glm_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`lme_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
+  Among others, the functions
+  [`parameters`](https://nerler.github.io/JointAI/reference/parameters.md),
+  [`list_models`](https://nerler.github.io/JointAI/reference/list_models.md)
+  and
+  [`set_refcat`](https://nerler.github.io/JointAI/reference/set_refcat.md)
+  are used.
 
 - [*Parameter
   Selection*](https://nerler.github.io/JointAI/articles/SelectingParameters.html):  
   Examples on how to select the parameters/variables/nodes to follow
   using the argument `monitor_params` and the parameters/variables/nodes
   displayed in the [`summary`](https://rdrr.io/r/base/summary.html),
-  [`traceplot`](traceplot.md), [`densplot`](densplot.md) or when using
-  [`GR_crit`](GR_crit.md) or [`MC_error`](MC_error.md).
+  [`traceplot`](https://nerler.github.io/JointAI/reference/traceplot.md),
+  [`densplot`](https://nerler.github.io/JointAI/reference/densplot.md)
+  or when using
+  [`GR_crit`](https://nerler.github.io/JointAI/reference/GR_crit.md) or
+  [`MC_error`](https://nerler.github.io/JointAI/reference/MC_error.md).
 
 - [*MCMC
   Settings*](https://nerler.github.io/JointAI/articles/MCMCsettings.html):  
@@ -139,12 +177,15 @@ The following vignettes are available
 - [*After
   Fitting*](https://nerler.github.io/JointAI/articles/AfterFitting.html):  
   Examples on the use of functions to be applied after the model has
-  been fitted, including [`traceplot`](traceplot.md),
-  [`densplot`](densplot.md),
+  been fitted, including
+  [`traceplot`](https://nerler.github.io/JointAI/reference/traceplot.md),
+  [`densplot`](https://nerler.github.io/JointAI/reference/densplot.md),
   [`summary`](https://rdrr.io/r/base/summary.html),
-  [`GR_crit`](GR_crit.md), [`MC_error`](MC_error.md),
+  [`GR_crit`](https://nerler.github.io/JointAI/reference/GR_crit.md),
+  [`MC_error`](https://nerler.github.io/JointAI/reference/MC_error.md),
   [`predict`](https://rdrr.io/r/stats/predict.html),
-  [`predDF`](predDF.md) and [`get_MIdat`](get_MIdat.md).
+  [`predDF`](https://nerler.github.io/JointAI/reference/predDF.md) and
+  [`get_MIdat`](https://nerler.github.io/JointAI/reference/get_MIdat.md).
 
 - [*Theoretical
   Background*](https://nerler.github.io/JointAI/articles/TheoreticalBackground.html):  

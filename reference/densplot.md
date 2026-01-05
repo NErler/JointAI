@@ -47,7 +47,7 @@ densplot(object, start = NULL, end = NULL, thin = NULL,
 
   subset of parameters/variables/nodes (columns in the MCMC sample).
   Follows the same principle as the argument `monitor_params` in
-  [`*_imp`](model_imp.md).
+  [`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
 
 - outcome:
 

@@ -79,7 +79,7 @@
             <h3 data-toc-skip class="subtitle">How to specify which
 parameters to monitor and display in the results</h3>
             
-            <h4 data-toc-skip class="date">January 02, 2026</h4>
+            <h4 data-toc-skip class="date">January 03, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/SelectingParameters.Rmd" class="external-link"><code>vignettes/SelectingParameters.Rmd</code></a></small>
       <div class="d-none name"><code>SelectingParameters.Rmd</code></div>
@@ -87,10 +87,10 @@ parameters to monitor and display in the results</h3>
 
     
     
-<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html" class="external-link">NHANES</a>
-data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html" class="external-link">simLong</a>
+<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a>
+data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a>
 for examples in longitudinal data. For more info on these datasets,
-check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html" class="external-link"><em>Visualizing
+check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing
 Incomplete Data</em></a>, in which the distribution of variables and
 missing values in both sets is explored.</p>
 <p><strong>Note:</strong><br> In several of the examples we use
@@ -108,7 +108,7 @@ Chain Monte Carlo</a>) sampling. Since JAGS only saves the values of
 MCMC chains for those parameters/variables for which the user has
 specified that they should be monitored, this is also the case in
 <strong>JointAI</strong>.</p>
-<p>For this purpose, the main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html" class="external-link"><code>*_imp()</code></a>
+<p>For this purpose, the main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>*_imp()</code></a>
 have an argument <code>monitor_params</code>.</p>
 <p><code>monitor_params</code> takes a named list (often a named vector
 also works) with the following possible entries:</p>
@@ -490,7 +490,7 @@ obtained with</p>
 <div class="section level4">
 <h4 id="side-note-how-to-extract-imputed-datasets">Side note: How to extract imputed datasets<a class="anchor" aria-label="anchor" href="#side-note-how-to-extract-imputed-datasets"></a>
 </h4>
-<p>Imputed datasets can be extracted and exported with the function <a href="https://nerler.github.io/JointAI/reference/get_MIdat.html" class="external-link"><code>get_MIdat()</code></a>.
+<p>Imputed datasets can be extracted and exported with the function <a href="https://nerler.github.io/JointAI/reference/get_MIdat.html"><code>get_MIdat()</code></a>.
 A completed dataset is created by taking the imputed values from a
 randomly chosen iteration of the MCMC sample (transforming them back to
 the original scale, if scaling had been performed during the MCMC
@@ -673,16 +673,16 @@ model can be quite useful when investigating convergence issues.)</p>
 <div class="section level2">
 <h2 id="subsets-of-parameters-for-plots-summaries">Subsets of Parameters for Plots, Summaries, …<a class="anchor" aria-label="anchor" href="#subsets-of-parameters-for-plots-summaries"></a>
 </h2>
-<p>The functions <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html" class="external-link"><code>summary()</code></a>,
-<a href="https://nerler.github.io/JointAI/reference/traceplot.html" class="external-link"><code>traceplot()</code></a>,
-<a href="https://nerler.github.io/JointAI/reference/densplot.html" class="external-link"><code>densplot()</code></a>,
-<a href="https://nerler.github.io/JointAI/reference/GR_crit.html" class="external-link"><code>GR_crit()</code></a>
-and <a href="https://nerler.github.io/JointAI/reference/MC_error.html" class="external-link"><code>MC_error()</code></a>
+<p>The functions <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a>,
+<a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code>traceplot()</code></a>,
+<a href="https://nerler.github.io/JointAI/reference/densplot.html"><code>densplot()</code></a>,
+<a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code>GR_crit()</code></a>
+and <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code>MC_error()</code></a>
 all have an argument <code>subset</code>. This argument allows us to
 select a subset of parameters to be shown in the output. Especially when
 not only the parameters of the main analysis model are followed, but
 also, for example, imputed values, looking at a subset may be desirable.
-For more details about these functions, see also the vignette <a href="https://nerler.github.io/JointAI/articles/AfterFitting.html" class="external-link"><em>After
+For more details about these functions, see also the vignette <a href="https://nerler.github.io/JointAI/articles/AfterFitting.html"><em>After
 Fitting</em></a>.</p>
 <p><code>subset</code> follows the same logic as
 <code>monitor_params</code> described above.</p>
@@ -704,16 +704,16 @@ displayed if they were monitored:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary:</span></span>
-<span><span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.839 9.8948 62.439 100.569      0.000    1.06 0.0577</span></span>
-<span><span class="co">#&gt; genderfemale  0.282 2.6286 -4.796   5.287      0.940    1.13 0.0577</span></span>
-<span><span class="co">#&gt; WC            0.304 0.0733  0.145   0.461      0.000    1.02 0.0577</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.370 2.4988  1.469  11.342      0.020    1.02 0.0712</span></span>
-<span><span class="co">#&gt; creat         7.194 7.9657 -8.222  22.800      0.327    1.06 0.0577</span></span>
+<span><span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD</span></span>
+<span><span class="co">#&gt; (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577</span></span>
+<span><span class="co">#&gt; genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577</span></span>
+<span><span class="co">#&gt; WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689</span></span>
+<span><span class="co">#&gt; creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; sigma_SBP 14.4 0.766 13.1    16    1.14 0.0577</span></span>
+<span><span class="co">#&gt; sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; MCMC settings:</span></span>
@@ -727,7 +727,7 @@ displayed if they were monitored:</p>
 <span><span class="co"># traceplot of the MCMC sample</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm5</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" width="100%"><p class="caption">
+<img src="figures_SelectingParameters/unnamed-chunk-9-1.svg" alt="plot of chunk unnamed-chunk-9" width="100%"><p class="caption">
 plot of chunk unnamed-chunk-9
 </p>
 </div>
@@ -736,7 +736,7 @@ plot of chunk unnamed-chunk-9
 <span><span class="co"># density plot of the MCMC sample</span></span>
 <span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">lm5</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-9-2.png" alt="plot of chunk unnamed-chunk-9" width="100%"><p class="caption">
+<img src="figures_SelectingParameters/unnamed-chunk-9-2.svg" alt="plot of chunk unnamed-chunk-9" width="100%"><p class="caption">
 plot of chunk unnamed-chunk-9
 </p>
 </div>
@@ -747,26 +747,26 @@ plot of chunk unnamed-chunk-9
 <span><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;              Point est. Upper C.I.</span></span>
-<span><span class="co">#&gt; (Intercept)        1.01       1.06</span></span>
-<span><span class="co">#&gt; genderfemale       1.04       1.13</span></span>
+<span><span class="co">#&gt; (Intercept)        1.00       1.01</span></span>
+<span><span class="co">#&gt; genderfemale       1.00       1.00</span></span>
 <span><span class="co">#&gt; WC                 1.00       1.02</span></span>
-<span><span class="co">#&gt; alc&gt;=1             1.01       1.02</span></span>
-<span><span class="co">#&gt; creat              1.02       1.06</span></span>
-<span><span class="co">#&gt; sigma_SBP          1.04       1.14</span></span>
+<span><span class="co">#&gt; alc&gt;=1             1.00       1.02</span></span>
+<span><span class="co">#&gt; creat              1.03       1.07</span></span>
+<span><span class="co">#&gt; sigma_SBP          1.00       1.02</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Multivariate psrf</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1.05</span></span>
+<span><span class="co">#&gt; 1.03</span></span>
 <span></span>
 <span><span class="co"># Monte Carlo Error of the MCMC sample</span></span>
 <span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">lm5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                est   MCSE    SD MCSE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.84 0.5713 9.895   0.058</span></span>
-<span><span class="co">#&gt; genderfemale  0.28 0.1518 2.629   0.058</span></span>
-<span><span class="co">#&gt; WC            0.30 0.0042 0.073   0.058</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.37 0.1779 2.499   0.071</span></span>
-<span><span class="co">#&gt; creat         7.19 0.4599 7.966   0.058</span></span>
-<span><span class="co">#&gt; sigma_SBP    14.38 0.0442 0.766   0.058</span></span></code></pre></div>
+<span><span class="co">#&gt;                est  MCSE   SD MCSE/SD</span></span>
+<span><span class="co">#&gt; (Intercept)  81.10 0.560 9.70   0.058</span></span>
+<span><span class="co">#&gt; genderfemale  0.68 0.147 2.55   0.058</span></span>
+<span><span class="co">#&gt; WC            0.30 0.004 0.07   0.058</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.64 0.158 2.30   0.069</span></span>
+<span><span class="co">#&gt; creat         8.21 0.473 8.19   0.058</span></span>
+<span><span class="co">#&gt; sigma_SBP    14.42 0.047 0.81   0.058</span></span></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on the default
 behaviour is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -778,7 +778,7 @@ behaviour is that all parameters are displayed:</p>
 <span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm4</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="100%"><p class="caption">
+<img src="figures_SelectingParameters/unnamed-chunk-10-1.svg" alt="plot of chunk unnamed-chunk-10" width="100%"><p class="caption">
 plot of chunk unnamed-chunk-10
 </p>
 </div>
@@ -793,21 +793,21 @@ to be specified:</p>
 <span><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                     Point est. Upper C.I.</span></span>
-<span><span class="co">#&gt; alc: (Intercept)         1.055      1.191</span></span>
-<span><span class="co">#&gt; alc: genderfemale        1.097      1.306</span></span>
-<span><span class="co">#&gt; alc: WC                  1.027      1.061</span></span>
-<span><span class="co">#&gt; alc: creat               1.055      1.183</span></span>
-<span><span class="co">#&gt; creat: (Intercept)       1.011      1.034</span></span>
-<span><span class="co">#&gt; creat: genderfemale      1.003      1.007</span></span>
-<span><span class="co">#&gt; creat: WC                1.009      1.029</span></span>
-<span><span class="co">#&gt; WC: (Intercept)          1.004      1.009</span></span>
-<span><span class="co">#&gt; WC: genderfemale         0.997      0.998</span></span>
-<span><span class="co">#&gt; sigma_creat              1.003      1.008</span></span>
-<span><span class="co">#&gt; sigma_WC                 1.006      1.016</span></span>
+<span><span class="co">#&gt; alc: (Intercept)         1.081      1.268</span></span>
+<span><span class="co">#&gt; alc: genderfemale        1.104      1.327</span></span>
+<span><span class="co">#&gt; alc: WC                  1.015      1.061</span></span>
+<span><span class="co">#&gt; alc: creat               1.061      1.210</span></span>
+<span><span class="co">#&gt; creat: (Intercept)       1.015      1.056</span></span>
+<span><span class="co">#&gt; creat: genderfemale      0.996      0.998</span></span>
+<span><span class="co">#&gt; creat: WC                1.018      1.060</span></span>
+<span><span class="co">#&gt; WC: (Intercept)          1.003      1.021</span></span>
+<span><span class="co">#&gt; WC: genderfemale         1.001      1.013</span></span>
+<span><span class="co">#&gt; sigma_creat              1.006      1.022</span></span>
+<span><span class="co">#&gt; sigma_WC                 1.007      1.010</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Multivariate psrf</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1.08</span></span></code></pre></div>
+<span><span class="co">#&gt; 1.1</span></span></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly
 by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -821,16 +821,16 @@ by name via the <code>other</code> element of <code>subset</code>:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary:</span></span>
-<span><span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.839 9.8948 62.439 100.569      0.000    1.06 0.0577</span></span>
-<span><span class="co">#&gt; genderfemale  0.282 2.6286 -4.796   5.287      0.940    1.13 0.0577</span></span>
-<span><span class="co">#&gt; WC            0.304 0.0733  0.145   0.461      0.000    1.02 0.0577</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.370 2.4988  1.469  11.342      0.020    1.02 0.0712</span></span>
-<span><span class="co">#&gt; creat         7.194 7.9657 -8.222  22.800      0.327    1.06 0.0577</span></span>
+<span><span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD</span></span>
+<span><span class="co">#&gt; (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577</span></span>
+<span><span class="co">#&gt; genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577</span></span>
+<span><span class="co">#&gt; WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689</span></span>
+<span><span class="co">#&gt; creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; sigma_SBP 14.4 0.766 13.1    16    1.14 0.0577</span></span>
+<span><span class="co">#&gt; sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; MCMC settings:</span></span>
@@ -858,7 +858,7 @@ displayed:</p>
 <span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm2</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>other <span class="op">=</span> <span class="va">sub3</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/lm2_2-1.png" alt="plot of chunk lm2_2" width="50%"><p class="caption">
+<img src="figures_SelectingParameters/lm2_2-1.svg" alt="plot of chunk lm2_2" width="50%"><p class="caption">
 plot of chunk lm2_2
 </p>
 </div>
@@ -884,7 +884,7 @@ effects can be selected:</p>
 <span><span class="co"># plot the chains of 8 randomly selected random intercepts</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lme4</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">ri</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="100%"><p class="caption">
+<img src="figures_SelectingParameters/unnamed-chunk-11-1.svg" alt="plot of chunk unnamed-chunk-11" width="100%"><p class="caption">
 plot of chunk unnamed-chunk-11
 </p>
 </div>
@@ -893,7 +893,7 @@ plot of chunk unnamed-chunk-11
 <span><span class="co"># plot the chains of 8 randomly selected random slopes</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lme4</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">rs</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-11-2.png" alt="plot of chunk unnamed-chunk-11" width="100%"><p class="caption">
+<img src="figures_SelectingParameters/unnamed-chunk-11-2.svg" alt="plot of chunk unnamed-chunk-11" width="100%"><p class="caption">
 plot of chunk unnamed-chunk-11
 </p>
 </div>

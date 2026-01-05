@@ -1,6 +1,7 @@
 # Check for duplicate grouping levels
 
-Used within [`get_groups()`](get_groups.md).
+Used within
+[`get_groups()`](https://nerler.github.io/JointAI/reference/get_groups.md).
 
 ## Usage
 

@@ -24,35 +24,40 @@ computational time when compiling this vignette.
 **JointAI** has several main functions (which are abbreviated with
 `*_imp()`):
 
-- [`lm_imp()`](../reference/model_imp.md): linear regression
-- [`glm_imp()`](../reference/model_imp.md): generalized linear
-  regression
-- [`lognorm_imp()`](../reference/model_imp.md): log-normal regression
-- [`betareg_imp()`](../reference/model_imp.md): beta regression
-- [`clm_imp()`](../reference/model_imp.md): cumulative logit models for
-  ordinal data
-- [`mlogit_imp()`](../reference/model_imp.md): multinomial logit models
-  for unordered factors
-- [`lme_imp()`](../reference/model_imp.md) /
-  [`lmer_imp()`](../reference/model_imp.md): linear mixed effects
-  regression
-- [`glme_imp()`](../reference/model_imp.md) /
-  [`glmer_imp()`](../reference/model_imp.md): generalized linear mixed
-  effects regression
-- [`lognormmm_imp()`](../reference/model_imp.md): log-normal mixed
-  effects regression
-- [`betamm_imp()`](../reference/model_imp.md): beta mixed effects
-  regression
-- [`clmm_imp()`](../reference/model_imp.md): cumulative logit mixed
-  models
-- [`mlogitmm_imp()`](../reference/model_imp.md): multinomial logit mixed
-  models
-- [`survreg_imp()`](../reference/model_imp.md): parametric (Weibull)
-  survival models
-- [`coxph_imp()`](../reference/model_imp.md): Proportional hazards
-  survival models
-- [`JM_imp()`](../reference/model_imp.md): Joint model for longitudinal
-  and survival data
+- [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  linear regression
+- [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  generalized linear regression
+- [`lognorm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  log-normal regression
+- [`betareg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  beta regression
+- [`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  cumulative logit models for ordinal data
+- [`mlogit_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  multinomial logit models for unordered factors
+- [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  /
+  [`lmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  linear mixed effects regression
+- [`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  /
+  [`glmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  generalized linear mixed effects regression
+- [`lognormmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  log-normal mixed effects regression
+- [`betamm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  beta mixed effects regression
+- [`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  cumulative logit mixed models
+- [`mlogitmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  multinomial logit mixed models
+- [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  parametric (Weibull) survival models
+- [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  Proportional hazards survival models
+- [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  Joint model for longitudinal and survival data
 
 Specification of these functions is similar to the specification of the
 complete data versions [`lm()`](https://rdrr.io/r/stats/lm.html),
@@ -74,19 +79,23 @@ section [Model formula](#ModelFormula), specification of the random
 random effects in section [Multi-level structure & longitudinal
 covariates](#MultiLevelStructure).
 
-Additionally, [`glm_imp()`](../reference/model_imp.md),
-[`glme_imp()`](../reference/model_imp.md) and
-[`glmer_imp()`](../reference/model_imp.md) require the specification of
-the model
+Additionally,
+[`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+and
+[`glmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+require the specification of the model
 [`family`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html)
 (and `link` function).
 
 ### Model family and link functions
 
 Implemented families and links for
-[`glm_imp()`](../reference/model_imp.md),
-[`glme_imp()`](../reference/model_imp.md) and
-[`glmer_imp()`](../reference/model_imp.md) are
+[`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+and
+[`glmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+are
 
 | family     |                                                 |
 |:-----------|:------------------------------------------------|
@@ -145,13 +154,16 @@ from the linear predictor, in which covariates (independent variables)
 are separated by `+`. An intercept is added automatically (except in
 proportional hazard models or models for ordinal outcomes).
 
-[`survreg_imp()`](../reference/model_imp.md) and
-[`coxph_imp()`](../reference/model_imp.md) expect a [survival
+[`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+and
+[`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+expect a [survival
 object](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/Surv.html)
-(created with [`Surv()`](../reference/Surv.md)) on the left hand side of
-the model formula. Currently, only right censored data can be handled
-and there can only be one type of event (i.e., no competing risks or
-multi-state models).
+(created with
+[`Surv()`](https://nerler.github.io/JointAI/reference/Surv.md)) on the
+left hand side of the model formula. Currently, only right censored data
+can be handled and there can only be one type of event (i.e., no
+competing risks or multi-state models).
 
 Note: `formula` and `fixed` can not be specified together. You either
 need to provide the argument `formula` or the arguments `fixed` and
@@ -191,9 +203,10 @@ the respective model `outcome`. For multinomial models, which have
 multiple linear predictors, the column `outcat` identifies the category
 of the outcome the parameters refer to.
 
-We use the function [`parameters()`](../reference/parameters.md) here
-and in other vignettes to demonstrate the effect that different model
-specifications have.
+We use the function
+[`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
+here and in other vignettes to demonstrate the effect that different
+model specifications have.
 
 ``` r
 parameters(mod2a)
@@ -569,7 +582,8 @@ ilogit <- plogis
 
 # Use ilogit in the model formula
 mod5a <- lm_imp(SBP ~ age + gender + ilogit(creat), data = NHANES)
-#> Error in ilogit(creat): could not find function "ilogit"
+#> Error in `ilogit()`:
+#> ! could not find function "ilogit"
 ```
 
 #### Nested functions
@@ -597,7 +611,8 @@ ilogit <- plogis
 
 # nest ilogit inside cloglog
 mod6a <- lm_imp(SBP ~ age + gender + cloglog(ilogit(creat)), data = NHANES)
-#> Error in cloglog(ilogit(creat)): could not find function "cloglog"
+#> Error in `cloglog()`:
+#> ! could not find function "cloglog"
 ```
 
 ## Multi-level structure & longitudinal covariates
@@ -1106,7 +1121,28 @@ a number.
 
 ``` r
 refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
-#> Error in set_refcat(NHANES, formula = formula(mod10b)): object 'extract_outcome' not found
+#> Warning in JointAI:::extract_outcome(formula): 'JointAI:::extract_outcome' is deprecated.
+#> Use 'extract_outcomes_list ' instead.
+#> See help("Deprecated") and help("JointAI-deprecated").
+#> Warning in extract_lhs(x): 'extract_lhs' is deprecated.
+#> Use 'extract_lhs_string ' instead.
+#> See help("Deprecated") and help("JointAI-deprecated").
+#> Warning in FUN(X[[i]], ...): 'FUN' is deprecated.
+#> Use 'extract_lhs_string ' instead.
+#> See help("Deprecated") and help("JointAI-deprecated").
+#> The categorical variables are:
+#> - "gender"
+#> - "race"
+#> - "educ"
+#> - "occup"
+#> - "smoke"
+#> 
+#> How do you want to specify the reference categories?
+#> 
+#> 1: Use the first category for each variable.
+#> 2: Use the last category for each variable.
+#> 3: Use the largest category for each variable.
+#> 4: Specify the reference categories individually.
 ```
 
 When option 4 is chosen, a question for each categorical variable is
@@ -1134,8 +1170,9 @@ printed:
 #> or use the output of this function.
 ```
 
-[`set_refcat()`](../reference/set_refcat.md) also returns a named vector
-that can be passed to the argument `refcats`:
+[`set_refcat()`](https://nerler.github.io/JointAI/reference/set_refcat.md)
+also returns a named vector that can be passed to the argument
+`refcats`:
 
 ``` r
 mod10c <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
@@ -1159,7 +1196,8 @@ In the Bayesian framework, parameters are random variables for which a
 distribution needs to be specified. These distributions depend on
 parameters themselves, i.e., on hyper-parameters.
 
-The function [`default_hyperpars()`](../reference/default_hyperpars.md)
+The function
+[`default_hyperpars()`](https://nerler.github.io/JointAI/reference/default_hyperpars.md)
 returns a list containing the default hyper parameters used in a
 `JointAI` model.
 
@@ -1203,9 +1241,10 @@ default_hyperpars()
 ```
 
 To change the hyper-parameters in a **JointAI** model, the list obtained
-from [`default_hyperpars()`](../reference/default_hyperpars.md) can be
-edited and passed to the argument `hyperpars` in the main functions
-`*_imp()`.
+from
+[`default_hyperpars()`](https://nerler.github.io/JointAI/reference/default_hyperpars.md)
+can be edited and passed to the argument `hyperpars` in the main
+functions `*_imp()`.
 
 - `mu_reg_*` and `tau_reg_*` refer to the mean and precision in the
   distribution for regression coefficients.

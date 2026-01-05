@@ -15,7 +15,7 @@ get_grouping_levels(grouping_df)
 - grouping_df:
 
   a `data.frame` of grouping ("id") variables, as obtained from
-  [`get_groups()`](get_groups.md)
+  [`get_groups()`](https://nerler.github.io/JointAI/reference/get_groups.md)
 
 ## Value
 

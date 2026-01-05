@@ -20,4 +20,5 @@ The updated `arglist` with formulas converted to lists.
 
 ## Note
 
-Helper function used in [`prep_arglist()`](prep_arglist.md).
+Helper function used in
+[`prep_arglist()`](https://nerler.github.io/JointAI/reference/prep_arglist.md).

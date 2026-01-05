@@ -22,4 +22,4 @@ by grouping variable
 
 ## See also
 
-[`remove_grouping()`](remove_grouping.md)
+[`remove_grouping()`](https://nerler.github.io/JointAI/reference/remove_grouping.md)

@@ -83,7 +83,7 @@ traceplot(object, start = NULL, end = NULL,
 
   subset of parameters/variables/nodes (columns in the MCMC sample).
   Follows the same principle as the argument `monitor_params` in
-  [`*_imp`](model_imp.md).
+  [`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
 
 - outcome:
 
@@ -120,8 +120,9 @@ traceplot(object, start = NULL, end = NULL,
 
 ## See also
 
-[`summary.JointAI`](summary.JointAI.md), [`*_imp`](model_imp.md),
-[`densplot`](densplot.md)  
+[`summary.JointAI`](https://nerler.github.io/JointAI/reference/summary.JointAI.md),
+[`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md),
+[`densplot`](https://nerler.github.io/JointAI/reference/densplot.md)  
 The vignette [Parameter
 Selection](https://nerler.github.io/JointAI/articles/SelectingParameters.html)
 contains some examples how to specify the parameter `subset`.

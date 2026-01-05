@@ -18,7 +18,7 @@ check_full_blockdiag(rd_vcov)
 
   a valid random effects variance-covariance structure specification
   (i.e., checked using
-  [`expand_rd_vcov_full()`](expand_rd_vcov_full.md))
+  [`expand_rd_vcov_full()`](https://nerler.github.io/JointAI/reference/expand_rd_vcov_full.md))
 
 ## Value
 

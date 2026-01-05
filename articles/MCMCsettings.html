@@ -96,12 +96,12 @@ is used as an interface to JAGS.</p>
 functions that control MCMC related settings. To learn more about how to
 specify the other arguments in <strong>JointAI</strong> models or the
 theoretical background of the statistical approach, check out the
-vignettes <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html" class="external-link"><em>Model
-Specification</em></a> and <a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html" class="external-link"><em>TheoreticalBackground</em></a>.</p>
-<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html" class="external-link">NHANES</a>
-data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html" class="external-link">simLong</a>
+vignettes <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model
+Specification</em></a> and <a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html"><em>TheoreticalBackground</em></a>.</p>
+<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a>
+data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a>
 for examples in longitudinal data. For more info on these datasets,
-check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html" class="external-link"><em>Visualizing
+check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing
 Incomplete Data</em></a>, in which the distributions of variables and
 missing values in both sets is explored.</p>
 <p><strong>Note:</strong><br> In several examples we use
@@ -111,7 +111,7 @@ in the vignette.</p>
 <div class="section level2">
 <h2 id="mcmc-related-parameters-in-jointai">MCMC related parameters in <strong>JointAI</strong><a class="anchor" aria-label="anchor" href="#mcmc-related-parameters-in-jointai"></a>
 </h2>
-<p>The main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html" class="external-link"><code>*_imp()</code></a>
+<p>The main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>*_imp()</code></a>
 have a number of arguments that specify settings for the MCMC
 sampling:</p>
 <ul>
@@ -182,10 +182,10 @@ several million.</p>
 <div class="section level4">
 <h4 id="side-note-how-to-evaluate-convergence">Side note: How to evaluate convergence?<a class="anchor" aria-label="anchor" href="#side-note-how-to-evaluate-convergence"></a>
 </h4>
-<p>Convergence can, for instance, be evaluated visually using a <a href="https://nerler.github.io/JointAI/reference/traceplot.html" class="external-link"><code>traceplot()</code></a>
+<p>Convergence can, for instance, be evaluated visually using a <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code>traceplot()</code></a>
 or using the Gelman-Rubin diagnostic criterion<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt; Gelman, A., Meng, X. L., &amp;amp; Stern, H. (1996).
 Posterior predictive assessment of model fitness via realized
-discrepancies. Statistica Sinica, 733-760.&lt;/p&gt;"><sup>1</sup></a> (implemented in <a href="https://nerler.github.io/JointAI/reference/GR_crit.html" class="external-link"><code>GR_crit()</code></a>,
+discrepancies. Statistica Sinica, 733-760.&lt;/p&gt;"><sup>1</sup></a> (implemented in <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code>GR_crit()</code></a>,
 but also returned with the model summary). The latter compares within
 and between chain variability and requires the JointAI object to have at
 least two chains.</p>
@@ -193,7 +193,7 @@ least two chains.</p>
 <div class="section level4">
 <h4 id="side-note-how-to-check-precision">Side note: How to check precision?<a class="anchor" aria-label="anchor" href="#side-note-how-to-check-precision"></a>
 </h4>
-<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html" class="external-link"><code>MC_error()</code></a>.
+<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code>MC_error()</code></a>.
 It calculates the Monte Carlo error (the error that is made since the
 sample is finite) and compares it to the standard deviation of the
 posterior sample. A rule of thumb is that the Monte Carlo error should
@@ -225,7 +225,7 @@ values. A value <code>thin = 10</code> would result in keeping every
 sampling iterations</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">alc</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.iter <span class="op">=</span> <span class="fl">100</span>, progress.bar <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span></span></code></pre></div>
-<p>The relevant part of the model summary (obtained with <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html" class="external-link"><code>summary()</code></a>)
+<p>The relevant part of the model summary (obtained with <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a>)
 shows that the first 100 iterations (adaptive phase) were discarded, and
 the 100 iterations that follow form the posterior sample. Thinning was
 set to 1 and there are 3 chains.</p>
@@ -303,7 +303,7 @@ indicators.</p>
 </h3>
 <p>For this purpose, the main analysis functions <code>*_imp</code> have
 an argument <code>monitor_params</code>.</p>
-<p>For details, explanation and examples see the vignette <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html" class="external-link"><em>Parameter
+<p>For details, explanation and examples see the vignette <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html"><em>Parameter
 Selection</em></a>.</p>
 </div>
 </div>

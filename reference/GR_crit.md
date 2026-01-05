@@ -47,7 +47,7 @@ GR_crit(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
 
   subset of parameters/variables/nodes (columns in the MCMC sample).
   Follows the same principle as the argument `monitor_params` in
-  [`*_imp`](model_imp.md).
+  [`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md).
 
 - exclude_chains:
 

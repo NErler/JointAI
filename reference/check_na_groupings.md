@@ -1,7 +1,8 @@
 # Check for missing values in grouping variables
 
 Checks if any grouping variable contains missing values (`NA` or `NaN`)
-and throws an error if so. Used within [`get_groups()`](get_groups.md).
+and throws an error if so. Used within
+[`get_groups()`](https://nerler.github.io/JointAI/reference/get_groups.md).
 
 ## Usage
 

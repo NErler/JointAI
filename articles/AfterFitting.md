@@ -42,10 +42,9 @@ mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500,
 traceplot(mod13a)
 ```
 
-![plot of chunk
-unnamed-chunk-1](figures_AfterFitting/unnamed-chunk-1-1.png)
+![plot of chunk trace13a](figures_AfterFitting/trace13a-1.svg)
 
-plot of chunk unnamed-chunk-1
+plot of chunk trace13a
 
 When the sampler has converged the chains show one horizontal band, as
 in the above figure. Consequently, when traces show a trend convergence
@@ -71,7 +70,7 @@ traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
   scale_color_brewer(palette = 'Dark2')
 ```
 
-![plot of chunk ggtrace15a](figures_AfterFitting/ggtrace15a-1.png)
+![plot of chunk ggtrace15a](figures_AfterFitting/ggtrace15a-1.svg)
 
 plot of chunk ggtrace15a
 
@@ -92,10 +91,9 @@ densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
                             col = grey(0.8))))
 ```
 
-![plot of chunk
-unnamed-chunk-3](figures_AfterFitting/unnamed-chunk-3-1.png)
+![plot of chunk dens13a-2](figures_AfterFitting/dens13a-2-1.svg)
 
-plot of chunk unnamed-chunk-3
+plot of chunk dens13a-2
 
 or marking the posterior mean and 2.5% and 97.5% quantiles:
 
@@ -112,12 +110,14 @@ densplot(mod13a, ncol = 3,
 )
 ```
 
-![plot of chunk densplot15a](figures_AfterFitting/densplot15a-1.png)
+![plot of chunk densplot15a](figures_AfterFitting/densplot15a-1.svg)
 
 plot of chunk densplot15a
 
-Like with [`traceplot()`](../reference/traceplot.md) it is possible to
-use the **ggplot2** version of [`densplot()`](../reference/densplot.md)
+Like with
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md)
+it is possible to use the **ggplot2** version of
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
 when setting `use_ggplot = TRUE`. Here, vertical lines can be added as
 additional layers:
 
@@ -168,7 +168,7 @@ p13a +
                      labels = c('JointAI', 'compl.case'))
 ```
 
-![plot of chunk ggdens15a](figures_AfterFitting/ggdens15a-1.png)
+![plot of chunk ggdens15a](figures_AfterFitting/ggdens15a-1.svg)
 
 plot of chunk ggdens15a
 
@@ -310,7 +310,7 @@ visualizes three examples of posterior distributions and the
 corresponding minimum of $Pr(\theta > 0)$ and $Pr(\theta < 0)$ (shaded
 area):
 
-![plot of chunk tailprob](figures_AfterFitting/tailprob-1.png)
+![plot of chunk tailprob](figures_AfterFitting/tailprob-1.svg)
 
 plot of chunk tailprob
 
@@ -350,7 +350,8 @@ GR_crit(mod13a)
 ```
 
 Besides the arguments `start`, `end`, `thin`, and `subset`, which are
-explained [below](#sec:subset), [`GR_crit()`](../reference/GR_crit.md)
+explained [below](#sec:subset),
+[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
 also takes the arguments of `gelman.diag()`.
 
 ### Monte Carlo Error
@@ -363,8 +364,9 @@ Monte Carlo error (the error that is made since the sample is finite)
 and compares it to the standard deviation of the posterior sample. A
 rule of thumb is that the Monte Carlo error should not be more than 5%
 of the standard deviation[²](#fn2). Besides the arguments explained
-[below](#sec:subset), [`MC_error()`](../reference/MC_error.md) takes the
-arguments of `mcmcse.mat()`.
+[below](#sec:subset),
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
+takes the arguments of `mcmcse.mat()`.
 
 ``` r
 MC_error(mod13a)
@@ -377,13 +379,14 @@ MC_error(mod13a)
 #> sigma_SBP    14.40 0.0217 0.779   0.028
 ```
 
-[`MC_error()`](../reference/MC_error.md) returns an object of class
-`MCElist`, which is a list containing matrices with the posterior mean,
-estimated Monte Carlo error, posterior standard deviation and the ratio
-of the Monte Carlo error to the posterior standard deviation, for the
-scaled (if they are part of the `JointAI` object) and unscaled
-(transformed back to the scale of the data) posterior samples. The
-associated print method prints only the latter.
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
+returns an object of class `MCElist`, which is a list containing
+matrices with the posterior mean, estimated Monte Carlo error, posterior
+standard deviation and the ratio of the Monte Carlo error to the
+posterior standard deviation, for the scaled (if they are part of the
+`JointAI` object) and unscaled (transformed back to the scale of the
+data) posterior samples. The associated print method prints only the
+latter.
 
 To facilitate quick evaluation of the Monte Carlo error to posterior
 standard deviation ratio, plotting of an object of class `MCElist` using
@@ -397,21 +400,23 @@ plot(MC_error(mod13a))  # left panel: all iterations 101:600
 plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 ```
 
-![plot of chunk MCE15a](figures_AfterFitting/MCE15a-1.png)
+![plot of chunk MCE15a](figures_AfterFitting/MCE15a-1.svg)
 
 plot of chunk MCE15a
 
 ## Subset of output
 
-By default, the functions [`traceplot()`](../reference/traceplot.md),
-[`densplot()`](../reference/densplot.md),
+By default, the functions
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md),
 [`summary()`](https://rdrr.io/r/base/summary.html),
-[`GR_crit()`](../reference/GR_crit.md), `MC_Error()` and
-[`predict()`](https://rdrr.io/r/stats/predict.html) use all iterations
-of the MCMC sample and consider only the parameters of the analysis
-model (if they were monitored). In this section, we describe how the set
-of iterations and parameters to display can be changed using the
-arguments `subset`, `start`, `end`, `thin` and `exclude_chains`.
+[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md),
+`MC_Error()` and [`predict()`](https://rdrr.io/r/stats/predict.html) use
+all iterations of the MCMC sample and consider only the parameters of
+the analysis model (if they were monitored). In this section, we
+describe how the set of iterations and parameters to display can be
+changed using the arguments `subset`, `start`, `end`, `thin` and
+`exclude_chains`.
 
 ### Subset of parameters
 
@@ -507,10 +512,9 @@ densplot(mod13c, subset = list(analysis_main = FALSE,
                                other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
-![plot of chunk
-unnamed-chunk-11](figures_AfterFitting/unnamed-chunk-11-1.png)
+![plot of chunk densplot13c](figures_AfterFitting/densplot13c-1.svg)
 
-plot of chunk unnamed-chunk-11
+plot of chunk densplot13c
 
 This also works when a subset of the imputed values should be displayed:
 
@@ -529,7 +533,7 @@ sub3
 traceplot(mod13d, subset = list(analysis_main = FALSE, other = sub3), ncol = 2)
 ```
 
-![plot of chunk trace15d](figures_AfterFitting/trace15d-1.png)
+![plot of chunk trace15d](figures_AfterFitting/trace15d-1.svg)
 
 plot of chunk trace15d
 
@@ -552,10 +556,9 @@ traceplot(mod13e, subset = list(analysis_main = FALSE,
                                 other = sample(ri, size = 12)), ncol = 4)
 ```
 
-![plot of chunk
-unnamed-chunk-14](figures_AfterFitting/unnamed-chunk-14-1.png)
+![plot of chunk ri](figures_AfterFitting/ri-1.svg)
 
-plot of chunk unnamed-chunk-14
+plot of chunk ri
 
 ### Subset of MCMC samples
 
@@ -577,46 +580,41 @@ mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
 densplot(mod14, ncol = 3)
 ```
 
-![plot of chunk
-unnamed-chunk-15](figures_AfterFitting/unnamed-chunk-15-1.png)
+![plot of chunk mod14](figures_AfterFitting/mod14-1.svg)
 
-plot of chunk unnamed-chunk-15
+plot of chunk mod14
 
 ``` r
 densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
-![plot of chunk
-unnamed-chunk-15](figures_AfterFitting/unnamed-chunk-15-2.png)
+![plot of chunk mod14](figures_AfterFitting/mod14-2.svg)
 
-plot of chunk unnamed-chunk-15
+plot of chunk mod14
 
 ``` r
 traceplot(mod14, thin = 10, ncol = 3)
 ```
 
-![plot of chunk
-unnamed-chunk-16](figures_AfterFitting/unnamed-chunk-16-1.png)
+![plot of chunk trace14](figures_AfterFitting/trace14-1.svg)
 
-plot of chunk unnamed-chunk-16
+plot of chunk trace14
 
 ``` r
 traceplot(mod14, start = 150, ncol = 3)
 ```
 
-![plot of chunk
-unnamed-chunk-16](figures_AfterFitting/unnamed-chunk-16-2.png)
+![plot of chunk trace14](figures_AfterFitting/trace14-2.svg)
 
-plot of chunk unnamed-chunk-16
+plot of chunk trace14
 
 ``` r
 traceplot(mod14, end = 120, ncol = 3)
 ```
 
-![plot of chunk
-unnamed-chunk-16](figures_AfterFitting/unnamed-chunk-16-3.png)
+![plot of chunk trace14](figures_AfterFitting/trace14-3.svg)
 
-plot of chunk unnamed-chunk-16
+plot of chunk trace14
 
 ## Predicted values
 
@@ -685,10 +683,9 @@ matplot(pred$newdata$age, pred$fitted,
         xlab = 'age in months', ylab = 'predicted value')
 ```
 
-![plot of chunk
-unnamed-chunk-19](figures_AfterFitting/unnamed-chunk-19-1.png)
+![plot of chunk predplot](figures_AfterFitting/predplot-1.svg)
 
-plot of chunk unnamed-chunk-19
+plot of chunk predplot
 
 It is possible to have multiple variables vary and to set values for
 these variables:
@@ -703,7 +700,8 @@ pred <- predict(mod13b, newdata = newDF)
 #> Prediction in multi-level settings currently only takes into
 #> account the fixed effects, i.e., assumes that the random
 #> effect realizations are equal to zero.
-#> Error in MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], : subscript out of bounds
+#> Error in `MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], drop = FALSE]`:
+#> ! subscript out of bounds
 
 
 # plot predicted values and credible interval
@@ -720,10 +718,9 @@ ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
   scale_y_continuous(name = 'Expected BMI', breaks = seq(15, 18, 0.5))
 ```
 
-![plot of chunk
-unnamed-chunk-20](figures_AfterFitting/unnamed-chunk-20-1.png)
+![plot of chunk predplotgg](figures_AfterFitting/predplotgg-1.svg)
 
-plot of chunk unnamed-chunk-20
+plot of chunk predplotgg
 
 ## Export of imputed values
 
@@ -753,29 +750,29 @@ are written. Arguments `filename` and `resdir` allow the specification
 of the name of the `.txt` and `.sps` file and the directory they are
 written to.
 
-[`get_MIdat()`](../reference/get_MIdat.md) returns a long-format
-`data.frame` containing the imputed datasets (and by default the
-original data) stacked onto each other. The imputation number is given
-in the variable `Imputation_`, column `.id` contains a newly created id
-variable for each observation in cross-sectional data (multi-level data
-should already contain an id variable).
+[`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md)
+returns a long-format `data.frame` containing the imputed datasets (and
+by default the original data) stacked onto each other. The imputation
+number is given in the variable `Imputation_`, column `.id` contains a
+newly created id variable for each observation in cross-sectional data
+(multi-level data should already contain an id variable).
 
 ``` r
 impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 ```
 
-The function [`plot_imp_distr()`](../reference/plot_imp_distr.md) allows
-us to visually compare the distribution of the observed and imputed
-values.
+The function
+[`plot_imp_distr()`](https://nerler.github.io/JointAI/reference/plot_imp_distr.md)
+allows us to visually compare the distribution of the observed and
+imputed values.
 
 ``` r
 plot_imp_distr(impDF, nrow = 1)
 ```
 
-![plot of chunk
-unnamed-chunk-22](figures_AfterFitting/unnamed-chunk-22-1.png)
+![plot of chunk plotimpdistr](figures_AfterFitting/plotimpdistr-1.svg)
 
-plot of chunk unnamed-chunk-22
+plot of chunk plotimpdistr
 
 ------------------------------------------------------------------------
 
