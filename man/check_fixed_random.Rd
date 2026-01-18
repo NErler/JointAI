@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpfunctions_checks.R
 \name{check_fixed_random}
 \alias{check_fixed_random}
-\title{Check wheather fixed or formula contains a random effects specification}
+\title{Check whether fixed or formula contains a random effects specification}
 \usage{
 check_fixed_random(arglist)
 }
