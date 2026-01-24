@@ -1,3 +1,28 @@
+# JointAI (version 1.1.0)
+
+## Round 1
+
+### Test environments
+* local macOS Darwin 25.2.0, R 4.5.2
+* windows server 2022 x64 (via github actions), R 4.5.2
+* ubuntu 24.04.3 LTS (via github actions), R 4.4.3, R 4.5.2, devel
+* macOS Sequoia 15.7.2 (via github actions), R 4.5.2
+* win-builder (oldrelease, devel and release)
+
+
+### R CMD check results
+0 errors | 0 warnings | 0 notes on current & devel
+
+R-oldrelease shows one codoc mismatch for `survival::Surv()` due
+to outdated documentation in that R version. Current and devel are clean.
+
+
+### Reverse dependencies
+One reverse dependency: "remiod"; passed the check.
+  
+---  
+
+
 # JointAI (version 1.0.6)
 
 ## Round 1

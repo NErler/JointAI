@@ -150,7 +150,7 @@ resolve_family_obj <- function(family) {
   return(thefamily)
 }
 
-#' Check wheather fixed or formula contains a random effects specification
+#' Check whether fixed or formula contains a random effects specification
 #'
 #' Checks if the objects provided to the `formula` and `fixed` arguments contain
 #' a random effects specification. This function is used in random effects

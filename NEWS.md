@@ -1,4 +1,4 @@
-# JointAI (development version)
+# JointAI 1.1.0
 
 ## New features
 * Added functions `crosscorr()`, `crosscorr_plot()`, `autocorr()` and `autocorr_plot()`
