@@ -30,29 +30,38 @@ melt_list <- function(l, varname = "L1", valname = "value") {
 
   # Check for elements that cannot be converted to a data.frame or would
   # result in differing numbers of columns e.g., formulas, arrays, lists, ...
-  if (any(lvapply(l, function(x) !is.atomic(x) | !is.vector(x)))) {
+  if (all(lvapply(l, function(x) is.atomic(x) & is.vector(x)))) {
+    do.call(
+      rbind,
+      lapply(seq_along(l), function(k) {
+        df <- as.data.frame(
+          list(l[[k]]),
+          col.names = valname,
+          stringsAsFactors = FALSE
+        )
+
+        df[, varname] <- names(l)[k]
+        df
+      })
+    )
+  } else if (all(lvapply(l, function(x) is.atomic(x) & inherits(x, "matrix")))) {
+    do.call(
+      rbind,
+      lapply(seq_along(l), function(k) {
+        df <- as.data.frame(
+          list(l[[k]]),
+          stringsAsFactors = FALSE
+        )
+        df[, varname] <- names(l)[k]
+        df
+      })
+    )
+  } else {
     errormsg(
-      "In melt_list(): Not all elements are atomic vectors (%s).",
-      paste_and(
-        names(Filter(function(x) !is.atomic(x) | !is.vector(x), l)),
-        dQ = TRUE
-      )
+      "In melt_list(): Not all elements are atomic vectors or matrices (%s).
+      I don't know how to convert this."
     )
   }
-
-  do.call(
-    rbind,
-    lapply(seq_along(l), function(k) {
-      df <- as.data.frame(
-        list(l[[k]]),
-        col.names = valname,
-        stringsAsFactors = FALSE
-      )
-
-      df[, varname] <- names(l)[k]
-      df
-    })
-  )
 }
 
 
