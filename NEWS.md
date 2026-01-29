@@ -20,6 +20,9 @@
 * Fix in identifying the number of workers used in parallel computation
   with the **future** package.
 * Fix `summary()` printout showing the wrong MCMC settings when using thinning.
+* `rd_vcov()`: fixed issue resulting in error when extracting random effects
+  variance-covariance matrix from fitted model in case of a multivariate mixed
+  model.
 
 
 --------------------------------------------------------------------------------
