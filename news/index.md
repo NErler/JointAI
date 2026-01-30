@@ -1,6 +1,6 @@
 # Changelog
 
-## JointAI (development version)
+## JointAI 1.1.0
 
 ### New features
 
@@ -30,6 +30,10 @@
   with the **future** package.
 - Fix [`summary()`](https://rdrr.io/r/base/summary.html) printout
   showing the wrong MCMC settings when using thinning.
+- [`rd_vcov()`](https://nerler.github.io/JointAI/reference/rd_vcov.md):
+  fixed issue resulting in error when extracting random effects
+  variance-covariance matrix from fitted model in case of a multivariate
+  mixed model.
 
 ------------------------------------------------------------------------
 
