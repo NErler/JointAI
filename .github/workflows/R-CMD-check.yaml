@@ -74,7 +74,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck, any::survival
+          extra-packages: |
+            any::survival
+            any::rcmdcheck
+          upgrade: 'TRUE'
+          cache-version: 2
           needs: check
 
 
