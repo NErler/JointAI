@@ -1,3 +1,32 @@
+# JointAI (version 1.1.0)
+
+## Round 1
+
+### Test environments
+* local macOS Darwin 25.2.0, R 4.5.2
+* windows server 2022 x64 (via github actions), R 4.5.2
+* ubuntu 24.04.3 LTS (via github actions), R 4.4.3, R 4.5.2, devel
+* macOS Sequoia 15.7.2 (via github actions), R 4.5.2
+* win-builder (oldrelease, devel and release)
+
+
+### R CMD check results
+0 errors | 0 warnings | 1-2 NOTES on win-builder
+
+#### NOTES
+* The Maintainer e-mail address has changed from  `n.erler@erasmusmc.nl` to
+  `n.s.erler@umcutrecht.nl`. This is intentional.
+* oldrel-only: “Author field differs from that derived from Authors@R”
+  This NOTE appears only on R-oldrelease, likely due to differences in how older
+  R formats ORCID information.
+
+
+### Reverse dependencies
+One reverse dependency: "remiod"; passed the check.
+  
+---  
+
+
 # JointAI (version 1.0.6)
 
 ## Round 1

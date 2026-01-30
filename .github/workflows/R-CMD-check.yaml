@@ -2,7 +2,7 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
+  workflow_dispatch:
 
 name: R-CMD-check
 
@@ -31,7 +31,7 @@ jobs:
 
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -56,7 +56,7 @@ jobs:
           key: ${{ runner.os }}-jags-4.3.1
           restore-keys: |
             ${{ runner.os }}-jags-
-            
+
       # Install JAGS on Windows
       - name: Install JAGS (Windows)
         if: runner.os == 'Windows'
@@ -71,18 +71,14 @@ jobs:
             echo "JAGS found in cache, skipping installation"
           )
 
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'cat(remotes::system_requirements("ubuntu", "20.04"), sep = "\n")')
-
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::survival
+            any::rcmdcheck
+          upgrade: 'TRUE'
+          cache-version: 2
           needs: check
 
 

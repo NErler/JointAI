@@ -1,4 +1,4 @@
-# JointAI (development version)
+# JointAI 1.1.0
 
 ## New features
 * Added functions `crosscorr()`, `crosscorr_plot()`, `autocorr()` and `autocorr_plot()`
@@ -20,6 +20,9 @@
 * Fix in identifying the number of workers used in parallel computation
   with the **future** package.
 * Fix `summary()` printout showing the wrong MCMC settings when using thinning.
+* `rd_vcov()`: fixed issue resulting in error when extracting random effects
+  variance-covariance matrix from fitted model in case of a multivariate mixed
+  model.
 
 
 --------------------------------------------------------------------------------
