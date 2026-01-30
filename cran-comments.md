@@ -11,10 +11,14 @@
 
 
 ### R CMD check results
-0 errors | 0 warnings | 0 notes on current & devel
+0 errors | 0 warnings | 1-2 NOTES on win-builder
 
-R-oldrelease shows one codoc mismatch for `survival::Surv()` due
-to outdated documentation in that R version. Current and devel are clean.
+#### NOTES
+* The Maintainer e-mail address has changed from  `n.erler@erasmusmc.nl` to
+  `n.s.erler@umcutrecht.nl`. This is intentional.
+* oldrel-only: “Author field differs from that derived from Authors@R”
+  This NOTE appears only on R-oldrelease, likely due to differences in how older
+  R formats ORCID information.
 
 
 ### Reverse dependencies
