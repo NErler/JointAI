@@ -1,6 +1,6 @@
 ---
 title: "Theoretical Background"
-date: "2020-06-20"
+date: "2026-02-22"
 output:
   bookdown::html_document2:
     toc: true
@@ -8,6 +8,8 @@ output:
     number_sections: false
 pkgdown:
   as_is: true
+template:
+  math-rendering: katex
 vignette: >
   %\VignetteIndexEntry{Theoretical Background}
   %\VignetteEncoding{UTF-8}
@@ -221,16 +223,19 @@ implemented as a link in
 
 ### Cumulative logit (mixed) models
 Cumulative logit mixed models are of the form
-\begin{eqnarray*}
-y_{ij} &\sim& \text{Mult}(\pi_{ij,1}, \ldots, \pi_{ij,K}),\\[2ex]
-\pi_{ij,1} &=& P(y_{ij} \leq 1),\\
-\pi_{ij,k} &=& P(y_{ij} \leq k) - P(y_{ij} \leq k-1), \quad k \in 2, \ldots, K-1,\\
-\pi_{ij,K} &=& 1 - \sum_{k = 1}^{K-1}\pi_{ij,k},\\[2ex]
-\text{logit}(P(y_{ij} \leq k)) &=& \gamma_k + \eta_{ij}, \quad k \in 1,\ldots,K,\\
-\eta_{ij} &=& \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,\\[2ex]
-\gamma_1,\delta_1,\ldots,\delta_{K-1} &\overset{iid}{\sim}& N(\mu_\gamma, \sigma_\gamma^2),\\
-\gamma_k &\sim& \gamma_{k-1} + \exp(\delta_{k-1}),\quad k = 2,\ldots,K,
-\end{eqnarray*}
+
+
+\begin{align*}
+y_{ij} &\sim \text{Mult}(\pi_{ij,1}, \ldots, \pi_{ij,K}),\\[2ex]
+\pi_{ij,1} &= P(y_{ij} \leq 1),\\
+\pi_{ij,k} &= P(y_{ij} \leq k) - P(y_{ij} \leq k-1), \quad k \in 2, \ldots, K-1,\\
+\pi_{ij,K} &= 1 - \sum_{k = 1}^{K-1}\pi_{ij,k},\\[2ex]
+\text{logit}(P(y_{ij} \leq k)) &= \gamma_k + \eta_{ij}, \quad k \in 1,\ldots,K,\\
+\eta_{ij} &= \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,\\[2ex]
+\gamma_1,\delta_1,\ldots,\delta_{K-1} &\overset{iid}{\sim} N(\mu_\gamma, \sigma_\gamma^2),\\
+\gamma_k &\sim \gamma_{k-1} + \exp(\delta_{k-1}),\quad k = 2,\ldots,K,
+\end{align*}
+
 where $\pi_{ij,k} = P(y_{ij} = k)$ and $\text{logit}(x) = \log\left(\frac{x}{1-x}\right)$.
 A cumulative logit regression model for a univariate outcome $y_i$ can be 
 obtained by dropping the index \(j\) and omitting \(\mathbf z_{ij}^\top\mathbf b_i\).
@@ -251,13 +256,13 @@ a parametric model which assumes a Weibull distribution for the true
 Cox proportional hazards model.
 
 The parametric survival model is implemented as
-\begin{eqnarray*}
-T_i^* &\sim& \text{Weibull}(1, r_i, s),\\
-D_i &\sim& \unicode{x1D7D9}(T_i^* \geq C_i),\\
-\log(r_j) &=& - \mathbf x_i^\top\boldsymbol\beta,\\
-s &\sim& \text{Exp}(0.01),
-\end{eqnarray*}
-where $\unicode{x1D7D9}$ is the indicator function which is one if $T_i^*\geq C_i$,
+\begin{align*}
+T_i^* &\sim \text{Weibull}(1, r_i, s),\\
+D_i &\sim \text{𝟙}(T_i^* \geq C_i),\\
+\log(r_j) &= - \mathbf x_i^\top\boldsymbol\beta,\\
+s &\sim \text{Exp}(0.01),
+\end{align*}
+where 𝟙 is the indicator function which is one if $T_i^*\geq C_i$,
 and zero otherwise.
 
 The Cox proportional hazards model can be written as
@@ -281,12 +286,12 @@ A convenient way to specify the joint distribution of the incomplete covariates
 \(\mathbf X_{mis} = (\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q})\) is to use
 a sequence of conditional univariate distributions [@Ibrahim2002; @Erler2016]
 <!--  -->
-\begin{eqnarray}
+\begin{align}
 p(\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q} \mid \mathbf X_{obs}, \boldsymbol\theta_{x})
-& = & p(\mathbf x_{mis_1} \mid \mathbf X_{obs}, \boldsymbol\theta_{x_1})\\
-&   & \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
+& =  p(\mathbf x_{mis_1} \mid \mathbf X_{obs}, \boldsymbol\theta_{x_1})\nonumber\\
+& \phantom{=}    \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
 \ldots, \mathbf x_{mis_{\ell-1}}, \boldsymbol\theta_{x_\ell}),(\#eq:factorization)
-\end{eqnarray}
+\end{align}
 with $\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots, 
 \boldsymbol\theta_{x_q}^\top)^\top$.
 
@@ -318,26 +323,26 @@ and covariates.
 
 When, for instance, the analysis model is a GLM, the full conditional 
 distribution of an incomplete covariate $x_{i, mis_{\ell}}$ can be written as
-\begin{eqnarray} \nonumber
+\begin{align} \nonumber
 p(x_{i, mis_{\ell}} \mid \mathbf y_i, \mathbf x_{i,obs},
 \mathbf x_{i,mis_{-\ell}}, \boldsymbol\theta)
-&\propto& p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
+\propto& p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
 \boldsymbol\theta_{y\mid x}
 \right)
 p(\mathbf x_{i, mis}\mid \mathbf x_{i, obs}, \boldsymbol\theta_{x})\,
 p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{x})\\\nonumber
-&\propto& p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
+\propto& p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
 \boldsymbol\theta_{y\mid x}
 \right)\\\nonumber
-&        & p(x_{i, mis_\ell} \mid \mathbf x_{i, obs}, \mathbf x_{i, mis_{<\ell}}, \boldsymbol\theta_{x_\ell})\\\nonumber
-&        & \left\{
+        & p(x_{i, mis_\ell} \mid \mathbf x_{i, obs}, \mathbf x_{i, mis_{<\ell}}, \boldsymbol\theta_{x_\ell})\\\nonumber
+        & \left\{
 \prod_{k=\ell+1}^q p(x_{i,mis_k}\mid \mathbf x_{i, obs},
 \mathbf x_{i, mis_{<k}},
 \boldsymbol\theta_{x_k})
 \right\}\\
-&        & p(\boldsymbol\theta_{y\mid x}) p(\boldsymbol\theta_{x_\ell})
+        & p(\boldsymbol\theta_{y\mid x}) p(\boldsymbol\theta_{x_\ell})
 \prod_{k=\ell+1}^p p(\boldsymbol\theta_{x_k}), (\#eq:fullcond)
-\end{eqnarray}
+\end{align}
 where $\boldsymbol\theta_{x_{\ell}}$ is the vector of parameters describing the model
 for the $\ell$-th covariate, and contains the vector of regression coefficients
 $\boldsymbol\alpha_\ell$ and potentially additional (variance) parameters.
@@ -361,12 +366,12 @@ the conditional distribution of the outcome in \@ref(eq:fullcond),
 $p\left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x}
 \right),$
 has to be replaced by
-\begin{eqnarray}
+\begin{equation}
 \left\{\prod_{j=1}^{n_i} p \left(y_{ij} \mid \mathbf x_{i, obs},
 \mathbf x_{i, mis}, \mathbf b_i,
 \boldsymbol\theta_{y\mid x}\right)
 \right\}. (\#eq:lmmpartfullcond)
-\end{eqnarray}
+\end{equation}
 Since $\mathbf y$ does not appear in any of the other terms in \@ref(eq:fullcond),
 and \@ref(eq:lmmpartfullcond) can be chosen to be a model that is appropriate
 for the outcome at hand, the thereby specified full conditional distribution
@@ -395,9 +400,10 @@ while models for completely observed baseline covariates can be omitted.
 This becomes clear when we extend the factorized joint distribution from above
 with completely and incompletely observed longitudinal (level-1) 
 covariates $\mathbf s_{obs}$ and $\mathbf s_{mis}$:
-\begin{multline*}
+
+$$
 p \left(y_{ij} \mid \mathbf s_{ij, obs}, \mathbf s_{ij, mis},
-\mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right)\\
+\mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right)\\\\
 p(\mathbf s_{ij, mis}\mid \mathbf s_{ij, obs}, \mathbf x_{i, obs},
 \mathbf x_{i, mis}, \boldsymbol\theta_{s_{mis}})\,
 p(\mathbf s_{ij, obs}\mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
@@ -407,7 +413,7 @@ p(\mathbf x_{i, obs} \mid \boldsymbol\theta_{x_{obs}})\,
 p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{s_{mis}}) \,
 p(\boldsymbol\theta_{s_{obs}})\, p(\boldsymbol\theta_{x_{mis}}) \,
 p(\boldsymbol\theta_{x_{obs}})
-\end{multline*}
+$$
 Given that the parameter vectors $\theta_{x_{obs}}$, $\theta_{x_{mis}}$, $\theta_{s_{obs}}$
 and $\theta_{s_{mis}}$ are a priori independent, and 
 $p(\mathbf x_{i, obs} \mid \boldsymbol\theta_{x_{obs}})$ is independent of

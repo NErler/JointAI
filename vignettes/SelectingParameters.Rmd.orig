@@ -20,6 +20,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   dev = "svglite",
   out.width = "100%",
+  fig.cap = "",
+  fig.scap = "",
   fig.width = 7,
   fig.align = 'center',
   fig.path = "figures_SelectingParameters/"
@@ -339,7 +341,7 @@ Note that the model summary will contain separate parts per sub-model when
 regression coefficients from different models are monitored.
 
 This also works when a subset of the imputed values should be displayed:
-```{r lm2_2, fig.height = 2, fig.width = 5, out.width = "50%", warning = FALSE}
+```{r lm2_2, fig.height = 2, fig.width = 5, out.width = "60%", warning = FALSE}
 # Re-run the model from above, now creating MCMC samples
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
               data = NHANES, n.iter = 100, progress.bar = 'none',

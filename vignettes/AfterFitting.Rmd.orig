@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
   fig.width = 7,
   out.width = '100%',
   dev = "svglite",
+  fig.cap = "",
+  fig.scap = "",
   fig.align = 'center',
   fig.path = "figures_AfterFitting/"
 )
@@ -79,7 +81,7 @@ rows and columns for the layout of the grid of plots.
 
 With the argument `use_ggplot` it is possible to get a [**ggplot2**](https://CRAN.R-project.org/package=ggplot2)
 version of the traceplot. It can be extended using standard **ggplot2** syntax.
-```{r ggtrace15a, fig.width = 7, fig.height = 3.5, out.width = '100%'}
+```{r ggtrace15a, fig.width = 7, fig.height = 3.5, out.width = '100%', message = FALSE}
 library(ggplot2)
 traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
   theme(legend.position = 'bottom') +

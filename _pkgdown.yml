@@ -13,6 +13,7 @@ template:
     code-color: "#991433"
     code-color-dark: "#D10E3B"
     link-color-dark: "#D10E3B"
+  math-rendering: katex
 
 navbar:
   structure:
@@ -23,7 +24,7 @@ navbar:
       icon: fa-home
       href: index.html
       aria-label: home
-      
+
 
 figures:
   dev: grDevices::png
