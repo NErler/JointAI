@@ -11,7 +11,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -77,7 +78,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Model Specification</h1>
             
-            <h4 data-toc-skip class="date">January 03, 2026</h4>
+            <h4 data-toc-skip class="date">February 22, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/ModelSpecification.Rmd" class="external-link"><code>vignettes/ModelSpecification.Rmd</code></a></small>
       <div class="d-none name"><code>ModelSpecification.Rmd</code></div>
@@ -753,45 +754,39 @@ models need to be specified for all level-1 variables.</p>
 <div class="section level4">
 <h4 id="why-do-we-need-models-for-completely-observed-covariates">Why do we need models for completely observed covariates?<a class="anchor" aria-label="anchor" href="#why-do-we-need-models-for-completely-observed-covariates"></a>
 </h4>
-<p>The joint distribution of an outcome
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>,
-covariates
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>,
-random effects
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
-and parameters
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo>,</mo><mi>x</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p(y, x, b, \theta)</annotation></semantics></math>,
-is modelled as the product of univariate conditional distributions. To
-facilitate the specification of these distributions they are ordered so
-that longitudinal (level-1) variables may have baseline (level-2)
-variables in their linear predictors but not vice versa.</p>
-<p>For example:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo>,</mo><mi>x</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo>∣</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>b</mi><mi>y</mi></msub><mo>,</mo><msub><mi>θ</mi><mi>y</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">analysis model</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">model for a complete baseline covariate</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>2</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">model for an incomplete baseline covariate</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo>∣</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mrow><mi>x</mi><mn>3</mn></mrow></msub><mo>,</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>3</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">model for a complete longitudinal covariate</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>4</mn></msub><mo>∣</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><msub><mi>b</mi><mrow><mi>x</mi><mn>4</mn></mrow></msub><mo>,</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>4</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">model for an incomplete longitudinal covariate</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>b</mi><mi>y</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>θ</mi><mi>b</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>b</mi><mrow><mi>x</mi><mn>3</mn></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>θ</mi><mi>b</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>b</mi><mrow><mi>x</mi><mn>4</mn></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>θ</mi><mi>b</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">models for the random effects</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>θ</mi><mi>y</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>…</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>4</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>θ</mi><mi>b</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">prior distributions</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
-p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \text{analysis model}\\
-&amp; p(x_1\mid \theta_{x1}) &amp;&amp; \text{model for a complete baseline covariate}\\
-&amp; p(x_2\mid x_1, \theta_{x2}) &amp;&amp; \text{model for an incomplete baseline covariate}\\
-&amp; p(x_3\mid x_1, x_2, b_{x3}, \theta_{x3}) &amp;&amp; \text{model for a complete longitudinal covariate}\\
-&amp; p(x_4\mid x_1, x_2, x_3, b_{x4}, \theta_{x4}) &amp;&amp; \text{model for an incomplete longitudinal covariate}\\
-&amp; p(b_y|\theta_b) p(b_{x3}|\theta_b) p(b_{x4}|\theta_b) &amp;&amp; \text{models for the random effects}\\
-&amp; p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b) &amp;&amp; \text{prior distributions}\end{align}</annotation></semantics></math></p>
-<p>Since the parameter vectors
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mrow><mi>x</mi><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">\theta_{x1}</annotation></semantics></math>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mrow><mi>x</mi><mn>2</mn></mrow></msub><annotation encoding="application/x-tex">\theta_{x2}</annotation></semantics></math>,
-… are assumed to be a priori independent, and furthermore
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math>
-is completely observed and modelled independently of incomplete
-variables, estimation of the other model parts is not affected by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p(x_1\mid \theta_{x1})</annotation></semantics></math>
-and, hence, this model can be omitted.</p>
-<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo>∣</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mrow><mi>x</mi><mn>3</mn></mrow></msub><mo>,</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>3</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})</annotation></semantics></math>,
-on the other hand is modelled conditional on the incomplete covariate
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math>
-and can therefore not be omitted.</p>
-<p>If there were no incomplete baseline covariates, i.e., if
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math>
-was completely observed,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo>∣</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mrow><mi>x</mi><mn>3</mn></mrow></msub><mo>,</mo><msub><mi>θ</mi><mrow><mi>x</mi><mn>3</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})</annotation></semantics></math>
+<p>The joint distribution of an outcome <span class="math inline">y</span>, covariates <span class="math inline">x</span>, random effects <span class="math inline">b</span> and parameters <span class="math inline">\theta</span>, <span class="math inline">p(y, x, b,
+\theta)</span>, is modelled as the product of univariate conditional
+distributions. To facilitate the specification of these distributions
+they are ordered so that longitudinal (level-1) variables may have
+baseline (level-2) variables in their linear predictors but not vice
+versa.</p>
+<p>For example:</p>
+<p><span class="math display">\begin{align}
+p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y)
+&amp;&amp; \text{analysis model}\\
+&amp; p(x_1\mid \theta_{x1}) &amp;&amp; \text{model for a complete
+baseline covariate}\\
+&amp; p(x_2\mid x_1, \theta_{x2}) &amp;&amp; \text{model for an
+incomplete baseline covariate}\\
+&amp; p(x_3\mid x_1, x_2, b_{x3}, \theta_{x3}) &amp;&amp; \text{model
+for a complete longitudinal covariate}\\
+&amp; p(x_4\mid x_1, x_2, x_3, b_{x4}, \theta_{x4}) &amp;&amp;
+\text{model for an incomplete longitudinal covariate}\\
+&amp; p(b_y|\theta_b) p(b_{x3}|\theta_b) p(b_{x4}|\theta_b) &amp;&amp;
+\text{models for the random effects}\\
+&amp; p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b)
+&amp;&amp; \text{prior distributions}
+\end{align}</span></p>
+<p>Since the parameter vectors <span class="math inline">\theta_{x1}</span>, <span class="math inline">\theta_{x2}</span>, … are assumed to be a priori
+independent, and furthermore <span class="math inline">x_1</span> is
+completely observed and modelled independently of incomplete variables,
+estimation of the other model parts is not affected by <span class="math inline">p(x_1\mid \theta_{x1})</span> and, hence, this model
+can be omitted.</p>
+<p><span class="math inline">p(x_3 \mid x_1, x_2, b_{x3},
+\theta_{x3})</span>, on the other hand is modelled conditional on the
+incomplete covariate <span class="math inline">x_2</span> and can
+therefore not be omitted.</p>
+<p>If there were no incomplete baseline covariates, i.e., if <span class="math inline">x_2</span> was completely observed, <span class="math inline">p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})</span>
 would also not affect the estimation of parameters in the other parts of
 the model and could be omitted.</p>
 </div>
@@ -1269,7 +1264,7 @@ to by input of a number.</p>
 <span><span class="co">#&gt; How do you want to specify the reference categories?</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; 1: Use the first category for each variable.</span></span>
-<span><span class="co">#&gt; 2: Use the last category for each variable.</span></span>
+<span><span class="co">#&gt; 2: Use the last category for each variabe.</span></span>
 <span><span class="co">#&gt; 3: Use the largest category for each variable.</span></span>
 <span><span class="co">#&gt; 4: Specify the reference categories individually.</span></span></code></pre></div>
 <p>When option 4 is chosen, a question for each categorical variable is
@@ -1431,10 +1426,8 @@ models, and in <code>modd11b</code> only in the models for
 <span>                n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note: No MCMC sample will be created when n.iter is set to 0.</span></span></code></pre></div>
-<p>Ridge regression is implemented as a
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Ga</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.01</mn><mo>,</mo><mn>0.01</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{Ga}(0.01, 0.01)</annotation></semantics></math>
-prior for the precision of the regression coefficients
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
+<p>Ridge regression is implemented as a <span class="math inline">\text{Ga}(0.01, 0.01)</span> prior for the precision
+of the regression coefficients <span class="math inline">\beta</span>
 instead of setting this precision to a fixed (small) value.</p>
 </div>
 

@@ -70,7 +70,7 @@ monitoring is switched off for all other parameters.
 The main parameters are the regression coefficients of the analysis
 model (`beta`) and potentially the residual standard deviation, for
 example in linear or Gamma models, the second parameter in a beta
-distribution (parametrized with $\mu$ and $\tau$ instead of two shape
+distribution (parametrized with \mu and \tau instead of two shape
 parameters), the variance-covariance matrices of random effects used in
 the main models, the shape parameter in a parametric Weibull survival
 model, and the coefficients used in the spline specification of the
@@ -201,20 +201,20 @@ the case for interaction terms and transformations of variables.
 
 ``` r
 head(lm2$data_list$M_lvlone)
-#>          SBP alc occup smoke    WC (Intercept) age alc>=1 smokeformer smokecurrent
-#> 10  108.0000  NA     1     1  99.0           1  35     NA          NA           NA
-#> 14  105.3333   0     1     1  82.7           1  38     NA          NA           NA
-#> 41  110.0000   0     3     1  94.9           1  78     NA          NA           NA
-#> 77  106.0000   1     2     1  82.4           1  23     NA          NA           NA
-#> 91  114.6667   0     3     1  93.1           1  40     NA          NA           NA
-#> 105 139.3333   1    NA     3 105.4           1  54     NA          NA           NA
-#>     occuplooking for work occupnot working
-#> 10                     NA               NA
-#> 14                     NA               NA
-#> 41                     NA               NA
-#> 77                     NA               NA
-#> 91                     NA               NA
-#> 105                    NA               NA
+#>          SBP alc occup smoke    WC (Intercept) age alc>=1 smokeformer
+#> 10  108.0000  NA     1     1  99.0           1  35     NA          NA
+#> 14  105.3333   0     1     1  82.7           1  38     NA          NA
+#> 41  110.0000   0     3     1  94.9           1  78     NA          NA
+#> 77  106.0000   1     2     1  82.4           1  23     NA          NA
+#> 91  114.6667   0     3     1  93.1           1  40     NA          NA
+#> 105 139.3333   1    NA     3 105.4           1  54     NA          NA
+#>     smokecurrent occuplooking for work occupnot working
+#> 10            NA                    NA               NA
+#> 14            NA                    NA               NA
+#> 41            NA                    NA               NA
+#> 77            NA                    NA               NA
+#> 91            NA                    NA               NA
+#> 105           NA                    NA               NA
 ```
 
 The parameters of the models for the incomplete variables can be
@@ -268,8 +268,8 @@ list_models(lm2)
 #>    family: gaussian 
 #>    link: identity 
 #> * Predictor variables:
-#>   (Intercept), age, WC, alc>=1, smokeformer, smokecurrent, occuplooking for 
-#>   work, occupnot working 
+#>   (Intercept), age, WC, alc>=1, smokeformer, smokecurrent, 
+#>   occuplooking for work, occupnot working 
 #> * Regression coefficients:
 #>   beta[1:8] (normal prior(s) with mean 0 and precision 1e-04) 
 #> * Precision of  "SBP" :
@@ -281,8 +281,8 @@ list_models(lm2)
 #>    link: logit 
 #> * Reference category: "<1"
 #> * Predictor variables:
-#>   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, 
-#>   occupnot working 
+#>   (Intercept), age, WC, smokeformer, smokecurrent, 
+#>   occuplooking for work, occupnot working 
 #> * Regression coefficients:
 #>   alpha[1:7] (normal prior(s) with mean 0 and precision 1e-04) 
 #> 
@@ -428,9 +428,11 @@ lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt =
                                    RinvD_main = FALSE,
                                    ranef_main = FALSE))
 #> Warning: 
-#> It is currently not possible to use "contr.poly" for incomplete categorical
-#> covariates. I will use "contr.treatment" instead.  You can specify (globally)
-#> which types of contrasts are used by changing "options('contrasts')".
+#> It is currently not possible to use "contr.poly" for
+#> incomplete categorical covariates. I will use
+#> "contr.treatment" instead.  You can specify (globally) which
+#> types of contrasts are used by changing
+#> "options('contrasts')".
 
 parameters(lme3b)
 #>    outcome outcat     varname             coef
@@ -507,16 +509,16 @@ summary(lm5)
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577
-#> genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577
-#> WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577
-#> alc>=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689
-#> creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577
+#>                 Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.7399 9.6925 63.439 100.547      0.000    1.04 0.0577
+#> genderfemale  0.0802 2.6383 -4.441   5.527      0.933    1.00 0.0577
+#> WC            0.3074 0.0767  0.168   0.451      0.000    1.01 0.0577
+#> alc>=1        6.3855 2.5770  1.542  11.284      0.020    1.01 0.0670
+#> creat         6.8877 7.4473 -5.536  21.447      0.387    1.13 0.0586
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577
+#> sigma_SBP 14.4 0.704 13.1  15.9       1 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -531,10 +533,7 @@ summary(lm5)
 traceplot(lm5)
 ```
 
-![plot of chunk
-unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-1.svg)
-
-plot of chunk unnamed-chunk-9
+![](figures_SelectingParameters/unnamed-chunk-9-1.svg)
 
 ``` r
 
@@ -542,10 +541,7 @@ plot of chunk unnamed-chunk-9
 densplot(lm5)
 ```
 
-![plot of chunk
-unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-2.svg)
-
-plot of chunk unnamed-chunk-9
+![](figures_SelectingParameters/unnamed-chunk-9-2.svg)
 
 ``` r
 
@@ -554,26 +550,26 @@ GR_crit(lm5)
 #> Potential scale reduction factors:
 #> 
 #>              Point est. Upper C.I.
-#> (Intercept)        1.00       1.01
-#> genderfemale       1.00       1.00
-#> WC                 1.00       1.02
-#> alc>=1             1.00       1.02
-#> creat              1.03       1.07
-#> sigma_SBP          1.00       1.02
+#> (Intercept)       1.009       1.04
+#> genderfemale      0.999       1.00
+#> WC                1.003       1.01
+#> alc>=1            1.003       1.01
+#> creat             1.035       1.13
+#> sigma_SBP         0.997       1.00
 #> 
 #> Multivariate psrf
 #> 
-#> 1.03
+#> 1.04
 
 # Monte Carlo Error of the MCMC sample
 MC_error(lm5)
-#>                est  MCSE   SD MCSE/SD
-#> (Intercept)  81.10 0.560 9.70   0.058
-#> genderfemale  0.68 0.147 2.55   0.058
-#> WC            0.30 0.004 0.07   0.058
-#> alc>=1        6.64 0.158 2.30   0.069
-#> creat         8.21 0.473 8.19   0.058
-#> sigma_SBP    14.42 0.047 0.81   0.058
+#>                est   MCSE    SD MCSE/SD
+#> (Intercept)  81.74 0.5596 9.692   0.058
+#> genderfemale  0.08 0.1523 2.638   0.058
+#> WC            0.31 0.0044 0.077   0.058
+#> alc>=1        6.39 0.1727 2.577   0.067
+#> creat         6.89 0.4361 7.447   0.059
+#> sigma_SBP    14.38 0.0407 0.704   0.058
 ```
 
 When `analysis_main` was not switched on the default behaviour is that
@@ -589,10 +585,7 @@ lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
 traceplot(lm4, ncol = 4)
 ```
 
-![plot of chunk
-unnamed-chunk-10](figures_SelectingParameters/unnamed-chunk-10-1.svg)
-
-plot of chunk unnamed-chunk-10
+![](figures_SelectingParameters/unnamed-chunk-10-1.svg)
 
 ### Select a subset of the variables to display
 
@@ -605,21 +598,21 @@ GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> Potential scale reduction factors:
 #> 
 #>                     Point est. Upper C.I.
-#> alc: (Intercept)         1.081      1.268
-#> alc: genderfemale        1.104      1.327
-#> alc: WC                  1.015      1.061
-#> alc: creat               1.061      1.210
-#> creat: (Intercept)       1.015      1.056
-#> creat: genderfemale      0.996      0.998
-#> creat: WC                1.018      1.060
-#> WC: (Intercept)          1.003      1.021
-#> WC: genderfemale         1.001      1.013
-#> sigma_creat              1.006      1.022
-#> sigma_WC                 1.007      1.010
+#> alc: (Intercept)         0.997      1.001
+#> alc: genderfemale        1.005      1.025
+#> alc: WC                  1.030      1.086
+#> alc: creat               1.007      1.034
+#> creat: (Intercept)       0.996      0.997
+#> creat: genderfemale      0.999      1.000
+#> creat: WC                0.995      0.996
+#> WC: (Intercept)          1.011      1.039
+#> WC: genderfemale         1.003      1.024
+#> sigma_creat              1.010      1.040
+#> sigma_WC                 1.007      1.032
 #> 
 #> Multivariate psrf
 #> 
-#> 1.1
+#> 1.05
 ```
 
 To select only some of the parameters, they can be specified directly by
@@ -636,16 +629,16 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577
-#> genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577
-#> WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577
-#> alc>=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689
-#> creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577
+#>                 Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.7399 9.6925 63.439 100.547      0.000    1.04 0.0577
+#> genderfemale  0.0802 2.6383 -4.441   5.527      0.933    1.00 0.0577
+#> WC            0.3074 0.0767  0.168   0.451      0.000    1.01 0.0577
+#> alc>=1        6.3855 2.5770  1.542  11.284      0.020    1.01 0.0670
+#> creat         6.8877 7.4473 -5.536  21.447      0.387    1.13 0.0586
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577
+#> sigma_SBP 14.4 0.704 13.1  15.9       1 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -677,9 +670,7 @@ sub3
 traceplot(lm2, subset = list(other = sub3), ncol = 2)
 ```
 
-![plot of chunk lm2_2](figures_SelectingParameters/lm2_2-1.svg)
-
-plot of chunk lm2_2
+![](figures_SelectingParameters/lm2_2-1.svg)
 
 ### Random subset of subject-specific values
 
@@ -703,10 +694,7 @@ rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T
 traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
 ```
 
-![plot of chunk
-unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-1.svg)
-
-plot of chunk unnamed-chunk-11
+![](figures_SelectingParameters/unnamed-chunk-11-1.svg)
 
 ``` r
 
@@ -714,7 +702,4 @@ plot of chunk unnamed-chunk-11
 traceplot(lme4, subset = list(other = sample(rs, size = 8)), ncol = 4)
 ```
 
-![plot of chunk
-unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-2.svg)
-
-plot of chunk unnamed-chunk-11
+![](figures_SelectingParameters/unnamed-chunk-11-2.svg)

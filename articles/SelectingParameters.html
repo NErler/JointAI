@@ -11,7 +11,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -79,7 +80,7 @@
             <h3 data-toc-skip class="subtitle">How to specify which
 parameters to monitor and display in the results</h3>
             
-            <h4 data-toc-skip class="date">January 03, 2026</h4>
+            <h4 data-toc-skip class="date">February 22, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/SelectingParameters.Rmd" class="external-link"><code>vignettes/SelectingParameters.Rmd</code></a></small>
       <div class="d-none name"><code>SelectingParameters.Rmd</code></div>
@@ -247,10 +248,7 @@ switched off for all other parameters.</p>
 <p>The main parameters are the regression coefficients of the analysis
 model (<code>beta</code>) and potentially the residual standard
 deviation, for example in linear or Gamma models, the second parameter
-in a beta distribution (parametrized with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+in a beta distribution (parametrized with <span class="math inline">\mu</span> and <span class="math inline">\tau</span>
 instead of two shape parameters), the variance-covariance matrices of
 random effects used in the main models, the shape parameter in a
 parametric Weibull survival model, and the coefficients used in the
@@ -373,20 +371,20 @@ corresponding dummy variables are stored in the matrices. The same is
 the case for interaction terms and transformations of variables.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lm2</span><span class="op">$</span><span class="va">data_list</span><span class="op">$</span><span class="va">M_lvlone</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          SBP alc occup smoke    WC (Intercept) age alc&gt;=1 smokeformer smokecurrent</span></span>
-<span><span class="co">#&gt; 10  108.0000  NA     1     1  99.0           1  35     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 14  105.3333   0     1     1  82.7           1  38     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 41  110.0000   0     3     1  94.9           1  78     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 77  106.0000   1     2     1  82.4           1  23     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 91  114.6667   0     3     1  93.1           1  40     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 105 139.3333   1    NA     3 105.4           1  54     NA          NA           NA</span></span>
-<span><span class="co">#&gt;     occuplooking for work occupnot working</span></span>
-<span><span class="co">#&gt; 10                     NA               NA</span></span>
-<span><span class="co">#&gt; 14                     NA               NA</span></span>
-<span><span class="co">#&gt; 41                     NA               NA</span></span>
-<span><span class="co">#&gt; 77                     NA               NA</span></span>
-<span><span class="co">#&gt; 91                     NA               NA</span></span>
-<span><span class="co">#&gt; 105                    NA               NA</span></span></code></pre></div>
+<span><span class="co">#&gt;          SBP alc occup smoke    WC (Intercept) age alc&gt;=1 smokeformer</span></span>
+<span><span class="co">#&gt; 10  108.0000  NA     1     1  99.0           1  35     NA          NA</span></span>
+<span><span class="co">#&gt; 14  105.3333   0     1     1  82.7           1  38     NA          NA</span></span>
+<span><span class="co">#&gt; 41  110.0000   0     3     1  94.9           1  78     NA          NA</span></span>
+<span><span class="co">#&gt; 77  106.0000   1     2     1  82.4           1  23     NA          NA</span></span>
+<span><span class="co">#&gt; 91  114.6667   0     3     1  93.1           1  40     NA          NA</span></span>
+<span><span class="co">#&gt; 105 139.3333   1    NA     3 105.4           1  54     NA          NA</span></span>
+<span><span class="co">#&gt;     smokecurrent occuplooking for work occupnot working</span></span>
+<span><span class="co">#&gt; 10            NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 14            NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 41            NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 77            NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 91            NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 105           NA                    NA               NA</span></span></code></pre></div>
 <p>The parameters of the models for the incomplete variables can be
 selected with <code>monitor_params = c(other_models = TRUE)</code>. This
 will set monitors for the regression coefficients (<code>alpha</code>)
@@ -436,8 +434,8 @@ obtained with</p>
 <span><span class="co">#&gt;    family: gaussian </span></span>
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
-<span><span class="co">#&gt;   (Intercept), age, WC, alc&gt;=1, smokeformer, smokecurrent, occuplooking for </span></span>
-<span><span class="co">#&gt;   work, occupnot working </span></span>
+<span><span class="co">#&gt;   (Intercept), age, WC, alc&gt;=1, smokeformer, smokecurrent, </span></span>
+<span><span class="co">#&gt;   occuplooking for work, occupnot working </span></span>
 <span><span class="co">#&gt; * Regression coefficients:</span></span>
 <span><span class="co">#&gt;   beta[1:8] (normal prior(s) with mean 0 and precision 1e-04) </span></span>
 <span><span class="co">#&gt; * Precision of  "SBP" :</span></span>
@@ -449,8 +447,8 @@ obtained with</p>
 <span><span class="co">#&gt;    link: logit </span></span>
 <span><span class="co">#&gt; * Reference category: "&lt;1"</span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
-<span><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, </span></span>
-<span><span class="co">#&gt;   occupnot working </span></span>
+<span><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent, </span></span>
+<span><span class="co">#&gt;   occuplooking for work, occupnot working </span></span>
 <span><span class="co">#&gt; * Regression coefficients:</span></span>
 <span><span class="co">#&gt;   alpha[1:7] (normal prior(s) with mean 0 and precision 1e-04) </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -629,9 +627,11 @@ e.g.</p>
 <span>                                   RinvD_main <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                   ranef_main <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: </span></span>
-<span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical</span></span>
-<span><span class="co">#&gt; covariates. I will use "contr.treatment" instead.  You can specify (globally)</span></span>
-<span><span class="co">#&gt; which types of contrasts are used by changing "options('contrasts')".</span></span>
+<span><span class="co">#&gt; It is currently not possible to use "contr.poly" for</span></span>
+<span><span class="co">#&gt; incomplete categorical covariates. I will use</span></span>
+<span><span class="co">#&gt; "contr.treatment" instead.  You can specify (globally) which</span></span>
+<span><span class="co">#&gt; types of contrasts are used by changing</span></span>
+<span><span class="co">#&gt; "options('contrasts')".</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">lme3b</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    outcome outcat     varname             coef</span></span>
@@ -704,16 +704,16 @@ displayed if they were monitored:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary:</span></span>
-<span><span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577</span></span>
-<span><span class="co">#&gt; genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577</span></span>
-<span><span class="co">#&gt; WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689</span></span>
-<span><span class="co">#&gt; creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577</span></span>
+<span><span class="co">#&gt;                 Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span></span>
+<span><span class="co">#&gt; (Intercept)  81.7399 9.6925 63.439 100.547      0.000    1.04 0.0577</span></span>
+<span><span class="co">#&gt; genderfemale  0.0802 2.6383 -4.441   5.527      0.933    1.00 0.0577</span></span>
+<span><span class="co">#&gt; WC            0.3074 0.0767  0.168   0.451      0.000    1.01 0.0577</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.3855 2.5770  1.542  11.284      0.020    1.01 0.0670</span></span>
+<span><span class="co">#&gt; creat         6.8877 7.4473 -5.536  21.447      0.387    1.13 0.0586</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577</span></span>
+<span><span class="co">#&gt; sigma_SBP 14.4 0.704 13.1  15.9       1 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; MCMC settings:</span></span>
@@ -726,20 +726,12 @@ displayed if they were monitored:</p>
 <span></span>
 <span><span class="co"># traceplot of the MCMC sample</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm5</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-9-1.svg" alt="plot of chunk unnamed-chunk-9" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-9
-</p>
-</div>
+<p><img src="figures_SelectingParameters/unnamed-chunk-9-1.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># density plot of the MCMC sample</span></span>
 <span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">lm5</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-9-2.svg" alt="plot of chunk unnamed-chunk-9" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-9
-</p>
-</div>
+<p><img src="figures_SelectingParameters/unnamed-chunk-9-2.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Gelman-Rubin criterion</span></span>
@@ -747,26 +739,26 @@ plot of chunk unnamed-chunk-9
 <span><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;              Point est. Upper C.I.</span></span>
-<span><span class="co">#&gt; (Intercept)        1.00       1.01</span></span>
-<span><span class="co">#&gt; genderfemale       1.00       1.00</span></span>
-<span><span class="co">#&gt; WC                 1.00       1.02</span></span>
-<span><span class="co">#&gt; alc&gt;=1             1.00       1.02</span></span>
-<span><span class="co">#&gt; creat              1.03       1.07</span></span>
-<span><span class="co">#&gt; sigma_SBP          1.00       1.02</span></span>
+<span><span class="co">#&gt; (Intercept)       1.009       1.04</span></span>
+<span><span class="co">#&gt; genderfemale      0.999       1.00</span></span>
+<span><span class="co">#&gt; WC                1.003       1.01</span></span>
+<span><span class="co">#&gt; alc&gt;=1            1.003       1.01</span></span>
+<span><span class="co">#&gt; creat             1.035       1.13</span></span>
+<span><span class="co">#&gt; sigma_SBP         0.997       1.00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Multivariate psrf</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1.03</span></span>
+<span><span class="co">#&gt; 1.04</span></span>
 <span></span>
 <span><span class="co"># Monte Carlo Error of the MCMC sample</span></span>
 <span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">lm5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                est  MCSE   SD MCSE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.10 0.560 9.70   0.058</span></span>
-<span><span class="co">#&gt; genderfemale  0.68 0.147 2.55   0.058</span></span>
-<span><span class="co">#&gt; WC            0.30 0.004 0.07   0.058</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.64 0.158 2.30   0.069</span></span>
-<span><span class="co">#&gt; creat         8.21 0.473 8.19   0.058</span></span>
-<span><span class="co">#&gt; sigma_SBP    14.42 0.047 0.81   0.058</span></span></code></pre></div>
+<span><span class="co">#&gt;                est   MCSE    SD MCSE/SD</span></span>
+<span><span class="co">#&gt; (Intercept)  81.74 0.5596 9.692   0.058</span></span>
+<span><span class="co">#&gt; genderfemale  0.08 0.1523 2.638   0.058</span></span>
+<span><span class="co">#&gt; WC            0.31 0.0044 0.077   0.058</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.39 0.1727 2.577   0.067</span></span>
+<span><span class="co">#&gt; creat         6.89 0.4361 7.447   0.059</span></span>
+<span><span class="co">#&gt; sigma_SBP    14.38 0.0407 0.704   0.058</span></span></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on the default
 behaviour is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -777,11 +769,7 @@ behaviour is that all parameters are displayed:</p>
 <span>                                    other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'mu_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm4</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-10-1.svg" alt="plot of chunk unnamed-chunk-10" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-10
-</p>
-</div>
+<p><img src="figures_SelectingParameters/unnamed-chunk-10-1.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="section level3">
 <h3 id="select-a-subset-of-the-variables-to-display">Select a subset of the variables to display<a class="anchor" aria-label="anchor" href="#select-a-subset-of-the-variables-to-display"></a>
 </h3>
@@ -793,21 +781,21 @@ to be specified:</p>
 <span><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                     Point est. Upper C.I.</span></span>
-<span><span class="co">#&gt; alc: (Intercept)         1.081      1.268</span></span>
-<span><span class="co">#&gt; alc: genderfemale        1.104      1.327</span></span>
-<span><span class="co">#&gt; alc: WC                  1.015      1.061</span></span>
-<span><span class="co">#&gt; alc: creat               1.061      1.210</span></span>
-<span><span class="co">#&gt; creat: (Intercept)       1.015      1.056</span></span>
-<span><span class="co">#&gt; creat: genderfemale      0.996      0.998</span></span>
-<span><span class="co">#&gt; creat: WC                1.018      1.060</span></span>
-<span><span class="co">#&gt; WC: (Intercept)          1.003      1.021</span></span>
-<span><span class="co">#&gt; WC: genderfemale         1.001      1.013</span></span>
-<span><span class="co">#&gt; sigma_creat              1.006      1.022</span></span>
-<span><span class="co">#&gt; sigma_WC                 1.007      1.010</span></span>
+<span><span class="co">#&gt; alc: (Intercept)         0.997      1.001</span></span>
+<span><span class="co">#&gt; alc: genderfemale        1.005      1.025</span></span>
+<span><span class="co">#&gt; alc: WC                  1.030      1.086</span></span>
+<span><span class="co">#&gt; alc: creat               1.007      1.034</span></span>
+<span><span class="co">#&gt; creat: (Intercept)       0.996      0.997</span></span>
+<span><span class="co">#&gt; creat: genderfemale      0.999      1.000</span></span>
+<span><span class="co">#&gt; creat: WC                0.995      0.996</span></span>
+<span><span class="co">#&gt; WC: (Intercept)          1.011      1.039</span></span>
+<span><span class="co">#&gt; WC: genderfemale         1.003      1.024</span></span>
+<span><span class="co">#&gt; sigma_creat              1.010      1.040</span></span>
+<span><span class="co">#&gt; sigma_WC                 1.007      1.032</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Multivariate psrf</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1.1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1.05</span></span></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly
 by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -821,16 +809,16 @@ by name via the <code>other</code> element of <code>subset</code>:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary:</span></span>
-<span><span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577</span></span>
-<span><span class="co">#&gt; genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577</span></span>
-<span><span class="co">#&gt; WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689</span></span>
-<span><span class="co">#&gt; creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577</span></span>
+<span><span class="co">#&gt;                 Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span></span>
+<span><span class="co">#&gt; (Intercept)  81.7399 9.6925 63.439 100.547      0.000    1.04 0.0577</span></span>
+<span><span class="co">#&gt; genderfemale  0.0802 2.6383 -4.441   5.527      0.933    1.00 0.0577</span></span>
+<span><span class="co">#&gt; WC            0.3074 0.0767  0.168   0.451      0.000    1.01 0.0577</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.3855 2.5770  1.542  11.284      0.020    1.01 0.0670</span></span>
+<span><span class="co">#&gt; creat         6.8877 7.4473 -5.536  21.447      0.387    1.13 0.0586</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577</span></span>
+<span><span class="co">#&gt; sigma_SBP 14.4 0.704 13.1  15.9       1 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; MCMC settings:</span></span>
@@ -857,11 +845,7 @@ displayed:</p>
 <span><span class="co">#&gt; [1] "M_lvlone[33,5]"  "M_lvlone[150,5]"</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm2</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>other <span class="op">=</span> <span class="va">sub3</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/lm2_2-1.svg" alt="plot of chunk lm2_2" width="50%"><p class="caption">
-plot of chunk lm2_2
-</p>
-</div>
+<p><img src="figures_SelectingParameters/lm2_2-1.svg" alt="" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="random-subset-of-subject-specific-values">Random subset of subject-specific values<a class="anchor" aria-label="anchor" href="#random-subset-of-subject-specific-values"></a>
@@ -883,20 +867,12 @@ effects can be selected:</p>
 <span></span>
 <span><span class="co"># plot the chains of 8 randomly selected random intercepts</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lme4</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">ri</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-11-1.svg" alt="plot of chunk unnamed-chunk-11" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-11
-</p>
-</div>
+<p><img src="figures_SelectingParameters/unnamed-chunk-11-1.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># plot the chains of 8 randomly selected random slopes</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lme4</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">rs</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_SelectingParameters/unnamed-chunk-11-2.svg" alt="plot of chunk unnamed-chunk-11" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-11
-</p>
-</div>
+<p><img src="figures_SelectingParameters/unnamed-chunk-11-2.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -112,26 +112,29 @@ is not implemented as a link in
 
 ### Cumulative logit (mixed) models
 
-Cumulative logit mixed models are of the form \\\begin{eqnarray\*}
-y\_{ij} &\sim& \text{Mult}(\pi\_{ij,1}, \ldots, \pi\_{ij,K}),\\\[2ex\]
-\pi\_{ij,1} &=& P(y\_{ij} \leq 1),\\ \pi\_{ij,k} &=& P(y\_{ij} \leq k) -
-P(y\_{ij} \leq k-1), \quad k \in 2, \ldots, K-1,\\ \pi\_{ij,K} &=& 1 -
-\sum\_{k = 1}^{K-1}\pi\_{ij,k},\\\[2ex\] \text{logit}(P(y\_{ij} \leq k))
-&=& \gamma_k + \eta\_{ij}, \quad k \in 1,\ldots,K,\\ \eta\_{ij} &=&
-\mathbf x\_{ij}^\top\boldsymbol\beta + \mathbf z\_{ij}^\top\mathbf
-b_i,\\\[2ex\] \gamma_1,\delta_1,\ldots,\delta\_{K-1}
-&\overset{iid}{\sim}& N(\mu\_\gamma, \sigma\_\gamma^2),\\ \gamma_k
-&\sim& \gamma\_{k-1} + \exp(\delta\_{k-1}),\quad k = 2,\ldots,K,
-\end{eqnarray\*}\\ where \\\pi\_{ij,k} = P(y\_{ij} = k)\\ and
-\\\text{logit}(x) = \log\left(\frac{x}{1-x}\right)\\. A cumulative logit
-regression model for a univariate outcome \\y_i\\ can be obtained by
-dropping the index \\j\\ and omitting \\\mathbf z\_{ij}^\top\mathbf
-b_i\\. In cumulative logit (mixed) models, the design matrix \\\mathbf
-X\\ does not contain an intercept, since outcome category specific
-intercepts \\\gamma_1,\ldots, \gamma_K\\ are specified. Here, the
-parameter vector \\\boldsymbol \theta\_{y\mid x}\\ includes the
-regression coefficients \\\boldsymbol\beta\\, the first intercept
-\\\gamma_1\\ and increments \\\delta_1, \ldots, \delta\_{K-1}\\.
+Cumulative logit mixed models are of the form
+
+\\\begin{align\*} y\_{ij} &\sim \text{Mult}(\pi\_{ij,1}, \ldots,
+\pi\_{ij,K}),\\\[2ex\] \pi\_{ij,1} &= P(y\_{ij} \leq 1),\\ \pi\_{ij,k}
+&= P(y\_{ij} \leq k) - P(y\_{ij} \leq k-1), \quad k \in 2, \ldots,
+K-1,\\ \pi\_{ij,K} &= 1 - \sum\_{k = 1}^{K-1}\pi\_{ij,k},\\\[2ex\]
+\text{logit}(P(y\_{ij} \leq k)) &= \gamma_k + \eta\_{ij}, \quad k \in
+1,\ldots,K,\\ \eta\_{ij} &= \mathbf x\_{ij}^\top\boldsymbol\beta +
+\mathbf z\_{ij}^\top\mathbf b_i,\\\[2ex\]
+\gamma_1,\delta_1,\ldots,\delta\_{K-1} &\overset{iid}{\sim}
+N(\mu\_\gamma, \sigma\_\gamma^2),\\ \gamma_k &\sim \gamma\_{k-1} +
+\exp(\delta\_{k-1}),\quad k = 2,\ldots,K, \end{align\*}\\
+
+where \\\pi\_{ij,k} = P(y\_{ij} = k)\\ and \\\text{logit}(x) =
+\log\left(\frac{x}{1-x}\right)\\. A cumulative logit regression model
+for a univariate outcome \\y_i\\ can be obtained by dropping the index
+\\j\\ and omitting \\\mathbf z\_{ij}^\top\mathbf b_i\\. In cumulative
+logit (mixed) models, the design matrix \\\mathbf X\\ does not contain
+an intercept, since outcome category specific intercepts
+\\\gamma_1,\ldots, \gamma_K\\ are specified. Here, the parameter vector
+\\\boldsymbol \theta\_{y\mid x}\\ includes the regression coefficients
+\\\boldsymbol\beta\\, the first intercept \\\gamma_1\\ and increments
+\\\delta_1, \ldots, \delta\_{K-1}\\.
 
 ### Survival models
 
@@ -143,11 +146,10 @@ model which assumes a Weibull distribution for the true (but partially
 unobserved) survival times \\T^\*\\, and a semi-parametric Cox
 proportional hazards model.
 
-The parametric survival model is implemented as \\\begin{eqnarray\*}
-T_i^\* &\sim& \text{Weibull}(1, r_i, s),\\ D_i &\sim&
-\unicode{x1D7D9}(T_i^\* \geq C_i),\\ \log(r_j) &=& - \mathbf
-x_i^\top\boldsymbol\beta,\\ s &\sim& \text{Exp}(0.01),
-\end{eqnarray\*}\\ where \\\unicode{x1D7D9}\\ is the indicator function
+The parametric survival model is implemented as \\\begin{align\*} T_i^\*
+&\sim \text{Weibull}(1, r_i, s),\\ D_i &\sim \text{𝟙}(T_i^\* \geq
+C_i),\\ \log(r_j) &= - \mathbf x_i^\top\boldsymbol\beta,\\ s &\sim
+\text{Exp}(0.01), \end{align\*}\\ where 𝟙 is the indicator function
 which is one if \\T_i^\*\geq C_i\\, and zero otherwise.
 
 The Cox proportional hazards model can be written as \\h_i(t) =
@@ -173,12 +175,12 @@ A convenient way to specify the joint distribution of the incomplete
 covariates \\\mathbf X\_{mis} = (\mathbf x\_{mis_1}, \ldots, \mathbf
 x\_{mis_q})\\ is to use a sequence of conditional univariate
 distributions (Ibrahim, Chen, and Lipsitz 2002; Erler et al. 2016)
-\\\begin{eqnarray} p(\mathbf x\_{mis_1}, \ldots, \mathbf x\_{mis_q} \mid
-\mathbf X\_{obs}, \boldsymbol\theta\_{x}) & = & p(\mathbf x\_{mis_1}
-\mid \mathbf X\_{obs}, \boldsymbol\theta\_{x_1})\\ & & \prod\_{\ell=2}^q
-p(\mathbf x\_{mis\_{\ell}} \mid \mathbf X\_{obs}, \mathbf x\_{mis_1},
-\ldots, \mathbf x\_{mis\_{\ell-1}},
-\boldsymbol\theta\_{x\_\ell}),\tag{1} \end{eqnarray}\\ with
+\\\begin{align} p(\mathbf x\_{mis_1}, \ldots, \mathbf x\_{mis_q} \mid
+\mathbf X\_{obs}, \boldsymbol\theta\_{x}) & = p(\mathbf x\_{mis_1} \mid
+\mathbf X\_{obs}, \boldsymbol\theta\_{x_1})\nonumber\\ & \phantom{=}
+\prod\_{\ell=2}^q p(\mathbf x\_{mis\_{\ell}} \mid \mathbf X\_{obs},
+\mathbf x\_{mis_1}, \ldots, \mathbf x\_{mis\_{\ell-1}},
+\boldsymbol\theta\_{x\_\ell}),\tag{1} \end{align}\\ with
 \\\boldsymbol\theta\_{x} = (\boldsymbol\theta\_{x_1}^\top, \ldots,
 \boldsymbol\theta\_{x_q}^\top)^\top\\.
 
@@ -205,21 +207,20 @@ outcome and covariates.
 
 When, for instance, the analysis model is a GLM, the full conditional
 distribution of an incomplete covariate \\x\_{i, mis\_{\ell}}\\ can be
-written as \\\begin{eqnarray} \nonumber p(x\_{i, mis\_{\ell}} \mid
-\mathbf y_i, \mathbf x\_{i,obs}, \mathbf x\_{i,mis\_{-\ell}},
-\boldsymbol\theta) &\propto& p \left(y_i \mid \mathbf x\_{i, obs},
-\mathbf x\_{i, mis}, \boldsymbol\theta\_{y\mid x} \right) p(\mathbf
-x\_{i, mis}\mid \mathbf x\_{i, obs}, \boldsymbol\theta\_{x})\\
-p(\boldsymbol\theta\_{y\mid x})\\ p(\boldsymbol\theta\_{x})\\\nonumber
-&\propto& p \left(y_i \mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis},
-\boldsymbol\theta\_{y\mid x} \right)\\\nonumber & & p(x\_{i, mis\_\ell}
-\mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis\_{\<\ell}},
-\boldsymbol\theta\_{x\_\ell})\\\nonumber & & \left\\ \prod\_{k=\ell+1}^q
-p(x\_{i,mis_k}\mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis\_{\<k}},
-\boldsymbol\theta\_{x_k}) \right\\\\ & & p(\boldsymbol\theta\_{y\mid x})
-p(\boldsymbol\theta\_{x\_\ell}) \prod\_{k=\ell+1}^p
-p(\boldsymbol\theta\_{x_k}), \tag{2} \end{eqnarray}\\ where
-\\\boldsymbol\theta\_{x\_{\ell}}\\ is the vector of parameters
+written as \\\begin{align} \nonumber p(x\_{i, mis\_{\ell}} \mid \mathbf
+y_i, \mathbf x\_{i,obs}, \mathbf x\_{i,mis\_{-\ell}}, \boldsymbol\theta)
+\propto& p \left(y_i \mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis},
+\boldsymbol\theta\_{y\mid x} \right) p(\mathbf x\_{i, mis}\mid \mathbf
+x\_{i, obs}, \boldsymbol\theta\_{x})\\ p(\boldsymbol\theta\_{y\mid x})\\
+p(\boldsymbol\theta\_{x})\\\nonumber \propto& p \left(y_i \mid \mathbf
+x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{y\mid x}
+\right)\\\nonumber & p(x\_{i, mis\_\ell} \mid \mathbf x\_{i, obs},
+\mathbf x\_{i, mis\_{\<\ell}}, \boldsymbol\theta\_{x\_\ell})\\\nonumber
+& \left\\ \prod\_{k=\ell+1}^q p(x\_{i,mis_k}\mid \mathbf x\_{i, obs},
+\mathbf x\_{i, mis\_{\<k}}, \boldsymbol\theta\_{x_k}) \right\\\\ &
+p(\boldsymbol\theta\_{y\mid x}) p(\boldsymbol\theta\_{x\_\ell})
+\prod\_{k=\ell+1}^p p(\boldsymbol\theta\_{x_k}), \tag{2} \end{align}\\
+where \\\boldsymbol\theta\_{x\_{\ell}}\\ is the vector of parameters
 describing the model for the \\\ell\\-th covariate, and contains the
 vector of regression coefficients \\\boldsymbol\alpha\_\ell\\ and
 potentially additional (variance) parameters. The product of
@@ -241,10 +242,10 @@ such as repeatedly measured outcomes. In the case where the analysis
 model is a GLMM or ordinal mixed model, the conditional distribution of
 the outcome in [(2)](#eq:fullcond), \\p\left(y_i \mid \mathbf x\_{i,
 obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{y\mid x} \right),\\ has
-to be replaced by \\\begin{eqnarray} \left\\\prod\_{j=1}^{n_i} p
+to be replaced by \\\begin{equation} \left\\\prod\_{j=1}^{n_i} p
 \left(y\_{ij} \mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis}, \mathbf
 b_i, \boldsymbol\theta\_{y\mid x}\right) \right\\. \tag{3}
-\end{eqnarray}\\ Since \\\mathbf y\\ does not appear in any of the other
+\end{equation}\\ Since \\\mathbf y\\ does not appear in any of the other
 terms in [(2)](#eq:fullcond), and [(3)](#eq:lmmpartfullcond) can be
 chosen to be a model that is appropriate for the outcome at hand, the
 thereby specified full conditional distribution of \\x\_{i, mis\_\ell}\\
@@ -274,21 +275,22 @@ completely observed ones, while models for completely observed baseline
 covariates can be omitted. This becomes clear when we extend the
 factorized joint distribution from above with completely and
 incompletely observed longitudinal (level-1) covariates \\\mathbf
-s\_{obs}\\ and \\\mathbf s\_{mis}\\: \\\begin{multline\*} p
-\left(y\_{ij} \mid \mathbf s\_{ij, obs}, \mathbf s\_{ij, mis}, \mathbf
-x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{y\mid x} \right)\\
-p(\mathbf s\_{ij, mis}\mid \mathbf s\_{ij, obs}, \mathbf x\_{i, obs},
-\mathbf x\_{i, mis}, \boldsymbol\theta\_{s\_{mis}})\\ p(\mathbf s\_{ij,
-obs}\mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis},
+s\_{obs}\\ and \\\mathbf s\_{mis}\\:
+
+\\ p \left(y\_{ij} \mid \mathbf s\_{ij, obs}, \mathbf s\_{ij, mis},
+\mathbf x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{y\mid x}
+\right)\\\\ p(\mathbf s\_{ij, mis}\mid \mathbf s\_{ij, obs}, \mathbf
+x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{s\_{mis}})\\
+p(\mathbf s\_{ij, obs}\mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis},
 \boldsymbol\theta\_{s\_{obs}})\\ p(\mathbf x\_{i, mis}\mid \mathbf
 x\_{i, obs}, \boldsymbol\theta\_{x\_{mis}})\\ p(\mathbf x\_{i, obs} \mid
 \boldsymbol\theta\_{x\_{obs}})\\ p(\boldsymbol\theta\_{y\mid x})\\
 p(\boldsymbol\theta\_{s\_{mis}}) \\ p(\boldsymbol\theta\_{s\_{obs}})\\
-p(\boldsymbol\theta\_{x\_{mis}}) \\ p(\boldsymbol\theta\_{x\_{obs}})
-\end{multline\*}\\ Given that the parameter vectors
-\\\theta\_{x\_{obs}}\\, \\\theta\_{x\_{mis}}\\, \\\theta\_{s\_{obs}}\\
-and \\\theta\_{s\_{mis}}\\ are a priori independent, and \\p(\mathbf
-x\_{i, obs} \mid \boldsymbol\theta\_{x\_{obs}})\\ is independent of both
+p(\boldsymbol\theta\_{x\_{mis}}) \\ p(\boldsymbol\theta\_{x\_{obs}}) \\
+Given that the parameter vectors \\\theta\_{x\_{obs}}\\,
+\\\theta\_{x\_{mis}}\\, \\\theta\_{s\_{obs}}\\ and
+\\\theta\_{s\_{mis}}\\ are a priori independent, and \\p(\mathbf x\_{i,
+obs} \mid \boldsymbol\theta\_{x\_{obs}})\\ is independent of both
 \\x\_{mis}\\ and \\s\_{mis}\\, it can be omitted.
 
 Since \\p(\mathbf s\_{ij, obs}\mid \mathbf x\_{i, obs}, \mathbf x\_{i,

@@ -560,8 +560,8 @@ prior. The corresponding part of the JAGS model is:
     #> 
     #> [...]
 
-The element `RinvD_bmi_ID` in the initial values has to be a 2 $\times$
-2 matrix, with positive values on the diagonal and `NA` as off-diagonal
+The element `RinvD_bmi_ID` in the initial values has to be a 2 \times 2
+matrix, with positive values on the diagonal and `NA` as off-diagonal
 elements, since these are fixed in the data:
 
 ``` r

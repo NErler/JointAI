@@ -54,9 +54,7 @@ converged. Convergence can be evaluated visually with a trace plot.
 traceplot(lm1)
 ```
 
-![plot of chunk results_lm1](figures_MinimalExample/results_lm1-1.svg)
-
-plot of chunk results_lm1
+![](figures_MinimalExample/results_lm1-1.svg)
 
 The function
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
@@ -89,22 +87,22 @@ summary(lm1)
 #> 
 #> Posterior summary:
 #>                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)            59.667 22.5323  13.8296 104.999    0.00800    1.00 0.0263
-#> genderfemale           -3.088  2.2801  -7.3085   1.497    0.18533    1.00 0.0258
-#> age                     0.367  0.0730   0.2256   0.512    0.00000    1.01 0.0262
-#> raceOther Hispanic      0.857  5.1357  -8.8799  10.758    0.88933    1.00 0.0258
-#> raceNon-Hispanic White -1.286  3.0295  -6.9351   4.658    0.66267    1.00 0.0258
-#> raceNon-Hispanic Black  9.061  3.4765   2.3074  15.679    0.01067    1.01 0.0258
-#> raceother               3.919  3.4728  -2.6699  11.094    0.25467    1.00 0.0258
-#> WC                      0.243  0.0811   0.0835   0.401    0.00267    1.00 0.0258
-#> alc>=1                  7.249  2.2744   2.5975  11.650    0.00000    1.00 0.0325
-#> educhigh               -3.392  2.2355  -8.0464   0.830    0.10400    1.01 0.0267
-#> albu                    5.390  4.1032  -2.9169  13.239    0.18133    1.01 0.0260
-#> bili                   -5.456  4.8697 -14.3350   4.293    0.25467    1.01 0.0285
+#> (Intercept)            60.879 22.8704  19.1247 106.227     0.0040    1.00 0.0271
+#> genderfemale           -3.177  2.2549  -7.6423   1.099     0.1640    1.00 0.0258
+#> age                     0.364  0.0708   0.2196   0.505     0.0000    1.01 0.0258
+#> raceOther Hispanic      0.518  5.0580  -9.2403  10.675     0.9373    1.00 0.0258
+#> raceNon-Hispanic White -1.451  3.0937  -7.2049   4.686     0.6227    1.00 0.0276
+#> raceNon-Hispanic Black  9.047  3.6389   2.0441  16.042     0.0147    1.00 0.0267
+#> raceother               3.686  3.4550  -3.0852  10.725     0.2653    1.00 0.0268
+#> WC                      0.236  0.0822   0.0754   0.392     0.0040    1.00 0.0258
+#> alc>=1                  7.272  2.3870   2.5418  11.763     0.0040    1.03 0.0284
+#> educhigh               -3.397  2.1457  -7.3896   0.869     0.1120    1.00 0.0258
+#> albu                    5.320  4.0590  -2.7810  12.922     0.1987    1.00 0.0291
+#> bili                   -5.516  4.9060 -15.2486   4.592     0.2413    1.01 0.0274
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 13.2 0.716 11.9  14.7       1 0.0281
+#> sigma_SBP 13.2 0.738 11.9  14.7    1.02 0.0282
 #> 
 #> 
 #> MCMC settings:
@@ -137,15 +135,12 @@ error to the standard deviation of the posterior sample.
 
 The tail probability is a measure of how likely the value 0 is under the
 estimated posterior distribution, and is calculated as
-$$2 \times \min\left\{ Pr(\theta > 0),Pr(\theta < 0) \right\}$$ (where
-$\theta$ is the parameter of interest).
+2\times\min\left\\Pr(\theta \> 0), Pr(\theta \< 0)\right\\ (where \theta
+is the parameter of interest).
 
 In the following graphics, the shaded areas represent the minimum of
-$Pr(\theta > 0)$ and $Pr(\theta < 0)$:
-
-![plot of chunk tailprob](figures_MinimalExample/tailprob-1.svg)
-
-plot of chunk tailprob
+Pr(\theta \> 0) and Pr(\theta \< 0):
+![](figures_MinimalExample/tailprob-1.svg)
 
 #### Gelman-Rubin criterion
 
@@ -194,9 +189,7 @@ The posterior distributions can be visualized using the function
 densplot(lm1)
 ```
 
-![plot of chunk densplot](figures_MinimalExample/densplot-1.svg)
-
-plot of chunk densplot
+![](figures_MinimalExample/densplot-1.svg)
 
 By default,
 [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)

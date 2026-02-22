@@ -2,6 +2,8 @@
 
 ## JointAI 1.1.0
 
+CRAN release: 2026-01-30
+
 ### New features
 
 - Added functions `crosscorr()`, `crosscorr_plot()`, `autocorr()` and

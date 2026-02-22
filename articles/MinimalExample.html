@@ -11,7 +11,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -86,7 +87,7 @@
                         <h4 data-toc-skip class="author">Nicole
 Erler</h4>
             
-            <h4 data-toc-skip class="date">January 03, 2026</h4>
+            <h4 data-toc-skip class="date">February 22, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/MinimalExample.Rmd" class="external-link"><code>vignettes/MinimalExample.Rmd</code></a></small>
       <div class="d-none name"><code>MinimalExample.Rmd</code></div>
@@ -134,11 +135,7 @@ converged. Convergence can be evaluated visually with a trace plot.</p>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_MinimalExample/results_lm1-1.svg" alt="plot of chunk results_lm1" width="100%"><p class="caption">
-plot of chunk results_lm1
-</p>
-</div>
+<p><img src="figures_MinimalExample/results_lm1-1.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code>traceplot()</code></a>
 produces a plot of the sampled values across iterations per parameter.
 Different chains are represented by different colours.</p>
@@ -166,22 +163,22 @@ printed using <code><a href="https://rdrr.io/r/base/summary.html" class="externa
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary:</span></span>
 <span><span class="co">#&gt;                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)            59.667 22.5323  13.8296 104.999    0.00800    1.00 0.0263</span></span>
-<span><span class="co">#&gt; genderfemale           -3.088  2.2801  -7.3085   1.497    0.18533    1.00 0.0258</span></span>
-<span><span class="co">#&gt; age                     0.367  0.0730   0.2256   0.512    0.00000    1.01 0.0262</span></span>
-<span><span class="co">#&gt; raceOther Hispanic      0.857  5.1357  -8.8799  10.758    0.88933    1.00 0.0258</span></span>
-<span><span class="co">#&gt; raceNon-Hispanic White -1.286  3.0295  -6.9351   4.658    0.66267    1.00 0.0258</span></span>
-<span><span class="co">#&gt; raceNon-Hispanic Black  9.061  3.4765   2.3074  15.679    0.01067    1.01 0.0258</span></span>
-<span><span class="co">#&gt; raceother               3.919  3.4728  -2.6699  11.094    0.25467    1.00 0.0258</span></span>
-<span><span class="co">#&gt; WC                      0.243  0.0811   0.0835   0.401    0.00267    1.00 0.0258</span></span>
-<span><span class="co">#&gt; alc&gt;=1                  7.249  2.2744   2.5975  11.650    0.00000    1.00 0.0325</span></span>
-<span><span class="co">#&gt; educhigh               -3.392  2.2355  -8.0464   0.830    0.10400    1.01 0.0267</span></span>
-<span><span class="co">#&gt; albu                    5.390  4.1032  -2.9169  13.239    0.18133    1.01 0.0260</span></span>
-<span><span class="co">#&gt; bili                   -5.456  4.8697 -14.3350   4.293    0.25467    1.01 0.0285</span></span>
+<span><span class="co">#&gt; (Intercept)            60.879 22.8704  19.1247 106.227     0.0040    1.00 0.0271</span></span>
+<span><span class="co">#&gt; genderfemale           -3.177  2.2549  -7.6423   1.099     0.1640    1.00 0.0258</span></span>
+<span><span class="co">#&gt; age                     0.364  0.0708   0.2196   0.505     0.0000    1.01 0.0258</span></span>
+<span><span class="co">#&gt; raceOther Hispanic      0.518  5.0580  -9.2403  10.675     0.9373    1.00 0.0258</span></span>
+<span><span class="co">#&gt; raceNon-Hispanic White -1.451  3.0937  -7.2049   4.686     0.6227    1.00 0.0276</span></span>
+<span><span class="co">#&gt; raceNon-Hispanic Black  9.047  3.6389   2.0441  16.042     0.0147    1.00 0.0267</span></span>
+<span><span class="co">#&gt; raceother               3.686  3.4550  -3.0852  10.725     0.2653    1.00 0.0268</span></span>
+<span><span class="co">#&gt; WC                      0.236  0.0822   0.0754   0.392     0.0040    1.00 0.0258</span></span>
+<span><span class="co">#&gt; alc&gt;=1                  7.272  2.3870   2.5418  11.763     0.0040    1.03 0.0284</span></span>
+<span><span class="co">#&gt; educhigh               -3.397  2.1457  -7.3896   0.869     0.1120    1.00 0.0258</span></span>
+<span><span class="co">#&gt; albu                    5.320  4.0590  -2.7810  12.922     0.1987    1.00 0.0291</span></span>
+<span><span class="co">#&gt; bili                   -5.516  4.9060 -15.2486   4.592     0.2413    1.01 0.0274</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; sigma_SBP 13.2 0.716 11.9  14.7       1 0.0281</span></span>
+<span><span class="co">#&gt; sigma_SBP 13.2 0.738 11.9  14.7    1.02 0.0282</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; MCMC settings:</span></span>
@@ -208,20 +205,12 @@ error to the standard deviation of the posterior sample.</p>
 <h4 id="tail-probability">Tail probability<a class="anchor" aria-label="anchor" href="#tail-probability"></a>
 </h4>
 <p>The tail probability is a measure of how likely the value 0 is under
-the estimated posterior distribution, and is calculated as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mo>min</mo><mrow><mo stretchy="true" form="prefix">{</mo><mi>P</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo>&gt;</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mi>P</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo>&lt;</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\}</annotation></semantics></math>
-(where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
-is the parameter of interest).</p>
-In the following graphics, the shaded areas represent the minimum of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo>&gt;</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Pr(\theta &gt; 0)</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo>&lt;</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Pr(\theta &lt; 0)</annotation></semantics></math>:
-<div class="figure" style="text-align: center">
-<img src="figures_MinimalExample/tailprob-1.svg" alt="plot of chunk tailprob" width="100%"><p class="caption">
-plot of chunk tailprob
-</p>
-</div>
+the estimated posterior distribution, and is calculated as <span class="math display">2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt;
+0)\right\}</span> (where <span class="math inline">\theta</span> is the
+parameter of interest).</p>
+<p>In the following graphics, the shaded areas represent the minimum of
+<span class="math inline">Pr(\theta &gt; 0)</span> and <span class="math inline">Pr(\theta &lt; 0)</span>:
+<img src="figures_MinimalExample/tailprob-1.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="gelman-rubin-criterion">Gelman-Rubin criterion<a class="anchor" aria-label="anchor" href="#gelman-rubin-criterion"></a>
@@ -275,11 +264,7 @@ model can be added to the summary by setting
 <code><a href="../reference/densplot.html">densplot()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figures_MinimalExample/densplot-1.svg" alt="plot of chunk densplot" width="100%"><p class="caption">
-plot of chunk densplot
-</p>
-</div>
+<p><img src="figures_MinimalExample/densplot-1.svg" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>By default, <code><a href="../reference/densplot.html">densplot()</a></code> plots the empirical distribution
 of each of the chains separately. When <code>joined = TRUE</code> the
 distributions of the combined chains are plotted.</p>

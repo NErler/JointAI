@@ -42,9 +42,7 @@ mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500,
 traceplot(mod13a)
 ```
 
-![plot of chunk trace13a](figures_AfterFitting/trace13a-1.svg)
-
-plot of chunk trace13a
+![](figures_AfterFitting/trace13a-1.svg)
 
 When the sampler has converged the chains show one horizontal band, as
 in the above figure. Consequently, when traces show a trend convergence
@@ -70,9 +68,7 @@ traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
   scale_color_brewer(palette = 'Dark2')
 ```
 
-![plot of chunk ggtrace15a](figures_AfterFitting/ggtrace15a-1.svg)
-
-plot of chunk ggtrace15a
+![](figures_AfterFitting/ggtrace15a-1.svg)
 
 ### Density plot
 
@@ -91,11 +87,8 @@ densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
                             col = grey(0.8))))
 ```
 
-![plot of chunk dens13a-2](figures_AfterFitting/dens13a-2-1.svg)
-
-plot of chunk dens13a-2
-
-or marking the posterior mean and 2.5% and 97.5% quantiles:
+![](figures_AfterFitting/dens13a-2-1.svg) or marking the posterior mean
+and 2.5% and 97.5% quantiles:
 
 ``` r
 res <- rbind(summary(mod13a)$res$SBP$regcoef[, c('Mean', '2.5%', '97.5%')],
@@ -110,9 +103,7 @@ densplot(mod13a, ncol = 3,
 )
 ```
 
-![plot of chunk densplot15a](figures_AfterFitting/densplot15a-1.svg)
-
-plot of chunk densplot15a
+![](figures_AfterFitting/densplot15a-1.svg)
 
 Like with
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md)
@@ -168,9 +159,7 @@ p13a +
                      labels = c('JointAI', 'compl.case'))
 ```
 
-![plot of chunk ggdens15a](figures_AfterFitting/ggdens15a-1.svg)
-
-plot of chunk ggdens15a
+![](figures_AfterFitting/ggdens15a-1.svg)
 
 ## Model Summary
 
@@ -302,17 +291,12 @@ of missing values per variable is printed
 
 ### Tail probability
 
-The tail probability, calculated as
-$2 \times \min\left\{ Pr(\theta > 0),Pr(\theta < 0) \right\},$ where
-$\theta$ is the parameter of interest, is a measure of how likely the
-value 0 is under the estimated posterior distribution. The figure
-visualizes three examples of posterior distributions and the
-corresponding minimum of $Pr(\theta > 0)$ and $Pr(\theta < 0)$ (shaded
-area):
-
-![plot of chunk tailprob](figures_AfterFitting/tailprob-1.svg)
-
-plot of chunk tailprob
+The tail probability, calculated as 2\times\min\left\\Pr(\theta \> 0),
+Pr(\theta \< 0)\right\\, where \theta is the parameter of interest, is a
+measure of how likely the value 0 is under the estimated posterior
+distribution. The figure visualizes three examples of posterior
+distributions and the corresponding minimum of Pr(\theta \> 0) and
+Pr(\theta \< 0) (shaded area): ![](figures_AfterFitting/tailprob-1.svg)
 
 ## Evaluation criteria
 
@@ -400,9 +384,7 @@ plot(MC_error(mod13a))  # left panel: all iterations 101:600
 plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 ```
 
-![plot of chunk MCE15a](figures_AfterFitting/MCE15a-1.svg)
-
-plot of chunk MCE15a
+![](figures_AfterFitting/MCE15a-1.svg)
 
 ## Subset of output
 
@@ -512,9 +494,7 @@ densplot(mod13c, subset = list(analysis_main = FALSE,
                                other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
-![plot of chunk densplot13c](figures_AfterFitting/densplot13c-1.svg)
-
-plot of chunk densplot13c
+![](figures_AfterFitting/densplot13c-1.svg)
 
 This also works when a subset of the imputed values should be displayed:
 
@@ -533,9 +513,7 @@ sub3
 traceplot(mod13d, subset = list(analysis_main = FALSE, other = sub3), ncol = 2)
 ```
 
-![plot of chunk trace15d](figures_AfterFitting/trace15d-1.svg)
-
-plot of chunk trace15d
+![](figures_AfterFitting/trace15d-1.svg)
 
 When the number of imputed values is large or in order to check
 convergence of random effects, it may not be feasible to plot and
@@ -556,9 +534,7 @@ traceplot(mod13e, subset = list(analysis_main = FALSE,
                                 other = sample(ri, size = 12)), ncol = 4)
 ```
 
-![plot of chunk ri](figures_AfterFitting/ri-1.svg)
-
-plot of chunk ri
+![](figures_AfterFitting/ri-1.svg)
 
 ### Subset of MCMC samples
 
@@ -580,41 +556,31 @@ mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
 densplot(mod14, ncol = 3)
 ```
 
-![plot of chunk mod14](figures_AfterFitting/mod14-1.svg)
-
-plot of chunk mod14
+![](figures_AfterFitting/mod14-1.svg)
 
 ``` r
 densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
-![plot of chunk mod14](figures_AfterFitting/mod14-2.svg)
-
-plot of chunk mod14
+![](figures_AfterFitting/mod14-2.svg)
 
 ``` r
 traceplot(mod14, thin = 10, ncol = 3)
 ```
 
-![plot of chunk trace14](figures_AfterFitting/trace14-1.svg)
-
-plot of chunk trace14
+![](figures_AfterFitting/trace14-1.svg)
 
 ``` r
 traceplot(mod14, start = 150, ncol = 3)
 ```
 
-![plot of chunk trace14](figures_AfterFitting/trace14-2.svg)
-
-plot of chunk trace14
+![](figures_AfterFitting/trace14-2.svg)
 
 ``` r
 traceplot(mod14, end = 120, ncol = 3)
 ```
 
-![plot of chunk trace14](figures_AfterFitting/trace14-3.svg)
-
-plot of chunk trace14
+![](figures_AfterFitting/trace14-3.svg)
 
 ## Predicted values
 
@@ -683,9 +649,7 @@ matplot(pred$newdata$age, pred$fitted,
         xlab = 'age in months', ylab = 'predicted value')
 ```
 
-![plot of chunk predplot](figures_AfterFitting/predplot-1.svg)
-
-plot of chunk predplot
+![](figures_AfterFitting/predplot-1.svg)
 
 It is possible to have multiple variables vary and to set values for
 these variables:
@@ -718,9 +682,7 @@ ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
   scale_y_continuous(name = 'Expected BMI', breaks = seq(15, 18, 0.5))
 ```
 
-![plot of chunk predplotgg](figures_AfterFitting/predplotgg-1.svg)
-
-plot of chunk predplotgg
+![](figures_AfterFitting/predplotgg-1.svg)
 
 ## Export of imputed values
 
@@ -770,9 +732,7 @@ imputed values.
 plot_imp_distr(impDF, nrow = 1)
 ```
 
-![plot of chunk plotimpdistr](figures_AfterFitting/plotimpdistr-1.svg)
-
-plot of chunk plotimpdistr
+![](figures_AfterFitting/plotimpdistr-1.svg)
 
 ------------------------------------------------------------------------
 
