@@ -29,6 +29,8 @@ knitr::opts_chunk$set(
   fig.width = 7,
   fig.align = 'center',
   out.width = '100%',
+  fig.cap = "",
+  fig.scap = "",
   dev = "svglite",
   fig.path = "figures_MinimalExample/"
 )
