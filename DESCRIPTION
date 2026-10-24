@@ -31,6 +31,7 @@ Suggests:
     ggpubr,
 	svglite,
     testthat,
+    tibble,
     covr
 VignetteBuilder: knitr
 Encoding: UTF-8
