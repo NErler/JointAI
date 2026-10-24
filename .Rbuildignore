@@ -54,3 +54,5 @@ revdep/
 ^[.]?air[.]toml$
 ^\.positai$
 ^\.claude$
+^CLAUDE\.md$
+^dev$
