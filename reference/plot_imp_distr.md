@@ -49,6 +49,7 @@ plot_imp_distr(data, imp = "Imputation_", id = ".id", rownr = ".rownr",
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 mod <- lme_imp(y ~ C1 + c2 + B2 + C2, random = ~ 1 | id, data = longDF,
                n.iter = 200, monitor_params = c(imps = TRUE), mess = FALSE)

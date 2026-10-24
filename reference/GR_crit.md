@@ -105,17 +105,17 @@ GR_crit(mod1)
 #> Potential scale reduction factors:
 #> 
 #>             Point est. Upper C.I.
-#> (Intercept)      1.001      1.006
-#> C1               1.002      1.006
-#> C2               1.009      1.027
-#> M22              1.002      1.018
-#> M23              0.998      0.999
-#> M24              1.002      1.015
-#> sigma_y          1.013      1.055
+#> (Intercept)      1.004       1.02
+#> C1               1.003       1.02
+#> C2               0.999       1.00
+#> M22              1.005       1.01
+#> M23              1.004       1.03
+#> M24              1.003       1.02
+#> sigma_y          1.001       1.00
 #> 
 #> Multivariate psrf
 #> 
-#> 1.02
+#> 1.01
 
 
 ```

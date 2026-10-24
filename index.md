@@ -25,12 +25,14 @@ of functions to summarize and visualize results and incomplete data.
 **JointAI** can be installed from [CRAN](https://cran.r-project.org/):
 
 ``` r
+
 install.packages('JointAI')
 ```
 
 Alternatively, you can install **JointAI** from GitHub:
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("NErler/JointAI")
 ```
@@ -40,6 +42,7 @@ remotes::install_github("NErler/JointAI")
 **JointAI** provides the following main functions:
 
 ``` r
+
 lm_imp()                 # linear regression
 glm_imp()                # generalized linear regression
 clm_imp()                # cumulative logit model
@@ -90,6 +93,7 @@ of the data and missing values, export of imputed values and prediction.
 ### Visualize the observed data and missing data pattern
 
 ``` r
+
 library(JointAI)
 
 plot_all(
@@ -104,6 +108,7 @@ plot_all(
 ![](reference/figures/README-plotall-1.png)
 
 ``` r
+
 md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ```
 
@@ -112,6 +117,7 @@ md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ### Fit a linear regression model with incomplete covariates
 
 ``` r
+
 lm1 <- lm_imp(
   SBP ~ gender + age + WC + alc + educ + bili,
   data = NHANES,
@@ -124,12 +130,14 @@ lm1 <- lm_imp(
 ### Visualize the MCMC sample
 
 ``` r
+
 traceplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4)
 ```
 
 ![](reference/figures/README-traceplot-1.png)
 
 ``` r
+
 densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
 ```
 
@@ -138,6 +146,7 @@ densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
 ### Summarize the Result
 
 ``` r
+
 summary(lm1)
 #> 
 #> Bayesian linear model fitted with JointAI
@@ -172,6 +181,7 @@ summary(lm1)
 ```
 
 ``` r
+
 coef(lm1)
 #> $SBP
 #>  (Intercept) genderfemale          age           WC       alc>=1     educhigh 

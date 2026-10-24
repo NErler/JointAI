@@ -12,30 +12,30 @@ default_hyperpars()
 
 **norm:** hyper-parameters for normal and log-normal models
 
-|                  |                                                                                   |
-|------------------|-----------------------------------------------------------------------------------|
-| `mu_reg_norm`    | mean in the priors for regression coefficients                                    |
-| `tau_reg_norm`   | precision in the priors for regression coefficients                               |
+|  |  |
+|----|----|
+| `mu_reg_norm` | mean in the priors for regression coefficients |
+| `tau_reg_norm` | precision in the priors for regression coefficients |
 | `shape_tau_norm` | shape parameter in Gamma prior for the precision of the (log-)normal distribution |
-| `rate_tau_norm`  | rate parameter in Gamma prior for the precision of the (log-)normal distribution  |
+| `rate_tau_norm` | rate parameter in Gamma prior for the precision of the (log-)normal distribution |
 
 **gamma:** hyper-parameters for Gamma models
 
-|                   |                                                                            |
-|-------------------|----------------------------------------------------------------------------|
-| `mu_reg_gamma`    | mean in the priors for regression coefficients                             |
-| `tau_reg_gamma`   | precision in the priors for regression coefficients                        |
+|  |  |
+|----|----|
+| `mu_reg_gamma` | mean in the priors for regression coefficients |
+| `tau_reg_gamma` | precision in the priors for regression coefficients |
 | `shape_tau_gamma` | shape parameter in Gamma prior for the precision of the Gamma distribution |
-| `rate_tau_gamma`  | rate parameter in Gamma prior for the precision of the Gamma distribution  |
+| `rate_tau_gamma` | rate parameter in Gamma prior for the precision of the Gamma distribution |
 
 **beta:** hyper-parameters for beta models
 
-|                  |                                                                             |
-|------------------|-----------------------------------------------------------------------------|
-| `mu_reg_beta`    | mean in the priors for regression coefficients                              |
-| `tau_reg_beta`   | precision in the priors for regression coefficients                         |
-| `shape_tau_beta` | shape parameter in Gamma prior for the precision of the beta distribution   |
-| `rate_tau_beta`  | rate parameter in Gamma prior for precision of the of the beta distribution |
+|  |  |
+|----|----|
+| `mu_reg_beta` | mean in the priors for regression coefficients |
+| `tau_reg_beta` | precision in the priors for regression coefficients |
+| `shape_tau_beta` | shape parameter in Gamma prior for the precision of the beta distribution |
+| `rate_tau_beta` | rate parameter in Gamma prior for precision of the of the beta distribution |
 
 **binom:** hyper-parameters for binomial models
 
@@ -71,11 +71,11 @@ default_hyperpars()
 matrices (when there is only one random effect a Gamma distribution is
 used instead of the Wishart distribution)
 
-|                    |                                                                                                                                                                                                                                                  |
-|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `shape_diag_RinvD` | shape parameter in Gamma prior for the diagonal elements of `RinvD`                                                                                                                                                                              |
-| `rate_diag_RinvD`  | rate parameter in Gamma prior for the diagonal elements of `RinvD`                                                                                                                                                                               |
-| `KinvD_expr`       | a character string that can be evaluated to calculate the number of degrees of freedom in the Wishart distribution used for the inverse of the variance-covariance matrix for random effects, depending on the number of random effects `nranef` |
+|  |  |
+|----|----|
+| `shape_diag_RinvD` | shape parameter in Gamma prior for the diagonal elements of `RinvD` |
+| `rate_diag_RinvD` | rate parameter in Gamma prior for the diagonal elements of `RinvD` |
+| `KinvD_expr` | a character string that can be evaluated to calculate the number of degrees of freedom in the Wishart distribution used for the inverse of the variance-covariance matrix for random effects, depending on the number of random effects `nranef` |
 
 **surv:** parameters for survival models (`survreg`, `coxph` and `JM`)
 

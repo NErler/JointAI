@@ -36,13 +36,16 @@ chains visually, and can be obtained with the function
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html):
 
 ``` r
+
 mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500,
                  seed = 2020)
 
 traceplot(mod13a)
 ```
 
-![](figures_AfterFitting/trace13a-1.svg)
+![plot of chunk trace13a](figures_AfterFitting/trace13a-1.svg)
+
+plot of chunk trace13a
 
 When the sampler has converged the chains show one horizontal band, as
 in the above figure. Consequently, when traces show a trend convergence
@@ -62,13 +65,16 @@ With the argument `use_ggplot` it is possible to get a
 traceplot. It can be extended using standard **ggplot2** syntax.
 
 ``` r
+
 library(ggplot2)
 traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
   theme(legend.position = 'bottom') +
   scale_color_brewer(palette = 'Dark2')
 ```
 
-![](figures_AfterFitting/ggtrace15a-1.svg)
+![plot of chunk ggtrace15a](figures_AfterFitting/ggtrace15a-1.svg)
+
+plot of chunk ggtrace15a
 
 ### Density plot
 
@@ -82,15 +88,20 @@ passed to `abline`, and allows us to add (vertical) lines to the plot,
 e.g., marking zero:
 
 ``` r
+
 densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
          vlines = list(list(v = c(rep(0, length(coef(mod13a)$SBP)), NA),
                             col = grey(0.8))))
 ```
 
-![](figures_AfterFitting/dens13a-2-1.svg) or marking the posterior mean
-and 2.5% and 97.5% quantiles:
+![plot of chunk dens13a-2](figures_AfterFitting/dens13a-2-1.svg)
+
+plot of chunk dens13a-2
+
+or marking the posterior mean and 2.5% and 97.5% quantiles:
 
 ``` r
+
 res <- rbind(summary(mod13a)$res$SBP$regcoef[, c('Mean', '2.5%', '97.5%')],
              summary(mod13a)$res$SBP$sigma[, c('Mean', '2.5%', '97.5%')])
 
@@ -103,7 +114,9 @@ densplot(mod13a, ncol = 3,
 )
 ```
 
-![](figures_AfterFitting/densplot15a-1.svg)
+![plot of chunk densplot15a](figures_AfterFitting/densplot15a-1.svg)
+
+plot of chunk densplot15a
 
 Like with
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md)
@@ -113,6 +126,7 @@ when setting `use_ggplot = TRUE`. Here, vertical lines can be added as
 additional layers:
 
 ``` r
+
 # fit the complete-case version of the model
 mod13a_cc <- lm(formula(mod13a), data = NHANES, na.action = na.omit)
 
@@ -159,7 +173,9 @@ p13a +
                      labels = c('JointAI', 'compl.case'))
 ```
 
-![](figures_AfterFitting/ggdens15a-1.svg)
+![plot of chunk ggdens15a](figures_AfterFitting/ggdens15a-1.svg)
+
+plot of chunk ggdens15a
 
 ## Model Summary
 
@@ -181,6 +197,7 @@ of chains. Furthermore, the number of observations (number of rows in
 the data) is given.
 
 ``` r
+
 summary(mod13a)
 #> 
 #> Bayesian linear model fitted with JointAI
@@ -219,6 +236,7 @@ add information on the missing values in the variables involved in the
 model:
 
 ``` r
+
 library(splines)
 mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
                   random = ~ 1 | ID,
@@ -227,6 +245,7 @@ mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
 ```
 
 ``` r
+
 summary(mod13b, missinfo = TRUE)
 #> 
 #> Bayesian linear mixed model fitted with JointAI
@@ -291,19 +310,24 @@ of missing values per variable is printed
 
 ### Tail probability
 
-The tail probability, calculated as 2\times\min\left\\Pr(\theta \> 0),
-Pr(\theta \< 0)\right\\, where \theta is the parameter of interest, is a
-measure of how likely the value 0 is under the estimated posterior
-distribution. The figure visualizes three examples of posterior
-distributions and the corresponding minimum of Pr(\theta \> 0) and
-Pr(\theta \< 0) (shaded area): ![](figures_AfterFitting/tailprob-1.svg)
+The tail probability, calculated as
+$`2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\},`$ where
+$`\theta`$ is the parameter of interest, is a measure of how likely the
+value 0 is under the estimated posterior distribution. The figure
+visualizes three examples of posterior distributions and the
+corresponding minimum of $`Pr(\theta > 0)`$ and $`Pr(\theta < 0)`$
+(shaded area):
+
+![plot of chunk tailprob](figures_AfterFitting/tailprob-1.svg)
+
+plot of chunk tailprob
 
 ## Evaluation criteria
 
 The convergence of the MCMC chains and precision of the posterior sample
 can also be evaluated more formally. Implemented in **JointAI** are the
-Gelman-Rubin criterion for convergence[¹](#fn1) and a comparison of the
-Monte Carlo Error with the posterior standard deviation.
+Gelman-Rubin criterion for convergence[^1] and a comparison of the Monte
+Carlo Error with the posterior standard deviation.
 
 ### Gelman-Rubin criterion for convergence
 
@@ -317,6 +341,7 @@ which is based on the function `gelman.diag()` from the package
 the confidence interval should not be much larger than 1.
 
 ``` r
+
 GR_crit(mod13a)
 #> Potential scale reduction factors:
 #> 
@@ -347,12 +372,13 @@ It uses the function `mcmcse::mcmcse.mat()` from the package
 Monte Carlo error (the error that is made since the sample is finite)
 and compares it to the standard deviation of the posterior sample. A
 rule of thumb is that the Monte Carlo error should not be more than 5%
-of the standard deviation[²](#fn2). Besides the arguments explained
+of the standard deviation[^2]. Besides the arguments explained
 [below](#sec:subset),
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
 takes the arguments of `mcmcse.mat()`.
 
 ``` r
+
 MC_error(mod13a)
 #>                est   MCSE    SD MCSE/SD
 #> (Intercept)  81.08 0.2502 9.692   0.026
@@ -379,12 +405,15 @@ ratio for each (selected) node and automatically adds a vertical line at
 the desired cut-off (by default 5%).
 
 ``` r
+
 par(mar = c(3, 5, 0.5, 0.5), mgp = c(2, 0.6, 0), mfrow = c(1, 2))
 plot(MC_error(mod13a))  # left panel: all iterations 101:600
 plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 ```
 
-![](figures_AfterFitting/MCE15a-1.svg)
+![plot of chunk MCE15a](figures_AfterFitting/MCE15a-1.svg)
+
+plot of chunk MCE15a
 
 ## Subset of output
 
@@ -421,10 +450,12 @@ re-estimating the model with the monitor for these parameters switched
 on):
 
 ``` r
+
 mod13c <- update(mod13a, monitor_params = c(other_models = TRUE))
 ```
 
 ``` r
+
 summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> 
 #> Bayesian joint model fitted with JointAI 
@@ -490,20 +521,25 @@ To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
 
 ``` r
+
 densplot(mod13c, subset = list(analysis_main = FALSE,
                                other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
-![](figures_AfterFitting/densplot13c-1.svg)
+![plot of chunk densplot13c](figures_AfterFitting/densplot13c-1.svg)
+
+plot of chunk densplot13c
 
 This also works when a subset of the imputed values should be displayed:
 
 ``` r
+
 # re-fit the model and monitor the imputed values
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 ```
 
 ``` r
+
 # select all imputed values for 'WC' (4th column of M_lvlone)
 sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d)$coef, value = TRUE)
 sub3
@@ -513,7 +549,9 @@ sub3
 traceplot(mod13d, subset = list(analysis_main = FALSE, other = sub3), ncol = 2)
 ```
 
-![](figures_AfterFitting/trace15d-1.svg)
+![plot of chunk trace15d](figures_AfterFitting/trace15d-1.svg)
+
+plot of chunk trace15d
 
 When the number of imputed values is large or in order to check
 convergence of random effects, it may not be feasible to plot and
@@ -521,11 +559,13 @@ inspect all trace plots. In that case a random subset of, for instance
 the random effects, can be selected (output not shown):
 
 ``` r
+
 # re-fit the model monitoring the random effects
 mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 ```
 
 ``` r
+
 # extract random intercepts
 ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
@@ -534,7 +574,9 @@ traceplot(mod13e, subset = list(analysis_main = FALSE,
                                 other = sample(ri, size = 12)), ncol = 4)
 ```
 
-![](figures_AfterFitting/ri-1.svg)
+![plot of chunk ri](figures_AfterFitting/ri-1.svg)
+
+plot of chunk ri
 
 ### Subset of MCMC samples
 
@@ -550,37 +592,52 @@ the summary or plot using the argument `exclude_chains`. This argument
 takes a numeric vector identifying chains to be excluded, for example:
 
 ``` r
+
 mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
                 progress.bar = 'none', n.chains = 5)
 
 densplot(mod14, ncol = 3)
 ```
 
-![](figures_AfterFitting/mod14-1.svg)
+![plot of chunk mod14](figures_AfterFitting/mod14-1.svg)
+
+plot of chunk mod14
 
 ``` r
+
 densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
-![](figures_AfterFitting/mod14-2.svg)
+![plot of chunk mod14](figures_AfterFitting/mod14-2.svg)
+
+plot of chunk mod14
 
 ``` r
+
 traceplot(mod14, thin = 10, ncol = 3)
 ```
 
-![](figures_AfterFitting/trace14-1.svg)
+![plot of chunk trace14](figures_AfterFitting/trace14-1.svg)
+
+plot of chunk trace14
 
 ``` r
+
 traceplot(mod14, start = 150, ncol = 3)
 ```
 
-![](figures_AfterFitting/trace14-2.svg)
+![plot of chunk trace14](figures_AfterFitting/trace14-2.svg)
+
+plot of chunk trace14
 
 ``` r
+
 traceplot(mod14, end = 120, ncol = 3)
 ```
 
-![](figures_AfterFitting/trace14-3.svg)
+![plot of chunk trace14](figures_AfterFitting/trace14-3.svg)
+
+plot of chunk trace14
 
 ## Predicted values
 
@@ -604,6 +661,7 @@ quantile). Arguments `start`, `end`, `thin` and `exclude_chains` control
 the subset of MCMC samples that is used.
 
 ``` r
+
 predict(mod13a, newdata = NHANES[27, ])
 #> $newdata
 #>          SBP gender age             race   WC alc educ creat albu
@@ -633,6 +691,7 @@ argument `vars`, and the median or reference value for all other
 continuous and categorical variables.
 
 ``` r
+
 # create dataset for prediction
 newDF <- predDF(mod13b, var = ~ age)
 
@@ -649,12 +708,15 @@ matplot(pred$newdata$age, pred$fitted,
         xlab = 'age in months', ylab = 'predicted value')
 ```
 
-![](figures_AfterFitting/predplot-1.svg)
+![plot of chunk predplot](figures_AfterFitting/predplot-1.svg)
+
+plot of chunk predplot
 
 It is possible to have multiple variables vary and to set values for
 these variables:
 
 ``` r
+
 # create dataset for prediction
 newDF <- predDF(mod13b, var = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
 
@@ -682,7 +744,9 @@ ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
   scale_y_continuous(name = 'Expected BMI', breaks = seq(15, 18, 0.5))
 ```
 
-![](figures_AfterFitting/predplotgg-1.svg)
+![plot of chunk predplotgg](figures_AfterFitting/predplotgg-1.svg)
+
+plot of chunk predplotgg
 
 ## Export of imputed values
 
@@ -720,6 +784,7 @@ newly created id variable for each observation in cross-sectional data
 (multi-level data should already contain an id variable).
 
 ``` r
+
 impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 ```
 
@@ -729,14 +794,15 @@ allows us to visually compare the distribution of the observed and
 imputed values.
 
 ``` r
+
 plot_imp_distr(impDF, nrow = 1)
 ```
 
-![](figures_AfterFitting/plotimpdistr-1.svg)
+![plot of chunk plotimpdistr](figures_AfterFitting/plotimpdistr-1.svg)
 
-------------------------------------------------------------------------
+plot of chunk plotimpdistr
 
-1.  Gelman, A. and Rubin, D.B. (1992). Inference from Iterative
+[^1]: Gelman, A. and Rubin, D.B. (1992). Inference from Iterative
     Simulation Using Multiple Sequences. *Statistical Science* **7**(4),
     457-472. doi: 10.1214/ss/1177011136.  
       
@@ -745,5 +811,5 @@ plot_imp_distr(impDF, nrow = 1)
     Graphical Statistics* **7**(4), 434 - 455. doi:
     10.1080/10618600.1998.10474787.
 
-2.  Lesaffre, E. M. and A. B. Lawson (2012). *Bayesian Biostatistics*.
+[^2]: Lesaffre, E. M. and A. B. Lawson (2012). *Bayesian Biostatistics*.
     John Wiley & Sons. doi: 10.1002/9781119942412.

@@ -11,10 +11,9 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Theoretical Background">
 </head>
@@ -76,9 +75,9 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Theoretical Background</h1>
             
-            <h4 data-toc-skip class="date">2026-02-22</h4>
+            <h4 data-toc-skip class="date">2020-06-20</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/TheoreticalBackground.Rmd" class="external-link"><code>vignettes/TheoreticalBackground.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/v1.1.0/vignettes/TheoreticalBackground.Rmd" class="external-link"><code>vignettes/TheoreticalBackground.Rmd</code></a></small>
       <div class="d-none name"><code>TheoreticalBackground.Rmd</code></div>
     </div>
 
@@ -191,18 +190,18 @@ implemented as a link in
 <div class="section level3">
 <h3 id="cumulative-logit-mixed-models">Cumulative logit (mixed) models<a class="anchor" aria-label="anchor" href="#cumulative-logit-mixed-models"></a>
 </h3>
-<p>Cumulative logit mixed models are of the form</p>
-<p><span class="math display">\[\begin{align*}
-y_{ij} &amp;\sim \text{Mult}(\pi_{ij,1}, \ldots, \pi_{ij,K}),\\[2ex]
-\pi_{ij,1} &amp;= P(y_{ij} \leq 1),\\
-\pi_{ij,k} &amp;= P(y_{ij} \leq k) - P(y_{ij} \leq k-1), \quad k \in 2, \ldots, K-1,\\
-\pi_{ij,K} &amp;= 1 - \sum_{k = 1}^{K-1}\pi_{ij,k},\\[2ex]
-\text{logit}(P(y_{ij} \leq k)) &amp;= \gamma_k + \eta_{ij}, \quad k \in 1,\ldots,K,\\
-\eta_{ij} &amp;= \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,\\[2ex]
-\gamma_1,\delta_1,\ldots,\delta_{K-1} &amp;\overset{iid}{\sim} N(\mu_\gamma, \sigma_\gamma^2),\\
-\gamma_k &amp;\sim \gamma_{k-1} + \exp(\delta_{k-1}),\quad k = 2,\ldots,K,
-\end{align*}\]</span></p>
-<p>where <span class="math inline">\(\pi_{ij,k} = P(y_{ij} = k)\)</span> and <span class="math inline">\(\text{logit}(x) = \log\left(\frac{x}{1-x}\right)\)</span>.
+<p>Cumulative logit mixed models are of the form
+<span class="math display">\[\begin{eqnarray*}
+y_{ij} &amp;\sim&amp; \text{Mult}(\pi_{ij,1}, \ldots, \pi_{ij,K}),\\[2ex]
+\pi_{ij,1} &amp;=&amp; P(y_{ij} \leq 1),\\
+\pi_{ij,k} &amp;=&amp; P(y_{ij} \leq k) - P(y_{ij} \leq k-1), \quad k \in 2, \ldots, K-1,\\
+\pi_{ij,K} &amp;=&amp; 1 - \sum_{k = 1}^{K-1}\pi_{ij,k},\\[2ex]
+\text{logit}(P(y_{ij} \leq k)) &amp;=&amp; \gamma_k + \eta_{ij}, \quad k \in 1,\ldots,K,\\
+\eta_{ij} &amp;=&amp; \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,\\[2ex]
+\gamma_1,\delta_1,\ldots,\delta_{K-1} &amp;\overset{iid}{\sim}&amp; N(\mu_\gamma, \sigma_\gamma^2),\\
+\gamma_k &amp;\sim&amp; \gamma_{k-1} + \exp(\delta_{k-1}),\quad k = 2,\ldots,K,
+\end{eqnarray*}\]</span>
+where <span class="math inline">\(\pi_{ij,k} = P(y_{ij} = k)\)</span> and <span class="math inline">\(\text{logit}(x) = \log\left(\frac{x}{1-x}\right)\)</span>.
 A cumulative logit regression model for a univariate outcome <span class="math inline">\(y_i\)</span> can be
 obtained by dropping the index <span class="math inline">\(j\)</span> and omitting <span class="math inline">\(\mathbf z_{ij}^\top\mathbf b_i\)</span>.
 In cumulative logit (mixed) models, the design matrix <span class="math inline">\(\mathbf X\)</span> does not contain
@@ -222,13 +221,13 @@ a parametric model which assumes a Weibull distribution for the true
 (but partially unobserved) survival times <span class="math inline">\(T^*\)</span>, and a semi-parametric
 Cox proportional hazards model.</p>
 <p>The parametric survival model is implemented as
-<span class="math display">\[\begin{align*}
-T_i^* &amp;\sim \text{Weibull}(1, r_i, s),\\
-D_i &amp;\sim \text{𝟙}(T_i^* \geq C_i),\\
-\log(r_j) &amp;= - \mathbf x_i^\top\boldsymbol\beta,\\
-s &amp;\sim \text{Exp}(0.01),
-\end{align*}\]</span>
-where 𝟙 is the indicator function which is one if <span class="math inline">\(T_i^*\geq C_i\)</span>,
+<span class="math display">\[\begin{eqnarray*}
+T_i^* &amp;\sim&amp; \text{Weibull}(1, r_i, s),\\
+D_i &amp;\sim&amp; \unicode{x1D7D9}(T_i^* \geq C_i),\\
+\log(r_j) &amp;=&amp; - \mathbf x_i^\top\boldsymbol\beta,\\
+s &amp;\sim&amp; \text{Exp}(0.01),
+\end{eqnarray*}\]</span>
+where <span class="math inline">\(\unicode{x1D7D9}\)</span> is the indicator function which is one if <span class="math inline">\(T_i^*\geq C_i\)</span>,
 and zero otherwise.</p>
 <p>The Cox proportional hazards model can be written as
 <span class="math display">\[h_i(t) = h_0(t)\exp(\mathbf X_i \boldsymbol\beta),\]</span>
@@ -251,14 +250,14 @@ evaluation points.</p>
 </h2>
 <p>A convenient way to specify the joint distribution of the incomplete covariates
 <span class="math inline">\(\mathbf X_{mis} = (\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q})\)</span> is to use
-a sequence of conditional univariate distributions <span class="citation">(Ibrahim, Chen, and Lipsitz 2002; Erler et al. 2016)</span>
+a sequence of conditional univariate distributions <span class="citation">(Ibrahim et al. 2002; Erler et al. 2016)</span>
 <!--  -->
-<span class="math display" id="eq:factorization">\[\begin{align}
+<span class="math display" id="eq:factorization">\[\begin{eqnarray}
 p(\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q} \mid \mathbf X_{obs}, \boldsymbol\theta_{x})
-&amp; =  p(\mathbf x_{mis_1} \mid \mathbf X_{obs}, \boldsymbol\theta_{x_1})\nonumber\\
-&amp; \phantom{=}    \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
+&amp; = &amp; p(\mathbf x_{mis_1} \mid \mathbf X_{obs}, \boldsymbol\theta_{x_1})\\
+&amp;   &amp; \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
 \ldots, \mathbf x_{mis_{\ell-1}}, \boldsymbol\theta_{x_\ell}),\tag{1}
-\end{align}\]</span>
+\end{eqnarray}\]</span>
 with <span class="math inline">\(\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots,
 \boldsymbol\theta_{x_q}^\top)^\top\)</span>.</p>
 <p>Each of the conditional distributions is a member of the exponential family,
@@ -284,26 +283,26 @@ distribution that can be derived from the full joint distribution of outcome
 and covariates.</p>
 <p>When, for instance, the analysis model is a GLM, the full conditional
 distribution of an incomplete covariate <span class="math inline">\(x_{i, mis_{\ell}}\)</span> can be written as
-<span class="math display" id="eq:fullcond">\[\begin{align} \nonumber
+<span class="math display" id="eq:fullcond">\[\begin{eqnarray} \nonumber
 p(x_{i, mis_{\ell}} \mid \mathbf y_i, \mathbf x_{i,obs},
 \mathbf x_{i,mis_{-\ell}}, \boldsymbol\theta)
-\propto&amp; p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
+&amp;\propto&amp; p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
 \boldsymbol\theta_{y\mid x}
 \right)
 p(\mathbf x_{i, mis}\mid \mathbf x_{i, obs}, \boldsymbol\theta_{x})\,
 p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{x})\\\nonumber
-\propto&amp; p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
+&amp;\propto&amp; p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
 \boldsymbol\theta_{y\mid x}
 \right)\\\nonumber
-        &amp; p(x_{i, mis_\ell} \mid \mathbf x_{i, obs}, \mathbf x_{i, mis_{&lt;\ell}}, \boldsymbol\theta_{x_\ell})\\\nonumber
-        &amp; \left\{
+&amp;        &amp; p(x_{i, mis_\ell} \mid \mathbf x_{i, obs}, \mathbf x_{i, mis_{&lt;\ell}}, \boldsymbol\theta_{x_\ell})\\\nonumber
+&amp;        &amp; \left\{
 \prod_{k=\ell+1}^q p(x_{i,mis_k}\mid \mathbf x_{i, obs},
 \mathbf x_{i, mis_{&lt;k}},
 \boldsymbol\theta_{x_k})
 \right\}\\
-        &amp; p(\boldsymbol\theta_{y\mid x}) p(\boldsymbol\theta_{x_\ell})
+&amp;        &amp; p(\boldsymbol\theta_{y\mid x}) p(\boldsymbol\theta_{x_\ell})
 \prod_{k=\ell+1}^p p(\boldsymbol\theta_{x_k}), \tag{2}
-\end{align}\]</span>
+\end{eqnarray}\]</span>
 where <span class="math inline">\(\boldsymbol\theta_{x_{\ell}}\)</span> is the vector of parameters describing the model
 for the <span class="math inline">\(\ell\)</span>-th covariate, and contains the vector of regression coefficients
 <span class="math inline">\(\boldsymbol\alpha_\ell\)</span> and potentially additional (variance) parameters.
@@ -326,12 +325,12 @@ the conditional distribution of the outcome in <a href="#eq:fullcond">(2)</a>,
 <span class="math inline">\(p\left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x}
 \right),\)</span>
 has to be replaced by
-<span class="math display" id="eq:lmmpartfullcond">\[\begin{equation}
+<span class="math display" id="eq:lmmpartfullcond">\[\begin{eqnarray}
 \left\{\prod_{j=1}^{n_i} p \left(y_{ij} \mid \mathbf x_{i, obs},
 \mathbf x_{i, mis}, \mathbf b_i,
 \boldsymbol\theta_{y\mid x}\right)
 \right\}. \tag{3}
-\end{equation}\]</span>
+\end{eqnarray}\]</span>
 Since <span class="math inline">\(\mathbf y\)</span> does not appear in any of the other terms in <a href="#eq:fullcond">(2)</a>,
 and <a href="#eq:lmmpartfullcond">(3)</a> can be chosen to be a model that is appropriate
 for the outcome at hand, the thereby specified full conditional distribution
@@ -355,10 +354,10 @@ to specify models for all longitudinal variables, even completely observed ones,
 while models for completely observed baseline covariates can be omitted.
 This becomes clear when we extend the factorized joint distribution from above
 with completely and incompletely observed longitudinal (level-1)
-covariates <span class="math inline">\(\mathbf s_{obs}\)</span> and <span class="math inline">\(\mathbf s_{mis}\)</span>:</p>
-<p><span class="math display">\[
+covariates <span class="math inline">\(\mathbf s_{obs}\)</span> and <span class="math inline">\(\mathbf s_{mis}\)</span>:
+<span class="math display">\[\begin{multline*}
 p \left(y_{ij} \mid \mathbf s_{ij, obs}, \mathbf s_{ij, mis},
-\mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right)\\\\
+\mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right)\\
 p(\mathbf s_{ij, mis}\mid \mathbf s_{ij, obs}, \mathbf x_{i, obs},
 \mathbf x_{i, mis}, \boldsymbol\theta_{s_{mis}})\,
 p(\mathbf s_{ij, obs}\mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
@@ -368,7 +367,7 @@ p(\mathbf x_{i, obs} \mid \boldsymbol\theta_{x_{obs}})\,
 p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{s_{mis}}) \,
 p(\boldsymbol\theta_{s_{obs}})\, p(\boldsymbol\theta_{x_{mis}}) \,
 p(\boldsymbol\theta_{x_{obs}})
-\]</span>
+\end{multline*}\]</span>
 Given that the parameter vectors <span class="math inline">\(\theta_{x_{obs}}\)</span>, <span class="math inline">\(\theta_{x_{mis}}\)</span>, <span class="math inline">\(\theta_{s_{obs}}\)</span>
 and <span class="math inline">\(\theta_{s_{mis}}\)</span> are a priori independent, and
 <span class="math inline">\(p(\mathbf x_{i, obs} \mid \boldsymbol\theta_{x_{obs}})\)</span> is independent of
@@ -386,7 +385,7 @@ has an advantage over standard FCS are settings with interaction terms that
 involve incomplete covariates or when the association of the outcome with an
 incomplete covariate is non-linear.
 In standard FCS such settings lead to incompatible imputation models
-<span class="citation">(White, Royston, and Wood 2011; Bartlett et al. 2015)</span>.
+<span class="citation">(White et al. 2011; Bartlett et al. 2015)</span>.
 This becomes clear when considering the following simple example
 where the analysis model of interest is the linear regression
 <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i\)</span>
@@ -424,18 +423,18 @@ in the section on <a href="https://nerler.github.io/JointAI/articles/ModelSpecif
 <div class="section level2 unnumbered">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Bartlett2015" class="csl-entry">
-Bartlett, JW, SR Seaman, IR White, and JR Carpenter. 2015. <span>“Multiple Imputation of Covariates by Fully Conditional Specification: Accommodating the Substantive Model.”</span> <em>Statistical Methods in Medical Research</em>. <a href="https://doi.org/10.1177/0962280214521348" class="external-link">https://doi.org/10.1177/0962280214521348</a>.
+Bartlett, JW, SR Seaman, IR White, and JR Carpenter. 2015. <span>“Multiple Imputation of Covariates by Fully Conditional Specification: Accommodating the Substantive Model.”</span> In <em>Statistical Methods in Medical Research</em>, vol. 24. no. 4. <a href="https://doi.org/10.1177/0962280214521348" class="external-link">https://doi.org/10.1177/0962280214521348</a>.
 </div>
 <div id="ref-Erler2016" class="csl-entry">
 Erler, NS, D Rizopoulos, J van Rosmalen, VWV Jaddoe, OH Franco, and EMEH Lesaffre. 2016. <span>“Dealing with Missing Covariates in Epidemiologic Studies: A Comparison Between Multiple Imputation and a Full Bayesian Approach.”</span> <em>Statistics in Medicine</em> 35 (17): 2955–74. <a href="https://doi.org/10.1002/sim.6944" class="external-link">https://doi.org/10.1002/sim.6944</a>.
 </div>
 <div id="ref-Ibrahim2002" class="csl-entry">
-Ibrahim, JG, MH Chen, and SR Lipsitz. 2002. <span>“Bayesian Methods for Generalized Linear Models with Covariates Missing At Random.”</span> <em>Canadian Journal of Statistics</em>. <a href="https://doi.org/10.2307/3315865" class="external-link">https://doi.org/10.2307/3315865</a>.
+Ibrahim, JG, MH Chen, and SR Lipsitz. 2002. <span>“Bayesian Methods for Generalized Linear Models with Covariates Missing At Random.”</span> In <em>Canadian Journal of Statistics</em>, vol. 30. no. 1. <a href="https://doi.org/10.2307/3315865" class="external-link">https://doi.org/10.2307/3315865</a>.
 </div>
 <div id="ref-White2011" class="csl-entry">
-White, IR, P Royston, and AM Wood. 2011. <span>“Multiple Imputation Using Chained Equations: Issues and Guidance for Practice.”</span> <em>Statistics in Medicine</em>. <a href="https://doi.org/10.1002/sim.4067" class="external-link">https://doi.org/10.1002/sim.4067</a>.
+White, IR, P Royston, and AM Wood. 2011. <span>“Multiple Imputation Using Chained Equations: Issues and Guidance for Practice.”</span> In <em>Statistics in Medicine</em>, vol. 30. no. 4. <a href="https://doi.org/10.1002/sim.4067" class="external-link">https://doi.org/10.1002/sim.4067</a>.
 </div>
 </div>
 </div>
@@ -450,7 +449,7 @@ White, IR, P Royston, and AM Wood. 2011. <span>“Multiple Imputation Using Chai
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

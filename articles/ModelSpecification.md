@@ -113,6 +113,7 @@ is used.
 The following three specifications are equal:
 
 ``` r
+
 mod1a <- glm_imp(educ ~ age + gender + creat, data = NHANES,
                  family = "binomial", n.adapt = 0)
 
@@ -134,6 +135,7 @@ To use, for instance, a “probit” link instead, this needs to be
 specified explicitly:
 
 ``` r
+
 mod1d <- glm_imp(educ ~ age + gender + creat, data = NHANES,
                family = binomial(link = 'probit'), n.adapt = 0)
 
@@ -175,12 +177,14 @@ Interactions between variables can be introduced using `:` or `*`, which
 adds the interaction term AND the main effects, i.e.,
 
 ``` r
+
 SBP ~ age + gender + smoke * creat
 ```
 
 is equivalent to
 
 ``` r
+
 SBP ~ age + gender + smoke + creat + smoke:creat
 ```
 
@@ -190,6 +194,7 @@ Interactions between multiple variables can be specified using
 parentheses:
 
 ``` r
+
 mod2a <- glm_imp(educ ~ gender * (age + smoke + creat),
                  data = NHANES, family = binomial(), n.adapt = 0)
 ```
@@ -209,6 +214,7 @@ here and in other vignettes to demonstrate the effect that different
 model specifications have.
 
 ``` r
+
 parameters(mod2a)
 #> 
 #> Note: "mod2a" does not contain MCMC samples.
@@ -237,6 +243,7 @@ parameters(mod2a)
 To specify interactions of a given level, `^` can be used:
 
 ``` r
+
 # all two-way interactions:
 mod2b <- glm_imp(educ ~ gender + (age + smoke + creat)^2,
                  data = NHANES, family = binomial(), n.adapt = 0)
@@ -354,9 +361,10 @@ variables. Those functions include:
 The list of functions implemented in JAGS can be found in the [JAGS user
 manual](https://sourceforge.net/projects/mcmc-jags/files/Manuals/).
 
-**Some examples:**[¹](#fn1)
+**Some examples:**[^1]
 
 ``` r
+
 # Absolute difference between bili and creat
 mod3a <- lm_imp(SBP ~ age + gender + abs(bili - creat), data = NHANES)
 
@@ -388,6 +396,7 @@ predictor for `SBP`, but in the imputation model for `bili`, `age`
 enters with a linear effect.
 
 ``` r
+
 list_models(mod3b, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
 #> Linear model for "SBP" 
 #>    family: gaussian 
@@ -422,6 +431,7 @@ for `SBP`, and the auxiliary variable `I(WC^2)` is used in the linear
 predictor of the imputation model for `bili`:
 
 ``` r
+
 mod3e <- lm_imp(SBP ~ age + gender + bili, auxvars = ~ I(WC^2), data = NHANES)
 
 list_models(mod3e, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
@@ -451,6 +461,7 @@ of `WC` is specified as auxiliary variable, both variables are used as
 predictors in the imputation models:
 
 ``` r
+
 mod3f <- lm_imp(SBP ~ age + gender + bili + WC, auxvars = ~ I(WC^2), data = NHANES)
 
 list_models(mod3f, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
@@ -481,6 +492,7 @@ predictor of imputation models, it is necessary to also include that
 function in the argument `auxvars`:
 
 ``` r
+
 mod3g <- lm_imp(SBP ~ age + gender + bili + I(WC^2), auxvars = ~ I(WC^2), data = NHANES)
 
 list_models(mod3g, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
@@ -548,6 +560,7 @@ log-normal distribution (`"glm_lognorm"`) or a Gamma distribution (e.g.,
 `"glm_gamma_log"`):
 
 ``` r
+
 # truncation of the distribution of  bili
 mod4a <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
                 trunc = list(bili = c(1e-5, NA)), data = NHANES)
@@ -577,6 +590,7 @@ available as the distribution function of the logistic distribution
 [`plogis()`](https://rdrr.io/r/stats/Logistic.html).
 
 ``` r
+
 # Define the function ilogit
 ilogit <- plogis
 
@@ -590,7 +604,7 @@ mod5a <- lm_imp(SBP ~ age + gender + ilogit(creat), data = NHANES)
 
 It is also possible to nest a function in another function.
 
-**Example:**[²](#fn2)
+**Example:**[^2]
 
 The complementary log log transformation is restricted to values larger
 than 0 and smaller than 1. In order to use this function on a variable
@@ -603,6 +617,7 @@ In JAGS, the complementary log-log transformation is implemented as
 need to define it:
 
 ``` r
+
 # define the complementary log log transformation
 cloglog <- function(x) log(-log(1 - x))
 
@@ -653,6 +668,7 @@ It is possible to use splines in the random effects structure (but only
 for completely observed variables), e.g.:
 
 ``` r
+
 mod7a <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 2),
                  random = ~ns(age, df = 2) | ID, data = simLong)
 ```
@@ -701,39 +717,37 @@ models need to be specified for all level-1 variables.
 
 #### Why do we need models for completely observed covariates?
 
-The joint distribution of an outcome y, covariates x, random effects b
-and parameters \theta, p(y, x, b, \theta), is modelled as the product of
-univariate conditional distributions. To facilitate the specification of
-these distributions they are ordered so that longitudinal (level-1)
-variables may have baseline (level-2) variables in their linear
-predictors but not vice versa.
+The joint distribution of an outcome $`y`$, covariates $`x`$, random
+effects $`b`$ and parameters $`\theta`$, $`p(y, x, b, \theta)`$, is
+modelled as the product of univariate conditional distributions. To
+facilitate the specification of these distributions they are ordered so
+that longitudinal (level-1) variables may have baseline (level-2)
+variables in their linear predictors but not vice versa.
 
 For example:
+``` math
+\begin{align}
+p(y, x, b, \theta) = & p(y \mid x_1, ..., x_4, b_y, \theta_y) && \text{analysis model}\\
+& p(x_1\mid \theta_{x1}) && \text{model for a complete baseline covariate}\\
+& p(x_2\mid x_1, \theta_{x2}) && \text{model for an incomplete baseline covariate}\\
+& p(x_3\mid x_1, x_2, b_{x3}, \theta_{x3}) && \text{model for a complete longitudinal covariate}\\
+& p(x_4\mid x_1, x_2, x_3, b_{x4}, \theta_{x4}) && \text{model for an incomplete longitudinal covariate}\\
+& p(b_y|\theta_b) p(b_{x3}|\theta_b) p(b_{x4}|\theta_b) && \text{models for the random effects}\\
+& p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b) && \text{prior distributions}\end{align}
+```
 
-\begin{align} p(y, x, b, \theta) = & p(y \mid x_1, ..., x_4, b_y,
-\theta_y) && \text{analysis model}\\ & p(x_1\mid \theta\_{x1}) &&
-\text{model for a complete baseline covariate}\\ & p(x_2\mid x_1,
-\theta\_{x2}) && \text{model for an incomplete baseline covariate}\\ &
-p(x_3\mid x_1, x_2, b\_{x3}, \theta\_{x3}) && \text{model for a complete
-longitudinal covariate}\\ & p(x_4\mid x_1, x_2, x_3, b\_{x4},
-\theta\_{x4}) && \text{model for an incomplete longitudinal covariate}\\
-& p(b_y\|\theta_b) p(b\_{x3}\|\theta_b) p(b\_{x4}\|\theta_b) &&
-\text{models for the random effects}\\ & p(\theta_y) p(\theta\_{x1})
-\ldots p(\theta\_{x4}) p(\theta_b) && \text{prior distributions}
-\end{align}
+Since the parameter vectors $`\theta_{x1}`$, $`\theta_{x2}`$, … are
+assumed to be a priori independent, and furthermore $`x_1`$ is
+completely observed and modelled independently of incomplete variables,
+estimation of the other model parts is not affected by
+$`p(x_1\mid \theta_{x1})`$ and, hence, this model can be omitted.
 
-Since the parameter vectors \theta\_{x1}, \theta\_{x2}, … are assumed to
-be a priori independent, and furthermore x_1 is completely observed and
-modelled independently of incomplete variables, estimation of the other
-model parts is not affected by p(x_1\mid \theta\_{x1}) and, hence, this
-model can be omitted.
+$`p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})`$, on the other hand is
+modelled conditional on the incomplete covariate $`x_2`$ and can
+therefore not be omitted.
 
-p(x_3 \mid x_1, x_2, b\_{x3}, \theta\_{x3}), on the other hand is
-modelled conditional on the incomplete covariate x_2 and can therefore
-not be omitted.
-
-If there were no incomplete baseline covariates, i.e., if x_2 was
-completely observed, p(x_3 \mid x_1, x_2, b\_{x3}, \theta\_{x3}) would
+If there were no incomplete baseline covariates, i.e., if $`x_2`$ was
+completely observed, $`p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})`$ would
 also not affect the estimation of parameters in the other parts of the
 model and could be omitted.
 
@@ -756,12 +770,12 @@ are:
 
 The default methods for lower level covariates are:
 
-| name         | model                         | variable type                                  |
-|:-------------|:------------------------------|:-----------------------------------------------|
-| `lmm`        | linear mixed model            | continuous longitudinal variables              |
-| `glmm_logit` | logistic mixed model          | longitudinal factors with two levels           |
-| `mlogitmm`   | multinomial logit mixed model | longitudinal unordered factors with \>2 levels |
-| `clmm`       | cumulative logit mixed model  | longitudinal ordered factors with \>2 levels   |
+| name | model | variable type |
+|:---|:---|:---|
+| `lmm` | linear mixed model | continuous longitudinal variables |
+| `glmm_logit` | logistic mixed model | longitudinal factors with two levels |
+| `mlogitmm` | multinomial logit mixed model | longitudinal unordered factors with \>2 levels |
+| `clmm` | cumulative logit mixed model | longitudinal ordered factors with \>2 levels |
 
 The imputation models that are chosen by default may not necessarily be
 appropriate for the data at hand, especially for continuous variables,
@@ -771,11 +785,11 @@ normality.
 Therefore, alternative imputation methods are available for baseline
 covariates:
 
-| name                  | model                                                              | variable type                                |
-|:----------------------|:-------------------------------------------------------------------|:---------------------------------------------|
-| `lognorm`             | normal regression of the log-transformed variable                  | right-skewed variables \>0                   |
-| `beta`                | beta regression (with logit-link)                                  | continuous variables with values in \[0, 1\] |
-| `glm_<family>_<link>` | e.g. `glm_gamma_inverse` for Gamma regression with an inverse-link |                                              |
+| name | model | variable type |
+|:---|:---|:---|
+| `lognorm` | normal regression of the log-transformed variable | right-skewed variables \>0 |
+| `beta` | beta regression (with logit-link) | continuous variables with values in \[0, 1\] |
+| `glm_<family>_<link>` | e.g. `glm_gamma_inverse` for Gamma regression with an inverse-link |  |
 
 `lognorm` assumes a normal distribution for the natural logarithm of the
 variable, but the variable enters the linear predictor of the analysis
@@ -784,11 +798,11 @@ model (and possibly other imputation models) on its original scale.
 For longitudinal (lower-level) covariates corresponding model types are
 . available:
 
-| name                   | model                                                           | variable type                                |
-|:-----------------------|:----------------------------------------------------------------|:---------------------------------------------|
-| `glmm_lognorm`         | normal mixed model for the log-transformed variable             | longitudinal right-skewed variables \>0      |
-| `glmm_beta`            | beta regression (with logit-link)                               | continuous variables with values in \[0, 1\] |
-| `glmm_<family>_<link>` | e.g. `glmm_poisson_log` for a poisson mixed model with log-link | longitudinal count variables                 |
+| name | model | variable type |
+|:---|:---|:---|
+| `glmm_lognorm` | normal mixed model for the log-transformed variable | longitudinal right-skewed variables \>0 |
+| `glmm_beta` | beta regression (with logit-link) | continuous variables with values in \[0, 1\] |
+| `glmm_<family>_<link>` | e.g. `glmm_poisson_log` for a poisson mixed model with log-link | longitudinal count variables |
 
 Logistic (mixed) models can be abbreviated `glm_logit` (`glmm_logit`).
 
@@ -804,6 +818,7 @@ supplied to `models` only contains specifications for a subset of the
 covariates, default models are used for the remaining variables.
 
 ``` r
+
 mod8a <- lm_imp(SBP ~ age + gender + WC + alc + bili + occup + smoke,
                 models = c(bili = 'glm_gamma_log', WC = 'lognorm'),
                 data = NHANES, n.adapt = 0, progress.bar = 'none')
@@ -826,6 +841,7 @@ The argument `no_model` allows us to exclude models for such variables
 (as long as they are completely observed):
 
 ``` r
+
 mod8b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + SMOKE + hc + MARITAL +
                    ns(age, df = 2),
                  random = ~ns(age, df = 2) | ID, data = simLong,
@@ -862,6 +878,7 @@ values in the respective response variables, so that the variable with
 the most missing values has the most covariates in its linear predictor.
 
 ``` r
+
 get_missinfo(mod8a)
 #> $complete_cases
 #>          #        %
@@ -930,7 +947,7 @@ Auxiliary variables are variables that are not part of the analysis
 model, but should be considered as predictor variables in the imputation
 models because they can inform the imputation of unobserved values.
 
-Good auxiliary variables are [³](#fn3)
+Good auxiliary variables are [^3]
 
 - associated with an incomplete variable of interest, or are
 - associated with the missingness of that variable, and
@@ -946,6 +963,7 @@ We might consider the variables `educ` and `smoke` as predictors for the
 imputation of `occup`:
 
 ``` r
+
 mod9a <- lm_imp(SBP ~ gender + age + occup, auxvars = ~ educ + smoke,
                 data = NHANES, n.adapt = 0)
 ```
@@ -955,6 +973,7 @@ analysis model. They are, however, used as predictors in the imputation
 for `occup` and imputed themselves (if they have missing values):
 
 ``` r
+
 list_models(mod9a, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = FALSE)
 #> Linear model for "SBP" 
 #>    family: gaussian 
@@ -981,12 +1000,14 @@ auxiliary variable is not considered as linear effect but as specified
 by the function:
 
 ``` r
+
 mod9b <- lm_imp(SBP ~ gender + age + occup, data = NHANES,
                 auxvars = ~ educ + smoke + log(WC),
                 trunc = list(WC = c(1e-10, 1e10)), n.adapt = 0)
 ```
 
 ``` r
+
 list_models(mod9b, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = FALSE)
 #> Linear model for "SBP" 
 #>    family: gaussian 
@@ -1036,6 +1057,7 @@ type of contrasts (i.e. “coding”) to be used for unordered and ordered
 factors can be checked and set in the global options:
 
 ``` r
+
 options('contrasts')
 #> $contrasts
 #>         unordered           ordered 
@@ -1082,6 +1104,7 @@ in the model, `refcats` can be set as
 For example:
 
 ``` r
+
 mod10a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = "largest", data = NHANES, n.adapt = 0)
 #> Warning: 
@@ -1099,6 +1122,7 @@ For variables for which no reference category is specified in the list
 the default is used.
 
 ``` r
+
 mod10b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = list(occup = "not working", race = 3, educ = 'largest'),
                  data = NHANES, n.adapt = 0)
@@ -1122,6 +1146,7 @@ asks a number of questions which the user needs to reply to by input of
 a number.
 
 ``` r
+
 refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
 #> Warning in JointAI:::extract_outcome(formula): 'JointAI:::extract_outcome' is deprecated.
 #> Use 'extract_outcomes_list ' instead.
@@ -1142,7 +1167,7 @@ refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
 #> How do you want to specify the reference categories?
 #> 
 #> 1: Use the first category for each variable.
-#> 2: Use the last category for each variabe.
+#> 2: Use the last category for each variable.
 #> 3: Use the largest category for each variable.
 #> 4: Specify the reference categories individually.
 ```
@@ -1151,6 +1176,7 @@ When option 4 is chosen, a question for each categorical variable is
 asked, for example:
 
 ``` r
+
 #> The reference category for “race” should be
 #>
 #> 1: Mexican American
@@ -1165,6 +1191,7 @@ variables, the determined specification for the argument `refcats` is
 printed:
 
 ``` r
+
 #> In the JointAI model specify:
 #>  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',
 #>              occup = 'not working', smoke = 'never')
@@ -1177,6 +1204,7 @@ also returns a named vector that can be passed to the argument
 `refcats`:
 
 ``` r
+
 mod10c <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = refs_mod10, data = NHANES, n.adapt = 0)
 #> Warning: 
@@ -1204,6 +1232,7 @@ returns a list containing the default hyper parameters used in a
 `JointAI` model.
 
 ``` r
+
 default_hyperpars()
 #> $norm
 #>    mu_reg_norm   tau_reg_norm shape_tau_norm  rate_tau_norm 
@@ -1300,6 +1329,7 @@ For example, in `mod11a` ridge regression is used for all models, and in
 `modd11b` only in the models for `SBP` and `educ`:
 
 ``` r
+
 mod11a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                 data = NHANES, shrinkage = 'ridge',
                 n.adapt = 0)
@@ -1313,19 +1343,18 @@ mod11b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
 #> Note: No MCMC sample will be created when n.iter is set to 0.
 ```
 
-Ridge regression is implemented as a \text{Ga}(0.01, 0.01) prior for the
-precision of the regression coefficients \beta instead of setting this
-precision to a fixed (small) value.
+Ridge regression is implemented as a $`\text{Ga}(0.01, 0.01)`$ prior for
+the precision of the regression coefficients $`\beta`$ instead of
+setting this precision to a fixed (small) value.
 
-------------------------------------------------------------------------
+[^1]: Note: these examples are chosen to demonstrate functionality and
+    may not fit the data.
 
-1.  Note: these examples are chosen to demonstrate functionality and may
-    not fit the data.
+[^2]: Again, this is just a demonstration of the possibilities in
+    JointAI, but nesting transformations will most often result in
+    coefficients that that do not have meaningful interpretation in
+    practice.
 
-2.  Again, this is just a demonstration of the possibilities in JointAI,
-    but nesting transformations will most often result in coefficients
-    that that do not have meaningful interpretation in practice.
-
-3.  Van Buuren, S. (2012). Flexible imputation of missing data. Chapman
-    and Hall/CRC. See also the [second edition
+[^3]: Van Buuren, S. (2012). Flexible imputation of missing data.
+    Chapman and Hall/CRC. See also the [second edition
     online](https://stefvanbuuren.name/fimd/).

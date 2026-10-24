@@ -45,9 +45,9 @@ mod <- glm_imp(B1 ~ C1 + C2 + O1, data = wideDF, n.iter = 100,
                family = binomial(), mess = FALSE)
 summary(residuals(mod, type = 'response')[[1]])
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>  0.1469  0.1469  0.1469  0.1469  0.1469  0.1469 
+#>   0.149   0.149   0.149   0.149   0.149   0.149 
 summary(residuals(mod, type = 'working')[[1]])
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>   1.172   1.172   1.172   1.172   1.172   1.172 
+#>   1.175   1.175   1.175   1.175   1.175   1.175 
 
 ```

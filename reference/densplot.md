@@ -104,6 +104,7 @@ contains some examples how to specify the argument `subset`.
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 # fit a JointAI object:
 mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)

@@ -25,6 +25,7 @@ an array of histograms (for continuous variables and dates) and bar
 plots (for categorical variables) can be obtained.
 
 ``` r
+
 op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(NHANES)
 ```
@@ -32,6 +33,7 @@ plot_all(NHANES)
 ![](VisualizingIncompleteData_files/figure-html/unnamed-chunk-1-1.png)
 
 ``` r
+
 par(op)
 ```
 
@@ -68,6 +70,7 @@ or
 For example:
 
 ``` r
+
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(NHANES, allNA = TRUE, fill = '#e30f41', border = '#34111b', ncol = 3, breaks = 30)
 ```
@@ -83,6 +86,7 @@ specifying the names of the grouping variables (“id” variables) via the
 argument `idvars`.
 
 ``` r
+
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(simLong, allNA = TRUE, fill = '#e30f41', border = '#34111b',
          ncol = 3, breaks = 30, idvars = "ID")
@@ -103,6 +107,7 @@ The pattern of the missing data can be visualized with the function
 [`md_pattern()`](https://nerler.github.io/JointAI/reference/md_pattern.md):
 
 ``` r
+
 md_pattern(NHANES)
 ```
 
@@ -128,6 +133,7 @@ returned as a matrix, where observed values are represented by `1` and
 missing values by `0`:
 
 ``` r
+
 md_pattern(NHANES, pattern = T, plot = F)
 #>      SBP gender age race educ WC smoke creat albu uricacid bili occup alc Npat
 #> 1      1      1   1    1    1  1     1     1    1        1    1     1   1  116
@@ -169,6 +175,7 @@ Setting `ylab = ''` will hide the axis title, but keep the number of
 observations per missing data pattern.
 
 ``` r
+
 md_pattern(NHANES, color = c('#34111b', '#e30f41'), border = 'white',
            legend.position = 'none', print_xaxis = FALSE,
            ylab = 'Alternative axis title')
@@ -181,6 +188,7 @@ md_pattern(NHANES, color = c('#34111b', '#e30f41'), border = 'white',
 For the `simLong` data, the missing data pattern is:
 
 ``` r
+
 md_pattern(simLong, color = c('#34111b', '#e30f41'))
 ```
 

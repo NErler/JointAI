@@ -132,6 +132,7 @@ for examples how to specify the parameter `subset`.
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 

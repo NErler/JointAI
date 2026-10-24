@@ -33,30 +33,30 @@ have an argument `monitor_params`.
 `monitor_params` takes a named list (often a named vector also works)
 with the following possible entries:
 
-| name/key word     | what is monitored                                                                                                                                                                          |
-|:------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `analysis_main`   | `betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models) |
-| `analysis_random` | `ranef_main`, `D_main`, `invD_main`, `RinvD_main`                                                                                                                                          |
-| `other_models`    | `alphas`, `tau_other`, `gamma_other`, `delta_other`                                                                                                                                        |
-| `imps`            | imputed values                                                                                                                                                                             |
-| `betas`           | regression coefficients of the main analysis model(s)                                                                                                                                      |
-| `tau_main`        | precision of the residuals from the analysis model(s)                                                                                                                                      |
-| `sigma_main`      | standard deviation of the residuals from the analysis model(s)                                                                                                                             |
-| `gamma_main`      | intercepts in ordinal main model                                                                                                                                                           |
-| `delta_main`      | increments of ordinal intercepts in main model(s)                                                                                                                                          |
-| `ranef_main`      | random effects of the analysis model(s)                                                                                                                                                    |
-| `D_main`          | covariance matrix of the random effects of the main model(s)                                                                                                                               |
-| `invD_main`       | inverse of `D_main`                                                                                                                                                                        |
-| `RinvD_main`      | scale matrix in Wishart prior for `invD_main`                                                                                                                                              |
-| `alphas`          | regression coefficients in the covariate models                                                                                                                                            |
-| `tau_other`       | precision parameters of the residuals from covariate models                                                                                                                                |
-| `gamma_other`     | intercepts in ordinal covariate models                                                                                                                                                     |
-| `delta_other`     | increments of ordinal intercepts in covariate models                                                                                                                                       |
-| `ranef_other`     | random effects of the covariate model(s)                                                                                                                                                   |
-| `D_other`         | covariance matrix of the random effects of the covariate model(s)                                                                                                                          |
-| `invD_other`      | inverse of `D_other`                                                                                                                                                                       |
-| `RinvD_other`     | scale matrix in Wishart prior for `invD_other`                                                                                                                                             |
-| `other`           | additional parameters                                                                                                                                                                      |
+| name/key word | what is monitored |
+|:---|:---|
+| `analysis_main` | `betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models) |
+| `analysis_random` | `ranef_main`, `D_main`, `invD_main`, `RinvD_main` |
+| `other_models` | `alphas`, `tau_other`, `gamma_other`, `delta_other` |
+| `imps` | imputed values |
+| `betas` | regression coefficients of the main analysis model(s) |
+| `tau_main` | precision of the residuals from the analysis model(s) |
+| `sigma_main` | standard deviation of the residuals from the analysis model(s) |
+| `gamma_main` | intercepts in ordinal main model |
+| `delta_main` | increments of ordinal intercepts in main model(s) |
+| `ranef_main` | random effects of the analysis model(s) |
+| `D_main` | covariance matrix of the random effects of the main model(s) |
+| `invD_main` | inverse of `D_main` |
+| `RinvD_main` | scale matrix in Wishart prior for `invD_main` |
+| `alphas` | regression coefficients in the covariate models |
+| `tau_other` | precision parameters of the residuals from covariate models |
+| `gamma_other` | intercepts in ordinal covariate models |
+| `delta_other` | increments of ordinal intercepts in covariate models |
+| `ranef_other` | random effects of the covariate model(s) |
+| `D_other` | covariance matrix of the random effects of the covariate model(s) |
+| `invD_other` | inverse of `D_other` |
+| `RinvD_other` | scale matrix in Wishart prior for `invD_other` |
+| `other` | additional parameters |
 
 Each of the key words works as a switch, except for `other`, which
 should be a vector of character strings.
@@ -70,11 +70,11 @@ monitoring is switched off for all other parameters.
 The main parameters are the regression coefficients of the analysis
 model (`beta`) and potentially the residual standard deviation, for
 example in linear or Gamma models, the second parameter in a beta
-distribution (parametrized with \mu and \tau instead of two shape
-parameters), the variance-covariance matrices of random effects used in
-the main models, the shape parameter in a parametric Weibull survival
-model, and the coefficients used in the spline specification of the
-baseline hazard of proportional hazards survival models.
+distribution (parametrized with $`\mu`$ and $`\tau`$ instead of two
+shape parameters), the variance-covariance matrices of random effects
+used in the main models, the shape parameter in a parametric Weibull
+survival model, and the coefficients used in the spline specification of
+the baseline hazard of proportional hazards survival models.
 
 The function
 [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
@@ -85,6 +85,7 @@ models where no MCMC sampling was performed, i.e. when `n.iter = 0` and
 For example:
 
 ``` r
+
 lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,  n.adapt = 0)
 
 parameters(lm1)
@@ -110,6 +111,7 @@ analyses, the imputed values need to be monitored. This can be done by
 setting `monitor_params = c(imps = TRUE)`.
 
 ``` r
+
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
               data = NHANES, n.adapt = 0,
               monitor_params = c(imps = TRUE, analysis_main = FALSE)
@@ -200,21 +202,22 @@ corresponding dummy variables are stored in the matrices. The same is
 the case for interaction terms and transformations of variables.
 
 ``` r
+
 head(lm2$data_list$M_lvlone)
-#>          SBP alc occup smoke    WC (Intercept) age alc>=1 smokeformer
-#> 10  108.0000  NA     1     1  99.0           1  35     NA          NA
-#> 14  105.3333   0     1     1  82.7           1  38     NA          NA
-#> 41  110.0000   0     3     1  94.9           1  78     NA          NA
-#> 77  106.0000   1     2     1  82.4           1  23     NA          NA
-#> 91  114.6667   0     3     1  93.1           1  40     NA          NA
-#> 105 139.3333   1    NA     3 105.4           1  54     NA          NA
-#>     smokecurrent occuplooking for work occupnot working
-#> 10            NA                    NA               NA
-#> 14            NA                    NA               NA
-#> 41            NA                    NA               NA
-#> 77            NA                    NA               NA
-#> 91            NA                    NA               NA
-#> 105           NA                    NA               NA
+#>          SBP alc occup smoke    WC (Intercept) age alc>=1 smokeformer smokecurrent
+#> 10  108.0000  NA     1     1  99.0           1  35     NA          NA           NA
+#> 14  105.3333   0     1     1  82.7           1  38     NA          NA           NA
+#> 41  110.0000   0     3     1  94.9           1  78     NA          NA           NA
+#> 77  106.0000   1     2     1  82.4           1  23     NA          NA           NA
+#> 91  114.6667   0     3     1  93.1           1  40     NA          NA           NA
+#> 105 139.3333   1    NA     3 105.4           1  54     NA          NA           NA
+#>     occuplooking for work occupnot working
+#> 10                     NA               NA
+#> 14                     NA               NA
+#> 41                     NA               NA
+#> 77                     NA               NA
+#> 91                     NA               NA
+#> 105                    NA               NA
 ```
 
 The parameters of the models for the incomplete variables can be
@@ -224,6 +227,7 @@ such as precision (`tau_*`) and intercepts & increments (`gamma_*` and
 `delta_*`) in cumulative logit models.
 
 ``` r
+
 lm3 <- lm_imp(SBP ~ age + WC + alc + smoke + occup, data = NHANES, n.adapt = 0,
               monitor_params = c(other_models = TRUE, analysis_main = FALSE)
 )
@@ -263,13 +267,14 @@ the names of the parameters and the hyper-parameters can be obtained
 with
 
 ``` r
+
 list_models(lm2)
 #> Linear model for "SBP" 
 #>    family: gaussian 
 #>    link: identity 
 #> * Predictor variables:
-#>   (Intercept), age, WC, alc>=1, smokeformer, smokecurrent, 
-#>   occuplooking for work, occupnot working 
+#>   (Intercept), age, WC, alc>=1, smokeformer, smokecurrent, occuplooking for 
+#>   work, occupnot working 
 #> * Regression coefficients:
 #>   beta[1:8] (normal prior(s) with mean 0 and precision 1e-04) 
 #> * Precision of  "SBP" :
@@ -281,8 +286,8 @@ list_models(lm2)
 #>    link: logit 
 #> * Reference category: "<1"
 #> * Predictor variables:
-#>   (Intercept), age, WC, smokeformer, smokecurrent, 
-#>   occuplooking for work, occupnot working 
+#>   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, 
+#>   occupnot working 
 #> * Regression coefficients:
 #>   alpha[1:7] (normal prior(s) with mean 0 and precision 1e-04) 
 #> 
@@ -339,17 +344,17 @@ newly created id variable for each observation in cross-sectional data
 [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md)
 takes the arguments:
 
-| argument         | explanation                                                                                                                                                                 |
-|:-----------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `object`         | ‘an object of class ’JointAI’                                                                                                                                               |
-| `m`              | number of datasets to be created                                                                                                                                            |
-| `include`        | logical; should the original data be included?                                                                                                                              |
-| `start`          | the first iteration that may be randomly chosen (i.e., all previous iterations are discarded as burn-in)                                                                    |
-| `minspace`       | minimum number of iterations between iterations chosen as imputed values                                                                                                    |
-| `seed`           | optional seed value in order to make the random selection of iterations reproducible                                                                                        |
+| argument | explanation |
+|:---|:---|
+| `object` | ‘an object of class ’JointAI’ |
+| `m` | number of datasets to be created |
+| `include` | logical; should the original data be included? |
+| `start` | the first iteration that may be randomly chosen (i.e., all previous iterations are discarded as burn-in) |
+| `minspace` | minimum number of iterations between iterations chosen as imputed values |
+| `seed` | optional seed value in order to make the random selection of iterations reproducible |
 | `export_to_SPSS` | logical; should the datasets be exported to SPSS, i.e., written as .txt and .sps file? If `export_to_SPSS = FALSE` (default) the imputed data is only returned `data.frame` |
-| `resdir`         | directory the files are exported to                                                                                                                                         |
-| `filename`       | the name of the .txt and .sps files                                                                                                                                         |
+| `resdir` | directory the files are exported to |
+| `filename` | the name of the .txt and .sps files |
 
 ### Random effects
 
@@ -357,6 +362,7 @@ For mixed models, `analysis_main` also includes the random effects
 covariance matrix `D`:
 
 ``` r
+
 lme1 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0)
 
 parameters(lme1)
@@ -377,6 +383,7 @@ inverse of the random effects covariance matrix (`invD`) and the
 diagonal of the scale matrix of the Wishart-prior of `invD` (`RinvD`).
 
 ``` r
+
 lme2 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_random = TRUE))
 
@@ -402,6 +409,7 @@ It is possible to select only a subset of the random effects parameters
 by specifying them directly, e.g.
 
 ``` r
+
 lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                  monitor_params = c(analysis_main = TRUE, RinvD_main = TRUE))
 
@@ -422,17 +430,16 @@ parameters(lme3a)
 or by switching unwanted parts of `analysis_random` off, e.g.
 
 ``` r
+
 lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_main = TRUE,
                                    analysis_random = TRUE,
                                    RinvD_main = FALSE,
                                    ranef_main = FALSE))
 #> Warning: 
-#> It is currently not possible to use "contr.poly" for
-#> incomplete categorical covariates. I will use
-#> "contr.treatment" instead.  You can specify (globally) which
-#> types of contrasts are used by changing
-#> "options('contrasts')".
+#> It is currently not possible to use "contr.poly" for incomplete categorical
+#> covariates. I will use "contr.treatment" instead.  You can specify (globally)
+#> which types of contrasts are used by changing "options('contrasts')".
 
 parameters(lme3b)
 #>    outcome outcat     varname             coef
@@ -462,6 +469,7 @@ but being able to monitor any node in a JAGS model can be quite useful
 when investigating convergence issues.)
 
 ``` r
+
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,
               monitor_params = list(analysis_main = FALSE,
                                     other = c('p_alc[1:3]', "mu_creat[1]")))
@@ -494,6 +502,7 @@ By default, only the parameters of the main analysis model are displayed
 if they were monitored:
 
 ``` r
+
 # Run a model monitoring analysis parameters and imputation parameters
 lm5 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
               progress.bar = 'none', monitor_params = c(other_models = TRUE))
@@ -509,16 +518,16 @@ summary(lm5)
 #> 
 #> 
 #> Posterior summary:
-#>                 Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.7399 9.6925 63.439 100.547      0.000    1.04 0.0577
-#> genderfemale  0.0802 2.6383 -4.441   5.527      0.933    1.00 0.0577
-#> WC            0.3074 0.0767  0.168   0.451      0.000    1.01 0.0577
-#> alc>=1        6.3855 2.5770  1.542  11.284      0.020    1.01 0.0670
-#> creat         6.8877 7.4473 -5.536  21.447      0.387    1.13 0.0586
+#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577
+#> genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577
+#> WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577
+#> alc>=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689
+#> creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.704 13.1  15.9       1 0.0577
+#> sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -533,49 +542,58 @@ summary(lm5)
 traceplot(lm5)
 ```
 
-![](figures_SelectingParameters/unnamed-chunk-9-1.svg)
+![plot of chunk
+unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-1.svg)
+
+plot of chunk unnamed-chunk-9
 
 ``` r
+
 
 # density plot of the MCMC sample
 densplot(lm5)
 ```
 
-![](figures_SelectingParameters/unnamed-chunk-9-2.svg)
+![plot of chunk
+unnamed-chunk-9](figures_SelectingParameters/unnamed-chunk-9-2.svg)
+
+plot of chunk unnamed-chunk-9
 
 ``` r
+
 
 # Gelman-Rubin criterion
 GR_crit(lm5)
 #> Potential scale reduction factors:
 #> 
 #>              Point est. Upper C.I.
-#> (Intercept)       1.009       1.04
-#> genderfemale      0.999       1.00
-#> WC                1.003       1.01
-#> alc>=1            1.003       1.01
-#> creat             1.035       1.13
-#> sigma_SBP         0.997       1.00
+#> (Intercept)        1.00       1.01
+#> genderfemale       1.00       1.00
+#> WC                 1.00       1.02
+#> alc>=1             1.00       1.02
+#> creat              1.03       1.07
+#> sigma_SBP          1.00       1.02
 #> 
 #> Multivariate psrf
 #> 
-#> 1.04
+#> 1.03
 
 # Monte Carlo Error of the MCMC sample
 MC_error(lm5)
-#>                est   MCSE    SD MCSE/SD
-#> (Intercept)  81.74 0.5596 9.692   0.058
-#> genderfemale  0.08 0.1523 2.638   0.058
-#> WC            0.31 0.0044 0.077   0.058
-#> alc>=1        6.39 0.1727 2.577   0.067
-#> creat         6.89 0.4361 7.447   0.059
-#> sigma_SBP    14.38 0.0407 0.704   0.058
+#>                est  MCSE   SD MCSE/SD
+#> (Intercept)  81.10 0.560 9.70   0.058
+#> genderfemale  0.68 0.147 2.55   0.058
+#> WC            0.30 0.004 0.07   0.058
+#> alc>=1        6.64 0.158 2.30   0.069
+#> creat         8.21 0.473 8.19   0.058
+#> sigma_SBP    14.42 0.047 0.81   0.058
 ```
 
 When `analysis_main` was not switched on the default behaviour is that
 all parameters are displayed:
 
 ``` r
+
 # Re-run the model from above, now creating MCMC samples
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
               data = NHANES, n.iter = 100, progress.bar = 'none',
@@ -585,7 +603,10 @@ lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
 traceplot(lm4, ncol = 4)
 ```
 
-![](figures_SelectingParameters/unnamed-chunk-10-1.svg)
+![plot of chunk
+unnamed-chunk-10](figures_SelectingParameters/unnamed-chunk-10-1.svg)
+
+plot of chunk unnamed-chunk-10
 
 ### Select a subset of the variables to display
 
@@ -593,32 +614,34 @@ To display other parts of the MCMC sample, `subset` needs to be
 specified:
 
 ``` r
+
 # we use lm5 from above
 GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> Potential scale reduction factors:
 #> 
 #>                     Point est. Upper C.I.
-#> alc: (Intercept)         0.997      1.001
-#> alc: genderfemale        1.005      1.025
-#> alc: WC                  1.030      1.086
-#> alc: creat               1.007      1.034
-#> creat: (Intercept)       0.996      0.997
-#> creat: genderfemale      0.999      1.000
-#> creat: WC                0.995      0.996
-#> WC: (Intercept)          1.011      1.039
-#> WC: genderfemale         1.003      1.024
-#> sigma_creat              1.010      1.040
-#> sigma_WC                 1.007      1.032
+#> alc: (Intercept)         1.081      1.268
+#> alc: genderfemale        1.104      1.327
+#> alc: WC                  1.015      1.061
+#> alc: creat               1.061      1.210
+#> creat: (Intercept)       1.015      1.056
+#> creat: genderfemale      0.996      0.998
+#> creat: WC                1.018      1.060
+#> WC: (Intercept)          1.003      1.021
+#> WC: genderfemale         1.001      1.013
+#> sigma_creat              1.006      1.022
+#> sigma_WC                 1.007      1.010
 #> 
 #> Multivariate psrf
 #> 
-#> 1.05
+#> 1.1
 ```
 
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`:
 
 ``` r
+
 summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> Bayesian linear model fitted with JointAI
@@ -629,16 +652,16 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> 
 #> Posterior summary:
-#>                 Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.7399 9.6925 63.439 100.547      0.000    1.04 0.0577
-#> genderfemale  0.0802 2.6383 -4.441   5.527      0.933    1.00 0.0577
-#> WC            0.3074 0.0767  0.168   0.451      0.000    1.01 0.0577
-#> alc>=1        6.3855 2.5770  1.542  11.284      0.020    1.01 0.0670
-#> creat         6.8877 7.4473 -5.536  21.447      0.387    1.13 0.0586
+#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.096 9.6988 60.971 97.166    0.00000    1.01 0.0577
+#> genderfemale  0.676 2.5491 -3.776  5.439    0.81333    1.00 0.0577
+#> WC            0.300 0.0699  0.164  0.425    0.00000    1.02 0.0577
+#> alc>=1        6.645 2.2974  2.500 11.345    0.00667    1.02 0.0689
+#> creat         8.206 8.1859 -7.115 24.301    0.34000    1.07 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.704 13.1  15.9       1 0.0577
+#> sigma_SBP 14.4 0.806   13  16.3    1.02 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -656,6 +679,7 @@ when regression coefficients from different models are monitored.
 This also works when a subset of the imputed values should be displayed:
 
 ``` r
+
 # Re-run the model from above, now creating MCMC samples
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
               data = NHANES, n.iter = 100, progress.bar = 'none',
@@ -670,7 +694,9 @@ sub3
 traceplot(lm2, subset = list(other = sub3), ncol = 2)
 ```
 
-![](figures_SelectingParameters/lm2_2-1.svg)
+![plot of chunk lm2_2](figures_SelectingParameters/lm2_2-1.svg)
+
+plot of chunk lm2_2
 
 ### Random subset of subject-specific values
 
@@ -680,6 +706,7 @@ plots. In that case, a random subset of, for instance, the random
 effects can be selected:
 
 ``` r
+
 lme4 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
                 data = simLong, n.iter = 100, progress.bar = 'none',
                 monitor_params = c(analysis_main = FALSE, ranef_main = TRUE))
@@ -694,12 +721,19 @@ rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T
 traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
 ```
 
-![](figures_SelectingParameters/unnamed-chunk-11-1.svg)
+![plot of chunk
+unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-1.svg)
+
+plot of chunk unnamed-chunk-11
 
 ``` r
+
 
 # plot the chains of 8 randomly selected random slopes
 traceplot(lme4, subset = list(other = sample(rs, size = 8)), ncol = 4)
 ```
 
-![](figures_SelectingParameters/unnamed-chunk-11-2.svg)
+![plot of chunk
+unnamed-chunk-11](figures_SelectingParameters/unnamed-chunk-11-2.svg)
+
+plot of chunk unnamed-chunk-11

@@ -522,46 +522,46 @@ have to be measured at the same time points, but there can only be one
 Implemented model types that can be chosen in the argument `models` for
 baseline covariates (not repeatedly measured) are:
 
-|                        |                                                                                                                     |
-|------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `lm`                   | linear (normal) model with identity link (alternatively: `glm_gaussian_identity`); default for continuous variables |
-| `glm_gaussian_log`     | linear (normal) model with log link                                                                                 |
-| `glm_gaussian_inverse` | linear (normal) model with inverse link                                                                             |
-| `glm_logit`            | logistic model for binary data (alternatively: `glm_binomial_logit`); default for binary variables                  |
-| `glm_probit`           | probit model for binary data (alternatively: `glm_binomial_probit`)                                                 |
-| `glm_binomial_log`     | binomial model with log link                                                                                        |
-| `glm_binomial_cloglog` | binomial model with complementary log-log link                                                                      |
-| `glm_gamma_inverse`    | gamma model with inverse link for skewed continuous data                                                            |
-| `glm_gamma_identity`   | gamma model with identity link for skewed continuous data                                                           |
-| `glm_gamma_log`        | gamma model with log link for skewed continuous data                                                                |
-| `glm_poisson_log`      | Poisson model with log link for count data                                                                          |
-| `glm_poisson_identity` | Poisson model with identity link for count data                                                                     |
-| `lognorm`              | log-normal model for skewed continuous data                                                                         |
-| `beta`                 | beta model (with logit link) for skewed continuous data in (0, 1)                                                   |
-| `mlogit`               | multinomial logit model for unordered categorical variables; default for unordered factors with \>2 levels          |
-| `clm`                  | cumulative logit model for ordered categorical variables; default for ordered factors                               |
+|  |  |
+|----|----|
+| `lm` | linear (normal) model with identity link (alternatively: `glm_gaussian_identity`); default for continuous variables |
+| `glm_gaussian_log` | linear (normal) model with log link |
+| `glm_gaussian_inverse` | linear (normal) model with inverse link |
+| `glm_logit` | logistic model for binary data (alternatively: `glm_binomial_logit`); default for binary variables |
+| `glm_probit` | probit model for binary data (alternatively: `glm_binomial_probit`) |
+| `glm_binomial_log` | binomial model with log link |
+| `glm_binomial_cloglog` | binomial model with complementary log-log link |
+| `glm_gamma_inverse` | gamma model with inverse link for skewed continuous data |
+| `glm_gamma_identity` | gamma model with identity link for skewed continuous data |
+| `glm_gamma_log` | gamma model with log link for skewed continuous data |
+| `glm_poisson_log` | Poisson model with log link for count data |
+| `glm_poisson_identity` | Poisson model with identity link for count data |
+| `lognorm` | log-normal model for skewed continuous data |
+| `beta` | beta model (with logit link) for skewed continuous data in (0, 1) |
+| `mlogit` | multinomial logit model for unordered categorical variables; default for unordered factors with \>2 levels |
+| `clm` | cumulative logit model for ordered categorical variables; default for ordered factors |
 
 For repeatedly measured variables the following model types are
 available:
 
-|                         |                                                                                                                            |
-|-------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| `lmm`                   | linear (normal) mixed model with identity link (alternatively: `glmm_gaussian_identity`); default for continuous variables |
-| `glmm_gaussian_log`     | linear (normal) mixed model with log link                                                                                  |
-| `glmm_gaussian_inverse` | linear (normal) mixed model with inverse link                                                                              |
-| `glmm_logit`            | logistic mixed model for binary data (alternatively: `glmm_binomial_logit`); default for binary variables                  |
-| `glmm_probit`           | probit model for binary data (alternatively: `glmm_binomial_probit`)                                                       |
-| `glmm_binomial_log`     | binomial mixed model with log link                                                                                         |
-| `glmm_binomial_cloglog` | binomial mixed model with complementary log-log link                                                                       |
-| `glmm_gamma_inverse`    | gamma mixed model with inverse link for skewed continuous data                                                             |
-| `glmm_gamma_identity`   | gamma mixed model with identity link for skewed continuous data                                                            |
-| `glmm_gamma_log`        | gamma mixed model with log link for skewed continuous data                                                                 |
-| `glmm_poisson_log`      | Poisson mixed model with log link for count data                                                                           |
-| `glmm_poisson_identity` | Poisson mixed model with identity link for count data                                                                      |
-| `glmm_lognorm`          | log-normal mixed model for skewed covariates                                                                               |
-| `glmm_beta`             | beta mixed model for continuous data in (0, 1)                                                                             |
-| `mlogitmm`              | multinomial logit mixed model for unordered categorical variables; default for unordered factors with \>2 levels           |
-| `clmm`                  | cumulative logit mixed model for ordered factors; default for ordered factors                                              |
+|  |  |
+|----|----|
+| `lmm` | linear (normal) mixed model with identity link (alternatively: `glmm_gaussian_identity`); default for continuous variables |
+| `glmm_gaussian_log` | linear (normal) mixed model with log link |
+| `glmm_gaussian_inverse` | linear (normal) mixed model with inverse link |
+| `glmm_logit` | logistic mixed model for binary data (alternatively: `glmm_binomial_logit`); default for binary variables |
+| `glmm_probit` | probit model for binary data (alternatively: `glmm_binomial_probit`) |
+| `glmm_binomial_log` | binomial mixed model with log link |
+| `glmm_binomial_cloglog` | binomial mixed model with complementary log-log link |
+| `glmm_gamma_inverse` | gamma mixed model with inverse link for skewed continuous data |
+| `glmm_gamma_identity` | gamma mixed model with identity link for skewed continuous data |
+| `glmm_gamma_log` | gamma mixed model with log link for skewed continuous data |
+| `glmm_poisson_log` | Poisson mixed model with log link for count data |
+| `glmm_poisson_identity` | Poisson mixed model with identity link for count data |
+| `glmm_lognorm` | log-normal mixed model for skewed covariates |
+| `glmm_beta` | beta mixed model for continuous data in (0, 1) |
+| `mlogitmm` | multinomial logit mixed model for unordered categorical variables; default for unordered factors with \>2 levels |
+| `clmm` | cumulative logit mixed model for ordered factors; default for ordered factors |
 
 When models are specified for only a subset of the variables for which a
 model is needed, the default model choices (as indicated in the tables)
@@ -586,31 +586,31 @@ specified automatically.
 If left unspecified, `monitor_params = c("analysis_main" = TRUE)` will
 be used.
 
-|                   |                                                                                                                                                                                                                                          |
-|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **name/key word** | **what is monitored**                                                                                                                                                                                                                    |
-| `analysis_main`   | `betas` and `sigma_main`, `tau_main` (for beta regression) or `shape_main` (for parametric survival models), `gamma_main` (for cumulative logit models), `D_main` (for multi-level models) and `basehaz` in proportional hazards models) |
-| `analysis_random` | `ranef_main`, `D_main`, `invD_main`, `RinvD_main`                                                                                                                                                                                        |
-| `other_models`    | `alphas`, `tau_other`, `gamma_other`, `delta_other`                                                                                                                                                                                      |
-| `imps`            | imputed values                                                                                                                                                                                                                           |
-| `betas`           | regression coefficients of the main analysis model                                                                                                                                                                                       |
-| `tau_main`        | precision of the residuals from the main analysis model(s)                                                                                                                                                                               |
-| `sigma_main`      | standard deviation of the residuals from the main analysis model(s)                                                                                                                                                                      |
-| `gamma_main`      | intercepts in ordinal main model(s)                                                                                                                                                                                                      |
-| `delta_main`      | increments of ordinal main model(s)                                                                                                                                                                                                      |
-| `ranef_main`      | random effects from the main analysis model(s) `b`                                                                                                                                                                                       |
-| `D_main`          | covariance matrix of the random effects from the main model(s)                                                                                                                                                                           |
-| `invD_main`       | inverse(s) of `D_main`                                                                                                                                                                                                                   |
-| `RinvD_main`      | matrices in the priors for `invD_main`                                                                                                                                                                                                   |
-| `alphas`          | regression coefficients in the covariate models                                                                                                                                                                                          |
-| `tau_other`       | precision parameters of the residuals from covariate models                                                                                                                                                                              |
-| `gamma_other`     | intercepts in ordinal covariate models                                                                                                                                                                                                   |
-| `delta_other`     | increments of ordinal intercepts                                                                                                                                                                                                         |
-| `ranef_other`     | random effects from the other models `b`                                                                                                                                                                                                 |
-| `D_other`         | covariance matrix of the random effects from the other models                                                                                                                                                                            |
-| `invD_other`      | inverses of `D_other`                                                                                                                                                                                                                    |
-| `RinvD_other`     | matrices in the priors for `invD_other`                                                                                                                                                                                                  |
-| `other`           | additional parameters                                                                                                                                                                                                                    |
+|  |  |
+|----|----|
+| **name/key word** | **what is monitored** |
+| `analysis_main` | `betas` and `sigma_main`, `tau_main` (for beta regression) or `shape_main` (for parametric survival models), `gamma_main` (for cumulative logit models), `D_main` (for multi-level models) and `basehaz` in proportional hazards models) |
+| `analysis_random` | `ranef_main`, `D_main`, `invD_main`, `RinvD_main` |
+| `other_models` | `alphas`, `tau_other`, `gamma_other`, `delta_other` |
+| `imps` | imputed values |
+| `betas` | regression coefficients of the main analysis model |
+| `tau_main` | precision of the residuals from the main analysis model(s) |
+| `sigma_main` | standard deviation of the residuals from the main analysis model(s) |
+| `gamma_main` | intercepts in ordinal main model(s) |
+| `delta_main` | increments of ordinal main model(s) |
+| `ranef_main` | random effects from the main analysis model(s) `b` |
+| `D_main` | covariance matrix of the random effects from the main model(s) |
+| `invD_main` | inverse(s) of `D_main` |
+| `RinvD_main` | matrices in the priors for `invD_main` |
+| `alphas` | regression coefficients in the covariate models |
+| `tau_other` | precision parameters of the residuals from covariate models |
+| `gamma_other` | intercepts in ordinal covariate models |
+| `delta_other` | increments of ordinal intercepts |
+| `ranef_other` | random effects from the other models `b` |
+| `D_other` | covariance matrix of the random effects from the other models |
+| `invD_other` | inverses of `D_other` |
+| `RinvD_other` | matrices in the priors for `invD_other` |
+| `other` | additional parameters |
 
 **For example:**  
 `monitor_params = c(analysis_main = TRUE, tau_main = TRUE, sigma_main = FALSE)`

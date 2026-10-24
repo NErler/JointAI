@@ -81,6 +81,7 @@ in the argument `monitor_params` in
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 # fit a model and monitor the imputed values with
 # monitor_params = c(imps = TRUE)

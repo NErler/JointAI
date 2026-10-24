@@ -93,7 +93,7 @@ of data and model, and may range from as few as 100 to several million.
 
 Convergence can, for instance, be evaluated visually using a
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
-or using the Gelman-Rubin diagnostic criterion[¹](#fn1) (implemented in
+or using the Gelman-Rubin diagnostic criterion[^1] (implemented in
 [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html),
 but also returned with the model summary). The latter compares within
 and between chain variability and requires the JointAI object to have at
@@ -106,7 +106,7 @@ The precision of the MCMC sample can be checked with the function
 It calculates the Monte Carlo error (the error that is made since the
 sample is finite) and compares it to the standard deviation of the
 posterior sample. A rule of thumb is that the Monte Carlo error should
-not be more than 5% of the standard deviation.[²](#fn2)
+not be more than 5% of the standard deviation.[^2]
 
 ### Thinning
 
@@ -129,6 +129,7 @@ values.
 `n.adapt = 100` and `thin = 1` with 100 sampling iterations
 
 ``` r
+
 mod1 <- lm_imp(SBP ~ alc, data = NHANES, n.iter = 100, progress.bar = 'none')
 ```
 
@@ -148,6 +149,7 @@ set to 1 and there are 3 chains.
 #### Insufficient adaptation phase
 
 ``` r
+
 mod2 <- lm_imp(
   SBP ~ alc,
   data = NHANES,
@@ -173,6 +175,7 @@ part of the model summary from the resulting model is:
 #### Thinning
 
 ``` r
+
 mod3 <- lm_imp(
   SBP ~ alc,
   data = NHANES,
@@ -254,6 +257,7 @@ For example, to create initial values for the parameter vector `beta`
 and the precision parameter `tau_SBP` for three chains:
 
 ``` r
+
 init_list <- lapply(1:3, function(i) {
   list(beta = rnorm(4), tau_SBP = rgamma(1, 1, 1))
 })
@@ -288,6 +292,7 @@ the user provided lists of initial values are stored in the JointAI
 object:
 
 ``` r
+
 mod4a <- lm_imp(
   SBP ~ gender + age + WC,
   data = NHANES,
@@ -348,6 +353,7 @@ For example, to create initial values for the parameter vectors `beta`
 and `alpha`:
 
 ``` r
+
 inits_fun <- function() {
   list(beta = rnorm(4), alpha = rnorm(3))
 }
@@ -429,11 +435,12 @@ values of the MCMC chains, by default the first chain. Elements of the
 initial values should have the same structure as the elements in this
 list.
 
-**Example:  
-** We are using a longitudinal model and the `simLong` data in this
+**Example:  **
+We are using a longitudinal model and the `simLong` data in this
 example. The output is abbreviated to show the relevant parts.
 
 ``` r
+
 mod4c <- lme_imp(
   bmi ~ time + HEIGHT_M + hc + SMOKE,
   random = ~ time | ID,
@@ -472,6 +479,7 @@ The first eight rows of `M_ID` in the data that is passed to JAGS (which
 is stored in `data_list` in a JointAI object) are:
 
 ``` r
+
 head(mod4c$data_list$M_ID, 8)
 ```
 
@@ -491,6 +499,7 @@ values corresponding to `M_ID`. That matrix would have to look like
 this:
 
 ``` r
+
 head(coef(mod4c$model)$M_ID, 8)
 #>      [,1] [,2] [,3] [,4] [,5]
 #> [1,]   NA   NA   NA   NA   NA
@@ -540,6 +549,7 @@ In the data that is passed to JAGS this matrix is specified as diagonal
 matrix, with unknown diagonal elements:
 
 ``` r
+
 mod4c$data_list['RinvD_bmi_ID']
 #> $RinvD_bmi_ID
 #>      [,1] [,2]
@@ -560,11 +570,12 @@ prior. The corresponding part of the JAGS model is:
     #> 
     #> [...]
 
-The element `RinvD_bmi_ID` in the initial values has to be a 2 \times 2
-matrix, with positive values on the diagonal and `NA` as off-diagonal
-elements, since these are fixed in the data:
+The element `RinvD_bmi_ID` in the initial values has to be a 2
+$`\times`$ 2 matrix, with positive values on the diagonal and `NA` as
+off-diagonal elements, since these are fixed in the data:
 
 ``` r
+
 coef(mod4c$model)$RinvD_bmi_ID
 #>           [,1]      [,2]
 #> [1,] 0.1996369        NA
@@ -588,6 +599,7 @@ be specified; this is the specification that determines if sampling is
 performed sequentially or in parallel. For example,
 
 ``` r
+
 future::plan(future::multisession, workers = 4)
 ```
 
@@ -600,6 +612,7 @@ is called and remains in place until it is overwritten.
 To re-set to sequential evaluation,
 
 ``` r
+
 future::plan(future::sequential())
 ```
 
@@ -622,11 +635,9 @@ the **rjags** functions `jags.model()` or `coda.samples()`:
 - `progress.bar`: allows to select the type of progress bar. Possible
   values are `"text"`, `"gui"` and `"none"`.
 
-------------------------------------------------------------------------
-
-1.  Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive
+[^1]: Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive
     assessment of model fitness via realized discrepancies. Statistica
     Sinica, 733-760.
 
-2.  See p. 195 of Lesaffre, E., & Lawson, A. B. (2012). Bayesian
+[^2]: See p. 195 of Lesaffre, E., & Lawson, A. B. (2012). Bayesian
     Biostatistics. John Wiley & Sons.

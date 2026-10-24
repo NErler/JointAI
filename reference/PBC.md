@@ -117,14 +117,14 @@ and several categorical variables were re-coded.
 #>  3rd Qu.:203.0   3rd Qu.:3819                                   3rd Qu.:56.15  
 #>  Max.   :312.0   Max.   :5225                                   Max.   :78.44  
 #>                                                                                
-#>      sex            day       ascites      hepato    spiders    
-#>  male  : 237   Min.   :   0   no  :1716   no  :952   no  :1311  
-#>  female:1708   1st Qu.: 192   yes : 169   yes :932   yes : 576  
-#>                Median : 750   NA's:  60   NA's: 61   NA's:  58  
-#>                Mean   :1145                                     
-#>                3rd Qu.:1838                                     
-#>                Max.   :5152                                     
-#>                                                                 
+#>      sex            day       ascites    hepato    spiders   
+#>  male  : 237   Min.   :   0   no :1716   no :952   no :1311  
+#>  female:1708   1st Qu.: 192   yes: 169   yes:932   yes: 576  
+#>                Median : 750   NAs:  60   NAs: 61   NAs:  58  
+#>                Mean   :1145                                  
+#>                3rd Qu.:1838                                  
+#>                Max.   :5152                                  
+#>                                                              
 #>          edema           bili             chol           albumin    
 #>  no         :1401   Min.   : 0.100   Min.   :  55.0   Min.   :1.17  
 #>  (un)treated: 379   1st Qu.: 0.800   1st Qu.: 235.0   1st Qu.:3.11  
@@ -132,7 +132,7 @@ and several categorical variables were re-coded.
 #>                     Mean   : 3.672   Mean   : 320.5   Mean   :3.39  
 #>                     3rd Qu.: 3.900   3rd Qu.: 349.2   3rd Qu.:3.70  
 #>                     Max.   :41.000   Max.   :1775.0   Max.   :8.01  
-#>                                      NA's   :821                    
+#>                                      NAs    :821                    
 #>     alk.phos          ast            platelet        protime     stage  
 #>  Min.   :   73   Min.   :   6.2   Min.   : 40.0   Min.   : 9.0   1: 95  
 #>  1st Qu.:  737   1st Qu.:  72.0   1st Qu.:165.0   1st Qu.:10.1   2:266  
@@ -140,7 +140,7 @@ and several categorical variables were re-coded.
 #>  Mean   : 1382   Mean   : 122.7   Mean   :233.7   Mean   :11.0   4:972  
 #>  3rd Qu.: 1636   3rd Qu.: 155.0   3rd Qu.:290.2   3rd Qu.:11.5          
 #>  Max.   :13862   Max.   :1205.0   Max.   :991.0   Max.   :36.0          
-#>  NA's   :60                       NA's   :73                            
+#>  NAs    :60                       NAs    :73                            
 #>      copper            trig    
 #>  Min.   :  4.00   Min.   : 33  
 #>  1st Qu.: 38.00   1st Qu.: 83  
@@ -148,5 +148,5 @@ and several categorical variables were re-coded.
 #>  Mean   : 84.54   Mean   :122  
 #>  3rd Qu.:105.00   3rd Qu.:151  
 #>  Max.   :588.00   Max.   :598  
-#>  NA's   :8        NA's   :206  
+#>  NAs    :8        NAs    :206  
 ```
