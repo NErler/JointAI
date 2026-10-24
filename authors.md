@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/nerler/JointAI/blob/v1.1.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/nerler/JointAI/blob/master/inst/CITATION)
 
 Erler NS, Rizopoulos D, Lesaffre EMEH (2021). “JointAI: Joint Analysis
 and Imputation of Incomplete Data in R.” *Journal of Statistical

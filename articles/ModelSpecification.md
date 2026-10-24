@@ -717,37 +717,39 @@ models need to be specified for all level-1 variables.
 
 #### Why do we need models for completely observed covariates?
 
-The joint distribution of an outcome $`y`$, covariates $`x`$, random
-effects $`b`$ and parameters $`\theta`$, $`p(y, x, b, \theta)`$, is
-modelled as the product of univariate conditional distributions. To
-facilitate the specification of these distributions they are ordered so
-that longitudinal (level-1) variables may have baseline (level-2)
-variables in their linear predictors but not vice versa.
+The joint distribution of an outcome y, covariates x, random effects b
+and parameters \theta, p(y, x, b, \theta), is modelled as the product of
+univariate conditional distributions. To facilitate the specification of
+these distributions they are ordered so that longitudinal (level-1)
+variables may have baseline (level-2) variables in their linear
+predictors but not vice versa.
 
 For example:
-``` math
-\begin{align}
-p(y, x, b, \theta) = & p(y \mid x_1, ..., x_4, b_y, \theta_y) && \text{analysis model}\\
-& p(x_1\mid \theta_{x1}) && \text{model for a complete baseline covariate}\\
-& p(x_2\mid x_1, \theta_{x2}) && \text{model for an incomplete baseline covariate}\\
-& p(x_3\mid x_1, x_2, b_{x3}, \theta_{x3}) && \text{model for a complete longitudinal covariate}\\
-& p(x_4\mid x_1, x_2, x_3, b_{x4}, \theta_{x4}) && \text{model for an incomplete longitudinal covariate}\\
-& p(b_y|\theta_b) p(b_{x3}|\theta_b) p(b_{x4}|\theta_b) && \text{models for the random effects}\\
-& p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b) && \text{prior distributions}\end{align}
-```
 
-Since the parameter vectors $`\theta_{x1}`$, $`\theta_{x2}`$, … are
-assumed to be a priori independent, and furthermore $`x_1`$ is
-completely observed and modelled independently of incomplete variables,
-estimation of the other model parts is not affected by
-$`p(x_1\mid \theta_{x1})`$ and, hence, this model can be omitted.
+\begin{align} p(y, x, b, \theta) = & p(y \mid x_1, ..., x_4, b_y,
+\theta_y) && \text{analysis model}\\ & p(x_1\mid \theta\_{x1}) &&
+\text{model for a complete baseline covariate}\\ & p(x_2\mid x_1,
+\theta\_{x2}) && \text{model for an incomplete baseline covariate}\\ &
+p(x_3\mid x_1, x_2, b\_{x3}, \theta\_{x3}) && \text{model for a complete
+longitudinal covariate}\\ & p(x_4\mid x_1, x_2, x_3, b\_{x4},
+\theta\_{x4}) && \text{model for an incomplete longitudinal covariate}\\
+& p(b_y\|\theta_b) p(b\_{x3}\|\theta_b) p(b\_{x4}\|\theta_b) &&
+\text{models for the random effects}\\ & p(\theta_y) p(\theta\_{x1})
+\ldots p(\theta\_{x4}) p(\theta_b) && \text{prior distributions}
+\end{align}
 
-$`p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})`$, on the other hand is
-modelled conditional on the incomplete covariate $`x_2`$ and can
-therefore not be omitted.
+Since the parameter vectors \theta\_{x1}, \theta\_{x2}, … are assumed to
+be a priori independent, and furthermore x_1 is completely observed and
+modelled independently of incomplete variables, estimation of the other
+model parts is not affected by p(x_1\mid \theta\_{x1}) and, hence, this
+model can be omitted.
 
-If there were no incomplete baseline covariates, i.e., if $`x_2`$ was
-completely observed, $`p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})`$ would
+p(x_3 \mid x_1, x_2, b\_{x3}, \theta\_{x3}), on the other hand is
+modelled conditional on the incomplete covariate x_2 and can therefore
+not be omitted.
+
+If there were no incomplete baseline covariates, i.e., if x_2 was
+completely observed, p(x_3 \mid x_1, x_2, b\_{x3}, \theta\_{x3}) would
 also not affect the estimation of parameters in the other parts of the
 model and could be omitted.
 
@@ -1167,7 +1169,7 @@ refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
 #> How do you want to specify the reference categories?
 #> 
 #> 1: Use the first category for each variable.
-#> 2: Use the last category for each variable.
+#> 2: Use the last category for each variabe.
 #> 3: Use the largest category for each variable.
 #> 4: Specify the reference categories individually.
 ```
@@ -1343,9 +1345,9 @@ mod11b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
 #> Note: No MCMC sample will be created when n.iter is set to 0.
 ```
 
-Ridge regression is implemented as a $`\text{Ga}(0.01, 0.01)`$ prior for
-the precision of the regression coefficients $`\beta`$ instead of
-setting this precision to a fixed (small) value.
+Ridge regression is implemented as a \text{Ga}(0.01, 0.01) prior for the
+precision of the regression coefficients \beta instead of setting this
+precision to a fixed (small) value.
 
 [^1]: Note: these examples are chosen to demonstrate functionality and
     may not fit the data.
