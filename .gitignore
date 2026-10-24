@@ -19,3 +19,5 @@ revdep
 .DS_Store
 
 /.quarto/
+.positai
+.claude
