@@ -51,8 +51,14 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="jointai-development-version">JointAI (development version)<a class="anchor" aria-label="anchor" href="#jointai-development-version"></a></h2>
 <div class="section level3">
+<h3 id="small-improvements-development-version">Small improvements<a class="anchor" aria-label="anchor" href="#small-improvements-development-version"></a></h3>
+<ul><li>Labelled variables (class <code>"haven_labelled"</code> from <strong>haven</strong>, or <code>"labelled"</code> from <strong>Hmisc</strong> and older versions of <strong>haven</strong>), e.g., from data imported from SPSS, can now be used (<a href="https://github.com/nerler/JointAI/issues/17" class="external-link">#17</a>). Variables with value labels are converted to unordered factors (with a message); other labelled variables keep their values. Variable labels are kept. SPSS user-defined missing values are not treated as missing. Labelled variables in <code>newdata</code> of <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> are converted in the same way, using the categories of the fitted model.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Model fitting failed with “invalid term in model formula” when the package <strong>logistf</strong> (or another package using <strong>formula.tools</strong>) was loaded (<a href="https://github.com/nerler/JointAI/issues/15" class="external-link">#15</a>).</li>
+<ul><li>The error message for variables of an unsupported class now names each variable correctly (it showed, e.g., “x1”, “x2” for a variable “x” with two classes) (<a href="https://github.com/nerler/JointAI/issues/17" class="external-link">#17</a>).</li>
+<li>Model fitting failed with “invalid term in model formula” when the package <strong>logistf</strong> (or another package using <strong>formula.tools</strong>) was loaded (<a href="https://github.com/nerler/JointAI/issues/15" class="external-link">#15</a>).</li>
+<li>Model fitting failed with “row names contain missing values” when variables had a “label” attribute (e.g., data imported from SPSS) or other attributes that are lost when the data are subset (<a href="https://github.com/nerler/JointAI/issues/35" class="external-link">#35</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">

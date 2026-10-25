@@ -222,3 +222,8 @@ Useful links:
 
 **Maintainer**: Nicole S. Erler <n.s.erler@umcutrecht.nl>
 ([ORCID](https://orcid.org/0000-0002-9370-6832))
+
+Authors:
+
+- Nicole S. Erler <n.s.erler@umcutrecht.nl>
+  ([ORCID](https://orcid.org/0000-0002-9370-6832))

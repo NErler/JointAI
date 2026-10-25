@@ -4,6 +4,9 @@ Wrapper function to check that
 
 - all used variables are present in the `data`
 
+- converts labelled variables (e.g., from SPSS) to factors or plain
+  vectors
+
 - that the classes of the variables are of a type for which default
   model types are defined
 
