@@ -296,5 +296,8 @@ golden_fit <- function(case, data = golden_data()) {
   out <- unclass(fit)[golden_parts]
   # the name of the temporary model file differs between runs
   out$mcmc_settings$modelfile <- NULL
+  # the JAGS model text is read back from a file; on Windows, line ends are
+  # then "\r\n" instead of "\n"
+  out$jagsmodel[] <- gsub("\r\n", "\n", out$jagsmodel, fixed = TRUE)
   golden_strip_env(out)
 }
