@@ -105,14 +105,14 @@ plot_all(
 )
 ```
 
-![](reference/figures/README-plotall-1.png)
+![](reference/figures/README-plotall-1.svg)
 
 ``` r
 
 md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
 ```
 
-![](reference/figures/README-mdpattern-1.png)
+![](reference/figures/README-mdpattern-1.svg)
 
 ### Fit a linear regression model with incomplete covariates
 
@@ -134,14 +134,14 @@ lm1 <- lm_imp(
 traceplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4)
 ```
 
-![](reference/figures/README-traceplot-1.png)
+![](reference/figures/README-traceplot-1.svg)
 
 ``` r
 
 densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
 ```
 
-![](reference/figures/README-densplot-1.png)
+![](reference/figures/README-densplot-1.svg)
 
 ### Summarize the Result
 
