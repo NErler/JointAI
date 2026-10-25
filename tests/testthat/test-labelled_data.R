@@ -132,8 +132,9 @@ test_that("check_classes() names the variables with unsupported classes", {
   dat$P <- as.POSIXct("2020-01-01", tz = "UTC") + seq_len(nrow(dat))
   dat$D <- as.Date("2020-01-01") + seq_len(nrow(dat))
 
+  # the message is line-wrapped; compare it without line breaks
   err <- tryCatch(check_classes(dat, fixed = list(y = y ~ C1 + P + D)),
-                  error = conditionMessage)
+                  error = function(e) gsub("\\s+", " ", conditionMessage(e)))
   expect_match(err, "variables: P)", fixed = TRUE)
   expect_match(err, "variables: D)", fixed = TRUE)
   expect_no_match(err, "P1|P2")
