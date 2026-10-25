@@ -216,8 +216,10 @@ check_fixed_random <- function(arglist) {
 #'
 #' @returns nothing, but throws an error if a variable is missing
 #' @keywords internal
-#' used in model_imp (2020-06-09)
 #'
+
+# used in model_imp (2020-06-09)
+
 check_vars_in_data <- function(
   datanames,
   fixed = NULL,

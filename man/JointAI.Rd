@@ -172,4 +172,9 @@ Useful links:
 \author{
 \strong{Maintainer}: Nicole S. Erler \email{n.s.erler@umcutrecht.nl} (\href{https://orcid.org/0000-0002-9370-6832}{ORCID})
 
+Authors:
+\itemize{
+  \item Nicole S. Erler \email{n.s.erler@umcutrecht.nl} (\href{https://orcid.org/0000-0002-9370-6832}{ORCID})
+}
+
 }
