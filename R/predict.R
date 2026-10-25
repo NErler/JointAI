@@ -228,13 +228,24 @@ predict.JointAI <- function(
   if (missing(newdata)) {
     newdata <- object$data
   } else {
+    allvars <- unique(c(
+      all_vars(object$fixed),
+      all_vars(object$random),
+      all_vars(object$auxvars)
+    ))
+
+    # labelled variables are converted as for the data used to fit the model,
+    # with the factor levels of that data (#17)
+    newdata <- convert_labelled(
+      data = newdata,
+      allvars = intersect(allvars, names(newdata)),
+      mess = FALSE,
+      ref_data = object$data
+    )
+
     newdata <- convert_variables(
       data = newdata,
-      allvars = unique(c(
-        all_vars(object$fixed),
-        all_vars(object$random),
-        all_vars(object$auxvars)
-      )),
+      allvars = allvars,
       mess = FALSE
       #data_orig = object$data
     )

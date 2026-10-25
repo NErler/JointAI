@@ -6,7 +6,8 @@
   from SPSS, can now be used (#17). Variables with value labels are converted
   to unordered factors (with a message); other labelled variables keep their
   values. Variable labels are kept. SPSS user-defined missing values are not
-  treated as missing.
+  treated as missing. Labelled variables in `newdata` of `predict()` are
+  converted in the same way, using the categories of the fitted model.
 
 ## Bug fixes
 * The error message for variables of an unsupported class now names each

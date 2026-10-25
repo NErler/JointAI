@@ -4,7 +4,7 @@
 \alias{convert_labelled}
 \title{Convert labelled variables}
 \usage{
-convert_labelled(data, allvars, mess = TRUE)
+convert_labelled(data, allvars, mess = TRUE, ref_data = NULL)
 }
 \arguments{
 \item{data}{a \code{data.frame}}
@@ -13,6 +13,8 @@ convert_labelled(data, allvars, mess = TRUE)
 
 \item{mess}{logical, if \code{TRUE} a message lists the variables that were
 converted to factors}
+
+\item{ref_data}{optional \code{data.frame} with the reference factor levels}
 }
 \value{
 the \code{data.frame} with the converted variables
@@ -31,5 +33,10 @@ class is removed.
 \details{
 The variable label (attribute \code{"label"}) is kept. SPSS user-defined missing
 values (class \code{"haven_labelled_spss"}) are not treated as missing.
+
+When \code{ref_data} is given (e.g., the data of a fitted model, when \code{data} is
+new data for prediction), factors get the levels of the corresponding
+factor in \code{ref_data}, and values without such a level become \code{NA} (with a
+warning).
 }
 \keyword{internal}

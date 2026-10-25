@@ -4,11 +4,14 @@
 \alias{labelled_to_factor}
 \title{Convert a variable with value labels to a factor}
 \usage{
-labelled_to_factor(x)
+labelled_to_factor(x, levels = NULL)
 }
 \arguments{
 \item{x}{a labelled vector with attribute \code{"labels"} (a named vector of
 values)}
+
+\item{levels}{optional character vector of factor levels. If \code{NULL}, the
+levels are the (labels of the) observed values, sorted by value.}
 }
 \value{
 an unordered factor with the value labels as levels, keeping the

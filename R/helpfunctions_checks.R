@@ -487,15 +487,21 @@ compare_data_structure <- function(data1, data2) {
 #' The variable label (attribute `"label"`) is kept. SPSS user-defined missing
 #' values (class `"haven_labelled_spss"`) are not treated as missing.
 #'
+#' When `ref_data` is given (e.g., the data of a fitted model, when `data` is
+#' new data for prediction), factors get the levels of the corresponding
+#' factor in `ref_data`, and values without such a level become `NA` (with a
+#' warning).
+#'
 #' @param data a `data.frame`
 #' @param allvars vector of names of the variables used in the model
 #' @param mess logical, if `TRUE` a message lists the variables that were
 #'   converted to factors
+#' @param ref_data optional `data.frame` with the reference factor levels
 #'
 #' @returns the `data.frame` with the converted variables
 #' @keywords internal
 #'
-convert_labelled <- function(data, allvars, mess = TRUE) {
+convert_labelled <- function(data, allvars, mess = TRUE, ref_data = NULL) {
   allvars <- unique(allvars)
   is_labelled <- lvapply(
     data[allvars],
@@ -506,7 +512,19 @@ convert_labelled <- function(data, allvars, mess = TRUE) {
   to_factor <- character(0L)
   for (k in allvars[is_labelled]) {
     if (!is.null(attr(data[[k]], "labels"))) {
-      data[[k]] <- labelled_to_factor(data[[k]])
+      ref_levels <- if (is.factor(ref_data[[k]])) levels(ref_data[[k]])
+      x <- labelled_to_factor(data[[k]], levels = ref_levels)
+
+      lost <- is.na(x) & !is.na(unclass(data[[k]]))
+      if (!is.null(ref_levels) && any(lost)) {
+        warnmsg(
+          "Some values of %s do not correspond to a category in the data
+          used to fit the model and were set to missing.",
+          dQuote(k)
+        )
+      }
+
+      data[[k]] <- x
       to_factor <- c(to_factor, k)
     } else {
       data[[k]] <- remove_labelled_class(data[[k]])
@@ -529,24 +547,33 @@ convert_labelled <- function(data, allvars, mess = TRUE) {
 #'
 #' @param x a labelled vector with attribute `"labels"` (a named vector of
 #'   values)
+#' @param levels optional character vector of factor levels. If `NULL`, the
+#'   levels are the (labels of the) observed values, sorted by value.
 #'
 #' @returns an unordered factor with the value labels as levels, keeping the
 #'   `"label"` attribute of `x`
 #' @keywords internal
 #'
-labelled_to_factor <- function(x) {
+labelled_to_factor <- function(x, levels = NULL) {
   labels <- attr(x, "labels")
   var_label <- attr(x, "label")
 
   values <- x
   attributes(values) <- NULL
 
-  lvls <- sort(unique(values[!is.na(values)]))
-  lvl_names <- as.character(lvls)
-  has_label <- lvls %in% labels
-  lvl_names[has_label] <- names(labels)[match(lvls[has_label], labels)]
+  # the label of each value, or the value itself if it has no label
+  value_names <- function(v) {
+    out <- as.character(v)
+    idx <- match(v, labels)
+    out[!is.na(idx)] <- names(labels)[idx[!is.na(idx)]]
+    out
+  }
 
-  out <- factor(values, levels = lvls, labels = lvl_names)
+  if (is.null(levels)) {
+    levels <- unique(value_names(sort(unique(values[!is.na(values)]))))
+  }
+
+  out <- factor(value_names(values), levels = levels)
   attr(out, "label") <- var_label
   out
 }

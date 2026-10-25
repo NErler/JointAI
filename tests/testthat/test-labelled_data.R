@@ -194,3 +194,22 @@ test_that("predict() works with labelled newdata", {
     )
   }
 })
+
+test_that("values without a category in the reference data become NA", {
+  # reference data in which the value 4 does not occur
+  rows <- which(as.numeric(wideDF$M1) != 4)
+  ref <- run_check_data(make_lab_df(rows), form17)
+  expect_false("4" %in% levels(ref$V))
+
+  expect_warning(
+    res <- convert_labelled(
+      make_lab_df(),
+      allvars = "V",
+      mess = FALSE,
+      ref_data = ref
+    ),
+    "set to missing"
+  )
+  expect_identical(levels(res$V), levels(ref$V))
+  expect_true(all(is.na(res$V[as.numeric(wideDF$M1) == 4])))
+})
