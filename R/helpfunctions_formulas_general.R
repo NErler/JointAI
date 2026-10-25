@@ -320,7 +320,9 @@ extract_fixef_formula <- function(formula) {
     collapse = " + "
   )
 
-  as.formula(paste0(as.character(formula)[2L], " ~ ", rhs))
+  # deparse() instead of as.character(formula)[2L]: packages such as
+  # formula.tools register an as.character() method for formulas (#15)
+  as.formula(paste0(deparse(formula[[2L]], width.cutoff = 500L), " ~ ", rhs))
 }
 
 

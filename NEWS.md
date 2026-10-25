@@ -1,5 +1,9 @@
 # JointAI (development version)
 
+## Bug fixes
+* Model fitting failed with "invalid term in model formula" when the package
+  **logistf** (or another package using **formula.tools**) was loaded (#15).
+
 # JointAI 1.1.0
 
 ## New features
