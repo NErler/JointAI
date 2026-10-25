@@ -45,19 +45,19 @@ golden_data <- function() {
     include.lowest = TRUE
   )
 
+  # survival models: the data list grows with the number of subjects (e.g.,
+  # quadrature matrices), so a subset of 60 subjects (in 2 centers) is used
   PBC <- JointAI::PBC
   PBC$center <- cut(as.numeric(PBC$id), c(-Inf, seq(30, 270, 30), Inf))
-  PBC2 <- PBC[match(unique(PBC$id), PBC$id), ]
-  # smaller data for the joint model (its data list is large)
-  PBC_jm <- droplevels(PBC[PBC$id %in% unique(PBC$id)[1:60], ])
+  PBC_small <- droplevels(PBC[PBC$id %in% unique(PBC$id)[1:60], ])
+  PBC2_small <- PBC_small[match(unique(PBC_small$id), PBC_small$id), ]
 
   list(
     wideDF = wideDF,
     longDF = longDF,
     NHANES = JointAI::NHANES,
-    PBC = PBC,
-    PBC2 = PBC2,
-    PBC_jm = PBC_jm
+    PBC_small = PBC_small,
+    PBC2_small = PBC2_small
   )
 }
 
@@ -76,8 +76,8 @@ golden_cases <- function() {
     clm_intercept = quote(clm_imp(O1 ~ 1, data = wideDF)), # clm.R:m0a
     coxph_intercept = quote(coxph_imp(
       Surv(futime, status != "censored") ~ 1,
-      data = PBC2
-    )), # coxph.R:m0a
+      data = PBC2_small
+    )), # coxph.R:m0a, on a subset of PBC
 
     # transformations and functions of covariates
     lm_spline_powers = quote(lm_imp(
@@ -215,8 +215,8 @@ golden_cases <- function() {
         (1 | id) +
         (1 | center),
       timevar = "day",
-      data = PBC
-    )), # coxph.R:m4d
+      data = PBC_small
+    )), # coxph.R:m4d, on a subset of PBC
     jm_three_longitudinal = quote(JM_imp(
       list(
         Surv(futime, status != "censored") ~ age +
@@ -230,7 +230,7 @@ golden_cases <- function() {
         stage ~ age + (1 | id)
       ),
       timevar = "day",
-      data = PBC_jm
+      data = PBC_small
     )) # survival.R, on a subset of PBC
   )
 }
@@ -257,17 +257,28 @@ golden_parts <- c(
   "coef_list"
 )
 
-# Set the environment of formulas and terms objects to the global environment.
-# Otherwise each run has a different environment (and saving them would store
-# the whole environment, including data).
+# Set the environment of formulas, terms objects and functions (e.g., in family
+# objects) to the global environment. Otherwise each run has a different
+# environment, and saving them would store the whole environment (e.g., data).
+# This only affects the stored and compared copy, not the package.
 golden_strip_env <- function(x) {
+  if (is.function(x)) {
+    if (!is.primitive(x)) {
+      environment(x) <- globalenv()
+    }
+    return(x)
+  }
   if (!is.null(attr(x, ".Environment"))) {
     attr(x, ".Environment") <- globalenv()
   }
-  if (is.list(x) && !is.data.frame(x) && !is.function(x)) {
+  if (is.list(x) && !is.data.frame(x)) {
     att <- attributes(x)
     x <- lapply(x, golden_strip_env)
     attributes(x) <- att
+  }
+  # attributes can hold such objects too, e.g. the family of analysis_type
+  for (a in setdiff(names(attributes(x)), c("names", "dim", "dimnames"))) {
+    attr(x, a) <- golden_strip_env(attr(x, a))
   }
   x
 }
