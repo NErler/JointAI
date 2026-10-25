@@ -77,7 +77,6 @@ jobs:
           extra-packages: |
             any::survival
             any::rcmdcheck
-          upgrade: 'TRUE'
           cache-version: 2
           needs: check
 
