@@ -29,11 +29,12 @@ with_as_character_formula <- function(code) {
 }
 
 test_that("the stand-in reproduces the formula.tools behaviour", {
+  before <- as.character(y ~ x)
   with_as_character_formula(
     expect_length(as.character(y ~ x), 1L)
   )
-  # and is removed again afterwards
-  expect_length(as.character(y ~ x), 3L)
+  # and the previous state is restored afterwards
+  expect_identical(as.character(y ~ x), before)
 })
 
 test_that("extract_fixef_formula() works with an as.character.formula method", {
