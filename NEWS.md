@@ -3,6 +3,9 @@
 ## Bug fixes
 * Model fitting failed with "invalid term in model formula" when the package
   **logistf** (or another package using **formula.tools**) was loaded (#15).
+* Model fitting failed with "row names contain missing values" when variables
+  had a "label" attribute (e.g., data imported from SPSS) or other attributes
+  that are lost when the data are subset (#35).
 
 # JointAI 1.1.0
 
