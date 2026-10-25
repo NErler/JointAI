@@ -168,15 +168,19 @@ fixture_results <- function() {
 fixture_predict_types <- function(object) {
   types <- switch(
     object$info_list[[1L]]$modeltype,
-    glm = ,
-    glmm = ,
+    glm = c("lp", "response"),
+    glmm = c("lp", "response"),
     survreg = c("lp", "response"),
-    clm = ,
-    clmm = ,
-    mlogit = ,
+    clm = c("lp", "prob", "class"),
+    clmm = c("lp", "prob", "class"),
+    mlogit = c("lp", "prob", "class"),
     mlogitmm = c("lp", "prob", "class"),
     coxph = c("lp", "risk", "survival", "expected"),
-    "lp"
+    JM = "lp",
+    stop(
+      "No prediction types for model type ",
+      object$info_list[[1L]]$modeltype
+    )
   )
   setNames(types, types)
 }
