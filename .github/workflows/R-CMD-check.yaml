@@ -24,14 +24,12 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-1'}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -42,15 +40,19 @@ jobs:
           use-public-rspm: true
 
 
-      - name: Install JAGS macOS
+      # Official JAGS installer: puts libjags in /usr/local/lib, where the CRAN
+      # binary of rjags looks for it (Homebrew uses /opt/homebrew on arm64)
+      - name: Install JAGS (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install jags
+          curl -sSL -o jags.pkg "https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/JAGS-4.3.2.pkg/download"
+          sudo installer -pkg jags.pkg -target /
+          rm jags.pkg
 
       # Cache JAGS installation (Windows)
       - name: Cache JAGS (Windows)
         if: runner.os == 'Windows'
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: C:\Program Files\JAGS
           key: ${{ runner.os }}-jags-4.3.1
@@ -77,13 +79,14 @@ jobs:
           extra-packages: |
             any::survival
             any::rcmdcheck
-          upgrade: 'TRUE'
           cache-version: 2
           needs: check
 
 
+      # install.packages() only warns if the installation fails; loading rjags
+      # makes the step fail if rjags cannot find JAGS
       - name: Install rjags
-        run: Rscript -e 'install.packages("rjags", type = "source")'
+        run: Rscript -e 'install.packages("rjags", type = "source"); library(rjags)'
 
 
       - uses: r-lib/actions/check-r-package@v2
