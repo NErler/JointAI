@@ -29,9 +29,14 @@ bash.exe.stackdump
 ## Exclude (large) vignettes
 ^vignettes/TheoreticalBackground.Rmd$
 ^vignettes/MinimalExample.Rmd$
+^vignettes/figures_MinimalExample$
+## images only used by MinimalExample (JointAI_square) or not at all
+^man/figures/JointAI_191\.png$
+^man/figures/JointAI_square\.png$
 ^vignettes/VisualizingIncompleteData.Rmd$
 
-^vignettes/*.Rmd.orig
+^vignettes/.*\.Rmd\.orig$
+^vignettes/precompile\.R$
 
 
 ## Exclude folder with test outputs which is super large
