@@ -40,10 +40,14 @@ jobs:
           use-public-rspm: true
 
 
-      - name: Install JAGS macOS
+      # Official JAGS installer: puts libjags in /usr/local/lib, where the CRAN
+      # binary of rjags looks for it (Homebrew uses /opt/homebrew on arm64)
+      - name: Install JAGS (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install jags
+          curl -sSL -o jags.pkg "https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Mac%20OS%20X/JAGS-4.3.2.pkg/download"
+          sudo installer -pkg jags.pkg -target /
+          rm jags.pkg
 
       # Cache JAGS installation (Windows)
       - name: Cache JAGS (Windows)
@@ -79,8 +83,10 @@ jobs:
           needs: check
 
 
+      # install.packages() only warns if the installation fails; loading rjags
+      # makes the step fail if rjags cannot find JAGS
       - name: Install rjags
-        run: Rscript -e 'install.packages("rjags", type = "source")'
+        run: Rscript -e 'install.packages("rjags", type = "source"); library(rjags)'
 
 
       - uses: r-lib/actions/check-r-package@v2
