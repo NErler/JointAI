@@ -159,6 +159,15 @@ fixture_results <- function() {
           error = function(e) paste("Error:", conditionMessage(e))
         )
       })
+    },
+    parameters = function(object) parameters(object, mess = FALSE),
+    # list_models() only prints; the printed lines are stored. The width
+    # (line breaks of strwrap()) and straight quotes (dQuote()) are fixed, as
+    # in testthat, so that the text does not depend on the session.
+    list_models = function(object) {
+      op <- options(width = 80, useFancyQuotes = FALSE)
+      on.exit(options(op))
+      capture.output(list_models(object))
     }
   )
 }
