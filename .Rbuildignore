@@ -58,6 +58,6 @@ revdep/
 ^\.vscode$
 ^[.]?air[.]toml$
 ^\.positai$
-^\.claude$
+(^|/)\.claude$
 ^CLAUDE\.md$
 ^dev$
