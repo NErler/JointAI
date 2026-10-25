@@ -25,7 +25,8 @@ for (k in names(cases)) {
   saveRDS(
     golden_fit(cases[[k]], data),
     file.path(golden_dir, paste0(k, ".rds")),
-    version = 2
+    version = 2,
+    compress = "xz"
   )
 }
 
@@ -43,5 +44,6 @@ saveRDS(
     rjags_version = as.character(packageVersion("rjags"))
   ),
   file.path(golden_dir, "info.rds"),
-  version = 2
+  version = 2,
+  compress = "xz"
 )

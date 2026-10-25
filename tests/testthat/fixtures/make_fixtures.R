@@ -33,7 +33,8 @@ if (what == "all") {
     saveRDS(
       fixture_fit(cases[[k]], data),
       file.path(fix_dir, paste0(k, ".rds")),
-      version = 2
+      version = 2,
+      compress = "xz"
     )
   }
   saveRDS(
@@ -50,7 +51,8 @@ if (what == "all") {
       JAGS_version = as.character(rjags::jags.version())
     ),
     file.path(fix_dir, "info.rds"),
-    version = 2
+    version = 2,
+    compress = "xz"
   )
 }
 
@@ -62,7 +64,8 @@ for (k in names(cases)) {
     saveRDS(
       results[[type]](fit),
       file.path(exp_dir, paste0(k, "_", type, ".rds")),
-      version = 2
+      version = 2,
+      compress = "xz"
     )
   }
 }
