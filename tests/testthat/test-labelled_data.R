@@ -14,8 +14,13 @@ test_that("get_datlvls() ignores attributes that subsetting drops (#35)", {
   attr(dat_attr$C1, "label") <- "a variable label"
   attr(dat_attr$c1, "comment") <- "a comment"
 
-  expected <- c(C1 = "id", c1 = "lvlone", B2 = "id", time = "lvlone",
-                y = "lvlone")
+  expected <- c(
+    C1 = "id",
+    c1 = "lvlone",
+    B2 = "id",
+    time = "lvlone",
+    y = "lvlone"
+  )
   expect_identical(get_datlvls(dat, groups), expected)
   expect_identical(get_datlvls(dat_attr, groups), expected)
 })
@@ -63,8 +68,12 @@ run_check_data <- function(data, formula, mess = FALSE) {
 
 # objects with the class and attributes that haven / Hmisc create
 haven_labelled <- function(x, labels = NULL, label = NULL) {
-  structure(x, labels = labels, label = label,
-            class = c("haven_labelled", "vctrs_vctr", class(x)))
+  structure(
+    x,
+    labels = labels,
+    label = label,
+    class = c("haven_labelled", "vctrs_vctr", class(x))
+  )
 }
 
 # Without haven loaded, `[` drops the class and attributes of these objects, so
@@ -83,13 +92,18 @@ make_lab_df <- function(rows = seq_len(nrow(wideDF))) {
   # only a variable label
   d$W <- haven_labelled(d$C2, label = "only a variable label")
   # Hmisc-style numeric, and a factor that kept the class (as in #17)
-  d$H <- structure(d$C1, label = "Hmisc label",
-                   class = c("labelled", "numeric"))
-  d$F <- structure(d$M2, label = "Hmisc label",
-                   class = c("labelled", "factor"))
+  d$H <- structure(
+    d$C1,
+    label = "Hmisc label",
+    class = c("labelled", "numeric")
+  )
+  d$F <- structure(d$M2, label = "Hmisc label", class = c("labelled", "factor"))
   # haven < 2.0: class "labelled" with value labels
-  d$O <- structure(as.numeric(d$B1), labels = c(no = 1, yes = 2),
-                   class = "labelled")
+  d$O <- structure(
+    as.numeric(d$B1),
+    labels = c(no = 1, yes = 2),
+    class = "labelled"
+  )
   d
 }
 
@@ -141,8 +155,10 @@ test_that("check_classes() names the variables with unsupported classes", {
   dat$D <- as.Date("2020-01-01") + seq_len(nrow(dat))
 
   # the message is line-wrapped; compare it without line breaks
-  err <- tryCatch(check_classes(dat, fixed = list(y = y ~ C1 + P + D)),
-                  error = function(e) gsub("\\s+", " ", conditionMessage(e)))
+  err <- tryCatch(
+    check_classes(dat, fixed = list(y = y ~ C1 + P + D)),
+    error = function(e) gsub("\\s+", " ", conditionMessage(e))
+  )
   expect_match(err, "variables: P)", fixed = TRUE)
   expect_match(err, "variables: D)", fixed = TRUE)
   expect_no_match(err, "P1|P2")
