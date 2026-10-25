@@ -8,6 +8,8 @@ on:
 
 name: test-coverage
 
+permissions: read-all
+
 jobs:
   test-coverage:
     runs-on: ubuntu-latest
@@ -21,16 +23,7 @@ jobs:
         with:
           use-public-rspm: true
 
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'cat(remotes::system_requirements("ubuntu", "20.04"), sep = "\n")')
-
-
+      # also installs the system requirements (e.g., JAGS)
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::covr
