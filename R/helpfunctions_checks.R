@@ -445,7 +445,7 @@ compare_data_structure <- function(data1, data2) {
     x1 = lapply(data1, class),
     x2 = lapply(data2, class)
   )
-  class_change = Filter(isTRUE, class_change)
+  class_change <- Filter(isTRUE, class_change)
 
   level_change <- mapply(
     function(x1, x2) !isTRUE(all.equal(x1, x2)),
@@ -497,8 +497,11 @@ compare_data_structure <- function(data1, data2) {
 #'
 convert_labelled <- function(data, allvars, mess = TRUE) {
   allvars <- unique(allvars)
-  is_labelled <- lvapply(data[allvars], inherits,
-                         c("labelled", "haven_labelled"))
+  is_labelled <- lvapply(
+    data[allvars],
+    inherits,
+    c("labelled", "haven_labelled")
+  )
 
   to_factor <- character(0L)
   for (k in allvars[is_labelled]) {
@@ -561,8 +564,16 @@ labelled_to_factor <- function(x) {
 remove_labelled_class <- function(x) {
   cls <- setdiff(
     oldClass(x),
-    c("labelled", "haven_labelled", "vctrs_vctr",
-      "double", "integer", "character", "logical", "numeric")
+    c(
+      "labelled",
+      "haven_labelled",
+      "vctrs_vctr",
+      "double",
+      "integer",
+      "character",
+      "logical",
+      "numeric"
+    )
   )
   oldClass(x) <- if (length(cls) > 0L) cls else NULL
   x
