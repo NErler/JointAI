@@ -1,5 +1,5 @@
 # Tests for data with label metadata, as produced e.g. by importing SPSS data
-# (GitHub issues #35 and #17). No JAGS needed.
+# (GitHub issues #35 and #17). Only the predict() test needs JAGS.
 
 # Issue #35 --------------------------------------------------------------------
 # get_datlvls() compared the data with a copy rebuilt by subsetting, which
@@ -67,25 +67,33 @@ haven_labelled <- function(x, labels = NULL, label = NULL) {
             class = c("haven_labelled", "vctrs_vctr", class(x)))
 }
 
-lab_df <- wideDF
-# value labels for 1-3; 4 occurs but has no label; 9 has a label but does not
-# occur; some values are missing
-lab_df$V <- haven_labelled(
-  as.numeric(wideDF$M1),
-  labels = c(low = 1, mid = 2, high = 3, refused = 9),
-  label = "a variable with value labels"
-)
-lab_df$V[c(3, 7)] <- NA
-# only a variable label
-lab_df$W <- haven_labelled(wideDF$C2, label = "only a variable label")
-# Hmisc-style numeric, and a factor that kept the class (as in #17)
-lab_df$H <- structure(wideDF$C1, label = "Hmisc label",
-                      class = c("labelled", "numeric"))
-lab_df$F <- structure(wideDF$M2, label = "Hmisc label",
-                      class = c("labelled", "factor"))
-# haven < 2.0: class "labelled" with value labels
-lab_df$O <- structure(as.numeric(wideDF$B1), labels = c(no = 1, yes = 2),
-                      class = "labelled")
+# Without haven loaded, `[` drops the class and attributes of these objects, so
+# subsets of the data are created with this function instead of by subsetting.
+make_lab_df <- function(rows = seq_len(nrow(wideDF))) {
+  d <- wideDF[rows, ]
+  # value labels for 1-3; 4 occurs but has no label; 9 has a label but does
+  # not occur; some values are missing
+  V <- as.numeric(d$M1)
+  V[rows %in% c(3, 7)] <- NA
+  d$V <- haven_labelled(
+    V,
+    labels = c(low = 1, mid = 2, high = 3, refused = 9),
+    label = "a variable with value labels"
+  )
+  # only a variable label
+  d$W <- haven_labelled(d$C2, label = "only a variable label")
+  # Hmisc-style numeric, and a factor that kept the class (as in #17)
+  d$H <- structure(d$C1, label = "Hmisc label",
+                   class = c("labelled", "numeric"))
+  d$F <- structure(d$M2, label = "Hmisc label",
+                   class = c("labelled", "factor"))
+  # haven < 2.0: class "labelled" with value labels
+  d$O <- structure(as.numeric(d$B1), labels = c(no = 1, yes = 2),
+                   class = "labelled")
+  d
+}
+
+lab_df <- make_lab_df()
 
 form17 <- y ~ C1 + V + W + H + F + O
 
@@ -138,4 +146,51 @@ test_that("check_classes() names the variables with unsupported classes", {
   expect_match(err, "variables: P)", fixed = TRUE)
   expect_match(err, "variables: D)", fixed = TRUE)
   expect_no_match(err, "P1|P2")
+})
+
+
+# predict() with labelled newdata ----------------------------------------------
+# newdata is converted like the data used for fitting, but with the factor
+# levels of the fitted model (newdata may not contain all values).
+
+test_that("convert_labelled() can use the factor levels of reference data", {
+  ref <- run_check_data(lab_df, form17)
+
+  # rows in which the value 4 (unlabelled level "4") does not occur
+  rows <- which(as.numeric(wideDF$M1) != 4)[1:5]
+  res <- convert_labelled(
+    make_lab_df(rows),
+    allvars = c("V", "O"),
+    mess = FALSE,
+    ref_data = ref
+  )
+
+  expect_identical(levels(res$V), levels(ref$V))
+  expect_identical(as.character(res$V), as.character(ref$V[rows]))
+  expect_identical(levels(res$O), levels(ref$O))
+})
+
+test_that("predict() works with labelled newdata", {
+  skip_on_cran()
+
+  mod <- suppressWarnings(lm_imp(
+    y ~ C1 + V + H,
+    data = lab_df,
+    n.adapt = 5,
+    n.iter = 10,
+    seed = 2020,
+    mess = FALSE,
+    warn = FALSE
+  ))
+
+  # all rows, and rows in which the value 4 of V does not occur
+  for (rows in list(
+    seq_len(nrow(lab_df)),
+    which(as.numeric(wideDF$M1) != 4)[1:10]
+  )) {
+    expect_identical(
+      predict(mod, newdata = make_lab_df(rows), warn = FALSE)$fitted,
+      predict(mod, newdata = mod$data[rows, ], warn = FALSE)$fitted
+    )
+  }
 })
