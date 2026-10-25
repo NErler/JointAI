@@ -1,5 +1,7 @@
 # Changelog
 
+## JointAI (development version)
+
 ## JointAI 1.1.0
 
 CRAN release: 2026-01-30
