@@ -14,6 +14,9 @@ if (is.na(what)) {
 }
 
 devtools::load_all(".", quiet = TRUE)
+# as in the tests (testthat sets this option): error messages stored as
+# expected results use straight quotes
+options(useFancyQuotes = FALSE)
 source(file.path("tests", "testthat", "helper-golden.R"))
 source(file.path("tests", "testthat", "helper-fixtures.R"))
 

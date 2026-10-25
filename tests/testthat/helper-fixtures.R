@@ -138,8 +138,47 @@ fixture_results <- function() {
         suppressWarnings(rd_vcov(object, mess = FALSE, warn = FALSE)),
         error = function(e) paste("Error:", conditionMessage(e))
       )
+    },
+    # fitted values and quantiles for each prediction type (only `fitted`:
+    # `newdata` is the data with `fitted` added, see test-fixtures_predict.R)
+    predict = function(object) {
+      lapply(fixture_predict_types(object), function(type) {
+        tryCatch(
+          suppressWarnings(
+            predict(object, type = type, mess = FALSE, warn = FALSE)$fitted
+          ),
+          error = function(e) paste("Error:", conditionMessage(e))
+        )
+      })
+    },
+    residuals = function(object) {
+      types <- c("working", "pearson", "response")
+      lapply(setNames(types, types), function(type) {
+        tryCatch(
+          suppressWarnings(residuals(object, type = type, warn = FALSE)),
+          error = function(e) paste("Error:", conditionMessage(e))
+        )
+      })
     }
   )
+}
+
+# The prediction types (argument `type` of predict()) for the model type of the
+# (first) analysis model of a fitted model.
+fixture_predict_types <- function(object) {
+  types <- switch(
+    object$info_list[[1L]]$modeltype,
+    glm = ,
+    glmm = ,
+    survreg = c("lp", "response"),
+    clm = ,
+    clmm = ,
+    mlogit = ,
+    mlogitmm = c("lp", "prob", "class"),
+    coxph = c("lp", "risk", "survival", "expected"),
+    "lp"
+  )
+  setNames(types, types)
 }
 
 fixture_expected <- function(name, type) {
