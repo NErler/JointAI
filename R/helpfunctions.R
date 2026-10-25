@@ -243,21 +243,38 @@ get_datlvls <- function(data, groups_df) {
     data <- as.data.frame(data)
   }
 
+  # compare only the values: subsetting drops attributes such as "label",
+  # which would otherwise make identical() return FALSE (#35)
+  same_values <- function(x, y) {
+    attributes(x) <- NULL
+    attributes(y) <- NULL
+    identical(x, y)
+  }
+
   clus <- lapply(groups_df, function(k) {
     # for each level of grouping, compare the original vector with a
     # reconstructed vector in which the first element per group is repeated
     # for each group member
     d_rep <- data[match(unique(k), k)[match(k, unique(k))], , drop = FALSE]
-    !unlist(Map(identical, d_rep, data))
+    !unlist(Map(same_values, d_rep, data))
   })
   clus <- do.call(cbind, clus)
 
   # obtain the grouping level hierarchy
   lvl_rel <- get_grouping_levels(groups_df)
 
-  apply(!clus[, names(lvl_rel), drop = FALSE], 1, function(k) {
-    names(lvl_rel)[max(which(k))]
+  lvls <- apply(!clus[, names(lvl_rel), drop = FALSE], 1, function(k) {
+    if (any(k)) names(lvl_rel)[max(which(k))] else NA_character_
   })
+
+  if (anyNA(lvls)) {
+    errormsg(
+      "The hierarchical level of the variable(s) %s could not be determined.",
+      paste(dQuote(names(lvls)[is.na(lvls)]), collapse = ", ")
+    )
+  }
+
+  lvls
 }
 
 

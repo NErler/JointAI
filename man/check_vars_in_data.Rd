@@ -24,8 +24,4 @@ nothing, but throws an error if a variable is missing
 \description{
 Check that all variables in formulas are in the data
 }
-\keyword{(2020-06-09)}
-\keyword{in}
 \keyword{internal}
-\keyword{model_imp}
-\keyword{used}

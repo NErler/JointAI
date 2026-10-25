@@ -1,8 +1,23 @@
 # JointAI (development version)
 
+## Small improvements
+* Labelled variables (class `"haven_labelled"` from **haven**, or `"labelled"`
+  from **Hmisc** and older versions of **haven**), e.g., from data imported
+  from SPSS, can now be used (#17). Variables with value labels are converted
+  to unordered factors (with a message); other labelled variables keep their
+  values. Variable labels are kept. SPSS user-defined missing values are not
+  treated as missing. Labelled variables in `newdata` of `predict()` are
+  converted in the same way, using the categories of the fitted model.
+
 ## Bug fixes
+* The error message for variables of an unsupported class now names each
+  variable correctly (it showed, e.g., "x1", "x2" for a variable "x" with two
+  classes) (#17).
 * Model fitting failed with "invalid term in model formula" when the package
   **logistf** (or another package using **formula.tools**) was loaded (#15).
+* Model fitting failed with "row names contain missing values" when variables
+  had a "label" attribute (e.g., data imported from SPSS) or other attributes
+  that are lost when the data are subset (#35).
 
 # JointAI 1.1.0
 

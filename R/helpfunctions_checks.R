@@ -216,8 +216,10 @@ check_fixed_random <- function(arglist) {
 #'
 #' @returns nothing, but throws an error if a variable is missing
 #' @keywords internal
-#' used in model_imp (2020-06-09)
 #'
+
+# used in model_imp (2020-06-09)
+
 check_vars_in_data <- function(
   datanames,
   fixed = NULL,
@@ -266,20 +268,28 @@ check_classes <- function(
   timevar = NULL,
   mess = TRUE
 ) {
-  vars <- all_vars(fixed, remove_grouping(random), auxvars, timevar)
-  classes <- unlist(sapply(data[vars], class))
+  vars <- unique(all_vars(fixed, remove_grouping(random), auxvars, timevar))
+  classes <- lapply(data[vars], class)
   known_classes <- c("numeric", "ordered", "factor", "logical", "integer")
 
-  # Throw an error for variables of unknown classes
-  if (any(w <- which(!classes %in% known_classes))) {
-    unknown_classes <- sapply(split(classes[w], classes[w]), function(x) {
-      paste0(
-        dQuote(unique(x)),
-        " (variables: ",
-        paste0(names(x), collapse = ", "),
-        ")"
-      )
-    })
+  # Throw an error for variables of unknown classes. Variables are grouped by
+  # their (complete) class, so that a variable with several classes is named
+  # only once (#17).
+  unknown <- Filter(function(cl) !all(cl %in% known_classes), classes)
+
+  if (length(unknown) > 0L) {
+    class_strings <- cvapply(unknown, paste, collapse = ", ")
+    unknown_classes <- cvapply(
+      split(names(class_strings), class_strings),
+      function(x) {
+        paste0(
+          dQuote(class_strings[x[1L]]),
+          " (variables: ",
+          paste0(x, collapse = ", "),
+          ")"
+        )
+      }
+    )
 
     errormsg(
       "Variables of type %s can not be handled.",
@@ -435,7 +445,7 @@ compare_data_structure <- function(data1, data2) {
     x1 = lapply(data1, class),
     x2 = lapply(data2, class)
   )
-  class_change = Filter(isTRUE, class_change)
+  class_change <- Filter(isTRUE, class_change)
 
   level_change <- mapply(
     function(x1, x2) !isTRUE(all.equal(x1, x2)),
@@ -464,10 +474,144 @@ compare_data_structure <- function(data1, data2) {
 }
 
 
+#' Convert labelled variables
+#'
+#' Variables of class `"labelled"` (Hmisc, haven < 2.0.0) or `"haven_labelled"`
+#' (haven >= 2.0.0), e.g., from data imported from SPSS, are converted:
+#' - Variables with value labels (attribute `"labels"`) become unordered
+#'   factors. Observed values without a label become levels named by their
+#'   value; labels of values that do not occur in the data are not used.
+#' - Variables without value labels keep their values; only the labelled
+#'   class is removed.
+#'
+#' The variable label (attribute `"label"`) is kept. SPSS user-defined missing
+#' values (class `"haven_labelled_spss"`) are not treated as missing.
+#'
+#' When `ref_data` is given (e.g., the data of a fitted model, when `data` is
+#' new data for prediction), factors get the levels of the corresponding
+#' factor in `ref_data`, and values without such a level become `NA` (with a
+#' warning).
+#'
+#' @param data a `data.frame`
+#' @param allvars vector of names of the variables used in the model
+#' @param mess logical, if `TRUE` a message lists the variables that were
+#'   converted to factors
+#' @param ref_data optional `data.frame` with the reference factor levels
+#'
+#' @returns the `data.frame` with the converted variables
+#' @keywords internal
+#'
+convert_labelled <- function(data, allvars, mess = TRUE, ref_data = NULL) {
+  allvars <- unique(allvars)
+  is_labelled <- lvapply(
+    data[allvars],
+    inherits,
+    c("labelled", "haven_labelled")
+  )
+
+  to_factor <- character(0L)
+  for (k in allvars[is_labelled]) {
+    if (!is.null(attr(data[[k]], "labels"))) {
+      ref_levels <- if (is.factor(ref_data[[k]])) levels(ref_data[[k]])
+      x <- labelled_to_factor(data[[k]], levels = ref_levels)
+
+      lost <- is.na(x) & !is.na(unclass(data[[k]]))
+      if (!is.null(ref_levels) && any(lost)) {
+        warnmsg(
+          "Some values of %s do not correspond to a category in the data
+          used to fit the model and were set to missing.",
+          dQuote(k)
+        )
+      }
+
+      data[[k]] <- x
+      to_factor <- c(to_factor, k)
+    } else {
+      data[[k]] <- remove_labelled_class(data[[k]])
+    }
+  }
+
+  if (mess && length(to_factor) > 0L) {
+    msg(
+      "The variable(s) %s has/have value labels and was/were converted to
+      (unordered) factor(s).",
+      paste_and(dQuote(to_factor))
+    )
+  }
+
+  data
+}
+
+
+#' Convert a variable with value labels to a factor
+#'
+#' @param x a labelled vector with attribute `"labels"` (a named vector of
+#'   values)
+#' @param levels optional character vector of factor levels. If `NULL`, the
+#'   levels are the (labels of the) observed values, sorted by value.
+#'
+#' @returns an unordered factor with the value labels as levels, keeping the
+#'   `"label"` attribute of `x`
+#' @keywords internal
+#'
+labelled_to_factor <- function(x, levels = NULL) {
+  labels <- attr(x, "labels")
+  var_label <- attr(x, "label")
+
+  values <- x
+  attributes(values) <- NULL
+
+  # the label of each value, or the value itself if it has no label
+  value_names <- function(v) {
+    out <- as.character(v)
+    idx <- match(v, labels)
+    out[!is.na(idx)] <- names(labels)[idx[!is.na(idx)]]
+    out
+  }
+
+  if (is.null(levels)) {
+    levels <- unique(value_names(sort(unique(values[!is.na(values)]))))
+  }
+
+  out <- factor(value_names(values), levels = levels)
+  attr(out, "label") <- var_label
+  out
+}
+
+
+#' Remove the labelled class from a vector
+#'
+#' @param x a vector of class `"labelled"` or `"haven_labelled"`
+#'
+#' @returns `x` without the labelled classes (and without classes that only
+#'   describe the base type), so that e.g. a numeric vector is plain numeric
+#'   again; other attributes are kept
+#' @keywords internal
+#'
+remove_labelled_class <- function(x) {
+  cls <- setdiff(
+    oldClass(x),
+    c(
+      "labelled",
+      "haven_labelled",
+      "vctrs_vctr",
+      "double",
+      "integer",
+      "character",
+      "logical",
+      "numeric"
+    )
+  )
+  oldClass(x) <- if (length(cls) > 0L) cls else NULL
+  x
+}
+
+
 #' Run all data related checks
 #'
 #' Wrapper function to check that
 #' - all used variables are present in the `data`
+#' - converts labelled variables (e.g., from SPSS) to factors or plain vectors
 #' - that the classes of the variables are of a type for which default model
 #'   types are defined
 #' - checks for empty variable levels
@@ -497,6 +641,16 @@ check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
     timevar = timevar
   )
 
+  var_labels <- lapply(data, attr, "label", exact = TRUE)
+
+  # labelled variables (e.g., from haven or Hmisc) must be converted before the
+  # class check (#17)
+  data <- convert_labelled(
+    data = data,
+    allvars = all_vars(fixed, remove_grouping(random), auxvars),
+    mess = mess
+  )
+
   check_classes(data, fixed = fixed, random = random, auxvars = auxvars)
 
   data <- drop_levels(
@@ -513,5 +667,28 @@ check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
     mess = mess
   )
 
+  # some steps (e.g., droplevels()) remove the variable labels; restore them
+  data <- restore_var_labels(data, var_labels)
+
+  data
+}
+
+
+#' Restore variable labels
+#'
+#' @param data a `data.frame`
+#' @param var_labels a named list of variable labels (the `"label"` attributes
+#'   of the variables in the original data, `NULL` if there was none)
+#'
+#' @returns `data`, where variables that lost their `"label"` attribute have it
+#'   again
+#' @keywords internal
+#'
+restore_var_labels <- function(data, var_labels) {
+  for (k in intersect(names(var_labels), names(data))) {
+    if (!is.null(var_labels[[k]]) && is.null(attr(data[[k]], "label"))) {
+      attr(data[[k]], "label") <- var_labels[[k]]
+    }
+  }
   data
 }

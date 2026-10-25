@@ -70,8 +70,12 @@ import(graphics)
 import(mathjaxr)
 import(stats)
 import(utils)
-importFrom(rjags,coda.samples)
-importFrom(rjags,jags.model)
+importFrom(rjags,
+  coda.samples,
+  jags.model
+)
 importFrom(rlang,.data)
-importFrom(splines,bs)
-importFrom(splines,ns)
+importFrom(splines,
+  bs,
+  ns
+)

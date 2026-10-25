@@ -29,6 +29,7 @@ the cleaned \code{data.frame}
 Wrapper function to check that
 \itemize{
 \item all used variables are present in the \code{data}
+\item converts labelled variables (e.g., from SPSS) to factors or plain vectors
 \item that the classes of the variables are of a type for which default model
 types are defined
 \item checks for empty variable levels
