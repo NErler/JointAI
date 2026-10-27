@@ -86,10 +86,8 @@ get_initial_values <- function(inits, seed, n_chains, warn) {
         # if the initial values are supplied as a function, evaluate the
         # function
 
-        oldseed <- .Random.seed
-        on.exit({
-          .Random.seed <<- oldseed
-        })
+        oldseed <- get_seed()
+        on.exit(reset_seed(oldseed))
 
         if (!is.null(seed)) {
           set_seed(seed)

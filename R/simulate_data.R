@@ -60,10 +60,8 @@ sim_data <- function(
   nmisvar = 7,
   seed = NULL
 ) {
-  oldseed <- .Random.seed
-  on.exit({
-    .Random.seed <<- oldseed
-  })
+  oldseed <- get_seed()
+  on.exit(reset_seed(oldseed))
 
   if (!is.null(seed)) {
     set_seed(seed)

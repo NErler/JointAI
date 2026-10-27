@@ -830,3 +830,20 @@ set_seed <- function(seed) {
     set.seed(seed)
   }
 }
+
+# state of the random number generator; NULL if no random numbers were drawn
+# yet in this session (then `.Random.seed` does not exist)
+get_seed <- function() {
+  if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+    get(".Random.seed", envir = globalenv(), inherits = FALSE)
+  }
+}
+
+# restore a state obtained with get_seed(); for NULL, remove `.Random.seed`
+reset_seed <- function(oldseed) {
+  if (!is.null(oldseed)) {
+    assign(".Random.seed", oldseed, envir = globalenv())
+  } else if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+    rm(".Random.seed", envir = globalenv())
+  }
+}

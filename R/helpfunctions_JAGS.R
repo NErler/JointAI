@@ -4,10 +4,8 @@ get_rng <- function(seed, n_chains) {
   # - n_chains: the number of MCMC chains for which starting values need to be
   #             generated
 
-  oldseed <- .Random.seed
-  on.exit({
-    .Random.seed <<- oldseed
-  })
+  oldseed <- get_seed()
+  on.exit(reset_seed(oldseed))
 
   if (!is.null(seed)) {
     set_seed(seed)
