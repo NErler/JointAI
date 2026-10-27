@@ -68,36 +68,41 @@
 #' @export
 #'
 
-get_MIdat <- function(object, m = 10, include = TRUE,
-                      start = NULL, minspace = 50, seed = NULL,
-                      export_to_SPSS = FALSE,
-                      resdir = NULL, filename = NULL) {
-
-  if (!"foreign" %in% rownames(installed.packages()))
+get_MIdat <- function(
+  object,
+  m = 10,
+  include = TRUE,
+  start = NULL,
+  minspace = 50,
+  seed = NULL,
+  export_to_SPSS = FALSE,
+  resdir = NULL,
+  filename = NULL
+) {
+  if (!"foreign" %in% rownames(installed.packages())) {
     errormsg("This function requires the 'foreign' package to be installed.")
+  }
 
-  if (is.null(object$MCMC))
+  if (is.null(object$MCMC)) {
     errormsg("The object does not contain any MCMC samples.")
+  }
 
-
-  oldseed <- .Random.seed
-  on.exit({
-    .Random.seed <<- oldseed
-  })
+  oldseed <- get_seed()
+  on.exit(reset_seed(oldseed))
 
   # set seed value if provided
   if (!is.null(seed)) {
     set_seed(seed)
   }
 
-
   # extract original data and add
   # - column with row numbers (needed for plot_imp_distr())
   # - an id variable if there is none
   DF <- object$data
   DF$.rownr <- seq_len(nrow(DF))
-  if (length(object$Mlist$groups) < 2) DF$.id <- seq_len(nrow(DF))
-
+  if (length(object$Mlist$groups) < 2) {
+    DF$.id <- seq_len(nrow(DF))
+  }
 
   # extract variable levels
   Mlvls <- object$Mlist$Mlvls
@@ -107,10 +112,12 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   # get a summary of the relevant characteristics of the imputed variables
   varinfo <- lapply(object$info_list[vars], function(x) {
-    data.frame(varname = x$varname,
-               modeltype = x$modeltype,
-               family = ifelse(!is.null(x$family), x$family, NA),
-               stringsAsFactors = FALSE)
+    data.frame(
+      varname = x$varname,
+      modeltype = x$modeltype,
+      family = ifelse(!is.null(x$family), x$family, NA),
+      stringsAsFactors = FALSE
+    )
   })
 
   if (is.null(start)) {
@@ -121,16 +128,23 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   MCMC <- do.call(rbind, window(object$MCMC, start = start))
 
-
   # randomly draw which iterations should be used as imputation
-  if (nrow(MCMC) / minspace < m)
-    errormsg("The total number of iterations (%s) is too small to select %s
-             iterations with spacing of >= %s.", nrow(MCMC), m, minspace)
+  if (nrow(MCMC) / minspace < m) {
+    errormsg(
+      "The total number of iterations (%s) is too small to select %s
+             iterations with spacing of >= %s.",
+      nrow(MCMC),
+      m,
+      minspace
+    )
+  }
 
-  cand_iters <- seq(from = sample.int(minspace, size = 1), to = nrow(MCMC),
-                    by = minspace)
+  cand_iters <- seq(
+    from = sample.int(minspace, size = 1),
+    to = nrow(MCMC),
+    by = minspace
+  )
   imp_iters <- sort(sample(cand_iters, size = m))
-
 
   # reduce MCMC to the relevant rows
   MCMC <- MCMC[imp_iters, , drop = FALSE]
@@ -141,37 +155,50 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     df_list[[i]] <- cbind("Imputation_" = i - 1, DF)
   }
 
-
   for (i in vars) {
     impval <- NULL
 
     # identify the names of the columns in MCMC corresponding to variable i
-    pat <- paste0(Mlvls[i], "\\[[[:digit:]]*,",
-                  match(i, colnames(object$data_list[[Mlvls[i]]])),
-                  "\\]")
+    pat <- paste0(
+      Mlvls[i],
+      "\\[[[:digit:]]*,",
+      match(i, colnames(object$data_list[[Mlvls[i]]])),
+      "\\]"
+    )
 
-    if (!any(grepl(pat, colnames(MCMC))))
-      errormsg("I cannot find imputed values for %s. Did you monitor them?",
-               dQuote(i))
+    if (!any(grepl(pat, colnames(MCMC)))) {
+      errormsg(
+        "I cannot find imputed values for %s. Did you monitor them?",
+        dQuote(i)
+      )
+    }
 
     impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
     if (length(impval) > 0) {
-      rownrs <- gsub(",[[:digit:]]*\\]", "",
-                     gsub("^[[:print:]]*\\[", "", colnames(impval)))
+      rownrs <- gsub(
+        ",[[:digit:]]*\\]",
+        "",
+        gsub("^[[:print:]]*\\[", "", colnames(impval))
+      )
 
       for (j in (1:m) + 1) {
-        iv <- impval[j - 1, na.omit(match(
-          object$Mlist$groups[[gsub("M_", "", Mlvls[i])]],
-          as.numeric(rownrs)
-        ))]
+        iv <- impval[
+          j - 1,
+          na.omit(match(
+            object$Mlist$groups[[gsub("M_", "", Mlvls[i])]],
+            as.numeric(rownrs)
+          ))
+        ]
 
         if (is.factor(df_list[[j]][, i])) {
           df_list[[j]][is.na(df_list[[j]][, i]), i] <-
-            factor(iv, labels = levels(df_list[[j]][, i]),
-                   levels = seq_along(levels(df_list[[j]][, i])) -
-                     as.numeric(length(levels(df_list[[j]][, i])) == 2)
-                   )
+            factor(
+              iv,
+              labels = levels(df_list[[j]][, i]),
+              levels = seq_along(levels(df_list[[j]][, i])) -
+                as.numeric(length(levels(df_list[[j]][, i])) == 2)
+            )
         } else {
           df_list[[j]][is.na(df_list[[j]][, i]), i] <- iv
         }
@@ -179,24 +206,27 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     }
   }
 
-
-  if (!include)
+  if (!include) {
     df_list <- df_list[-1]
+  }
 
   # build dataset --------------------------------------------------------------
   imp_df <- do.call(rbind, df_list)
 
-  if (is.null(resdir))
+  if (is.null(resdir)) {
     resdir <- getwd()
+  }
 
-  if (is.null(filename))
+  if (is.null(filename)) {
     filename <- paste0("JointAI-imputation_", Sys.Date())
+  }
 
   if (export_to_SPSS == TRUE) {
-    foreign::write.foreign(imp_df,
-                           file.path(resdir, paste0(filename, ".txt")),
-                           file.path(resdir, paste0(filename, ".sps")),
-                           package = "SPSS"
+    foreign::write.foreign(
+      imp_df,
+      file.path(resdir, paste0(filename, ".txt")),
+      file.path(resdir, paste0(filename, ".sps")),
+      package = "SPSS"
     )
   }
 

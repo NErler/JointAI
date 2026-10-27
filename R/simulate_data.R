@@ -40,15 +40,28 @@
 #'          parameters norm, bin, multi, ...
 #' @noRd
 #' @keywords internal
-sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
-                     norm = 2, bin = 2, multi = 2, ord = 2, count = 2,
-                     longnorm = 2, longbin = 2, longord = 2, longcount = 2,
-                     coef = NULL, misvar = NULL, nmisvar = 7,
-                     seed = NULL) {
-  oldseed <- .Random.seed
-  on.exit({
-    .Random.seed <<- oldseed
-  })
+sim_data <- function(
+  N = 100,
+  Jmin = 1,
+  Jmax = 6,
+  tmin = 0,
+  tmax = 5,
+  norm = 2,
+  bin = 2,
+  multi = 2,
+  ord = 2,
+  count = 2,
+  longnorm = 2,
+  longbin = 2,
+  longord = 2,
+  longcount = 2,
+  coef = NULL,
+  misvar = NULL,
+  nmisvar = 7,
+  seed = NULL
+) {
+  oldseed <- get_seed()
+  on.exit(reset_seed(oldseed))
 
   if (!is.null(seed)) {
     set_seed(seed)
@@ -96,10 +109,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     DF.multi <- sapply(
       1:n.multi,
       function(i) {
-        factor(sample.int(ncat.multi[i],
-          N,
-          replace = TRUE
-        ))
+        factor(sample.int(ncat.multi[i], N, replace = TRUE))
       }
     )
     colnames(DF.multi) <- multi.names
@@ -118,10 +128,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     DF.ord <- sapply(
       1:n.ord,
       function(i) {
-        factor(sample.int(ncat.ord[i],
-          N,
-          replace = TRUE
-        ))
+        factor(sample.int(ncat.ord[i], N, replace = TRUE))
       }
     )
     colnames(DF.ord) <- ord.names
@@ -167,7 +174,8 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       1:n.longnorm,
       function(i) {
         rnorm(
-          nrow(DF), mu.longnorm[i],
+          nrow(DF),
+          mu.longnorm[i],
           sig.longnorm[i]
         )
       }
@@ -190,10 +198,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     DF.longbin <- sapply(
       1:n.longbin,
       function(i) {
-        factor(rbinom(nrow(DF),
-          size = 1,
-          plongbin[i]
-        ))
+        factor(rbinom(nrow(DF), size = 1, plongbin[i]))
       }
     )
     colnames(DF.longbin) <- longbin.names
@@ -214,10 +219,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     DF.longord <- sapply(
       1:n.longord,
       function(i) {
-        factor(sample.int(ncat.longord[i],
-          nrow(DF),
-          replace = TRUE
-        ))
+        factor(sample.int(ncat.longord[i], nrow(DF), replace = TRUE))
       }
     )
     colnames(DF.longord) <- longord.names
@@ -236,9 +238,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     DF.longcount <- sapply(
       1:n.longcount,
       function(i) {
-        rpois(nrow(DF),
-          lambda = lambda.longcount[i]
-        )
+        rpois(nrow(DF), lambda = lambda.longcount[i])
       }
     )
     colnames(DF.longcount) <- longcount.names
@@ -248,7 +248,6 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
 
   DF$id <- rep(1:N, times = nrep)
   DF$time <- unlist(sapply(1:N, function(i) sort(runif(nrep[i], tmin, tmax))))
-
 
   # fixed effects -------------------------------------------------------------
   fmla <- as.formula(
@@ -264,16 +263,17 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   }
 
   # random effects ------------------------------------------------------------
-  D <- rWishart(1, df = 2, Sigma = diag(rep(0.1, 2)))[, , 1]
+  D <- rWishart(1, df = 2, Sigma = diag(rep(0.1, 2)))[,, 1]
   b <- MASS::mvrnorm(N, c(0, 0), Sigma = D)
   Z <- model.matrix(~time, DF)
 
   # outcome
   DF$y <- as.numeric(
-    X %*% coef + rowSums(Z * b[match(DF$id, unique(DF$id))]) +
+    X %*%
+      coef +
+      rowSums(Z * b[match(DF$id, unique(DF$id))]) +
       rnorm(nrow(DF), 0, 0.5)
   )
-
 
   if (is.null(misvar)) {
     misvar <- sample(covars, nmisvar)
