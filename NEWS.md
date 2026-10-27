@@ -8,6 +8,10 @@
   values. Variable labels are kept. SPSS user-defined missing values are not
   treated as missing. Labelled variables in `newdata` of `predict()` are
   converted in the same way, using the categories of the fitted model.
+* Clearer error messages: `plot_imp_distr()` applied to a fitted model now
+  points to `get_MIdat()`; `residuals()` for JM and mlogit models says that
+  residuals (not prediction) are not yet implemented; typo in the message for
+  coxph models fixed.
 
 ## Bug fixes
 * The error message for variables of an unsupported class now names each

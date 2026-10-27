@@ -33,6 +33,16 @@ plot_imp_distr <- function(
   nrow = NULL,
   labeller = NULL
 ) {
+  if (inherits(data, "JointAI")) {
+    errormsg(
+      "%s needs the imputed datasets, not the fitted model. Obtain them with
+      %s, e.g., %s.",
+      sQuote("plot_imp_distr()"),
+      sQuote("get_MIdat()"),
+      sQuote("plot_imp_distr(get_MIdat(object))")
+    )
+  }
+
   pkgs <- installed.packages()[, "Package"]
 
   if (!"ggplot2" %in% pkgs) {

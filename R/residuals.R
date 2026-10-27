@@ -91,7 +91,7 @@ residuals.JointAI <- function(
         )
       } else {
         errormsg(
-          "Prediction is not yet implemented for a model of type %s.",
+          "Residuals are not yet implemented for a model of type %s.",
           dQuote(object$info_list[[varname]]$modeltype)
         )
       }
@@ -185,7 +185,7 @@ resid_survreg <- function(...) {
 }
 
 resid_coxph <- function(...) {
-  errormsg('It is currently not possible to obtain residuals for coxph modes.')
+  errormsg('It is currently not possible to obtain residuals for coxph models.')
   # martingale residuals
   # mresid <- lung$status - 1 + logsurv
 }
