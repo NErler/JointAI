@@ -168,6 +168,34 @@ fixture_results <- function() {
       op <- options(width = 80, useFancyQuotes = FALSE)
       on.exit(options(op))
       capture.output(list_models(object))
+    },
+    GR_crit = function(object) {
+      suppressWarnings(GR_crit(object, warn = FALSE, mess = FALSE))
+    },
+    MC_error = function(object) {
+      suppressWarnings(MC_error(object, warn = FALSE, mess = FALSE))
+    },
+    # m = 2: the fixtures have too few iterations for the default m = 10. For
+    # models without monitored imputed values, the error message is stored.
+    get_MIdat = function(object) {
+      # get_MIdat() fails when there is no .Random.seed yet, even with `seed`
+      # (recorded in dev/STATUS.md)
+      if (!exists(".Random.seed", envir = globalenv())) {
+        set.seed(1)
+      }
+      tryCatch(
+        get_MIdat(object, m = 2, seed = 2020),
+        error = function(e) paste("Error:", conditionMessage(e))
+      )
+    },
+    # titles of the sub-plots in traceplot() and densplot() (and row names in
+    # GR_crit() and MC_error()), for all monitored nodes
+    plot_titles = function(object) {
+      nams <- colnames(object$MCMC[[1L]])
+      list(
+        main = get_plotmain(object, nams),
+        ylab = get_plotmain(object, nams, ylab = TRUE)
+      )
     }
   )
 }
