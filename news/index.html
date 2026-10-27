@@ -59,6 +59,8 @@
 <ul><li>The error message for variables of an unsupported class now names each variable correctly (it showed, e.g., “x1”, “x2” for a variable “x” with two classes) (<a href="https://github.com/nerler/JointAI/issues/17" class="external-link">#17</a>).</li>
 <li>Model fitting failed with “invalid term in model formula” when the package <strong>logistf</strong> (or another package using <strong>formula.tools</strong>) was loaded (<a href="https://github.com/nerler/JointAI/issues/15" class="external-link">#15</a>).</li>
 <li>Model fitting failed with “row names contain missing values” when variables had a “label” attribute (e.g., data imported from SPSS) or other attributes that are lost when the data are subset (<a href="https://github.com/nerler/JointAI/issues/35" class="external-link">#35</a>).</li>
+<li>
+<code><a href="../reference/get_MIdat.html">get_MIdat()</a></code> failed with “object ‘.Random.seed’ not found” in an R session in which no random numbers had been drawn yet (e.g., a new session in plain R), also when <code>seed</code> was given. The same applied to the generation of initial values when <code>inits</code> is a function. If there was no <code>.Random.seed</code> before the call, none is left behind afterwards.</li>
 </ul></div>
 </div>
     <div class="section level2">

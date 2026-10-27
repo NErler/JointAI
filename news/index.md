@@ -28,6 +28,12 @@
   variables had a “label” attribute (e.g., data imported from SPSS) or
   other attributes that are lost when the data are subset
   ([\#35](https://github.com/nerler/JointAI/issues/35)).
+- [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md)
+  failed with “object ‘.Random.seed’ not found” in an R session in which
+  no random numbers had been drawn yet (e.g., a new session in plain R),
+  also when `seed` was given. The same applied to the generation of
+  initial values when `inits` is a function. If there was no
+  `.Random.seed` before the call, none is left behind afterwards.
 
 ## JointAI 1.1.0
 
