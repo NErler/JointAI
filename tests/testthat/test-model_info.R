@@ -388,6 +388,21 @@ test_that("rd_vcov sets the structure of the random effects covariance", {
   )
 })
 
+test_that("the RinvD parameters of a full rd_vcov structure can be monitored", {
+  fit <- setup_case(quote(lme_imp(
+    list(y ~ C1 + c2 + time + (time | id), c1 ~ C1 + time + (1 | id)),
+    rd_vcov = "full",
+    monitor_params = c(RinvD_main = TRUE),
+    data = longDF
+  )))
+  # one full matrix for the three random effects of y and c1
+  expect_identical(
+    grep("^RinvD", fit$mcmc_settings$variable.names, value = TRUE),
+    c("RinvD_id[1,1]", "RinvD_id[2,2]", "RinvD_id[3,3]")
+  )
+  expect_match(fit$jagsmodel, "RinvD_id[k, k] ~ dgamma", fixed = TRUE)
+})
+
 test_that("custom sub-models, trunc and df_basehaz are passed on", {
   fit <- setup_case(quote(lm_imp(
     y ~ C1 + C2,

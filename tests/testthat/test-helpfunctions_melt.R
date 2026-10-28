@@ -196,3 +196,29 @@ test_that("melt_data_frame() works as expected", {
   expect_error(melt_data_frame(d, id_vars = "id"))
   expect_error(melt_data_frame(d, id_vars = c("id", "x2")))
 })
+
+test_that("melt_data.frame_list() works as expected", {
+  # deprecated, but still used by remiod
+  X <- list(
+    a = data.frame(id = 1:2, x = c(1, 2), y = c(3, 4)),
+    b = NULL,
+    c = data.frame(id = 3, x = 5, y = 6)
+  )
+  res <- suppressWarnings(melt_data.frame_list(X, id.vars = "id"))
+
+  expect_named(res, c("id", "variable", "value", "L1"))
+  expect_identical(nrow(res), 6L)
+  # NULL elements are dropped; the names of the list are kept in L1
+  expect_setequal(res$L1, c("a", "c"))
+  expect_identical(res$value[res$L1 == "c"], c(5, 6))
+  expect_null(attr(res, "out.attrs"))
+
+  # unnamed list: numbered
+  res <- suppressWarnings(melt_data.frame_list(unname(X[c(1, 3)])))
+  expect_setequal(res$L1, c("1", "2"))
+
+  expect_error(
+    melt_data.frame_list(list(1:3)),
+    "list of data\\s+frames"
+  )
+})
