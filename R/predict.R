@@ -674,8 +674,8 @@ predict_coxph <- function(
       MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
         (t(x) - scale_pars$center[match(colnames(x), rownames(scale_pars))])
     } else {
-      t(x) %*%
-        MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE]
+      MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
+        t(x)
     }
   })
 

@@ -44,6 +44,12 @@
   the model. Proportional hazards models need the event time in `newdata`
   (also for `type = "lp"`, the log hazard at that time); there is now an
   informative error if it is missing.
+* `scale_vars` given as a character vector of variable names failed with
+  "invalid argument type", and `scale_vars = TRUE` switched scaling off. Now
+  only the named variables are scaled, and `TRUE` is the same as the default.
+* `predict()` for proportional hazards models (`coxph_imp()`) failed with
+  "non-conformable arguments" when no variables were scaled
+  (`scale_vars = FALSE`).
 
 # JointAI 1.1.0
 
