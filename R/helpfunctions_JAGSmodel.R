@@ -20,16 +20,28 @@
 #'             quadrature?
 #'
 #' @keywords internal
-paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
-                          isgk = FALSE) {
+paste_linpred <- function(
+  parname,
+  parelmts,
+  matnam,
+  index,
+  cols,
+  scale_pars,
+  isgk = FALSE
+) {
   scaled_data <- paste_scaling(
     x = paste_data(matnam, index, cols, isgk),
     rows = cols,
     scale_pars = list(scale_pars)[rep(1, length(cols))],
-    scalemat = rep(paste0("sp", matnam), length(cols)))
+    scalemat = rep(paste0("sp", matnam), length(cols))
+  )
 
-  paste(scaled_data, paste_coef(parname, parelmts),
-        sep = " * ", collapse = " + ")
+  paste(
+    scaled_data,
+    paste_coef(parname, parelmts),
+    sep = " * ",
+    collapse = " + "
+  )
 }
 
 # * linpred help functions -----------------------------------------------------
@@ -47,7 +59,7 @@ paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
 #'
 paste_data <- function(matnam, index, col, isgk = FALSE) {
   if (isTRUE(isgk)) {
-    paste0(matnam, "gk[", index, ", ", col,  ", k]")
+    paste0(matnam, "gk[", index, ", ", col, ", k]")
   } else {
     paste0(matnam, "[", index, ", ", col, "]")
   }
@@ -83,7 +95,6 @@ paste_coef <- function(parname, parelmts) {
 #'
 #' @keywords internal
 paste_scaling <- function(x, rows, scale_pars, scalemat) {
-
   # if there is no scaling info at all, return x
   if (is.null(unlist(scale_pars))) {
     return(x)
@@ -111,10 +122,20 @@ paste_scaling <- function(x, rows, scale_pars, scalemat) {
 #' @return a character string of the form `(x - center)/scale`.
 #'
 paste_scale <- function(x, row, scalemat) {
-  paste0("(", x, " - ", scalemat, "[", row, ", 1])/", scalemat,
-         "[", row, ", 2]")
+  paste0(
+    "(",
+    x,
+    " - ",
+    scalemat,
+    "[",
+    row,
+    ", 1])/",
+    scalemat,
+    "[",
+    row,
+    ", 2]"
+  )
 }
-
 
 
 # paste rd. effects into jagsmodel ---------------------------------------------
@@ -133,26 +154,30 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
     return(NULL)
   }
 
-
-
   # for each of the grouping levels for which there are random effects do:
   nlapply(names(info$hc_list$hcvars), function(lvl) {
-
-    get_rds_lp(info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
-               info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs,
-               lvl = lvl,
-               index = info$index,
-               parname = info$parname,
-               scale_pars = info$scale_pars,
-               isgk = isgk)
+    get_rds_lp(
+      info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
+      info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs,
+      lvl = lvl,
+      index = info$index,
+      parname = info$parname,
+      scale_pars = info$scale_pars,
+      isgk = isgk
+    )
   })
 }
 
 
-get_rds_lp <- function(rd_slope_coefs, rd_slope_interact_coefs = NULL,
-                       lvl, index, parname, scale_pars = NULL,
-                       isgk = FALSE) {
-
+get_rds_lp <- function(
+  rd_slope_coefs,
+  rd_slope_interact_coefs = NULL,
+  lvl,
+  index,
+  parname,
+  scale_pars = NULL,
+  isgk = FALSE
+) {
   # name of the corresponding data matrix
   mat <- paste0("M_", lvl)
 
@@ -160,42 +185,44 @@ get_rds_lp <- function(rd_slope_coefs, rd_slope_interact_coefs = NULL,
   # current grouping level and variables which have an interaction with one
   # of these random slope variables
 
-
-  rd_vars <- unique(c(rd_slope_coefs$rd_effect,
-                      rd_slope_interact_coefs$rd_effect))
-
+  rd_vars <- unique(c(
+    rd_slope_coefs$rd_effect,
+    rd_slope_interact_coefs$rd_effect
+  ))
 
   nlapply(rd_vars, function(rd) {
-
     rds <- rd_slope_coefs[rd_slope_coefs$rd_effect == rd, ]
     rdsi <- rd_slope_interact_coefs[
       rd_slope_interact_coefs$rd_effect == rd &
-        !is.na(rd_slope_interact_coefs$parelmts), ]
+        !is.na(rd_slope_interact_coefs$parelmts),
+    ]
 
-    rds_terms <- ifelse(is.na(rds$parelmts),
-                        "0",
-                        paste_coef(parname = parname,
-                                   parelmts = rds$parelmts)
+    rds_terms <- ifelse(
+      is.na(rds$parelmts),
+      "0",
+      paste_coef(parname = parname, parelmts = rds$parelmts)
     )
     rdsi_terms <- if (isTRUE(nrow(rdsi) > 0L)) {
       paste(
-        paste_scaling(x = paste_data(matnam = rdsi$matrix,
-                                     index = index[lvl],
-                                     col = rdsi$cols, isgk),
-                      rows = rdsi$cols,
-                      scale_pars = scale_pars[rep(mat, length(rdsi$cols))],
-                      scalemat = rep(paste0("sp", mat), length(rdsi$cols))
+        paste_scaling(
+          x = paste_data(
+            matnam = rdsi$matrix,
+            index = index[lvl],
+            col = rdsi$cols,
+            isgk
+          ),
+          rows = rdsi$cols,
+          scale_pars = scale_pars[rep(mat, length(rdsi$cols))],
+          scalemat = rep(paste0("sp", mat), length(rdsi$cols))
         ),
-        paste_coef(parname = parname,
-                   parelmts = rdsi$parelmts),
-        sep = " * ")
+        paste_coef(parname = parname, parelmts = rdsi$parelmts),
+        sep = " * "
+      )
     }
 
     paste0(c(rds_terms, rdsi_terms), collapse = " + ")
   })
 }
-
-
 
 
 # used in jagsmodels that use random effects (2020-06-10)
@@ -212,7 +239,6 @@ paste_rdintercept_lp <- function(info) {
 
   # for each of the grouping levels for which there are random effects do:
   nlapply(names(info$hc_list$hcvars), function(lvl) {
-
     # name of the corresponding data matrix
     mat <- paste0("M_", lvl)
 
@@ -224,13 +250,15 @@ paste_rdintercept_lp <- function(info) {
     # linear predictor, otherwise the mean of the random effect distribution
     # should be 0
     if (length(x$parelmts) > 0L) {
-      paste_linpred(parname = info$parname,
-                    parelmts = x$parelmts,
-                    matnam = unique(x$mat),
-                    index = info$index[lvl],
-                    cols = x$cols,
-                    scale_pars = info$scale_pars[[mat]],
-                    isgk = FALSE)
+      paste_linpred(
+        parname = info$parname,
+        parelmts = x$parelmts,
+        matnam = unique(x$mat),
+        index = info$index[lvl],
+        cols = x$cols,
+        scale_pars = info$scale_pars[[mat]],
+        isgk = FALSE
+      )
     } else if (attr(info$hc_list$hcvars[[lvl]], "rd_intercept")) {
       "0"
     } else {
@@ -238,7 +266,6 @@ paste_rdintercept_lp <- function(info) {
     }
   })
 }
-
 
 
 paste_lp_ranef_part <- function(info, isgk = FALSE) {
@@ -249,16 +276,13 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
   # - isgk: logical indicator whether the output is in the Gauss-Kronrod
   #         quadrature
 
-
   # if there are no random effects (hc_list = NULL), return NULL
   if (is.null(info$hc_list)) {
     return(NULL)
   }
 
-
   # identify grouping level of the outcome
   resplvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
-
 
   # for all grouping levels above or equal to the outcome level do:
   lp_ranef <- nlapply(
@@ -268,9 +292,13 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       # of the outcome, but also on the current grouping level, whether the
       # outcome is on the lowest level (lvlone) or not, and if the output is
       # used in the GK-quadrature
-      index <- get_index(lvl, resplvl, indices = info$index,
-                         surv_lvl = info$surv_lvl, isgk = isgk)
-
+      index <- get_index(
+        lvl,
+        resplvl,
+        indices = info$index,
+        surv_lvl = info$surv_lvl,
+        isgk = isgk
+      )
 
       rd_nam <- if (isTRUE(info$rd_vcov[[lvl]] == "full")) {
         attr(info$rd_vcov[[lvl]], "name")
@@ -278,29 +306,36 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
         paste0("_", info$varname)
       }
 
-      ranef_nrs <- if (!is.null(info$rd_vcov[[lvl]]) &
-                       isTRUE(info$nranef[lvl] > 0L)) {
+      ranef_nrs <- if (
+        !is.null(info$rd_vcov[[lvl]]) &
+          isTRUE(info$nranef[lvl] > 0L)
+      ) {
         if (is.null(attr(info$rd_vcov[[lvl]], "ranef_index"))) {
           1:info$nranef[lvl]
         } else {
-          eval(parse(text = attr(info$rd_vcov[[lvl]],
-                                 "ranef_index")[info$varname]))
+          eval(parse(
+            text = attr(info$rd_vcov[[lvl]], "ranef_index")[info$varname]
+          ))
         }
       }
 
       # generate the random intercept part to enter the linear predictor of
       # the outcome.
       rdi <- if (isTRUE(attr(info$hc_list$hcvars[[lvl]], "rd_intercept"))) {
-        paste_data(matnam = paste0("b", rd_nam, "_", lvl),
-                   index = index,
-                   col = min(ranef_nrs)
+        paste_data(
+          matnam = paste0("b", rd_nam, "_", lvl),
+          index = index,
+          col = min(ranef_nrs)
         )
       }
 
       # generate the random slope part to enter the linear predictor of
       # the outcome
-      rds_data_lvls <- gsub("M_", "",
-                            info$hc_list$hcvars[[lvl]]$rd_slope_coefs$matrix)
+      rds_data_lvls <- gsub(
+        "M_",
+        "",
+        info$hc_list$hcvars[[lvl]]$rd_slope_coefs$matrix
+      )
       rds <- get_rds(
         rd_slope_coefs = info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
         lvl = lvl,
@@ -315,40 +350,46 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
           isgk = isgk
         ),
         ranef_nrs = ranef_nrs,
-        has_rdintercept = attr(info$hc_list$hcvars[[lvl]],
-                               "rd_intercept"),
+        has_rdintercept = attr(info$hc_list$hcvars[[lvl]], "rd_intercept"),
         scale_pars = info$scale_pars,
         isgk = isgk
       )
 
       # write the syntax for other longitudinal variables
       other <- if (!is.null(info$hc_list$othervars[[lvl]])) {
-        paste_other(othervars = info$hc_list$othervars[[lvl]],
-                    parname = info$parname, index = index,
-                    scale_pars = info$scale_pars[[paste0("M_", lvl)]],
-                    scale_mat = paste0("spM_", lvl), isgk = isgk)
+        paste_other(
+          othervars = info$hc_list$othervars[[lvl]],
+          parname = info$parname,
+          index = index,
+          scale_pars = info$scale_pars[[paste0("M_", lvl)]],
+          scale_mat = paste0("spM_", lvl),
+          isgk = isgk
+        )
       }
 
       # combine random intercept and slope
       rdis <- if (any(!is.null(rdi), !is.null(rds))) {
-        paste0(unlist(Filter(Negate(is.null),
-                             list(rdi = rdi, rds = rds))),
-               collapse = " + ")
+        paste0(
+          unlist(Filter(Negate(is.null), list(rdi = rdi, rds = rds))),
+          collapse = " + "
+        )
       }
 
-      Filter(Negate(is.null),
-             list(rdis = rdis, other = other)
-      )
-    })
+      Filter(Negate(is.null), list(rdis = rdis, other = other))
+    }
+  )
 
   if (any(!lvapply(lp_ranef, is.null))) {
-    apply(as.data.frame(unlist(lp_ranef, recursive = FALSE)),
-          1L, paste0, collapse = " + ")
+    apply(
+      as.data.frame(unlist(lp_ranef, recursive = FALSE)),
+      1L,
+      paste0,
+      collapse = " + "
+    )
   } else {
     "0"
   }
 }
-
 
 
 write_nonprop <- function(info, isgk = FALSE) {
@@ -360,7 +401,6 @@ write_nonprop <- function(info, isgk = FALSE) {
   # identify grouping level of the outcome
   resplvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
 
-
   # for all grouping levels above or equal to the outcome level do:
   nonprop <- nlapply(
     names(info$group_lvls)[info$group_lvls >= info$group_lvls[resplvl]],
@@ -369,18 +409,26 @@ write_nonprop <- function(info, isgk = FALSE) {
       # of the outcome, but also on the current grouping level, whether the
       # outcome is on the lowest level (lvlone) or not, and if the output is
       # used in the GK-quadrature
-      index <- get_index(lvl, resplvl, indices = info$index,
-                         surv_lvl = info$surv_lvl, isgk = isgk)
-
+      index <- get_index(
+        lvl,
+        resplvl,
+        indices = info$index,
+        surv_lvl = info$surv_lvl,
+        isgk = isgk
+      )
 
       if (!is.null(info$hc_list$nonprop[[lvl]])) {
-        paste_other(othervars = info$hc_list$nonprop[[lvl]],
-                    parname = info$parname, index = index,
-                    scale_pars = info$scale_pars[[paste0("M_", lvl)]],
-                    scale_mat = paste0("spM_", lvl), isgk = isgk)
+        paste_other(
+          othervars = info$hc_list$nonprop[[lvl]],
+          parname = info$parname,
+          index = index,
+          scale_pars = info$scale_pars[[paste0("M_", lvl)]],
+          scale_mat = paste0("spM_", lvl),
+          isgk = isgk
+        )
       }
-    })
-
+    }
+  )
 
   apply(as.data.frame(nonprop), 1L, paste0, collapse = " + ")
 }
@@ -420,8 +468,7 @@ get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
     # (relating rd. effect level to lvlone), indexed by the position of
     # the outcome level (position in lvlone that corresponds to the
     # current index value)
-    paste0("group_", lvl, "[",
-           "pos_", resplvl, "[", indices[resplvl], "]]")
+    paste0("group_", lvl, "[", "pos_", resplvl, "[", indices[resplvl], "]]")
   } else if (isgk & (lvl == surv_lvl | lvl == "lvlone")) {
     # if we are in the quadrature part, and the random effects
     # level is either the same as the outcome level or the lowest
@@ -432,23 +479,27 @@ get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
     # the same as the outcome level and not the lowest level, use group and
     # pos to relate the level of the survival outcome and the level of the
     # random effect, via lvlone
-    paste0("group_", lvl, "[",
-           "pos_", surv_lvl, "[", indices[surv_lvl], "]]")
+    paste0("group_", lvl, "[", "pos_", surv_lvl, "[", indices[surv_lvl], "]]")
   }
 }
 
 
-
-get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
-                    has_rdintercept = TRUE,
-                    scale_pars, isgk = FALSE, ranef_nrs) {
-
+get_rds <- function(
+  rd_slope_coefs,
+  lvl,
+  varname,
+  index,
+  out_index,
+  has_rdintercept = TRUE,
+  scale_pars,
+  isgk = FALSE,
+  ranef_nrs
+) {
   if (is.null(rd_slope_coefs)) {
     return(NULL)
   }
 
   if (!is.null(has_rdintercept)) {
-
     if (has_rdintercept) {
       ranef_nrs <- ranef_nrs[-which.min(ranef_nrs)]
     }
@@ -457,41 +508,62 @@ get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
     # write the multiplication of the random slope with the corresponding
     # longitudinal variable ("b[i, 2] * M[i, 4]")
     paste(
-      paste_data(matnam = paste0("b", varname, "_", lvl),
-                 index = index,
-                 col = ranef_nrs),
+      paste_data(
+        matnam = paste0("b", varname, "_", lvl),
+        index = index,
+        col = ranef_nrs
+      ),
 
       paste_scaling(
         paste_data(
           matnam = rd_slope_coefs$matrix,
           index = out_index,
-          col = rd_slope_coefs$cols, isgk = isgk),
+          col = rd_slope_coefs$cols,
+          isgk = isgk
+        ),
         rows = rd_slope_coefs$cols,
         scale_pars = scale_pars[rd_slope_coefs$matrix],
-        scalemat = paste0("sp", rd_slope_coefs$matrix)),
-      sep = " * ")
+        scalemat = paste0("sp", rd_slope_coefs$matrix)
+      ),
+      sep = " * "
+    )
     # })
   }
 }
 
 
 # used in write_nonprop() (2020-07-09)
-paste_other <- function(othervars, parname, index, scale_pars, scale_mat,
-                        isgk = FALSE) {
+paste_other <- function(
+  othervars,
+  parname,
+  index,
+  scale_pars,
+  scale_mat,
+  isgk = FALSE
+) {
   # write the syntax for other longitudinal variables
   #
   if (!is.data.frame(othervars)) {
-    sapply(othervars, paste_o,
-           parname = parname, index = index, scale_pars = scale_pars,
-           scale_mat = scale_mat, isgk = isgk)
+    sapply(
+      othervars,
+      paste_o,
+      parname = parname,
+      index = index,
+      scale_pars = scale_pars,
+      scale_mat = scale_mat,
+      isgk = isgk
+    )
   } else {
-    paste_o(othervars,
-            parname = parname, index = index, scale_pars = scale_pars,
-            scale_mat = scale_mat, isgk = isgk)
+    paste_o(
+      othervars,
+      parname = parname,
+      index = index,
+      scale_pars = scale_pars,
+      scale_mat = scale_mat,
+      isgk = isgk
+    )
   }
 }
-
-
 
 
 # used in paste_other() (2020-07-09)
@@ -509,18 +581,16 @@ paste_o <- function(x, parname, index, scale_pars, scale_mat, isgk = FALSE) {
     paste(
       paste_coef(parname = parname, parelmts = x$parelmts),
       paste_scaling(
-        paste_data(matnam = x$matrix,
-                   index = index,
-                   col = x$cols,
-                   isgk = isgk),
+        paste_data(matnam = x$matrix, index = index, col = x$cols, isgk = isgk),
         rows = x$cols,
         scale_pars = list(scale_pars)[rep(1, length(x$cols))],
-        scalemat = rep(scale_mat, length(x$cols))),
-      sep = " * "),
-    collapse = " + ")
+        scalemat = rep(scale_mat, length(x$cols))
+      ),
+      sep = " * "
+    ),
+    collapse = " + "
+  )
 }
-
-
 
 
 # used in jagsmodels that use random effects (2020-06-10)
@@ -536,30 +606,63 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   if (isTRUE(info$rd_vcov[[lvl]] != "full")) {
     # write the model part for the random effects distribution
     paste0(
-      tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
+      tab(),
+      "for (",
+      info$index[lvl],
+      " in 1:",
+      info$N[lvl],
+      ") {",
+      "\n",
 
       # distribution specification
-      ranef_distr(nam = paste0("_", info$varname, "_", lvl),
-                  index = info$index[lvl], nranef = info$nranef[lvl]),
+      ranef_distr(
+        nam = paste0("_", info$varname, "_", lvl),
+        index = info$index[lvl],
+        nranef = info$nranef[lvl]
+      ),
 
       # specification of the means structure of the random effects
-      paste_mu_b(rdintercept[[lvl]], rdslopes[[lvl]],
-                 paste(info$varname, lvl, sep = "_"), info$index[lvl]),
+      paste_mu_b(
+        rdintercept[[lvl]],
+        rdslopes[[lvl]],
+        paste(info$varname, lvl, sep = "_"),
+        info$index[lvl]
+      ),
       "\n",
-      tab(), "}", "\n\n")
+      tab(),
+      "}",
+      "\n\n"
+    )
   }
 }
 
 
 ranef_distr <- function(nam, index, nranef) {
   # specify distribution for the random effects, based on their dimension
-  norm_distr  <- if (nranef < 2L) {"dnorm"} else {"dmnorm"}
+  norm_distr <- if (nranef < 2L) {
+    "dnorm"
+  } else {
+    "dmnorm"
+  }
 
   paste0(
-    tab(4L), "b", nam, "[", index, ", 1:",
-    nranef, "] ~ ", norm_distr,
-    "(mu_b", nam, "[", index, ", ], invD",
-    nam, "[ , ])", "\n"
+    tab(4L),
+    "b",
+    nam,
+    "[",
+    index,
+    ", 1:",
+    nranef,
+    "] ~ ",
+    norm_distr,
+    "(mu_b",
+    nam,
+    "[",
+    index,
+    ", ], invD",
+    nam,
+    "[ , ])",
+    "\n"
   )
 }
 
@@ -582,15 +685,17 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   # - 1 underscore
   # - the number of characters of the index
   # - 8 ", 1] <- "
-  rdi <- if (length(rdintercept) > 0L)
-    paste0(tab(4L),
-           paste_data(matnam = paste0("mu_b_", varname), index = index,
-                      col = 1L),
-           " <- ",
-           add_linebreaks(rdintercept,
-                          indent = 4L + 5L + nchar(varname) + 1L +
-                            nchar(index) + 8L)
+  rdi <- if (length(rdintercept) > 0L) {
+    paste0(
+      tab(4L),
+      paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1L),
+      " <- ",
+      add_linebreaks(
+        rdintercept,
+        indent = 4L + 5L + nchar(varname) + 1L + nchar(index) + 8L
+      )
     )
+  }
 
   # paste the rd. slope part, a vector of "mu_b_varname[i, k] <- lin.predictor"
   # or NULL if there are no random slopes
@@ -605,11 +710,17 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   rds <- if (length(rdslopes) > 0L) {
     paste0(
       tab(4L),
-      paste_data(matnam = paste0("mu_b_", varname), index = index,
-                 col = seq_along(rdslopes) + as.numeric(length(rdi) > 0L)),
+      paste_data(
+        matnam = paste0("mu_b_", varname),
+        index = index,
+        col = seq_along(rdslopes) + as.numeric(length(rdi) > 0L)
+      ),
       " <- ",
-      cvapply(rdslopes, add_linebreaks,
-              indent = 4L + 5L + nchar(varname) + 1L + nchar(index) + 8L)
+      cvapply(
+        rdslopes,
+        add_linebreaks,
+        indent = 4L + 5L + nchar(varname) + 1L + nchar(index) + 8L
+      )
     )
   }
 
@@ -618,24 +729,28 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
 }
 
 
-
 # used in write_ranefs() (2020-06-10)
 paste_mu_b_full <- function(lps, nranef, nam, index) {
   lps <- Filter(Negate(is.null), lps)
 
-  rd_lp <- paste0(tab(4L),
-                  paste_data(matnam = paste0("mu_b", nam), index = index,
-                             col = unlist(nranef)),
-                  " <- ",
-                  lapply(lps, add_linebreaks,
-                         indent = 4L + 4L + max(0, nchar(nam)) + 1L +
-                           nchar(index) + 8L)
+  rd_lp <- paste0(
+    tab(4L),
+    paste_data(
+      matnam = paste0("mu_b", nam),
+      index = index,
+      col = unlist(nranef)
+    ),
+    " <- ",
+    lapply(
+      lps,
+      add_linebreaks,
+      indent = 4L + 4L + max(0, nchar(nam)) + 1L + nchar(index) + 8L
+    )
   )
 
   # combine the random intercept and random slope part
   paste0(rd_lp, collapse = "\n")
 }
-
 
 
 # used in jagsmodels that use random effects (2020-06-10)
@@ -652,62 +767,123 @@ ranef_priors <- function(nranef, nam, rd_vcov) {
   } else if (rd_vcov %in% c("full", "blockdiag")) {
     rd_vcov_full(nranef, nam)
   } else {
-    errormsg("I do not know %s type %s.",
-             dQuote("rd_vcov"), dQuote(rd_vcov))
+    errormsg("I do not know %s type %s.", dQuote("rd_vcov"), dQuote(rd_vcov))
   }
 }
 
 rd_vcov_univ <- function(nam) {
-
   # (Truncation in Gamma to prevent JAGS error when values get too small or
   # too large)
 
   invD_distr <- "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
-  paste0("\n",
-         tab(), "invD", nam, "[1, 1] ~ ", invD_distr, "\n",
-         tab(), "D", nam, "[1, 1] <- 1 / (invD", nam, "[1, 1])"
+  paste0(
+    "\n",
+    tab(),
+    "invD",
+    nam,
+    "[1, 1] ~ ",
+    invD_distr,
+    "\n",
+    tab(),
+    "D",
+    nam,
+    "[1, 1] <- 1 / (invD",
+    nam,
+    "[1, 1])"
   )
 }
 
 rd_vcov_indep <- function(nranef, nam) {
-
   # (Truncation in Gamma to prevent JAGS error when values get too small or
   # too large)
 
   invD_distr <- "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
-  paste0("\n",
-         tab(), "for (k in 1:", nranef, ") {", "\n",
-         tab(4L), "invD", nam, "[k, k] ~ ", invD_distr, "\n",
-         tab(), "}", "\n",
-         tab(), "D", nam, "[1:", nranef, ", 1:", nranef,
-         "] <- inverse(invD", nam, "[ , ])"
+  paste0(
+    "\n",
+    tab(),
+    "for (k in 1:",
+    nranef,
+    ") {",
+    "\n",
+    tab(4L),
+    "invD",
+    nam,
+    "[k, k] ~ ",
+    invD_distr,
+    "\n",
+    tab(),
+    "}",
+    "\n",
+    tab(),
+    "D",
+    nam,
+    "[1:",
+    nranef,
+    ", 1:",
+    nranef,
+    "] <- inverse(invD",
+    nam,
+    "[ , ])"
   )
 }
 
 rd_vcov_full <- function(nranef, nam) {
-
   invD_distr <- paste0("dwish(RinvD", nam, "[ , ], KinvD", nam, ")")
 
-  paste0("\n",
-         tab(), "for (k in 1:", nranef, ") {", "\n",
-         tab(4L), "RinvD", nam,
-         "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
-         tab(), "}", "\n",
-         tab(),
-         "invD", nam, "[1:", nranef, ", 1:", nranef, "] ~ ",
-         invD_distr, "\n",
-         tab(), "D", nam, "[1:", nranef, ", 1:", nranef,
-         "] <- inverse(invD", nam, "[ , ])"
+  paste0(
+    "\n",
+    tab(),
+    "for (k in 1:",
+    nranef,
+    ") {",
+    "\n",
+    tab(4L),
+    "RinvD",
+    nam,
+    "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)",
+    "\n",
+    tab(),
+    "}",
+    "\n",
+    tab(),
+    "invD",
+    nam,
+    "[1:",
+    nranef,
+    ", 1:",
+    nranef,
+    "] ~ ",
+    invD_distr,
+    "\n",
+    tab(),
+    "D",
+    nam,
+    "[1:",
+    nranef,
+    ", 1:",
+    nranef,
+    "] <- inverse(invD",
+    nam,
+    "[ , ])"
   )
 }
 
 
-
 # Joint model ------------------------------------------------------------------
 
-paste_linpred_jm <- function(varname, parname, parelmts, matnam, index, cols,
-                             scale_pars, assoc_type, covnames, isgk = FALSE,
-                             trafo = NULL) {
+paste_linpred_jm <- function(
+  varname,
+  parname,
+  parelmts,
+  matnam,
+  index,
+  cols,
+  scale_pars,
+  assoc_type,
+  covnames,
+  isgk = FALSE,
+  trafo = NULL
+) {
   # - varname: name of the survival outcome
   # - parname: name of the parameter, e.g. "beta"
   # - parelmts: vector specifying which elements of the parameter vector are
@@ -726,44 +902,62 @@ paste_linpred_jm <- function(varname, parname, parelmts, matnam, index, cols,
   # - isgk: logical; indicating if the output is used inside the GK-quadrature
   #         part
 
-
   # get vector of association structure strings
-  pastedat <- paste_association(varname = varname,
-                                covnames = covnames, matname = matnam,
-                                index = index, columns = cols,
-                                assoc_type = assoc_type, isgk = isgk)
+  pastedat <- paste_association(
+    varname = varname,
+    covnames = covnames,
+    matname = matnam,
+    index = index,
+    columns = cols,
+    assoc_type = assoc_type,
+    isgk = isgk
+  )
 
   # wrap in trafo if there is a trafo of the time-dep variable in the lin.pred
   # of the survival model
   if (!is.null(unlist(covnames))) {
-    pastedat <- Map(function(covname, colname, strng) {
-      if (colname %in% trafo$colname) {
-        fct <- trafo$fct[trafo$colname == colname]
-        if (trafo$type[trafo$colname == colname] == "I") {
-          fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
+    pastedat <- Map(
+      function(covname, colname, strng) {
+        if (colname %in% trafo$colname) {
+          fct <- trafo$fct[trafo$colname == colname]
+          if (trafo$type[trafo$colname == colname] == "I") {
+            fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
+          }
+          gsub(pattern = covname, replacement = strng, x = fct)
+        } else {
+          strng
         }
-        gsub(pattern = covname, replacement = strng, x = fct)
-      } else {
-        strng
-      }
-    }, covname = covnames, colname = names(covnames), strng = pastedat)
+      },
+      covname = covnames,
+      colname = names(covnames),
+      strng = pastedat
+    )
   }
 
   paste(
-    paste_scaling(x = unlist(pastedat),
-                  rows = cols,
-                  scale_pars = list(scale_pars)[rep(1, length(cols))],
-                  scalemat = rep(paste0("sp", matnam), length(cols))
+    paste_scaling(
+      x = unlist(pastedat),
+      rows = cols,
+      scale_pars = list(scale_pars)[rep(1, length(cols))],
+      scalemat = rep(paste0("sp", matnam), length(cols))
     ),
     paste_coef(parname, parelmts),
-    sep = " * ", collapse = " + ")
+    sep = " * ",
+    collapse = " + "
+  )
 }
 
 
 # used in paste_linpred_jm() (2020-06-10)
-paste_association <- function(varname, covnames, matname, index, columns,
-                              assoc_type, isgk) {
-
+paste_association <- function(
+  varname,
+  covnames,
+  matname,
+  index,
+  columns,
+  assoc_type,
+  isgk
+) {
   # for each time-varying variable, paste the association structure
   # - varname: name of the survival outcome
   # - covnames: vector of names of the time-varying covariates
@@ -775,19 +969,28 @@ paste_association <- function(varname, covnames, matname, index, columns,
   # - assoc_type: vector of association types
   # - isgk: logical: is the output for within the quadrature part?
 
-  mapply(function(varname, assoc_type, covname, matname, column, index, isgk) {
-    paste_assoc <- switch(assoc_type,
-                          "obs.value" = paste_obsvalue,
-                          "underl.value" = paste_underlvalue)
-    paste_assoc(varname = varname,
-                covname = covname,
-                matname = matname,
-                index = index,
-                column = column,
-                isgk = isgk)
-  }, varname = varname, assoc_type = assoc_type, covname = covnames,
-  matname = matname, column = columns,
-  MoreArgs = list(index = index, isgk = isgk)
+  mapply(
+    function(varname, assoc_type, covname, matname, column, index, isgk) {
+      paste_assoc <- switch(
+        assoc_type,
+        "obs.value" = paste_obsvalue,
+        "underl.value" = paste_underlvalue
+      )
+      paste_assoc(
+        varname = varname,
+        covname = covname,
+        matname = matname,
+        index = index,
+        column = column,
+        isgk = isgk
+      )
+    },
+    varname = varname,
+    assoc_type = assoc_type,
+    covname = covnames,
+    matname = matname,
+    column = columns,
+    MoreArgs = list(index = index, isgk = isgk)
   )
 }
 
@@ -804,10 +1007,13 @@ paste_obsvalue <- function(varname, matname, index, column, isgk, ...) {
   # - ...: for compatibility of syntax with other association structure type
   #        functions
 
-  if (isgk) # "M_lvlonegk[i, 4, k]" in the GK-quadrature
+  if (isgk) {
+    # "M_lvlonegk[i, 4, k]" in the GK-quadrature
     paste0(matname, "gk[", index, ", ", column, ", 1:15]")
-  else # "M_lvlone[srow_varname[i, k]" outside the quadrature
+  } else {
+    # "M_lvlone[srow_varname[i, k]" outside the quadrature
     paste0(matname, "[srow_", varname, "[", index, "], ", column, "]")
+  }
 }
 
 
@@ -822,16 +1028,12 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
   # - ...: for compatibility of syntax with other association structure type
   #        functions
 
-  if (isgk)
+  if (isgk) {
     paste0("mugk_", covname, "[", index, ", 1:15]")
-  else
+  } else {
     paste0("mu_", covname, "[srow_", varname, "[", index, "]]")
+  }
 }
-
-
-
-
-
 
 
 # paste other model parts ------------------------------------------------------
@@ -850,23 +1052,45 @@ paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
   cmat <- attr(refs, "contr_matrix")
   categories <- seq_along(levels(refs)) - as.numeric(length(levels(refs)) == 2L)
 
-  paste0(tab(4L), resp_mat, "[", index, ", ", dummy_cols, "] <- ifelse(",
-         resp_mat, "[", index, ", ", resp_col, "] == ",
-         categories[apply(cmat == 1L, 2L, which)], ", 1",
-         if (attr(refs, "contrasts") == "contr.treatment") {
-           ", 0)"
-         } else if (attr(refs, "contrasts") == "contr.sum") {
-           paste0(", ifelse(", resp_mat, "[", index, ", ", resp_col, "] == ",
-                  refs, ", -1, 0))")
-         } else {
-           errormsg("It is currently not possible to use contrasts of type
+  paste0(
+    tab(4L),
+    resp_mat,
+    "[",
+    index,
+    ", ",
+    dummy_cols,
+    "] <- ifelse(",
+    resp_mat,
+    "[",
+    index,
+    ", ",
+    resp_col,
+    "] == ",
+    categories[apply(cmat == 1L, 2L, which)],
+    ", 1",
+    if (attr(refs, "contrasts") == "contr.treatment") {
+      ", 0)"
+    } else if (attr(refs, "contrasts") == "contr.sum") {
+      paste0(
+        ", ifelse(",
+        resp_mat,
+        "[",
+        index,
+        ", ",
+        resp_col,
+        "] == ",
+        refs,
+        ", -1, 0))"
+      )
+    } else {
+      errormsg(
+        "It is currently not possible to use contrasts of type
                       %s for incomplete variables.",
-                    dQuote(attr(refs, "contrasts")))
-         })
+        dQuote(attr(refs, "contrasts"))
+      )
+    }
+  )
 }
-
-
-
 
 
 # used in write_model() (2020-06-11)
@@ -879,11 +1103,13 @@ paste_interactions <- function(interactions, group_lvls, n) {
   # - group_lvls: vector of order of the grouping levels
   # - n: vector of the number of observations per grouping level
 
-
   # determine which index should be used for each of the levels
-  index <- setNames(cvapply(seq_along(sort(group_lvls)),
-                            function(k) paste0(rep("i", k), collapse = "")),
-                    names(sort(group_lvls)))
+  index <- setNames(
+    cvapply(seq_along(sort(group_lvls)), function(k) {
+      paste0(rep("i", k), collapse = "")
+    }),
+    names(sort(group_lvls))
+  )
 
   # select only those interactions in which incomplete variables are involved
   interactions <- interactions[lvapply(interactions, "attr", "has_NAs")]
@@ -901,29 +1127,46 @@ paste_interactions <- function(interactions, group_lvls, n) {
     sapply(unique(minlvl), function(lvl) {
       paste0(
         tab(),
-        "for (", index[lvl], " in 1:", n[lvl], ") {\n",
+        "for (",
+        index[lvl],
+        " in 1:",
+        n[lvl],
+        ") {\n",
         paste0(
           sapply(interactions[which(minlvl == lvl)], function(x) {
             paste0(
               tab(4L),
-              paste_data(names(x$interterm), index = index[lvl],
-                         col = x$interterm),
+              paste_data(
+                names(x$interterm),
+                index = index[lvl],
+                col = x$interterm
+              ),
               " <- ",
-              paste0(paste_data(
-                names(x$elmts),
-                index = ifelse(names(x$elmts) == paste0("M_", lvl),
-                               index[lvl],
-                               paste0("group_", gsub("M_", "", names(x$elmts)),
-                                      "[", index[lvl], "]"
-                               )
+              paste0(
+                paste_data(
+                  names(x$elmts),
+                  index = ifelse(
+                    names(x$elmts) == paste0("M_", lvl),
+                    index[lvl],
+                    paste0(
+                      "group_",
+                      gsub("M_", "", names(x$elmts)),
+                      "[",
+                      index[lvl],
+                      "]"
+                    )
+                  ),
+                  x$elmts
                 ),
-                x$elmts
-              ), collapse = " * ")
+                collapse = " * "
+              )
             )
           }),
           collapse = "\n"
         ),
-        "\n", tab(), "}\n"
+        "\n",
+        tab(),
+        "}\n"
       )
     })
   )
@@ -931,42 +1174,65 @@ paste_interactions <- function(interactions, group_lvls, n) {
 
 
 # used in jagsmodels (2020-06-11)
-get_priordistr <- function(shrinkage, type, family = NULL, link = NULL,
-                           parname) {
+get_priordistr <- function(
+  shrinkage,
+  type,
+  family = NULL,
+  link = NULL,
+  parname
+) {
   # write specification fo the prior distribution for the regression parameters,
   # using the specified type of shrinkage (or no shrinkage)
 
   if (type %in% c("glm", "glmm")) {
-    type <- switch(family,
-                   gaussian = "norm",
-                   binomial = "binom",
-                   Gamma = "gamma",
-                   poisson = "poisson",
-                   lognorm = "norm",
-                   beta = "beta"
+    type <- switch(
+      family,
+      gaussian = "norm",
+      binomial = "binom",
+      Gamma = "gamma",
+      poisson = "poisson",
+      lognorm = "norm",
+      beta = "beta"
     )
   }
-
 
   if (is.null(shrinkage) | isFALSE(shrinkage)) {
     # no shrinkage
     paste0(
-      tab(4L), parname, "[k] ~ dnorm(mu_reg_", type,
-      ", tau_reg_", type, ")", "\n"
+      tab(4L),
+      parname,
+      "[k] ~ dnorm(mu_reg_",
+      type,
+      ", tau_reg_",
+      type,
+      ")",
+      "\n"
     )
   } else if (shrinkage == "ridge") {
     # ridge shrinkage
     paste0(
-      tab(4L), parname, "[k] ~ dnorm(mu_reg_", type,
-      ", tau_reg_", type, "_ridge_", parname, "[k])", "\n",
-      tab(4L), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)",
+      tab(4L),
+      parname,
+      "[k] ~ dnorm(mu_reg_",
+      type,
+      ", tau_reg_",
+      type,
+      "_ridge_",
+      parname,
+      "[k])",
+      "\n",
+      tab(4L),
+      "tau_reg_",
+      type,
+      "_ridge_",
+      parname,
+      "[k] ~ dgamma(0.01, 0.01)",
       "\n"
     )
   } else {
     errormsg("Regularization of type %s is not implemented.", dQuote(shrinkage))
   }
 }
-
 
 
 # specifications for GLMs (and GLMMs) ------------------------------------------
@@ -982,34 +1248,86 @@ get_distr <- function(family, varname, index, isgk = FALSE) {
     return(NULL)
   }
 
-  switch(family,
-         "gaussian" = paste0(
-           "dnorm(mu", if (isgk) "gk", "_", varname,
-           "[", index, if (isgk) ", k", "], tau_", varname, ")"
-         ),
-         "binomial" = paste0(
-           "dbern(max(1e-16, min(1 - 1e-16, mu",
-           if (isgk) "gk", "_", varname,
-           "[", index, if (isgk) ", k", "])))"
-         ),
-         "Gamma" = paste0(
-           "dgamma(shape", if (isgk) "gk", "_", varname,
-           "[", index, if (isgk) ", k", "], rate", if (isgk) "gk", "_",
-           varname, "[", index, if (isgk) ", k", "])"
-         ),
-         "poisson" = paste0(
-           "dpois(max(1e-10, mu", if (isgk) "gk", "_", varname,
-           "[", index, if (isgk) ", k", "]))"
-         ),
-         "lognorm" = paste0(
-           "dlnorm(mu", if (isgk) "gk", "_", varname, "[",
-           index, if (isgk) ", k", "], tau_", varname, ")"
-         ),
-         "beta" = paste0(
-           "dbeta(shape1", if (isgk) "gk", "_", varname,
-           "[", index, if (isgk) ", k", "], shape2", if (isgk) "gk",
-           "_", varname, "[", index, if (isgk) ", k", "])T(1e-15, 1 - 1e-15)"
-         )
+  switch(
+    family,
+    "gaussian" = paste0(
+      "dnorm(mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "], tau_",
+      varname,
+      ")"
+    ),
+    "binomial" = paste0(
+      "dbern(max(1e-16, min(1 - 1e-16, mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "])))"
+    ),
+    "Gamma" = paste0(
+      "dgamma(shape",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "], rate",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "])"
+    ),
+    "poisson" = paste0(
+      "dpois(max(1e-10, mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "]))"
+    ),
+    "lognorm" = paste0(
+      "dlnorm(mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "], tau_",
+      varname,
+      ")"
+    ),
+    "beta" = paste0(
+      "dbeta(shape1",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "], shape2",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "])T(1e-15, 1 - 1e-15)"
+    )
   )
 }
 
@@ -1023,17 +1341,18 @@ get_linkfun <- function(link) {
     return(NULL)
   }
 
-  switch(link,
-         "identity" = function(x) x,
-         "logit"    = function(x) paste0("logit(", x, ")"),
-         "probit"   = function(x) paste0("probit(", x, ")"),
-         "log"      = function(x) paste0("log(", x, ")"),
-         "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-         # "sqrt": JAGS does not know this link function
-         # "cauchit is not available in JAGS
-         "inverse"  = function(x)
-           paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
-                  tab(4L), "inv_", x)
+  switch(
+    link,
+    "identity" = function(x) x,
+    "logit" = function(x) paste0("logit(", x, ")"),
+    "probit" = function(x) paste0("probit(", x, ")"),
+    "log" = function(x) paste0("log(", x, ")"),
+    "cloglog" = function(x) paste0("cloglog(", x, ")"),
+    # "sqrt": JAGS does not know this link function
+    # "cauchit is not available in JAGS
+    "inverse" = function(x) {
+      paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n", tab(4L), "inv_", x)
+    }
   )
 }
 
@@ -1047,35 +1366,92 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
     return(NULL)
   }
 
-  switch(family,
-         "gaussian" = NULL,
-         "binomial" = NULL,
-         "Gamma" = paste0("\n",
-                          tab(4L), "shape", if (isgk) "gk", "_", varname,
-                          "[", index, if (isgk) ", k", "] <- pow(mu",
-                          if (isgk) "gk", "_", varname, "[", index,
-                          if (isgk) ", k", "], 2) / pow(sigma_", varname,
-                          ", 2)",
-                          "\n",
-                          tab(4L), "rate", if (isgk) "gk", "_", varname,
-                          "[", index, if (isgk) ", k", "] <- mu",
-                          if (isgk) "gk", "_", varname, "[", index,
-                          if (isgk) ", k", "] / pow(sigma_", varname, ", 2)",
-                          "\n\n"),
-         "poisson" = NULL,
-         "lognorm" = NULL,
-         "beta" <- paste0(
-           "\n",
-           tab(4L), "shape1", if (isgk) "gk", "_", varname,
-           "[", index, if (isgk) ", k", "] <- mu",
-           if (isgk) "gk", "_", varname, "[", index,
-           if (isgk) ", k", "] * tau_",
-           varname, "\n",
-           tab(4L), "shape2", if (isgk) "gk", "_", varname,
-           "[", index, if (isgk) ", k", "] <- (1 - mu", if (isgk) "gk", "_",
-           varname, "[", index, if (isgk) ", k", "]) * tau_",
-           varname, "\n\n"
-         )
+  switch(
+    family,
+    "gaussian" = NULL,
+    "binomial" = NULL,
+    "Gamma" = paste0(
+      "\n",
+      tab(4L),
+      "shape",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "] <- pow(mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "], 2) / pow(sigma_",
+      varname,
+      ", 2)",
+      "\n",
+      tab(4L),
+      "rate",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "] <- mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "] / pow(sigma_",
+      varname,
+      ", 2)",
+      "\n\n"
+    ),
+    "poisson" = NULL,
+    "lognorm" = NULL,
+    "beta" <- paste0(
+      "\n",
+      tab(4L),
+      "shape1",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "] <- mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "] * tau_",
+      varname,
+      "\n",
+      tab(4L),
+      "shape2",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "] <- (1 - mu",
+      if (isgk) "gk",
+      "_",
+      varname,
+      "[",
+      index,
+      if (isgk) ", k",
+      "]) * tau_",
+      varname,
+      "\n\n"
+    )
   )
 }
 
@@ -1090,32 +1466,60 @@ get_secndpar <- function(family, varname) {
     return(NULL)
   }
 
-  switch(family,
-         "gaussian" = paste0(
-           "\n",
-           tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)",
-           "\n",
-           tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
-         ),
-         "binomial" = NULL,
-         "Gamma" = paste0(
-           "\n",
-           tab(), "tau_", varname, " ~ dgamma(shape_tau_gamma, rate_tau_gamma)",
-           "\n",
-           tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
-         ),
-         "poisson" = NULL,
-         "lognorm" = paste0(
-           "\n",
-           tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)",
-           "\n",
-           tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
-         ),
-         "beta" = paste0(
-           "\n",
-           tab(), "tau_", varname, " ~ dgamma(shape_tau_beta, rate_tau_beta)",
-           "\n"
-         )
+  switch(
+    family,
+    "gaussian" = paste0(
+      "\n",
+      tab(),
+      "tau_",
+      varname,
+      " ~ dgamma(shape_tau_norm, rate_tau_norm)",
+      "\n",
+      tab(),
+      "sigma_",
+      varname,
+      " <- sqrt(1/tau_",
+      varname,
+      ")"
+    ),
+    "binomial" = NULL,
+    "Gamma" = paste0(
+      "\n",
+      tab(),
+      "tau_",
+      varname,
+      " ~ dgamma(shape_tau_gamma, rate_tau_gamma)",
+      "\n",
+      tab(),
+      "sigma_",
+      varname,
+      " <- sqrt(1/tau_",
+      varname,
+      ")"
+    ),
+    "poisson" = NULL,
+    "lognorm" = paste0(
+      "\n",
+      tab(),
+      "tau_",
+      varname,
+      " ~ dgamma(shape_tau_norm, rate_tau_norm)",
+      "\n",
+      tab(),
+      "sigma_",
+      varname,
+      " <- sqrt(1/tau_",
+      varname,
+      ")"
+    ),
+    "beta" = paste0(
+      "\n",
+      tab(),
+      "tau_",
+      varname,
+      " ~ dgamma(shape_tau_beta, rate_tau_beta)",
+      "\n"
+    )
   )
 }
 
@@ -1128,13 +1532,14 @@ get_glm_modelname <- function(family) {
     return(NULL)
   }
 
-  switch(family,
-         "gaussian" = "Normal",
-         "binomial" = "Binomial",
-         "Gamma" = "Gamma",
-         "poisson" = "Poisson",
-         "lognorm" = "Log-normal",
-         "beta" = "Beta"
+  switch(
+    family,
+    "gaussian" = "Normal",
+    "binomial" = "Binomial",
+    "Gamma" = "Gamma",
+    "poisson" = "Poisson",
+    "lognorm" = "Log-normal",
+    "beta" = "Beta"
   )
 }
 
@@ -1144,15 +1549,19 @@ get_linkindent <- function(link) {
   # get number of characters that lines after a line break in the  linear
   # predictor of a GLM(M) JAGS model should be indented
 
-  if (is.null(link)) 0L
-  else
-    switch(link,
-           identity = 0L,
-           logit = 7L,
-           probit = 8L,
-           log = 5L,
-           cloglog = 9L,
-           inverse = 4L)
+  if (is.null(link)) {
+    0L
+  } else {
+    switch(
+      link,
+      identity = 0L,
+      logit = 7L,
+      probit = 8L,
+      log = 5L,
+      cloglog = 9L,
+      inverse = 4L
+    )
+  }
 }
 
 
@@ -1165,17 +1574,23 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4L) {
   .index <- index
   .isgk <- isgk
 
-  probs <- cvapply(2L:(info$ncat - 1L),
-                   function(k, .info = info, .index = index, .isgk = isgk) {
-                     paste0(tab(indent), paste_p(k), " <- ",
-                            minmax(
-                              if (isTRUE(.info$rev)) {
-                                paste0(paste_ps(k), " - ", paste_ps(k - 1L))
-                              } else {
-                                paste0(paste_ps(k - 1L), " - ", paste_ps(k))
-                              })
-                     )
-                   })
+  probs <- cvapply(
+    2L:(info$ncat - 1L),
+    function(k, .info = info, .index = index, .isgk = isgk) {
+      paste0(
+        tab(indent),
+        paste_p(k),
+        " <- ",
+        minmax(
+          if (isTRUE(.info$rev)) {
+            paste0(paste_ps(k), " - ", paste_ps(k - 1L))
+          } else {
+            paste0(paste_ps(k - 1L), " - ", paste_ps(k))
+          }
+        )
+      )
+    }
+  )
   # if (isTRUE(isgk)) {
   #   paste0(c(
   #     write_pgk(info, index, indent), "",
@@ -1184,45 +1599,65 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4L) {
   #
   # } else {
 
-  paste0(tab(indent),
-         paste_p(1L), " <- ",
-         if (isTRUE(info$rev)) {
-           minmax(paste_ps(1L))
-         } else {
-           paste0("1 - ", minmax(paste0("sum(", paste_p(2L:info$ncat), ")")))
-         },
-         "\n",
-         paste(probs, collapse = "\n"), "\n",
-         tab(indent), paste_p(info$ncat), " <- ",
-         if (isTRUE(info$rev)) {
-           paste0("1 - ", minmax(paste0("sum(", paste_p(1L:(info$ncat - 1L)), ")")
-           ))
-         } else {
-           minmax(paste_ps(info$ncat - 1L))
-         }
+  paste0(
+    tab(indent),
+    paste_p(1L),
+    " <- ",
+    if (isTRUE(info$rev)) {
+      minmax(paste_ps(1L))
+    } else {
+      paste0("1 - ", minmax(paste0("sum(", paste_p(2L:info$ncat), ")")))
+    },
+    "\n",
+    paste(probs, collapse = "\n"),
+    "\n",
+    tab(indent),
+    paste_p(info$ncat),
+    " <- ",
+    if (isTRUE(info$rev)) {
+      paste0("1 - ", minmax(paste0("sum(", paste_p(1L:(info$ncat - 1L)), ")")))
+    } else {
+      minmax(paste_ps(info$ncat - 1L))
+    }
   )
 }
 
 
-
-write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
-                         indent = 4L) {
+write_logits <- function(
+  info,
+  index,
+  nonprop = FALSE,
+  isgk = FALSE,
+  indent = 4L
+) {
   # syntax for logits, e.g., "logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]"
 
-  logits <- cvapply(1L:(info$ncat - 1L),
-                    function(k,
-                             .info = info,
-                             .index = index,
-                             .isgk = isgk) {
-                      paste0(tab(indent), "logit(", paste_ps(k),
-                             ") <- gamma_", info$varname, "[", k, "]",
-                             " + eta", if (isgk) "gk",
-                             "_", info$varname, "[", index, if (isgk) ", k", "]",
-                             if (nonprop) {
-                               paste0(" + eta_", info$varname, "_", k,
-                                      "[", index, "]")
-                             })
-                    })
+  logits <- cvapply(
+    1L:(info$ncat - 1L),
+    function(k, .info = info, .index = index, .isgk = isgk) {
+      paste0(
+        tab(indent),
+        "logit(",
+        paste_ps(k),
+        ") <- gamma_",
+        info$varname,
+        "[",
+        k,
+        "]",
+        " + eta",
+        if (isgk) "gk",
+        "_",
+        info$varname,
+        "[",
+        index,
+        if (isgk) ", k",
+        "]",
+        if (nonprop) {
+          paste0(" + eta_", info$varname, "_", k, "[", index, "]")
+        }
+      )
+    }
+  )
 
   paste0(logits, collapse = "\n")
   # if (isTRUE(isgk)) {
@@ -1230,33 +1665,65 @@ write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
   #          collapse = "\n")
   #
   # } else {
-
 }
 
 # write the part that calculates the exponential function of the linear predictor
 # in the quadrature part for ordinal longitudinal outcomes in joint models
 write_exp_lp <- function(info, index, nonprop = FALSE, indent = 4L) {
-  paste0(tab(indent),
-         "exp_lp_", info$varname, "[", index, ", ", 1L:(info$ncat - 1L),
-         ", 1:15] <- exp(1)^(gamma_", info$varname, "[", 1L:(info$ncat - 1L), "]",
-         " + etagk",
-         "_", info$varname, "[", index, ", 1:15", "]",
-         if (nonprop) {
-           paste0(" + eta_", info$varname, "_", 1L:(info$ncat - 1L),
-                  "[", index, "]")
-         }, ")")
+  paste0(
+    tab(indent),
+    "exp_lp_",
+    info$varname,
+    "[",
+    index,
+    ", ",
+    1L:(info$ncat - 1L),
+    ", 1:15] <- exp(1)^(gamma_",
+    info$varname,
+    "[",
+    1L:(info$ncat - 1L),
+    "]",
+    " + etagk",
+    "_",
+    info$varname,
+    "[",
+    index,
+    ", 1:15",
+    "]",
+    if (nonprop) {
+      paste0(" + eta_", info$varname, "_", 1L:(info$ncat - 1L), "[", index, "]")
+    },
+    ")"
+  )
 }
 
 
 write_psum_expit <- function(info, index, indent = 4L) {
   cvapply(1:(info$ncat - 1), function(r) {
-    paste0(tab(indent),
-           "psumgk_", info$varname, "[", index, ", ", r,
-           ", 1:15] <- exp_lp_", info$varname, "[", index, ", ", r,
-           ", ]/(1 + exp_lp_", info$varname, "[", index, ", ", r, ", ])",
-           if (r < info$ncat - 1) {
-             paste0(" - psumgk_", info$varname, "[", index, ", ", r + 1, ", 1:15]")
-           }
+    paste0(
+      tab(indent),
+      "psumgk_",
+      info$varname,
+      "[",
+      index,
+      ", ",
+      r,
+      ", 1:15] <- exp_lp_",
+      info$varname,
+      "[",
+      index,
+      ", ",
+      r,
+      ", ]/(1 + exp_lp_",
+      info$varname,
+      "[",
+      index,
+      ", ",
+      r,
+      ", ])",
+      if (r < info$ncat - 1) {
+        paste0(" - psumgk_", info$varname, "[", index, ", ", r + 1, ", 1:15]")
+      }
     )
   })
 }
@@ -1264,49 +1731,130 @@ write_psum_expit <- function(info, index, indent = 4L) {
 
 write_pgk <- function(info, index, indent = 4L) {
   c(
-    paste0(tab(indent),
-           "pgk_", info$varname, "[", index, ", 1, 1:15] <- 1 - ifelse(",
-           "probsumgk_", info$varname, "[", index, ", ] > 1 - 1e-10, 1-1e-10, ", "\n",
-           tab(indent + 4 + nchar(info$varname) + nchar(index) + 15),
-           "ifelse(probsumgk_", info$varname, "[", index, ", ] < 1e-10, 1e-10, ",
-           "probsumgk_", info$varname, "[", index, ", ]))"
+    paste0(
+      tab(indent),
+      "pgk_",
+      info$varname,
+      "[",
+      index,
+      ", 1, 1:15] <- 1 - ifelse(",
+      "probsumgk_",
+      info$varname,
+      "[",
+      index,
+      ", ] > 1 - 1e-10, 1-1e-10, ",
+      "\n",
+      tab(indent + 4 + nchar(info$varname) + nchar(index) + 15),
+      "ifelse(probsumgk_",
+      info$varname,
+      "[",
+      index,
+      ", ] < 1e-10, 1e-10, ",
+      "probsumgk_",
+      info$varname,
+      "[",
+      index,
+      ", ]))"
     ),
 
-    paste0(tab(indent),
-           "pgk_", info$varname, "[", index, ", 2:", info$ncat, ", 1:15] <- ifelse(",
-           "psumgk_", info$varname, "[", index, ", , ] > 1 - 1e-10, 1-1e-10, ", "\n",
-           tab(indent + 4 + nchar(info$varname) + nchar(index) + 17),
-           "ifelse(psumgk_", info$varname, "[", index, ", , ] < 1e-10, 1e-10, ",
-           "psumgk_", info$varname, "[", index, ", , ]))"
+    paste0(
+      tab(indent),
+      "pgk_",
+      info$varname,
+      "[",
+      index,
+      ", 2:",
+      info$ncat,
+      ", 1:15] <- ifelse(",
+      "psumgk_",
+      info$varname,
+      "[",
+      index,
+      ", , ] > 1 - 1e-10, 1-1e-10, ",
+      "\n",
+      tab(indent + 4 + nchar(info$varname) + nchar(index) + 17),
+      "ifelse(psumgk_",
+      info$varname,
+      "[",
+      index,
+      ", , ] < 1e-10, 1e-10, ",
+      "psumgk_",
+      info$varname,
+      "[",
+      index,
+      ", , ]))"
     ),
 
-    paste0("\n", tab(indent),
-           "probsumgk_", info$varname, "[", index, ", 1:15] <- ",
-           paste0("pgk_", info$varname, "[", index, ", ", 2:info$ncat, ", ]",
-                  collapse = " + ")
-    ))
+    paste0(
+      "\n",
+      tab(indent),
+      "probsumgk_",
+      info$varname,
+      "[",
+      index,
+      ", 1:15] <- ",
+      paste0(
+        "pgk_",
+        info$varname,
+        "[",
+        index,
+        ", ",
+        2:info$ncat,
+        ", ]",
+        collapse = " + "
+      )
+    )
+  )
 }
 
 
-
 write_priors_clm <- function(info) {
-
   deltas <- cvapply(1L:(info$ncat - 2L), function(k) {
-    paste0(tab(), "delta_", info$varname, "[", k,
-           "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
+    paste0(
+      tab(),
+      "delta_",
+      info$varname,
+      "[",
+      k,
+      "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)"
+    )
   })
 
-  sign <- if (isTRUE(info$rev)) {" + "} else {" - "}
-
+  sign <- if (isTRUE(info$rev)) {
+    " + "
+  } else {
+    " - "
+  }
 
   gammas <- cvapply(1L:(info$ncat - 1L), function(k) {
     if (k == 1L) {
-      paste0(tab(), "gamma_", info$varname, "[", k,
-             "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
+      paste0(
+        tab(),
+        "gamma_",
+        info$varname,
+        "[",
+        k,
+        "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)"
+      )
     } else {
-      paste0(tab(), "gamma_", info$varname, "[", k, "] <- gamma_",
-             info$varname, "[", k - 1L, "]", sign, "exp(delta_", info$varname,
-             "[", k - 1L, "])")
+      paste0(
+        tab(),
+        "gamma_",
+        info$varname,
+        "[",
+        k,
+        "] <- gamma_",
+        info$varname,
+        "[",
+        k - 1L,
+        "]",
+        sign,
+        "exp(delta_",
+        info$varname,
+        "[",
+        k - 1L,
+        "])"
+      )
     }
   })
 
@@ -1320,8 +1868,9 @@ paste_p <- function(nr, env = parent.frame()) {
   ind <- env$.index
   gk <- env$.isgk
 
-  if (length(nr) > 1L)
+  if (length(nr) > 1L) {
     nr <- paste0(min(nr), ":", max(nr))
+  }
   paste0("p", if (gk) "gk", "_", vn, "[", ind, ", ", nr, if (gk) ", k", "]")
 }
 
@@ -1332,5 +1881,3 @@ paste_ps <- function(nr, env = parent.frame()) {
 
   paste0("psum", if (gk) "gk", "_", vn, "[", ind, ", ", nr, if (gk) ", k", "]")
 }
-
-
