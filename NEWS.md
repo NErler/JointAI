@@ -27,6 +27,10 @@
   R), also when `seed` was given. The same applied to the generation of
   initial values when `inits` is a function. If there was no `.Random.seed`
   before the call, none is left behind afterwards.
+* Binomial mixed models with `family = binomial(link = "cloglog")` (and
+  covariate models `"glmm_binomial_cloglog"`) used a log link instead of the
+  complementary log-log link. Results of such models fitted with earlier
+  versions differ.
 
 # JointAI 1.1.0
 
