@@ -484,6 +484,39 @@ compare_data_structure <- function(data1, data2) {
 }
 
 
+#' Convert new data as the data used to fit a model
+#'
+#' Used for `newdata` in `predict()`. Only the variables in `allvars` that
+#' are in `data` are converted: `NaN` becomes `NA`, and variables that are
+#' factors in `ref_data` (the data of the fitted model) become factors with
+#' the same levels, also when they are given as numeric, character or
+#' logical, or as a factor with only some of the levels. Other variables are
+#' not changed (in particular, a continuous variable with two distinct values
+#' stays continuous). Values that are not levels in `ref_data` become `NA`.
+#'
+#' @param data a `data.frame` (the new data)
+#' @param allvars character vector; names of the variables used in the model
+#' @param ref_data a `data.frame`; the data used to fit the model
+#'
+#' @returns the converted `data`
+#' @noRd
+#'
+convert_newdata <- function(data, allvars, ref_data) {
+  for (k in intersect(allvars, names(data))) {
+    data[[k]] <- replace_nan_with_na(data[[k]])
+
+    if (is.factor(ref_data[[k]])) {
+      data[[k]] <- factor(
+        clean_names(as.character(data[[k]])),
+        levels = levels(ref_data[[k]]),
+        ordered = is.ordered(ref_data[[k]])
+      )
+    }
+  }
+  data
+}
+
+
 #' Convert labelled variables
 #'
 #' Variables of class `"labelled"` (Hmisc, haven < 2.0.0) or `"haven_labelled"`
