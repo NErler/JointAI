@@ -62,6 +62,7 @@
 <li>Model fitting failed with “row names contain missing values” when variables had a “label” attribute (e.g., data imported from SPSS) or other attributes that are lost when the data are subset (<a href="https://github.com/nerler/JointAI/issues/35" class="external-link">#35</a>).</li>
 <li>
 <code><a href="../reference/get_MIdat.html">get_MIdat()</a></code> failed with “object ‘.Random.seed’ not found” in an R session in which no random numbers had been drawn yet (e.g., a new session in plain R), also when <code>seed</code> was given. The same applied to the generation of initial values when <code>inits</code> is a function. If there was no <code>.Random.seed</code> before the call, none is left behind afterwards.</li>
+<li>Binomial mixed models with <code>family = binomial(link = "cloglog")</code> (and covariate models <code>"glmm_binomial_cloglog"</code>) used a log link instead of the complementary log-log link. Results of such models fitted with earlier versions differ.</li>
 </ul></div>
 </div>
     <div class="section level2">
