@@ -31,6 +31,11 @@
   covariate models `"glmm_binomial_cloglog"`) used a log link instead of the
   complementary log-log link. Results of such models fitted with earlier
   versions differ.
+* Arguments that the `*_imp()` functions pass on to the underlying model
+  function (e.g., `trunc`, `custom`) failed with "object not found" when
+  their value was a local variable of a function from which `*_imp()` was
+  called, or with "the ... list contains fewer than ... elements" when
+  `*_imp()` was called through a function that passes on its `...`.
 
 # JointAI 1.1.0
 
