@@ -79,13 +79,22 @@
 #'                 \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})}
 #'            \item{`hyperpars`}{list of hyper-parameters, as obtained by
 #'                 \code{\link{default_hyperpars}()}}
-#'            \item{`scale_vars`}{named vector of (continuous) variables that
-#'                 will be centred and scaled (such that mean = 0 and sd = 1)
-#'                 when they enter a linear predictor to improve
-#'                 convergence of the MCMC sampling. Default is that all
-#'                 numeric variables and integer variables with >20 different
-#'                 values will be scaled.
-#'                 If set to \code{FALSE} no scaling will be done.}
+#'            \item{`scale_vars`}{character vector with the names of the
+#'                 variables that will be centred and scaled (such that
+#'                 mean = 0 and sd = 1) when they enter a linear predictor to
+#'                 improve convergence of the MCMC sampling. By default, all
+#'                 numeric variables (including integer variables, e.g.,
+#'                 counts) are scaled, as well as columns created by
+#'                 functions of numeric variables (e.g., \code{ns()},
+#'                 \code{log()}) and interaction terms that involve a numeric
+#'                 variable. Factors are not scaled, and neither are numeric
+#'                 variables with only two distinct values, because these are
+#'                 converted to factors. If \code{scale_vars} is specified,
+#'                 only those of these that are named in it are scaled (for
+#'                 columns created by functions or interactions, the column
+#'                 name in the model matrix, e.g., \code{"C1:C2"}).
+#'                 \code{TRUE} is the same as the default; if set to
+#'                 \code{FALSE} no scaling will be done.}
 #'            \item{`custom`}{named list of JAGS model chunks (character strings)
 #'                 that replace the model for the given variable.}
 #'            \item{`append_data_list`}{list that will be appended to the list
