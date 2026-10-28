@@ -36,6 +36,14 @@
   their value was a local variable of a function from which `*_imp()` was
   called, or with "the ... list contains fewer than ... elements" when
   `*_imp()` was called through a function that passes on its `...`.
+* `predict()` with `newdata` failed when `newdata` did not contain the
+  outcome variable(s) ("replacement has 0 rows"), when a continuous covariate
+  had only two distinct values in `newdata` (it was converted to a factor),
+  and when a factor was given with only some of its levels, or as numeric or
+  character. `newdata` is now converted according to the data used to fit
+  the model. Proportional hazards models need the event time in `newdata`
+  (also for `type = "lp"`, the log hazard at that time); there is now an
+  informative error if it is missing.
 * `scale_vars` given as a character vector of variable names failed with
   "invalid argument type", and `scale_vars = TRUE` switched scaling off. Now
   only the named variables are scaled, and `TRUE` is the same as the default.

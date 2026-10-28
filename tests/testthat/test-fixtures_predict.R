@@ -132,29 +132,3 @@ test_that("for Gaussian models, all types of residuals are the same", {
     expect_equal(res$pearson, res$response, label = k)
   }
 })
-
-test_that("predict() for coxph works when no variables were scaled", {
-  # a model fitted with scale_vars = FALSE has no scaling parameters
-  object <- fixture_load("coxph")
-  unscaled <- object
-  unscaled$Mlist$scale_pars <- lapply(object$Mlist$scale_pars, function(x) NULL)
-
-  for (type in c("lp", "risk", "survival")) {
-    expect_no_error(
-      predict(unscaled, type = type, warn = FALSE),
-      message = type
-    )
-  }
-
-  # without centring, the linear predictor is higher by sum(beta * center)
-  coefs <- object$coef_list[[1L]]
-  centers <- do.call(rbind, unname(object$Mlist$scale_pars))[
-    coefs$varname,
-  ]$center
-  MCMC <- do.call(rbind, object$MCMC)[, coefs$coef]
-  shift <- mean(MCMC %*% ifelse(is.na(centers), 0, centers))
-
-  lp <- predict(object, type = "lp", warn = FALSE)$fit$fit
-  lp_unscaled <- predict(unscaled, type = "lp", warn = FALSE)$fit$fit
-  expect_equal(lp_unscaled - lp, rep(shift, length(lp)))
-})

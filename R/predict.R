@@ -243,14 +243,22 @@ predict.JointAI <- function(
       ref_data = object$data
     )
 
-    newdata <- convert_variables(
+    # convert the variables as in the data used to fit the model
+    newdata <- convert_newdata(
       data = newdata,
       allvars = allvars,
-      mess = FALSE
-      #data_orig = object$data
+      ref_data = object$data
     )
-    #TODO: new version of convert_variables does no longer have "data_orig" argument
-    #Maybe this check should be done by the new "compare_data_structure()".
+
+    # outcomes are not needed for prediction (except the event time of
+    # proportional hazards models, checked in predict_coxph()); missing ones
+    # are set to NA, because some model frames use the whole formula
+    outvars <- unique(unlist(lapply(object$fixed, function(f) {
+      all.vars(f[[2L]])
+    })))
+    for (k in setdiff(outvars, names(newdata))) {
+      newdata[[k]] <- NA
+    }
   }
 
   MCMC <- prep_MCMC(
@@ -607,6 +615,16 @@ predict_coxph <- function(
   coefs <- coef_list[[varname]]
 
   survinfo <- get_survinfo(info_list, Mlist)[varname]
+
+  if (all(is.na(newdata[[survinfo[[1L]]$time_name]]))) {
+    errormsg(
+      "Prediction for a proportional hazards model needs the event time
+      (%s) in %s, also for %s (the log hazard at that time).",
+      dQuote(survinfo[[1L]]$time_name),
+      dQuote("newdata"),
+      dQuote('type = "lp"')
+    )
+  }
 
   resp_mat <- info_list[[varname]]$resp_mat[2L]
   surv_lvl <- survinfo[[1L]]$surv_lvl
