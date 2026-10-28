@@ -376,7 +376,18 @@ these variance-covariance matrices. Implemented structures are \code{full},
 \code{blockdiag} and \code{indep} (all off-diagonal elements are zero).
 
 If \code{rd_vcov} is set to one of these options, the structure is assumed for
-all random effects variance-covariance matrices.
+the random effects of all outcomes that are specified in the model
+formula(s).
+
+The structure only applies to these outcomes, i.e., the response variables
+in \code{formula} or \code{fixed}, or in a list of formulas for a multivariate model.
+The models for incomplete time-varying covariates that \strong{JointAI} adds
+automatically always have their own (block-diagonal) variance-covariance
+matrix: their random effects are not correlated with those of the
+outcome(s), whatever is specified in \code{rd_vcov}. In a model with a single
+outcome, \code{full} and \code{blockdiag} are therefore the same, and \code{indep} means
+that the random effects of this outcome are independent of each other.
+
 Alternatively, it is possible to specify a named list of vectors, where
 the names are the structures and the vectors contain the names of the
 response variables which are included in this structure.

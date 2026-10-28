@@ -187,7 +187,18 @@
 #' `blockdiag` and `indep` (all off-diagonal elements are zero).
 #'
 #' If `rd_vcov` is set to one of these options, the structure is assumed for
-#' all random effects variance-covariance matrices.
+#' the random effects of all outcomes that are specified in the model
+#' formula(s).
+#'
+#' The structure only applies to these outcomes, i.e., the response variables
+#' in `formula` or `fixed`, or in a list of formulas for a multivariate model.
+#' The models for incomplete time-varying covariates that **JointAI** adds
+#' automatically always have their own (block-diagonal) variance-covariance
+#' matrix: their random effects are not correlated with those of the
+#' outcome(s), whatever is specified in `rd_vcov`. In a model with a single
+#' outcome, `full` and `blockdiag` are therefore the same, and `indep` means
+#' that the random effects of this outcome are independent of each other.
+#'
 #' Alternatively, it is possible to specify a named list of vectors, where
 #' the names are the structures and the vectors contain the names of the
 #' response variables which are included in this structure.
