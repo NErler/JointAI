@@ -71,8 +71,18 @@ prep_arglist <- function(
 merge_call_args <- function(formals, call, sframe) {
   arglist <- mget(names(formals), sframe)
   call_list <- as.list(call)[-1L]
+  extra <- call_list[!names(call_list) %in% names(arglist)]
 
-  arglist <- c(arglist, call_list[!names(call_list) %in% names(arglist)])
+  # Arguments passed via `...` are evaluated where they were specified. Their
+  # expressions in `call` may refer to local variables of a calling function
+  # or to `..1`, `..2`, ... of a function that passes on its own `...`.
+  if (exists("...", envir = sframe, inherits = FALSE)) {
+    dots <- eval(quote(list(...)), sframe)
+    dotnames <- intersect(names(extra), names(dots))
+    extra[dotnames] <- dots[dotnames]
+  }
+
+  arglist <- c(arglist, extra)
 
   arglist$thecall <- call
 
