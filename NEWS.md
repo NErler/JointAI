@@ -36,6 +36,9 @@
   their value was a local variable of a function from which `*_imp()` was
   called, or with "the ... list contains fewer than ... elements" when
   `*_imp()` was called through a function that passes on its `...`.
+* `predict()` for proportional hazards models (`coxph_imp()`) failed with
+  "non-conformable arguments" when no variables were scaled
+  (`scale_vars = FALSE`).
 
 # JointAI 1.1.0
 
