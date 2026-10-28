@@ -483,7 +483,7 @@ get_link <- function(model) {
       glmm_binomial_logit = "logit",
       glmm_binomial_probit = "probit",
       glmm_binomial_log = "log",
-      glmm_binomial_cloglog = "log",
+      glmm_binomial_cloglog = "cloglog",
       glmm_logit = "logit",
       glmm_probit = "probit",
       glmm_gamma_inverse = "inverse",
