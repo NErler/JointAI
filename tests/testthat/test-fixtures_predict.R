@@ -132,3 +132,76 @@ test_that("for Gaussian models, all types of residuals are the same", {
     expect_equal(res$pearson, res$response, label = k)
   }
 })
+
+test_that("predict() with newdata converts it as the data used for fitting", {
+  object <- fixture_load("glm_binomial")
+  nd <- object$data[c(1, 2, 5, 9), ]
+  pred <- function(newdata) {
+    predict(object, newdata = newdata, type = "link", warn = FALSE)$fit$fit
+  }
+  expected <- pred(nd)
+
+  # the outcome is not needed
+  expect_equal(pred(nd[, setdiff(names(nd), "B1")]), expected)
+
+  # a continuous covariate with two distinct values stays continuous
+  nd2 <- nd
+  nd2$C1 <- rep(c(1.40, 1.45), 2)
+  expect_equal(pred(nd2), pred(rbind(nd2, transform(nd2[1, ], C1 = 1.5)))[1:4])
+
+  # factors: only some levels, given as numeric or as character
+  nd_fct <- nd
+  nd_fct$B2 <- factor(as.character(nd$B2))
+  nd_fct$M2 <- factor(as.character(nd$M2))
+  expect_equal(pred(nd_fct), expected)
+
+  nd_chr <- nd
+  nd_chr$B2 <- as.numeric(as.character(nd$B2))
+  nd_chr$M2 <- as.character(nd$M2)
+  expect_equal(pred(nd_chr), expected)
+})
+
+test_that("predict() for a survival model with newdata without the outcome", {
+  object <- fixture_load("survreg")
+  nd <- object$data[1:3, ]
+  expected <- predict(object, newdata = nd, type = "lp", warn = FALSE)$fit$fit
+  expect_equal(
+    predict(
+      object,
+      newdata = nd[, c("age", "sex", "copper")],
+      type = "lp",
+      warn = FALSE
+    )$fit$fit,
+    expected
+  )
+})
+
+test_that("predict() for coxph with newdata: the event time is needed", {
+  object <- fixture_load("coxph")
+  nd <- object$data[1:4, ]
+  for (type in c("lp", "risk", "survival")) {
+    expected <- predict(object, newdata = nd, type = type, warn = FALSE)$fit
+    # the event indicator is not needed
+    expect_equal(
+      predict(
+        object,
+        newdata = nd[, setdiff(names(nd), "status")],
+        type = type,
+        warn = FALSE
+      )$fit,
+      expected,
+      label = type
+    )
+    # the event time is
+    expect_error(
+      predict(
+        object,
+        newdata = nd[, setdiff(names(nd), "futime")],
+        type = type,
+        warn = FALSE
+      ),
+      "futime",
+      label = type
+    )
+  }
+})
