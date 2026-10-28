@@ -53,47 +53,6 @@ check_predprob <- function(mod) {
 }
 
 
-compare_modeltype <- function(mod) {
-  call <- deparse(mod$call, width.cutoff = 500)
-
-  type <- gsub("_[[:print:]]+", "", call)
-  fam <- gsub(
-    "family = |,",
-    "",
-    regmatches(call, regexpr("family = [[:alpha:]]+\\([[:print:]]*\\),", call))
-  )
-  family = eval(parse(text = fam))
-
-  m <- mod$models[names(mod$fixed)[1]]
-
-  c(
-    list(
-      # compare analysis model type
-      analysis_model_type = all.equal(as.vector(mod$analysis_type), type),
-
-      # compare family
-      family = if (type != "lm") {
-        all.equal(attr(mod$analysis_type, "family"), family)
-      }
-    ),
-
-    # compare models element
-    if (type %in% c("glm", "glmm")) {
-      list(
-        models_type = all.equal(get_modeltype(m), type),
-        models_family = all.equal(get_family(m), family$family),
-        models_link = all.equal(get_link(m), family$link)
-      )
-    } else {
-      list(
-        models_type = !inherits(get_modeltype(m), "try-error"),
-        models_family = !inherits(get_family(m), "try-error"),
-        models_link = !inherits(get_link(m), "try-error")
-      )
-    }
-  )
-}
-
 print_output <- function(
   x,
   dir = 'testout',
@@ -101,7 +60,7 @@ print_output <- function(
   extra = NULL,
   type = "output"
 ) {
-  call = as.list(match.call())$x
+  call <- as.list(match.call())$x
   input <- make.names(
     paste0(deparse(call, width.cutoff = 500), collapse = "")
   )

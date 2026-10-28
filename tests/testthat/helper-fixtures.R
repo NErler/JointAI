@@ -178,11 +178,6 @@ fixture_results <- function() {
     # m = 2: the fixtures have too few iterations for the default m = 10. For
     # models without monitored imputed values, the error message is stored.
     get_MIdat = function(object) {
-      # get_MIdat() fails when there is no .Random.seed yet, even with `seed`
-      # (recorded in dev/STATUS.md)
-      if (!exists(".Random.seed", envir = globalenv())) {
-        set.seed(1)
-      }
       tryCatch(
         get_MIdat(object, m = 2, seed = 2020),
         error = function(e) paste("Error:", conditionMessage(e))

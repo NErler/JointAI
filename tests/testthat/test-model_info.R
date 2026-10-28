@@ -96,6 +96,122 @@ test_that("model type, family and link of all model types", {
 # helper-golden.R; the call is evaluated with the golden data as variables).
 setup_case <- function(case) golden_fit(case, golden_data())
 
+test_that("the *_imp() function and family give the model type of the outcome", {
+  # call, analysis type, and model type of the outcome
+  cases <- list(
+    list(quote(lm_imp(y ~ C1, data = wideDF)), "lm", "glm_gaussian_identity"),
+    list(
+      quote(glm_imp(y ~ C1, family = gaussian(link = "log"), data = wideDF)),
+      "glm",
+      "glm_gaussian_log"
+    ),
+    list(
+      quote(glm_imp(B1 ~ C1, family = binomial(), data = wideDF)),
+      "glm",
+      "glm_binomial_logit"
+    ),
+    list(
+      quote(glm_imp(B1 ~ C1, family = binomial("probit"), data = wideDF)),
+      "glm",
+      "glm_binomial_probit"
+    ),
+    list(
+      quote(glm_imp(B1 ~ C1, family = binomial("cloglog"), data = wideDF)),
+      "glm",
+      "glm_binomial_cloglog"
+    ),
+    list(
+      quote(glm_imp(L1 ~ C1, family = Gamma(), data = wideDF)),
+      "glm",
+      "glm_gamma_inverse"
+    ),
+    list(
+      quote(glm_imp(P1 ~ C1, family = poisson("identity"), data = wideDF)),
+      "glm",
+      "glm_poisson_identity"
+    ),
+    list(quote(lognorm_imp(L1 ~ C1, data = wideDF)), "lognorm", "lognorm"),
+    list(quote(betareg_imp(Be2 ~ C1, data = wideDF)), "beta", "beta"),
+    list(quote(clm_imp(O1 ~ C1, data = wideDF)), "clm", "clm"),
+    list(quote(mlogit_imp(M1 ~ C1, data = wideDF)), "mlogit", "mlogit"),
+    list(
+      quote(lme_imp(y ~ C1 + (1 | id), data = longDF)),
+      "lme",
+      "glmm_gaussian_identity"
+    ),
+    list(
+      quote(glme_imp(
+        b1 ~ C1 + (1 | id),
+        family = binomial("probit"),
+        data = longDF
+      )),
+      "glme",
+      "glmm_binomial_probit"
+    ),
+    list(
+      quote(glme_imp(
+        b1 ~ C1 + (1 | id),
+        family = binomial("cloglog"),
+        data = longDF
+      )),
+      "glme",
+      "glmm_binomial_cloglog"
+    ),
+    list(
+      quote(glme_imp(L1 ~ C1 + (1 | id), family = Gamma("log"), data = longDF)),
+      "glme",
+      "glmm_gamma_log"
+    ),
+    list(
+      quote(glme_imp(p1 ~ C1 + (1 | id), family = poisson(), data = longDF)),
+      "glme",
+      "glmm_poisson_log"
+    ),
+    list(
+      quote(lognormmm_imp(L1 ~ C1 + (1 | id), data = longDF)),
+      "glmm_lognorm",
+      "glmm_lognorm"
+    ),
+    list(
+      quote(betamm_imp(Be2 ~ C1 + (1 | id), data = longDF)),
+      "glmm_beta",
+      "glmm_beta"
+    ),
+    list(quote(clmm_imp(o1 ~ C1 + (1 | id), data = longDF)), "clmm", "clmm"),
+    list(
+      quote(mlogitmm_imp(m1 ~ C1 + (1 | id), data = longDF)),
+      "mlogitmm",
+      "mlogitmm"
+    ),
+    list(
+      quote(survreg_imp(
+        Surv(futime, status != "censored") ~ age,
+        data = PBC2_small
+      )),
+      "survreg",
+      "survreg"
+    ),
+    list(
+      quote(coxph_imp(
+        Surv(futime, status != "censored") ~ age,
+        data = PBC2_small
+      )),
+      "coxph",
+      "coxph"
+    )
+  )
+  for (case in cases) {
+    fit <- setup_case(case[[1L]])
+    lab <- deparse1(case[[1L]])
+    expect_identical(as.vector(fit$analysis_type), case[[2L]], label = lab)
+    expect_identical(
+      unname(fit$models[names(fit$fixed)[1L]]),
+      case[[3L]],
+      label = lab
+    )
+  }
+})
+
 # cases not covered by the golden master
 extra_cases <- list(
   survreg = quote(survreg_imp(

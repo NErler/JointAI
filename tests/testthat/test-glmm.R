@@ -23,7 +23,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     sink(tempfile())
     on.exit(sink())
     invisible(force(suppressWarnings({
-      models = list(
+      models <- list(
         # no covariates
         m0a1 = lme_imp(
           y ~ 1 + (1 | id),
@@ -724,12 +724,6 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   test_that("models run", {
     for (k in seq_along(models)) {
       expect_s3_class(models[[k]], "JointAI")
-    }
-  })
-
-  test_that("models have the correct model and analysis model type", {
-    for (i in seq_along(models)) {
-      expect_false(any(sapply(compare_modeltype(models), isFALSE)))
     }
   })
 
