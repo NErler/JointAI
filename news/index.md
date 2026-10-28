@@ -14,6 +14,13 @@
   variables in `newdata` of
   [`predict()`](https://rdrr.io/r/stats/predict.html) are converted in
   the same way, using the categories of the fitted model.
+- Clearer error messages:
+  [`plot_imp_distr()`](https://nerler.github.io/JointAI/reference/plot_imp_distr.md)
+  applied to a fitted model now points to
+  [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.md);
+  [`residuals()`](https://rdrr.io/r/stats/residuals.html) for JM and
+  mlogit models says that residuals (not prediction) are not yet
+  implemented; typo in the message for coxph models fixed.
 
 ### Bug fixes
 
