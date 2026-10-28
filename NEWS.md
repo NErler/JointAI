@@ -36,6 +36,9 @@
   their value was a local variable of a function from which `*_imp()` was
   called, or with "the ... list contains fewer than ... elements" when
   `*_imp()` was called through a function that passes on its `...`.
+* `scale_vars` given as a character vector of variable names failed with
+  "invalid argument type", and `scale_vars = TRUE` switched scaling off. Now
+  only the named variables are scaled, and `TRUE` is the same as the default.
 * `predict()` for proportional hazards models (`coxph_imp()`) failed with
   "non-conformable arguments" when no variables were scaled
   (`scale_vars = FALSE`).
