@@ -33676,7 +33676,7 @@
          # Binomial mixed effects model for b1 -------------------------------------------
         for (i in 1:329) {
           M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_b1[i])))
-          log(mu_b1[i]) <- b_b1_id[group_id[i], 1]
+          cloglog(mu_b1[i]) <- b_b1_id[group_id[i], 1]
         }
       
         for (ii in 1:100) {
