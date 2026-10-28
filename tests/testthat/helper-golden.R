@@ -231,7 +231,71 @@ golden_cases <- function() {
       ),
       timevar = "day",
       data = PBC_small
-    )) # survival.R, on a subset of PBC
+    )), # survival.R, on a subset of PBC
+
+    # added 2026-10-28: model types, families and arguments not covered above
+    # (created with make_golden.R new; the files above were not re-created)
+    lognorm_covariates = quote(lognorm_imp(
+      L1 ~ C1 + C2 + B2 + M2,
+      data = wideDF
+    )),
+    glm_poisson_covariates = quote(glm_imp(
+      P1 ~ C1 + C2 + B2,
+      family = poisson(),
+      data = wideDF
+    )),
+    glm_probit = quote(glm_imp(
+      B1 ~ C1 + L1mis,
+      family = binomial("probit"),
+      data = wideDF
+    )),
+    clm_rev_shrinkage = quote(clm_imp(
+      O1 ~ C1 + C2 + B2,
+      rev = "O1",
+      shrinkage = c(O1 = "ridge"),
+      data = wideDF
+    )),
+    lognormmm_random_slope = quote(lognormmm_imp(
+      L1 ~ C1 + c2 + time + (time | id),
+      data = longDF
+    )),
+    betamm_covariates = quote(betamm_imp(
+      Be2 ~ C1 + c1 + b2 + time + (1 | id),
+      data = longDF
+    )),
+    glme_probit = quote(glme_imp(
+      b1 ~ C1 + c2 + time + (1 | id),
+      family = binomial("probit"),
+      data = longDF
+    )),
+    glme_cloglog = quote(glme_imp(
+      b1 ~ C1 + c1 + (1 | id),
+      family = binomial("cloglog"),
+      data = longDF
+    )),
+    lme_two_outcomes_full = quote(lme_imp(
+      list(y ~ C1 + c2 + time + (time | id), c1 ~ C1 + time + (1 | id)),
+      rd_vcov = "full",
+      data = longDF
+    )),
+    lme_indep = quote(lme_imp(
+      y ~ C1 + c2 + time + (time | id),
+      rd_vcov = "indep",
+      data = longDF
+    )),
+    survreg_covariates = quote(survreg_imp(
+      Surv(futime, status != "censored") ~ age + sex + copper + trig,
+      data = PBC2_small
+    )),
+    jm_assoc_type = quote(JM_imp(
+      list(
+        Surv(futime, status != "censored") ~ age + chol + (1 | id),
+        chol ~ day + age + (day | id)
+      ),
+      timevar = "day",
+      assoc_type = c(chol = "obs.value"),
+      data = PBC_small
+    ))
   )
 }
 
