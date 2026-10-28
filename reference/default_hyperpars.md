@@ -142,6 +142,5 @@ default_hyperpars()
 hyp <- default_hyperpars()
 hyp$norm['rate_tau_norm'] <- 1e-3
 mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, hyperpars = hyp, mess = FALSE)
-#> Error in lm_imp(y ~ C1 + C2 + B1, data = wideDF, hyperpars = hyp, mess = FALSE): object 'hyp' not found
 
 ```

@@ -63,6 +63,7 @@
 <li>
 <code><a href="../reference/get_MIdat.html">get_MIdat()</a></code> failed with “object ‘.Random.seed’ not found” in an R session in which no random numbers had been drawn yet (e.g., a new session in plain R), also when <code>seed</code> was given. The same applied to the generation of initial values when <code>inits</code> is a function. If there was no <code>.Random.seed</code> before the call, none is left behind afterwards.</li>
 <li>Binomial mixed models with <code>family = binomial(link = "cloglog")</code> (and covariate models <code>"glmm_binomial_cloglog"</code>) used a log link instead of the complementary log-log link. Results of such models fitted with earlier versions differ.</li>
+<li>Arguments that the <code>*_imp()</code> functions pass on to the underlying model function (e.g., <code>trunc</code>, <code>custom</code>) failed with “object not found” when their value was a local variable of a function from which <code>*_imp()</code> was called, or with “the … list contains fewer than … elements” when <code>*_imp()</code> was called through a function that passes on its <code>...</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
