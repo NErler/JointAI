@@ -358,61 +358,6 @@ factor_to_integer <- function(x) {
 }
 
 
-# used in extract_outcome_data() (2020-06-10)
-split_outcome <- function(lhs, data) {
-  if (missing(data)) {
-    stop("No data provided")
-  }
-
-  if (grepl("^cbind\\(", lhs)) {
-    lhs2 <- gsub("\\)$", "", gsub("^cbind\\(", "", lhs))
-
-    splitpos <- c(gregexpr(",", text = lhs2)[[1L]], nchar(lhs2) + 1L)
-
-    if (splitpos[1L] > 0L) {
-      start <- 1L
-      end <- splitpos[1L] - 1L
-      i <- 1L
-      outlist <- list()
-
-      while (start <= splitpos[length(splitpos)]) {
-        fct <- substr(lhs2, start, end)
-        fct <- gsub(" $", "", gsub("^ ", "", fct))
-        var <- try(eval(parse(text = fct), envir = data), silent = TRUE)
-
-        if (!inherits(var, "try-error")) {
-          var <- data.frame(var)
-          names(var) <- if (ncol(var) > 1L) {
-            paste0(fct, seq_len(ncol(var)))
-          } else {
-            fct
-          }
-          outlist <- c(outlist, var)
-          start <- splitpos[i] + 1L
-          end <- splitpos[i + 1L] -
-            switch(
-              as.character(splitpos[i + 1L] == nchar(lhs2)),
-              "TRUE" = 0L,
-              "FALSE" = 1L
-            )
-          i <- i + 1L
-        } else {
-          end <- splitpos[i + 1L] - 1L
-          i <- i + 1L
-        }
-      }
-      outdat <- as.data.frame(outlist)
-      names(outdat) <- names(outlist)
-    }
-  } else {
-    outdat <- as.data.frame(eval(parse(text = lhs), envir = data))
-    names(outdat) <- lhs
-  }
-
-  outdat
-}
-
-
 # * prep outcome data ----------------------------------------------------------
 # used in divide_matrices (2020-06-09)
 outcomes_to_mat <- function(outcomes) {
