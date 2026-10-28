@@ -11,13 +11,15 @@ get_scale_pars <- function(
   # create a list of matrices containing the scaling parameters corresponding
   # to each of the design matrices
 
-  if (is.null(mat) | (!is.null(scale_vars) && !scale_vars)) {
+  # scale_vars: NULL or TRUE (all eligible columns), FALSE (none), or the
+  # names of the columns to be scaled
+  if (is.null(mat) || isFALSE(scale_vars)) {
     return(NULL)
   }
 
   vars <- find_scalevars(mat, refs, fcts_all, interactions, data)
 
-  if (!is.null(scale_vars)) {
+  if (is.character(scale_vars)) {
     vars <- intersect(vars, scale_vars)
   }
 
