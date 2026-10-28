@@ -492,8 +492,17 @@ The argument <code>rd_vcov</code> allows the user specify different assumptions 
 these variance-covariance matrices. Implemented structures are <code>full</code>,
 <code>blockdiag</code> and <code>indep</code> (all off-diagonal elements are zero).</p>
 <p>If <code>rd_vcov</code> is set to one of these options, the structure is assumed for
-all random effects variance-covariance matrices.
-Alternatively, it is possible to specify a named list of vectors, where
+the random effects of all outcomes that are specified in the model
+formula(s).</p>
+<p>The structure only applies to these outcomes, i.e., the response variables
+in <code>formula</code> or <code>fixed</code>, or in a list of formulas for a multivariate model.
+The models for incomplete time-varying covariates that <strong>JointAI</strong> adds
+automatically always have their own (block-diagonal) variance-covariance
+matrix: their random effects are not correlated with those of the
+outcome(s), whatever is specified in <code>rd_vcov</code>. In a model with a single
+outcome, <code>full</code> and <code>blockdiag</code> are therefore the same, and <code>indep</code> means
+that the random effects of this outcome are independent of each other.</p>
+<p>Alternatively, it is possible to specify a named list of vectors, where
 the names are the structures and the vectors contain the names of the
 response variables which are included in this structure.</p>
 <p>For example, for a multivariate mixed model with five outcomes
