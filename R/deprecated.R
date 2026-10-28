@@ -321,47 +321,6 @@ extract_outcome <- function(fixed) {
 }
 
 
-split_formula <- function(formula) {
-  .Deprecated("split_formula_list ", package = "JointAI")
-
-  # get all terms from the formula and identify which contain the vertical bar
-  # (= random effects)
-  term_labels <- attr(terms(formula), "term.labels")
-  which_ranef <- grepl("|", term_labels, fixed = TRUE)
-
-  # build fixed effects formula by combining all non-random effects terms with
-  # a "+", and combine with the LHS
-  rhs <- paste(
-    c(
-      term_labels[!which_ranef],
-      if (attr(terms(formula), "intercept") == 0L) "0"
-    ),
-    collapse = " + "
-  )
-
-  fixed <- paste0(
-    as.character(formula)[2L],
-    " ~ ",
-    if (rhs == "") {
-      1L
-    } else {
-      rhs
-    }
-  )
-
-  # build random effects formula by pasting all random effects terms in brackets
-  # (to separate different random effects terms from each other), and combine
-  # them with "+"
-  rhs2 <- paste0("(", term_labels[which_ranef], ")", collapse = " + ")
-
-  # if there are random effect terms at all, combine with "~" and convert to a
-  # formula object
-  random <- if (rhs2 != "()") as.formula(paste0(" ~ ", rhs2))
-
-  list(fixed = as.formula(fixed), random = random)
-}
-
-
 melt_data.frame <- function(
   data,
   id.vars = NULL,
