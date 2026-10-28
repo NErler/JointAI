@@ -187,7 +187,18 @@
 #' `blockdiag` and `indep` (all off-diagonal elements are zero).
 #'
 #' If `rd_vcov` is set to one of these options, the structure is assumed for
-#' all random effects variance-covariance matrices.
+#' the random effects of all outcomes that are specified in the model
+#' formula(s).
+#'
+#' The structure only applies to these outcomes, i.e., the response variables
+#' in `formula` or `fixed`, or in a list of formulas for a multivariate model.
+#' The models for incomplete time-varying covariates that **JointAI** adds
+#' automatically always have their own (block-diagonal) variance-covariance
+#' matrix: their random effects are not correlated with those of the
+#' outcome(s), whatever is specified in `rd_vcov`. In a model with a single
+#' outcome, `full` and `blockdiag` are therefore the same, and `indep` means
+#' that the random effects of this outcome are independent of each other.
+#'
 #' Alternatively, it is possible to specify a named list of vectors, where
 #' the names are the structures and the vectors contain the names of the
 #' response variables which are included in this structure.
@@ -700,25 +711,48 @@
 #'
 NULL
 
-model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
-                      family = NULL, df_basehaz = NULL,
-                      rd_vcov = "blockdiag",
-                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                      timevar = NULL, refcats = NULL,
-                      models = NULL, no_model = NULL, trunc = NULL,
-                      shrinkage = FALSE, custom = NULL,
-                      nonprop = NULL, rev = NULL,
-                      ppc = TRUE, seed = NULL, inits = NULL,
-                      scale_vars = NULL, hyperpars = NULL,
-                      modelname = NULL, modeldir = NULL,
-                      keep_model = FALSE, overwrite = NULL,
-                      quiet = TRUE, progress.bar = "text",
-                      warn = TRUE, mess = TRUE,
-                      keep_scaled_mcmc = FALSE,
-                      analysis_type, assoc_type = NULL,
-                      append_data_list = NULL, ...) {
-
+model_imp <- function(
+  formula = NULL,
+  fixed = NULL,
+  data,
+  random = NULL,
+  family = NULL,
+  df_basehaz = NULL,
+  rd_vcov = "blockdiag",
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  timevar = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  trunc = NULL,
+  shrinkage = FALSE,
+  custom = NULL,
+  nonprop = NULL,
+  rev = NULL,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  scale_vars = NULL,
+  hyperpars = NULL,
+  modelname = NULL,
+  modeldir = NULL,
+  keep_model = FALSE,
+  overwrite = NULL,
+  quiet = TRUE,
+  progress.bar = "text",
+  warn = TRUE,
+  mess = TRUE,
+  keep_scaled_mcmc = FALSE,
+  analysis_type,
+  assoc_type = NULL,
+  append_data_list = NULL,
+  ...
+) {
   modimpcall <- as.list(match.call())[-1L]
   start_time <- Sys.time()
 
@@ -729,143 +763,207 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     random <- split_formula_list(formula)$random
   }
 
-
   # return an error if the deprecated arguments meth, n.cores or parallel are
   # provided
   args <- as.list(match.call())
 
-  if (!is.null(args$meth))
-    errormsg("The argument %s has been replaced by the argument %s.",
-             dQuote("meth"), dQuote("models"))
-
-  if (!is.null(args$parallel) | !is.null(args$n.cores)) {
-    errormsg("The arguments %s and %s are no longer used. To perform the
-             computation in parallel, specify future::plan().
-             For an example, see ?model_imp.",
-             dQuote("parallel"), dQuote("n.cores"))
+  if (!is.null(args$meth)) {
+    errormsg(
+      "The argument %s has been replaced by the argument %s.",
+      dQuote("meth"),
+      dQuote("models")
+    )
   }
 
+  if (!is.null(args$parallel) | !is.null(args$n.cores)) {
+    errormsg(
+      "The arguments %s and %s are no longer used. To perform the
+             computation in parallel, specify future::plan().
+             For an example, see ?model_imp.",
+      dQuote("parallel"),
+      dQuote("n.cores")
+    )
+  }
 
   # data pre-processing --------------------------------------------------------
   data <- check_data(data, fixed, random, auxvars, timevar, mess, warn)
 
-
   # * divide matrices ----------------------------------------------------------
-  Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
-                           random = random, models = models, auxvars = auxvars,
-                           timevar = timevar, no_model = no_model,
-                           scale_vars = scale_vars, refcats = refcats,
-                           nonprop = nonprop, rev = rev,
-                           warn = warn, mess = mess, ppc = ppc,
-                           shrinkage = shrinkage, df_basehaz = df_basehaz,
-                           rd_vcov = rd_vcov)
+  Mlist <- divide_matrices(
+    data,
+    fixed,
+    analysis_type = analysis_type,
+    random = random,
+    models = models,
+    auxvars = auxvars,
+    timevar = timevar,
+    no_model = no_model,
+    scale_vars = scale_vars,
+    refcats = refcats,
+    nonprop = nonprop,
+    rev = rev,
+    warn = warn,
+    mess = mess,
+    ppc = ppc,
+    shrinkage = shrinkage,
+    df_basehaz = df_basehaz,
+    rd_vcov = rd_vcov
+  )
 
   # * model dimensions ---------------------------------------------------------
-  par_index_main <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in%
-                                                  names(Mlist$fixed)],
-                                  Mlist = Mlist)
-  par_index_other <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in%
-                                                   names(Mlist$fixed)],
-                                   Mlist = Mlist)
+  par_index_main <- get_model_dim(
+    Mlist$lp_cols[
+      names(Mlist$lp_cols) %in%
+        names(Mlist$fixed)
+    ],
+    Mlist = Mlist
+  )
+  par_index_other <- get_model_dim(
+    Mlist$lp_cols[
+      !names(Mlist$lp_cols) %in%
+        names(Mlist$fixed)
+    ],
+    Mlist = Mlist
+  )
 
   # * model info ---------------------------------------------------------------
-  info_list <- get_model_info(Mlist, par_index_main = par_index_main,
-                              par_index_other = par_index_other,
-                              trunc = trunc, assoc_type = assoc_type,
-                              custom = custom)
+  info_list <- get_model_info(
+    Mlist,
+    par_index_main = par_index_main,
+    par_index_other = par_index_other,
+    trunc = trunc,
+    assoc_type = assoc_type,
+    custom = custom
+  )
 
   # * data list ----------------------------------------------------------------
   data_list <- get_data_list(Mlist, info_list, hyperpars, append_data_list)
 
   # write model ----------------------------------------------------------------
-  modelfile <- make_filename(modeldir = modeldir, modelname = modelname,
-                             keep_model = keep_model, overwrite = overwrite,
-                             mess = mess)
+  modelfile <- make_filename(
+    modeldir = modeldir,
+    modelname = modelname,
+    keep_model = keep_model,
+    overwrite = overwrite,
+    mess = mess
+  )
 
-  if (!file.exists(modelfile) || (file.exists(modelfile) &
-                                  attr(modelfile, "overwrite") == TRUE)) {
+  if (
+    !file.exists(modelfile) ||
+      (file.exists(modelfile) &
+        attr(modelfile, "overwrite") == TRUE)
+  ) {
     write_model(info_list = info_list, Mlist = Mlist, modelfile = modelfile)
   }
 
   # initial values -------------------------------------------------------------
-  inits <- get_initial_values(inits = inits, seed = seed, n_chains = n.chains,
-                              warn = warn)
+  inits <- get_initial_values(
+    inits = inits,
+    seed = seed,
+    n_chains = n.chains,
+    warn = warn
+  )
 
   # parameters to monitor ------------------------------------------------------
-  if (any(grepl("^beta\\[", unlist(monitor_params))) &
-      any(!is.na(unlist(Mlist$scale_pars)))) {
+  if (
+    any(grepl("^beta\\[", unlist(monitor_params))) &
+      any(!is.na(unlist(Mlist$scale_pars)))
+  ) {
+    monitor_params <- c(
+      lapply(monitor_params, function(x) {
+        if (any(grepl("^beta[", x, fixed = TRUE))) {
+          x[-grep("^beta[", x, fixed = TRUE)]
+        } else {
+          x
+        }
+      }),
+      betas = TRUE
+    )
 
-    monitor_params <- c(lapply(monitor_params, function(x) {
-      if (any(grepl("^beta[", x, fixed = TRUE))) {
-        x[-grep("^beta[", x, fixed = TRUE)]
-      } else {
-        x
-      }
-    }),
-    betas = TRUE)
-
-    if (mess)
-      msg("Note: %s was set in %s because re-scaling of the effects of
+    if (mess) {
+      msg(
+        "Note: %s was set in %s because re-scaling of the effects of
              the regression coefficients in the main model(s) requires all
              of them to be monitored.",
-          dQuote("betas = TRUE"), dQuote("monitor_params"))
+        dQuote("betas = TRUE"),
+        dQuote("monitor_params")
+      )
+    }
   }
 
-  var_names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
-                                          mess = mess),
-                                     monitor_params))
+  var_names <- do.call(
+    get_params,
+    c(list(Mlist = Mlist, info_list = info_list, mess = mess), monitor_params)
+  )
 
   # run JAGS -----------------------------------------------------------------
   # Message if no MCMC sample will be produced.
   if (n.iter == 0) {
-    if (mess)
+    if (mess) {
       msg("Note: No MCMC sample will be created when n.iter is set to 0.")
+    }
   }
 
-  jags_res <- run_parallel(n_adapt = n.adapt, n_iter = n.iter,
-                           n_chains = n.chains, inits = inits, thin = thin,
-                           data_list = data_list, var_names = var_names,
-                           modelfile = modelfile, quiet = quiet,
-                           progress_bar = progress.bar, mess = mess,
-                           warn = warn)
+  jags_res <- run_parallel(
+    n_adapt = n.adapt,
+    n_iter = n.iter,
+    n_chains = n.chains,
+    inits = inits,
+    thin = thin,
+    data_list = data_list,
+    var_names = var_names,
+    modelfile = modelfile,
+    quiet = quiet,
+    progress_bar = progress.bar,
+    mess = mess,
+    warn = warn
+  )
   adapt <- jags_res$adapt
   mcmc <- jags_res$mcmc
 
-
-  if (n.iter > 0 & !inherits(mcmc, "mcmc.list"))
+  if (n.iter > 0 & !inherits(mcmc, "mcmc.list")) {
     warnmsg("There is no mcmc sample. Something went wrong.")
+  }
 
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc) & !inherits(mcmc, "try-error")) {
     MCMC <- mcmc
 
-    if (any(!vapply(Mlist$scale_pars, is.null, FUN.VALUE = logical(1)),
-            !is.na(unlist(Mlist$scale_pars)))) {
+    if (
+      any(
+        !vapply(Mlist$scale_pars, is.null, FUN.VALUE = logical(1)),
+        !is.na(unlist(Mlist$scale_pars))
+      )
+    ) {
       coefs <- try(get_coef_names(info_list))
 
       for (k in seq_len(length(MCMC))) {
         MCMC[[k]] <- coda::as.mcmc(
-          rescale(MCMC[[k]],
-                  coefs = do.call(rbind, coefs),
-                  scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
-                  info_list = info_list,
-                  data_list = data_list,
-                  groups = Mlist$groups))
+          rescale(
+            MCMC[[k]],
+            coefs = do.call(rbind, coefs),
+            scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
+            info_list = info_list,
+            data_list = data_list,
+            groups = Mlist$groups
+          )
+        )
         attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
       }
     }
   }
 
-
   # prepare output -------------------------------------------------------------
-  mcmc_settings <- list(modelfile = modelfile,
-                        n.chains = n.chains,
-                        n.adapt = n.adapt,
-                        n.iter = n.iter,
-                        variable.names = if (exists("var_names")) var_names,
-                        thin = thin,
-                        inits = inits,
-                        seed = seed)
+  mcmc_settings <- list(
+    modelfile = modelfile,
+    n.chains = n.chains,
+    n.adapt = n.adapt,
+    n.iter = n.iter,
+    variable.names = if (exists("var_names")) var_names,
+    thin = thin,
+    inits = inits,
+    seed = seed
+  )
 
   fmla <- if (is.null(formula) & !is.null(fixed)) {
     combine_formula_lists(fixed, random, warn = warn)
@@ -877,59 +975,76 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   }
 
   object <- structure(
-    list(analysis_type = analysis_type,
-         formula = fmla,
-         data = Mlist$data,
-         models = Mlist$models,
-         fixed = Mlist$fixed,
-         random = Mlist$random,
-         Mlist = Mlist[setdiff(names(Mlist), c("data", "models",
-                                               "fixed", "random",
-                                               "M"))],
-         par_index_main = par_index_main,
-         par_index_other = par_index_other,
-         jagsmodel = structure(readChar(modelfile,
-                                        file.info(modelfile)$size),
-                               class = "modelstring"),
-         mcmc_settings = mcmc_settings,
-         monitor_params = c(monitor_params,
-                            if (!"analysis_main" %in% names(monitor_params))
-                              setNames(TRUE, "analysis_main")),
-         data_list = data_list,
-         hyperpars = if (is.null(hyperpars)) default_hyperpars() else hyperpars,
-         info_list = info_list,
-         coef_list = get_coef_names(info_list),
-         model = if (n.adapt > 0) adapt,
-         sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
-         MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
-         comp_info = list(start_time = start_time,
-                          duration = if (!is.null(jags_res)) {
-                            duration_obj(
-                              list("adapt" = jags_res$time_adapt,
-                                   "sample" = jags_res$time_sample))
-                          },
-                          JointAI_version = packageVersion("JointAI"),
-                          R_version = R.version.string,
-                          parallel = if (!is.null(jags_res)) jags_res$parallel,
-                          workers = if (isTRUE(jags_res$parallel))
-                            jags_res$workers),
-         call = modimpcall$thecall
-    ), class = "JointAI")
+    list(
+      analysis_type = analysis_type,
+      formula = fmla,
+      data = Mlist$data,
+      models = Mlist$models,
+      fixed = Mlist$fixed,
+      random = Mlist$random,
+      Mlist = Mlist[setdiff(
+        names(Mlist),
+        c("data", "models", "fixed", "random", "M")
+      )],
+      par_index_main = par_index_main,
+      par_index_other = par_index_other,
+      jagsmodel = structure(
+        readChar(modelfile, file.info(modelfile)$size),
+        class = "modelstring"
+      ),
+      mcmc_settings = mcmc_settings,
+      monitor_params = c(
+        monitor_params,
+        if (!"analysis_main" %in% names(monitor_params)) {
+          setNames(TRUE, "analysis_main")
+        }
+      ),
+      data_list = data_list,
+      hyperpars = if (is.null(hyperpars)) default_hyperpars() else hyperpars,
+      info_list = info_list,
+      coef_list = get_coef_names(info_list),
+      model = if (n.adapt > 0) adapt,
+      sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
+      MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
+      comp_info = list(
+        start_time = start_time,
+        duration = if (!is.null(jags_res)) {
+          duration_obj(
+            list("adapt" = jags_res$time_adapt, "sample" = jags_res$time_sample)
+          )
+        },
+        JointAI_version = packageVersion("JointAI"),
+        R_version = R.version.string,
+        parallel = if (!is.null(jags_res)) jags_res$parallel,
+        workers = if (isTRUE(jags_res$parallel)) {
+          jags_res$workers
+        }
+      ),
+      call = modimpcall$thecall
+    ),
+    class = "JointAI"
+  )
 
+  object$fitted.values <- try(
+    fitted_values(object, mess = FALSE, warn = FALSE),
+    silent = TRUE
+  )
 
-  object$fitted.values <- try(fitted_values(object, mess = FALSE, warn = FALSE),
-                              silent = TRUE)
+  object$residuals <- try(
+    residuals(object, type = "working", warn = FALSE),
+    silent = TRUE
+  )
 
-  object$residuals <- try(residuals(object, type = "working", warn = FALSE),
-                          silent = TRUE)
-
-  if (inherits(object$fitted.values, "try-error"))
+  if (inherits(object$fitted.values, "try-error")) {
     object$fitted.values <- NULL
-  if (inherits(object$residuals, "try-error"))
+  }
+  if (inherits(object$residuals, "try-error")) {
     object$residuals <- NULL
+  }
 
-  if (inherits(adapt, "try-error"))
+  if (inherits(adapt, "try-error")) {
     class(object) <- "JointAI_errored"
+  }
 
   if (!attr(modelfile, "keep_model")) {
     file.remove(modelfile)
@@ -941,69 +1056,79 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 #' @rdname model_imp
 #' @export
-lm_imp <- function(formula, data,
-                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                   refcats = NULL,
-                   models = NULL, no_model = NULL,
-                   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   warn = TRUE, mess = TRUE,
-                   ...) {
+lm_imp <- function(
+  formula,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
 
-
-  if (missing(formula)) errormsg("No model formula specified.")
-
-  arglist <- prep_arglist(analysis_type = "lm",
-                          family = gaussian(),
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
+  arglist <- prep_arglist(
+    analysis_type = "lm",
+    family = gaussian(),
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   do.call(model_imp, arglist)
 }
 
 
-
 #' @rdname model_imp
 #' @export
-glm_imp <- function(formula, family, data,
-                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                    refcats = NULL,
-                    models = NULL, no_model = NULL,
-                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    warn = TRUE, mess = TRUE,
-                    ...) {
-
-  if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(family))
+glm_imp <- function(
+  formula,
+  family,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
+  if (missing(family)) {
     errormsg("The argument %s needs to be specified.", dQuote("family"))
+  }
 
-  arglist <- prep_arglist(analysis_type = "glm",
-                          family = family,
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
-  do.call(model_imp, arglist)
-}
-
-
-#' @rdname model_imp
-#' @export
-clm_imp <- function(formula, data,
-                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                    refcats = NULL, nonprop = NULL, rev = NULL,
-                    models = NULL, no_model = NULL,
-                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    warn = TRUE, mess = TRUE, ...) {
-
-  if (missing(formula)) errormsg("No model formula specified.")
-
-  arglist <- prep_arglist(analysis_type = "clm",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
+  arglist <- prep_arglist(
+    analysis_type = "glm",
+    family = family,
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   do.call(model_imp, arglist)
 }
@@ -1011,41 +1136,38 @@ clm_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-lognorm_imp <- function(formula, data,
-                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                        monitor_params = c(analysis_main = TRUE),
-                        auxvars = NULL, refcats = NULL,
-                        models = NULL, no_model = NULL,
-                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                        inits = NULL, warn = TRUE, mess = TRUE, ...) {
+clm_imp <- function(
+  formula,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  nonprop = NULL,
+  rev = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
 
-  if (missing(formula)) errormsg("No model formula specified.")
-
-  arglist <- prep_arglist(analysis_type = "lognorm",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
-
-  do.call(model_imp, arglist)
-}
-
-
-
-#' @rdname model_imp
-#' @export
-betareg_imp <- function(formula, data,
-                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                        monitor_params = c(analysis_main = TRUE),
-                        auxvars = NULL, refcats = NULL,
-                        models = NULL, no_model = NULL,
-                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                        inits = NULL, warn = TRUE, mess = TRUE, ...) {
-
-  if (missing(formula)) errormsg("No model formula specified.")
-
-  arglist <- prep_arglist(analysis_type = "beta",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
+  arglist <- prep_arglist(
+    analysis_type = "clm",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   do.call(model_imp, arglist)
 }
@@ -1053,19 +1175,36 @@ betareg_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-mlogit_imp <- function(formula, data,
-                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                       monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                       refcats = NULL,
-                       models = NULL, no_model = NULL,
-                       shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                       warn = TRUE, mess = TRUE, ...) {
+lognorm_imp <- function(
+  formula,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
 
-  if (missing(formula)) errormsg("No model formula specified.")
-
-  arglist <- prep_arglist(analysis_type = "mlogit",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
+  arglist <- prep_arglist(
+    analysis_type = "lognorm",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   do.call(model_imp, arglist)
 }
@@ -1073,24 +1212,114 @@ mlogit_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-lme_imp <- function(fixed, data, random,
-                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                    refcats = NULL, rd_vcov = "blockdiag",
-                    models = NULL, no_model = NULL,
-                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    warn = TRUE, mess = TRUE, ...) {
+betareg_imp <- function(
+  formula,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
 
-  arglist <- prep_arglist(analysis_type = "lme",
-                          family = gaussian(),
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
+  arglist <- prep_arglist(
+    analysis_type = "beta",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
+
+  do.call(model_imp, arglist)
+}
+
+
+#' @rdname model_imp
+#' @export
+mlogit_imp <- function(
+  formula,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
+
+  arglist <- prep_arglist(
+    analysis_type = "mlogit",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
+
+  do.call(model_imp, arglist)
+}
+
+
+#' @rdname model_imp
+#' @export
+lme_imp <- function(
+  fixed,
+  data,
+  random,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  rd_vcov = "blockdiag",
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  arglist <- prep_arglist(
+    analysis_type = "lme",
+    family = gaussian(),
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   arglist <- check_fixed_random(arglist)
 
   do.call(model_imp, arglist)
 }
-
 
 
 #' @rdname model_imp
@@ -1102,26 +1331,44 @@ lmer_imp <- lme_imp
 #' @rdname model_imp
 #' @aliases glmer_imp
 #' @export
-glme_imp <- function(fixed, data, random, family,
-                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                     refcats = NULL, rd_vcov = "blockdiag",
-                     models = NULL, no_model = NULL,
-                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     warn = TRUE, mess = TRUE, ...) {
-
-  if (missing(family))
+glme_imp <- function(
+  fixed,
+  data,
+  random,
+  family,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  rd_vcov = "blockdiag",
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(family)) {
     errormsg("The argument %s needs to be specified.", dQuote(family))
+  }
 
-  arglist <- prep_arglist(analysis_type = "glme",
-                          family = family,
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
+  arglist <- prep_arglist(
+    analysis_type = "glme",
+    family = family,
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   arglist <- check_fixed_random(arglist)
 
   do.call(model_imp, arglist)
-
 }
 
 
@@ -1131,43 +1378,36 @@ glme_imp <- function(fixed, data, random, family,
 glmer_imp <- glme_imp
 
 
-
-
 #' @rdname model_imp
 #' @export
-betamm_imp <- function(fixed, random, data,
-                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                       monitor_params = c(analysis_main = TRUE),
-                       auxvars = NULL, refcats = NULL, rd_vcov = "blockdiag",
-                       models = NULL, no_model = NULL,
-                       shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                       inits = NULL, warn = TRUE, mess = TRUE, ...) {
-
-  arglist <- prep_arglist(analysis_type = "glmm_beta",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
-  arglist <- check_fixed_random(arglist)
-
-  do.call(model_imp, arglist)
-}
-
-
-
-
-#' @rdname model_imp
-#' @export
-lognormmm_imp <- function(fixed, random, data,
-                          n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                          monitor_params = c(analysis_main = TRUE),
-                          auxvars = NULL, refcats = NULL, rd_vcov = "blockdiag",
-                          models = NULL, no_model = NULL,
-                          shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                          inits = NULL, warn = TRUE, mess = TRUE, ...) {
-
-  arglist <- prep_arglist(analysis_type = "glmm_lognorm",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
+betamm_imp <- function(
+  fixed,
+  random,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  rd_vcov = "blockdiag",
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  arglist <- prep_arglist(
+    analysis_type = "glmm_beta",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   arglist <- check_fixed_random(arglist)
 
@@ -1177,39 +1417,34 @@ lognormmm_imp <- function(fixed, random, data,
 
 #' @rdname model_imp
 #' @export
-clmm_imp <- function(fixed, data, random,
-                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                     refcats = NULL, nonprop = NULL, rev = NULL,
-                     rd_vcov = "blockdiag",
-                     models = NULL, no_model = NULL,
-                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     warn = TRUE, mess = TRUE, ...) {
-
-  arglist <- prep_arglist(analysis_type = "clmm",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
-  arglist <- check_fixed_random(arglist)
-
-  do.call(model_imp, arglist)
-}
-
-
-#' @rdname model_imp
-#' @export
-mlogitmm_imp <- function(fixed, data, random,
-                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                         monitor_params = c(analysis_main = TRUE),
-                         auxvars = NULL, refcats = NULL, rd_vcov = "blockdiag",
-                         models = NULL, no_model = NULL,
-                         shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                         inits = NULL,
-                         warn = TRUE, mess = TRUE, ...) {
-
-  arglist <- prep_arglist(analysis_type = "mlogitmm",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
+lognormmm_imp <- function(
+  fixed,
+  random,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  rd_vcov = "blockdiag",
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  arglist <- prep_arglist(
+    analysis_type = "glmm_lognorm",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   arglist <- check_fixed_random(arglist)
 
@@ -1219,50 +1454,105 @@ mlogitmm_imp <- function(fixed, data, random,
 
 #' @rdname model_imp
 #' @export
-survreg_imp <- function(formula, data,
-                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                        monitor_params = c(analysis_main = TRUE),
-                        auxvars = NULL, refcats = NULL,
-                        models = NULL, no_model = NULL,
-                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                        inits = NULL,
-                        warn = TRUE, mess = TRUE, ...) {
+clmm_imp <- function(
+  fixed,
+  data,
+  random,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  nonprop = NULL,
+  rev = NULL,
+  rd_vcov = "blockdiag",
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  arglist <- prep_arglist(
+    analysis_type = "clmm",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
+
+  arglist <- check_fixed_random(arglist)
+
+  do.call(model_imp, arglist)
+}
 
 
-  if (missing(formula)) errormsg("No model formula specified.")
+#' @rdname model_imp
+#' @export
+mlogitmm_imp <- function(
+  fixed,
+  data,
+  random,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  rd_vcov = "blockdiag",
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  arglist <- prep_arglist(
+    analysis_type = "mlogitmm",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
+
+  arglist <- check_fixed_random(arglist)
+
+  do.call(model_imp, arglist)
+}
 
 
-  fmla <- if (is.list(formula)) {
-    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
-  } else {
-    paste(deparse(formula, width.cutoff = 500) , collapse = " ")
+#' @rdname model_imp
+#' @export
+survreg_imp <- function(
+  formula,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
   }
-  if (!grepl("^Surv\\(", fmla)) {
-    errormsg("For a survival model, the left hand side of the model formula
-             should be a survival object (using %s).", dQuote("Surv()"))
-  }
-
-  arglist <- prep_arglist(analysis_type = "survreg",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
-  do.call(model_imp, arglist)
-}
-
-
-
-#' @rdname model_imp
-#' @export
-coxph_imp <- function(formula, data, df_basehaz = 6,
-                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = c(analysis_main = TRUE),  auxvars = NULL,
-                      refcats = NULL,
-                      models = NULL, no_model = NULL,
-                      shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                      warn = TRUE, mess = TRUE, ...) {
-
-
-  if (missing(formula)) errormsg("No model formula specified.")
 
   fmla <- if (is.list(formula)) {
     paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
@@ -1270,45 +1560,121 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
     paste(deparse(formula, width.cutoff = 500), collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
-    errormsg("For a survival model, the left hand side of the model formula
-             should be a survival object (using %s).", dQuote("Surv()"))
+    errormsg(
+      "For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).",
+      dQuote("Surv()")
+    )
   }
 
-
-  arglist <- prep_arglist(analysis_type = "coxph",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
+  arglist <- prep_arglist(
+    analysis_type = "survreg",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   do.call(model_imp, arglist)
 }
 
 
+#' @rdname model_imp
+#' @export
+coxph_imp <- function(
+  formula,
+  data,
+  df_basehaz = 6,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
+
+  fmla <- if (is.list(formula)) {
+    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
+  } else {
+    paste(deparse(formula, width.cutoff = 500), collapse = " ")
+  }
+  if (!grepl("^Surv\\(", fmla)) {
+    errormsg(
+      "For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).",
+      dQuote("Surv()")
+    )
+  }
+
+  arglist <- prep_arglist(
+    analysis_type = "coxph",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
+
+  do.call(model_imp, arglist)
+}
+
 
 #' @rdname model_imp
 #' @export
-JM_imp <- function(formula, data, df_basehaz = 6,
-                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                   timevar = NULL, refcats = NULL, rd_vcov = "blockdiag",
-                   models = NULL, no_model = NULL,
-                   assoc_type = NULL,
-                   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   warn = TRUE, mess = TRUE, ...) {
-
-
-  if (missing(timevar))
-    errormsg("The name of the %s variable of the longitudinal outcome(s) must
+JM_imp <- function(
+  formula,
+  data,
+  df_basehaz = 6,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL,
+  timevar = NULL,
+  refcats = NULL,
+  rd_vcov = "blockdiag",
+  models = NULL,
+  no_model = NULL,
+  assoc_type = NULL,
+  shrinkage = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (missing(timevar)) {
+    errormsg(
+      "The name of the %s variable of the longitudinal outcome(s) must
              be specified via the argument %s.",
-             dQuote("time"), dQuote("timevar"))
+      dQuote("time"),
+      dQuote("timevar")
+    )
+  }
 
-  if (!is.numeric(data[[timevar]]))
-    errormsg("The time variable (specified via the argument %s) must
+  if (!is.numeric(data[[timevar]])) {
+    errormsg(
+      "The time variable (specified via the argument %s) must
              be numeric.",
-             dQuote("timevar"))
+      dQuote("timevar")
+    )
+  }
 
-
-  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(formula)) {
+    errormsg("No model formula specified.")
+  }
 
   fmla <- if (is.list(formula)) {
     paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
@@ -1316,15 +1682,19 @@ JM_imp <- function(formula, data, df_basehaz = 6,
     paste(deparse(formula, width.cutoff = 500), collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
-    errormsg("For a survival model, the left hand side of the model formula
-             should be a survival object (using %s).", dQuote("Surv()"))
+    errormsg(
+      "For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).",
+      dQuote("Surv()")
+    )
   }
 
-
-  arglist <- prep_arglist(analysis_type = "JM",
-                          formals = formals(), call = match.call(),
-                          sframe = sys.frame(sys.nframe()))
-
+  arglist <- prep_arglist(
+    analysis_type = "JM",
+    formals = formals(),
+    call = match.call(),
+    sframe = sys.frame(sys.nframe())
+  )
 
   do.call(model_imp, arglist)
 }
