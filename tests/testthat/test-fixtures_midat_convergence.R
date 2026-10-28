@@ -8,11 +8,6 @@
 
 skip_on_cran()
 
-# get_MIdat() fails when there is no .Random.seed yet (dev/STATUS.md)
-if (!exists(".Random.seed", envir = globalenv())) {
-  set.seed(1)
-}
-
 # MCMC sample of all chains, as one matrix
 combined <- function(mcmc) do.call(rbind, lapply(mcmc, as.matrix))
 
@@ -69,6 +64,9 @@ test_that("get_MIdat(include = FALSE) leaves out the original data", {
 test_that("get_MIdat() uses the seed and restores the random state", {
   object <- fixture_load("lm")
   # minspace = 1: with the default, m = 2 always selects the same iterations
+  # (an existing random state is needed to check that it is restored; the case
+  # without one is tested in test-random_seed.R)
+  set.seed(123)
   seed_before <- .Random.seed
   imp1 <- get_MIdat(object, m = 2, minspace = 1, seed = 1)
   expect_identical(.Random.seed, seed_before)
