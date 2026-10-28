@@ -291,13 +291,22 @@ vignette
 <code><a href="default_hyperpars.html">default_hyperpars()</a></code></p></dd>
 
 <dt><code>scale_vars</code></dt>
-<dd><p>named vector of (continuous) variables that
-will be centred and scaled (such that mean = 0 and sd = 1)
-when they enter a linear predictor to improve
-convergence of the MCMC sampling. Default is that all
-numeric variables and integer variables with &gt;20 different
-values will be scaled.
-If set to <code>FALSE</code> no scaling will be done.</p></dd>
+<dd><p>character vector with the names of the
+variables that will be centred and scaled (such that
+mean = 0 and sd = 1) when they enter a linear predictor to
+improve convergence of the MCMC sampling. By default, all
+numeric variables (including integer variables, e.g.,
+counts) are scaled, as well as columns created by
+functions of numeric variables (e.g., <code><a href="ns.html">ns()</a></code>,
+<code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>) and interaction terms that involve a numeric
+variable. Factors are not scaled, and neither are numeric
+variables with only two distinct values, because these are
+converted to factors. If <code>scale_vars</code> is specified,
+only those of these that are named in it are scaled (for
+columns created by functions or interactions, the column
+name in the model matrix, e.g., <code>"C1:C2"</code>).
+<code>TRUE</code> is the same as the default; if set to
+<code>FALSE</code> no scaling will be done.</p></dd>
 
 <dt><code>custom</code></dt>
 <dd><p>named list of JAGS model chunks (character strings)

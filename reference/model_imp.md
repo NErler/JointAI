@@ -234,12 +234,21 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
 
   `scale_vars`
 
-  :   named vector of (continuous) variables that will be centred and
-      scaled (such that mean = 0 and sd = 1) when they enter a linear
-      predictor to improve convergence of the MCMC sampling. Default is
-      that all numeric variables and integer variables with \>20
-      different values will be scaled. If set to `FALSE` no scaling will
-      be done.
+  :   character vector with the names of the variables that will be
+      centred and scaled (such that mean = 0 and sd = 1) when they enter
+      a linear predictor to improve convergence of the MCMC sampling. By
+      default, all numeric variables (including integer variables, e.g.,
+      counts) are scaled, as well as columns created by functions of
+      numeric variables (e.g.,
+      [`ns()`](https://nerler.github.io/JointAI/reference/ns.md),
+      [`log()`](https://rdrr.io/r/base/Log.html)) and interaction terms
+      that involve a numeric variable. Factors are not scaled, and
+      neither are numeric variables with only two distinct values,
+      because these are converted to factors. If `scale_vars` is
+      specified, only those of these that are named in it are scaled
+      (for columns created by functions or interactions, the column name
+      in the model matrix, e.g., `"C1:C2"`). `TRUE` is the same as the
+      default; if set to `FALSE` no scaling will be done.
 
   `custom`
 
