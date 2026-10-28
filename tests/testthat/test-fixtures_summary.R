@@ -1,5 +1,7 @@
 # Post-processing of fitted models, tested on stored fixtures (no JAGS run):
-# summary(), coef(), confint() are compared with stored results; printing must
+# the results of all types in fixture_results() (summary(), coef(), confint(),
+# predict(), parameters(), get_MIdat(), ...) are compared with stored results;
+# printing must
 # work; and functions that are not implemented for some model types must give
 # their error. Fixtures, expected results and helpers: helper-fixtures.R.
 
@@ -29,7 +31,7 @@ test_that("there is a fixture and expected results for every case", {
 })
 
 for (k in fixture_names) {
-  test_that(paste("summary, coef and confint:", k), {
+  test_that(paste("post-processing results as stored:", k), {
     object <- fixture_load(k)
     for (type in names(results)) {
       expect_equal(
