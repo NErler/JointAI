@@ -1,6 +1,6 @@
 # Scaling of continuous covariates (R/scaling.R and where the scaling
 # parameters are used). The models are set up but not sampled (golden_fit()
-# from helper-golden.R). Overview: dev/SCALING.md (local notes).
+# from helper-golden.R).
 
 skip_on_cran()
 
@@ -180,10 +180,10 @@ expect_lp_invariant <- function(fit, outcome) {
   }
 }
 
-# Not (yet) back-transformed correctly, tested in the PRs that fix them (see
-# dev/SCALING.md): thresholds of ordinal models and the baseline hazard of
-# survival models (F1); the intercept of survreg models (F6). Intercept-only
-# models have nothing to re-scale.
+# Not (yet) back-transformed correctly, tested in the PRs that fix them:
+# thresholds of ordinal models, the baseline hazard of survival models and the
+# intercept of survreg models (#62). Intercept-only models have nothing to
+# re-scale.
 lp_cases <- grep(
   "intercept$",
   names(golden_cases()),
@@ -236,7 +236,7 @@ test_that("rescale() changes coefficients only", {
 # Random effects and their variance-covariance matrix --------------------------
 # Z b (Z: random effects design matrix) and Z D Z' must be the same on the
 # original and the scaled scale. Not included: rd_vcov = "full" with several
-# outcomes (lme_two_outcomes_full), where b and D are not re-scaled (F7).
+# outcomes (lme_two_outcomes_full), where b and D are not re-scaled (#63).
 
 z_mat <- function(fit, lvl_info, scaled) {
   z_names <- attr(lvl_info, "z_names")
