@@ -14,6 +14,17 @@
   coxph models fixed.
 
 ## Bug fixes
+* With scaled covariates (the default), the thresholds of ordinal models
+  (`clm_imp()`, `clmm_imp()`, and ordinal covariate models) and the
+  coefficients of the baseline hazard of proportional hazards and joint
+  models (`coxph_imp()`, `JM_imp()`) were reported for centred covariates
+  instead of on the scale of the original data, and the intercept of
+  `survreg_imp()` models was not transformed back at all. These parameters
+  are now transformed back like the intercept of other models (#62). Results
+  of such models fitted with earlier versions differ in these parameters.
+  Predictions of ordinal and proportional hazards models do not change;
+  predictions of `survreg_imp()` models change (they used the untransformed
+  intercept).
 * The error message for variables of an unsupported class now names each
   variable correctly (it showed, e.g., "x1", "x2" for a variable "x" with two
   classes) (#17).
