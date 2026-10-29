@@ -42,6 +42,11 @@
   predictions of
   [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
   models change (they used the untransformed intercept).
+- The variance of a single scaled random effect (e.g., a random slope
+  without random intercept, `(0 + time | id)`) had the same value in all
+  iterations of a chain (that of the first iteration), so that
+  [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
+  was `Inf` ([\#67](https://github.com/nerler/JointAI/issues/67)).
 - The error message for variables of an unsupported class now names each
   variable correctly (it showed, e.g., “x1”, “x2” for a variable “x”
   with two classes)
