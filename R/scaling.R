@@ -341,8 +341,10 @@ rescale_rd_vcov <- function(MCMC, rdvcov_scale) {
                 ncol = dim(vcov)[3]
               )
             )
+            # for a 1 x 1 matrix, vapply() returns a vector; the iterations
+            # are in the last dimension
             if (!inherits(vcov_new, "array")) {
-              vcov_new <- array(vcov_new, dim = dim(vcov))
+              vcov_new <- array(vcov_new, dim = c(dim(vcov)[2:3], nrow(MCMC)))
             }
 
             for (k in seq_len(nrow(pos))) {

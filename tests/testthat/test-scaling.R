@@ -415,6 +415,37 @@ test_that("random effects are not re-scaled if a random slope is incomplete", {
   expect_lp_invariant(fit, "y")
 })
 
+test_that("rescale_rd_vcov() transforms each iteration of D (#67)", {
+  # the transformation is A D A' with A = z_inv %*% z_scaled; here constructed
+  # directly (a scaled 1 x 1 D occurs for a random slope without random
+  # intercept, for which A is not yet computed correctly, #66)
+  rdvcov_scale <- list(
+    y = list(id = list(z_inv = matrix(0.5), z_scaled = matrix(4)))
+  )
+  MCMC <- cbind("D_y_id[1,1]" = c(1, 2, 3), other = c(5, 6, 7))
+  rescaled <- rescale_rd_vcov(MCMC, rdvcov_scale)
+  expect_equal(rescaled[, "D_y_id[1,1]"], c(4, 8, 12))
+  expect_identical(rescaled[, "other"], MCMC[, "other"])
+
+  # 2 x 2: A D A' per iteration
+  A <- matrix(c(1, 0.5, 0, 2), 2)
+  rdvcov_scale <- list(
+    y = list(id = list(z_inv = diag(2), z_scaled = A))
+  )
+  D_names <- c("D_y_id[1,1]", "D_y_id[1,2]", "D_y_id[2,2]")
+  MCMC <- rbind(c(1, 0.2, 2), c(3, -0.5, 1))
+  colnames(MCMC) <- D_names
+  rescaled <- rescale_rd_vcov(MCMC, rdvcov_scale)
+  for (r in 1:2) {
+    D <- matrix(MCMC[r, c(1, 2, 2, 3)], 2)
+    expect_equal(
+      rescaled[r, D_names],
+      (A %*% D %*% t(A))[c(1, 3, 4)],
+      ignore_attr = TRUE
+    )
+  }
+})
+
 
 # Parameters to monitor --------------------------------------------------------
 
