@@ -664,19 +664,9 @@ predict_coxph <- function(
     )
   }
 
-  scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
-  if (!is.null(scale_pars)) {
-    scale_pars$center[is.na(scale_pars$center)] <- 0L
-  }
-
   lp_list <- lapply(desgn_mat, function(x) {
-    if (!is.null(scale_pars)) {
-      MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
-        (t(x) - scale_pars$center[match(colnames(x), rownames(scale_pars))])
-    } else {
-      MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
-        t(x)
-    }
+    MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
+      t(x)
   })
 
   eta_surv <- if (
@@ -773,25 +763,12 @@ predict_coxph <- function(
       ))]
 
       lapply(seq_len(nrow(MCMC)), function(m) {
-        if (!is.null(scale_pars)) {
-          matrix(
-            (mat_gk[, vars, drop = FALSE] -
-              outer(
-                rep(1L, prod(dim(mat_gk)[-2L])),
-                scale_pars$center[match(vars, rownames(scale_pars))]
-              )) %*%
-              MCMC[m, coefs$coef[match(vars, coefs$varname)]],
-            nrow = nrow(newdata),
-            ncol = length(gkx)
-          )
-        } else {
-          matrix(
-            mat_gk[, vars, drop = FALSE] %*%
-              MCMC[m, coefs$coef[match(vars, coefs$varname)]],
-            nrow = nrow(newdata),
-            ncol = length(gkx)
-          )
-        }
+        matrix(
+          mat_gk[, vars, drop = FALSE] %*%
+            MCMC[m, coefs$coef[match(vars, coefs$varname)]],
+          nrow = nrow(newdata),
+          ncol = length(gkx)
+        )
       })
     } else {
       0L
@@ -903,11 +880,6 @@ predict_clm <- function(
 
   coefs <- coef_list[[varname]]
 
-  scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
-  if (!is.null(scale_pars)) {
-    scale_pars$center[is.na(scale_pars$center)] <- 0L
-  }
-
   mf <- model.frame(
     as.formula(paste(formula[-2L], collapse = " ")),
     data,
@@ -946,7 +918,7 @@ predict_clm <- function(
   eta <- calc_lp(
     regcoefs = MCMC[, coefs_prop$coef, drop = FALSE],
     design_mat = desgn_mat[, coefs_prop$varname, drop = FALSE],
-    scale_pars
+    scale_pars = NULL
   )
 
   eta_nonprop <- if (length(coefs_nonprop) > 0L) {
@@ -954,7 +926,7 @@ predict_clm <- function(
       calc_lp(
         regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
         design_mat = desgn_mat[, c_np_k$varname, drop = FALSE],
-        scale_pars = scale_pars
+        scale_pars = NULL
       )
     })
   }
