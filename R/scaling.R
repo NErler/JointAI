@@ -90,7 +90,8 @@ find_scalevars <- function(mat, refs, fcts_all, interactions, data) {
 #' Continuous covariates are centred and scaled before they are passed to
 #' JAGS (see `get_scale_pars()`). After sampling, all parameters that depend
 #' on this scaling are transformed back, so that they refer to the original
-#' variables: the regression coefficients (`rescale_coefs()`), and the random
+#' variables: the regression coefficients, thresholds of ordinal models and
+#' coefficients of the baseline hazard (`rescale_coefs()`), and the random
 #' effects and their variance-covariance matrices (`rescale_rd_vcov()`,
 #' `rescale_ranefs()`).
 #'
@@ -132,6 +133,13 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
 #' * intercept: `beta0 = beta0_s - sum(beta_s * center / scale)`, summing over
 #'   all covariate coefficients of the same linear predictor.
 #'
+#' Models without intercept have other parameters that take the role of the
+#' intercept and are shifted in the same way: the thresholds of ordinal models
+#' (`gamma_<y>[k]`; with the non-proportional effects of category `k`) and the
+#' coefficients of the baseline hazard of proportional hazards and joint models
+#' (`beta_Bh0_<y>`; all by the same amount, because the rows of the B-spline
+#' basis sum to 1).
+#'
 #' A linear predictor is identified by the outcome and, for models with
 #' category-specific coefficients (e.g. multinomial models), the category
 #' (`coefs$outcat`; `NA` otherwise). All matching is done by name: parameters
@@ -151,36 +159,62 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list) {
     dimnames = list(NULL, colnames(MCMC))
   )
 
-  # Not (yet) shifted (#62): the intercept of survreg models
-  survreg <- vapply(info_list, "[[", "modeltype", FUN.VALUE = "") == "survreg"
-  not_shifted <- unlist(lapply(info_list[survreg], "[[", "varname"))
-
-  is_intercept <- coefs$varname == "(Intercept)"
-  monitored <- coefs$coef %in% colnames(MCMC)
-
-  # Intercepts first, because rescaling them requires coefficients on the scale
-  # used in JAGS
-  shift_intercept <- is_intercept & monitored & !coefs$outcome %in% not_shifted
-  for (i in which(shift_intercept)) {
-    # identify all other coefficients from the same linear predictor
-    # (`%in%`, so that NA matches NA)
-    same_lp <- coefs$outcome == coefs$outcome[i] &
-      coefs$outcat %in% coefs$outcat[i] &
-      !is_intercept
-    lp_coefs <- coefs[same_lp, ]
-    if (nrow(lp_coefs) == 0L) {
-      next
-    }
-
-    # rescaling intercepts needs all coefficients from that linear predictor:
-    # if one was not monitored, this fails
+  # Shift of a linear predictor caused by the centring, sum(beta_s * center /
+  # scale), from the coefficients on the scale used in JAGS. It needs all
+  # coefficients of the linear predictor: if one was not monitored, this fails.
+  lp_shift <- function(lp_coefs) {
     beta_s <- MCMC[, lp_coefs$coef, drop = FALSE]
     shift <- t(
       t(beta_s) *
         scale_pars[lp_coefs$varname, "center"] /
         scale_pars[lp_coefs$varname, "scale"]
     )
-    rescaled[, coefs$coef[i]] <- MCMC[, coefs$coef[i]] - rowSums(shift)
+    rowSums(shift)
+  }
+
+  is_intercept <- coefs$varname == "(Intercept)"
+  monitored <- coefs$coef %in% colnames(MCMC)
+
+  # Intercepts
+  for (i in which(is_intercept & monitored)) {
+    # all other coefficients from the same linear predictor (`%in%`, so that
+    # NA matches NA)
+    same_lp <- coefs$outcome == coefs$outcome[i] &
+      coefs$outcat %in% coefs$outcat[i] &
+      !is_intercept
+    rescaled[, coefs$coef[i]] <- MCMC[, coefs$coef[i]] -
+      lp_shift(coefs[same_lp, ])
+  }
+
+  # Models without intercept: thresholds and baseline hazard
+  for (info in info_list) {
+    model_coefs <- coefs[coefs$outcome %in% info$varname, ]
+    if (any(model_coefs$varname == "(Intercept)")) {
+      next
+    }
+
+    if (info$modeltype %in% c("clm", "clmm")) {
+      # categories with non-proportional effects, in the order of the
+      # thresholds (as in the JAGS model)
+      nonprop <- lapply(info$parelmts, attr, "nonprop")
+      categories <- unique(names(unlist(unname(nonprop), recursive = FALSE)))
+      gammas <- par_names(paste0("gamma_", info$varname), info$ncat - 1L)
+
+      for (k in which(gammas %in% colnames(MCMC))) {
+        lp_coefs <- model_coefs[
+          is.na(model_coefs$outcat) | model_coefs$outcat %in% categories[k],
+        ]
+        rescaled[, gammas[k]] <- MCMC[, gammas[k]] - lp_shift(lp_coefs)
+      }
+    }
+
+    if (info$modeltype %in% c("coxph", "JM")) {
+      bh0 <- par_names(paste0("beta_Bh0_", info$varname), info$df_basehaz)
+      bh0 <- intersect(bh0, colnames(MCMC))
+      if (length(bh0) > 0L) {
+        rescaled[, bh0] <- MCMC[, bh0] - lp_shift(model_coefs)
+      }
+    }
   }
 
   # Coefficients of covariates
@@ -191,6 +225,22 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list) {
   )
 
   rescaled
+}
+
+
+#' Names of the elements of a parameter vector in the MCMC sample
+#'
+#' JAGS names the elements `name[1]`, `name[2]`, ..., but a vector of length 1
+#' just `name`.
+#'
+#' @param name character string; name of the parameter vector
+#' @param n integer; length of the parameter vector
+#' @noRd
+par_names <- function(name, n) {
+  if (n == 1L) {
+    return(name)
+  }
+  paste0(name, "[", seq_len(n), "]")
 }
 
 

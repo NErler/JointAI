@@ -3,15 +3,16 @@
 # root:
 #   Rscript tests/testthat/fixtures/make_fixtures.R            # everything
 #   Rscript tests/testthat/fixtures/make_fixtures.R expected   # only results
+#   Rscript tests/testthat/fixtures/make_fixtures.R lm clmm    # named fixtures
 #
 # "expected" keeps the stored fitted models and only (re-)creates the expected
 # results (e.g. after adding a new type of result to fixture_results()).
+# With fixture names, only these fixtures and their expected results are
+# (re-)created; info.rds is not changed.
 # The cases are defined in tests/testthat/helper-fixtures.R.
 
-what <- commandArgs(TRUE)[1]
-if (is.na(what)) {
-  what <- "all"
-}
+args <- commandArgs(TRUE)
+what <- if (length(args) == 0) "all" else args
 
 devtools::load_all(".", quiet = TRUE)
 # as in the tests (testthat sets this option): error messages stored as
@@ -26,7 +27,16 @@ dir.create(exp_dir, showWarnings = FALSE, recursive = TRUE)
 
 cases <- fixture_cases()
 
-if (what == "all") {
+named <- !identical(what, "all") && !identical(what, "expected")
+if (named) {
+  unknown <- setdiff(what, names(cases))
+  if (length(unknown) > 0) {
+    stop("Unknown fixture(s): ", paste(unknown, collapse = ", "))
+  }
+  cases <- cases[what]
+}
+
+if (identical(what, "all") || named) {
   data <- golden_data()
   for (k in names(cases)) {
     message("Fitting fixture ", k)
@@ -37,6 +47,9 @@ if (what == "all") {
       compress = "xz"
     )
   }
+}
+
+if (identical(what, "all")) {
   saveRDS(
     list(
       created = Sys.time(),

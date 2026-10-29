@@ -152,53 +152,118 @@ design_mat <- function(fit, columns, scaled) {
   X
 }
 
-# names of the parameters of each linear predictor of a sub-model (one per
-# category for multinomial models)
-lp_parameters <- function(info) {
-  pe <- info$parelmts[names(info$lp)]
-  idx <- if (any(vapply(pe, is.list, logical(1)))) {
-    lapply(seq_along(pe[[1]]), function(j) unlist(lapply(pe, "[[", j)))
-  } else {
-    list(unlist(pe))
+# The linear predictors of a sub-model (one per category for multinomial
+# models, one per threshold for ordinal models). For each: a data.frame with
+# the design-matrix column and the name of its coefficient, and the names of
+# the "offsets", i.e., intercept-like parameters that are added to it: the
+# thresholds of ordinal models (each with the non-proportional effects of its
+# category) and the coefficients of the baseline hazard of proportional
+# hazards models (each enters with weight 1, because the rows of the B-spline
+# basis sum to 1).
+linear_predictors <- function(info) {
+  terms_df <- function(cols, pe) {
+    do.call(
+      rbind,
+      lapply(names(cols), function(m) {
+        data.frame(
+          matrix = rep(m, length(cols[[m]])),
+          column = names(cols[[m]]),
+          par = sprintf("%s[%d]", info$parname, pe[[m]][names(cols[[m]])])
+        )
+      })
+    )
   }
-  lapply(idx, function(i) paste0(info$parname, "[", i, "]"))
+
+  pe <- info$parelmts[names(info$lp)]
+  if (any(vapply(pe, is.list, logical(1)))) {
+    return(lapply(seq_along(pe[[1]]), function(j) {
+      list(
+        terms = terms_df(info$lp, lapply(pe, "[[", j)),
+        offsets = character(0)
+      )
+    }))
+  }
+
+  lp <- list(terms = terms_df(info$lp, pe), offsets = character(0))
+
+  if (info$modeltype %in% c("coxph", "JM")) {
+    lp$offsets <- sprintf(
+      "beta_Bh0_%s[%d]",
+      info$varname,
+      seq_len(info$df_basehaz)
+    )
+  }
+
+  if (info$modeltype %in% c("clm", "clmm")) {
+    np_cols <- attr(info$lp, "nonprop")
+    return(lapply(seq_len(info$ncat - 1), function(k) {
+      np_pe <- lapply(info$parelmts[names(np_cols)], function(x) {
+        attr(x, "nonprop")[[k]]
+      })
+      list(
+        terms = rbind(lp$terms, terms_df(np_cols, np_pe)),
+        offsets = sprintf("gamma_%s[%d]", info$varname, k)
+      )
+    }))
+  }
+  list(lp)
 }
 
-expect_lp_invariant <- function(fit, outcome) {
-  info <- fit$info_list[[outcome]]
-  draws <- scaled_draws(fit)
-  rescaled <- rescale_draws(fit, draws)
-  X <- design_mat(fit, info$lp, scaled = FALSE)
-  X_scaled <- design_mat(fit, info$lp, scaled = TRUE)
+# linear predictor X %*% beta for each draw (columns: draws)
+lp_values <- function(fit, terms, draws, scaled) {
+  X <- design_mat(fit, split(terms$column, terms$matrix), scaled = scaled)
+  X %*% t(draws[, unlist(split(terms$par, terms$matrix)), drop = FALSE])
+}
 
-  for (pars in lp_parameters(info)) {
+# the linear predictor plus each offset must be the same on both scales
+expect_offsets_invariant <- function(
+  eta,
+  eta_scaled,
+  lp,
+  rescaled,
+  draws,
+  info
+) {
+  if (length(lp$offsets) == 0) {
+    expect_equal(eta, eta_scaled, info = info)
+  }
+  for (o in lp$offsets) {
     expect_equal(
-      X %*% t(rescaled[, pars, drop = FALSE]),
-      X_scaled %*% t(draws[, pars, drop = FALSE]),
-      info = paste(outcome, pars[1])
+      sweep(eta, 2, rescaled[, o], "+"),
+      sweep(eta_scaled, 2, draws[, o], "+"),
+      info = paste(info, o)
     )
   }
 }
 
-# Not (yet) back-transformed correctly, tested in the PRs that fix them:
-# thresholds of ordinal models, the baseline hazard of survival models and the
-# intercept of survreg models (#62). Intercept-only models have nothing to
-# re-scale.
+expect_lp_invariant <- function(fit, outcome) {
+  lps <- linear_predictors(fit$info_list[[outcome]])
+  draws <- scaled_draws(fit, extra = unlist(lapply(lps, "[[", "offsets")))
+  rescaled <- rescale_draws(fit, draws)
+
+  for (lp in lps) {
+    expect_offsets_invariant(
+      eta = lp_values(fit, lp$terms, rescaled, scaled = FALSE),
+      eta_scaled = lp_values(fit, lp$terms, draws, scaled = TRUE),
+      lp = lp,
+      rescaled = rescaled,
+      draws = draws,
+      info = paste(outcome, lp$terms$par[1])
+    )
+  }
+}
+
+# Intercept-only models have nothing to re-scale.
 lp_cases <- grep(
   "intercept$",
   names(golden_cases()),
   value = TRUE,
   invert = TRUE
 )
-lp_skip_types <- c("clm", "clmm", "coxph", "JM", "survreg")
 
 for (case in lp_cases) {
   fit <- golden_case(case)
-  types <- vapply(fit$info_list, "[[", "modeltype", FUN.VALUE = character(1))
-  outcomes <- names(fit$info_list)[!types %in% lp_skip_types]
-  if (length(outcomes) == 0) {
-    next
-  }
+  outcomes <- names(fit$info_list)
   test_that(
     paste("re-scaled coefficients give the same linear predictor:", case),
     {
