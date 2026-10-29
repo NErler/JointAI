@@ -60,63 +60,12 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
         parelmts = parelmts,
         lp = lp
       ),
-      warnings = rescale_ranefs_warning(
-        lapply(hc_columns, attr, "incomplete"),
-        Mlist$scale_pars,
-        varname
-      )
+      # the random effects can always be transformed back (also with missing
+      # values in a random-slope variable), so there are no warnings any
+      # more; the attribute is kept (one element per level)
+      warnings = lapply(hc_columns, function(x) NULL)
     )
   }
-}
-
-
-#' Create warning about not being able to re-scale the random effects
-#'
-#' When random slope variables or variables having an interaction with a random
-#' slope variable are scaled during fitting the model the random effects and
-#' their variance-covariance parameters need to be re-scaled afterwards.
-#' This only possible if there are no missing values in the scaled variables.
-#'
-#' @param incompl list of logical vectors (one per random effects level)
-#'                indicating for all random slope variables if they are
-#'                incomplete
-#' @param scale_pars list of scaling parameters, as obtained in
-#'                   `divide_matrices()`
-#' @param varname character string; name of the response variable
-#'
-#' @noRd
-#'
-rescale_ranefs_warning <- function(incompl, scale_pars, varname) {
-  nlapply(names(incompl), function(lvl) {
-    if (
-      any(incompl[[lvl]]) &&
-        any(
-          !is.na(do.call(
-            rbind,
-            unname(
-              scale_pars
-            )
-          ))[names(incompl[[lvl]]), ]
-        )
-    ) {
-      w <- warnmsg(
-        "There are missing values in a variable for which a random effect
-          is specified (%s). It will not be possible to re-scale the
-          random effects %s and their variance covariance matrix %s back
-          to the original scale of the data. If you are not interested in
-          the estimated random effects or their (co)variances this is not a
-          problem. The fixed effects estimates are not affected by this.
-          If you are interested in the random effects or the (co)variances
-          you need to specify that %s are not scaled (using the argument %s).",
-        dQuote(names(incompl[[lvl]])[incompl[[lvl]]]),
-        dQuote(paste0("b_", varname, "_", lvl)),
-        dQuote(paste0("D_", varname, "_", lvl)),
-        paste_and(dQuote(names(incompl[[lvl]]))),
-        dQuote("scale_params")
-      )
-      w
-    }
-  })
 }
 
 
