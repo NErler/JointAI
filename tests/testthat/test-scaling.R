@@ -124,10 +124,49 @@ rescale_draws <- function(fit, draws) {
   )
 }
 
+# Cross-level interactions in the mean of a random slope (hierarchical
+# centring), e.g. `C1:time` with `(time | id)`, enter the JAGS model as the
+# product of the separately scaled variables, w (higher level) and z (random
+# slope variable), not as a scaled column: one row per such term.
+slope_interactions <- function(fit) {
+  do.call(
+    rbind,
+    lapply(fit$info_list, function(info) {
+      do.call(
+        rbind,
+        lapply(info$hc_list$hcvars, function(lvl) {
+          ia <- lvl$rd_slope_interact_coefs
+          if (NROW(ia) == 0) {
+            return(NULL)
+          }
+          z <- lvl$rd_slope_coefs[
+            match(ia$rd_effect, lvl$rd_slope_coefs$rd_effect),
+          ]
+          data.frame(
+            term = ia$term,
+            w_matrix = ia$matrix,
+            w_col = ia$cols,
+            z_matrix = z$matrix,
+            z_col = z$cols
+          )
+        })
+      )
+    })
+  )
+}
+
+# one scaled column of a data matrix (rows of the lowest level)
+scaled_column <- function(fit, matrix, col, sp) {
+  x <- fit$data_list[[matrix]][fit$Mlist$groups[[sub("^M_", "", matrix)]], col]
+  nam <- colnames(fit$data_list[[matrix]])[col]
+  (x - sp[nam, "center"]) / sp[nam, "scale"]
+}
+
 # design matrix of a linear predictor (rows of the lowest level), on the
-# original or the scaled scale. Since each column is scaled separately, the
-# invariance holds for any values; missing values are therefore replaced by
-# random numbers.
+# original or the scaled scale, as in the JAGS model. Since each column is
+# scaled separately, the invariance holds for any values; missing values are
+# therefore replaced by random numbers (except in the variables of
+# cross-level interactions, which must be complete).
 design_mat <- function(fit, columns, scaled) {
   sp <- do.call(rbind, unname(fit$Mlist$scale_pars))
   sp$center[is.na(sp$center)] <- 0
@@ -148,6 +187,13 @@ design_mat <- function(fit, columns, scaled) {
   if (scaled) {
     X <- sweep(X, 2, sp[colnames(X), "center"])
     X <- sweep(X, 2, sp[colnames(X), "scale"], "/")
+
+    ia <- slope_interactions(fit)
+    for (k in which(ia$term %in% colnames(X))) {
+      X[, ia$term[k]] <-
+        scaled_column(fit, ia$w_matrix[k], ia$w_col[k], sp) *
+        scaled_column(fit, ia$z_matrix[k], ia$z_col[k], sp)
+    }
   }
   X
 }
@@ -274,6 +320,24 @@ for (case in lp_cases) {
     }
   )
 }
+
+test_that("cross-level interactions with a random slope are re-scaled (#74)", {
+  # continuous and binary higher-level covariate; ordinal model (thresholds
+  # instead of an intercept). The variables of the interactions are complete.
+  cases <- list(
+    quote(lme_imp(
+      y ~ C1 * time + B1 * time + c1 + (time | id),
+      data = longDF
+    )),
+    quote(clmm_imp(o1 ~ C1 * time + (time | id), data = longDF))
+  )
+  set.seed(2020)
+  for (case in cases) {
+    fit <- golden_fit(case, list(longDF = JointAI::longDF))
+    expect_gt(NROW(slope_interactions(fit)), 0)
+    expect_lp_invariant(fit, names(fit$info_list)[1])
+  }
+})
 
 test_that("rescale() changes coefficients only", {
   set.seed(2020)
