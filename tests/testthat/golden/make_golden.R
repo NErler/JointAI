@@ -4,15 +4,16 @@
 # results. Run from the package root:
 #   Rscript tests/testthat/golden/make_golden.R        # all cases
 #   Rscript tests/testthat/golden/make_golden.R new    # only new cases
+#   Rscript tests/testthat/golden/make_golden.R lm_intercept lme_nested
 #
 # "new" only creates the files of cases that do not have a file yet and leaves
 # the existing files unchanged (e.g. after adding cases to golden_cases()).
+# With case names, only these files are re-created (recorded in info.rds).
 # The cases and the data are defined in tests/testthat/helper-golden.R.
 
-what <- commandArgs(TRUE)[1]
-if (is.na(what)) {
-  what <- "all"
-}
+args <- commandArgs(TRUE)
+what <- if (length(args) == 0) "all" else args
+named <- !identical(what, "all") && !identical(what, "new")
 
 devtools::load_all(".", quiet = TRUE)
 source(file.path("tests", "testthat", "helper-golden.R"))
@@ -21,7 +22,13 @@ golden_dir <- file.path("tests", "testthat", "golden")
 data <- golden_data()
 cases <- golden_cases()
 
-if (what == "new") {
+if (named) {
+  unknown <- setdiff(what, names(cases))
+  if (length(unknown) > 0) {
+    stop("Unknown case(s): ", paste(unknown, collapse = ", "))
+  }
+  cases <- cases[what]
+} else if (identical(what, "new")) {
   cases <- cases[
     !file.exists(file.path(golden_dir, paste0(names(cases), ".rds")))
   ]
@@ -44,8 +51,8 @@ for (k in names(cases)) {
   )
 }
 
-# where and with which versions the files were created; for "new", this is
-# added to the existing information
+# where and with which versions the files were created; for "new" and named
+# cases, this is added to the existing information
 created <- list(
   created = Sys.time(),
   git_commit = tryCatch(
@@ -57,9 +64,16 @@ created <- list(
   platform = R.version$platform,
   rjags_version = as.character(packageVersion("rjags"))
 )
-info <- if (what == "new") {
+info <- if (identical(what, "new")) {
   info <- readRDS(file.path(golden_dir, "info.rds"))
   info$added <- c(info$added, list(c(created, list(cases = names(cases)))))
+  info
+} else if (named) {
+  info <- readRDS(file.path(golden_dir, "info.rds"))
+  info$recreated <- c(
+    info$recreated,
+    list(c(created, list(cases = names(cases))))
+  )
   info
 } else {
   created
