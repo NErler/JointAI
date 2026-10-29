@@ -323,14 +323,25 @@ for (case in lp_cases) {
 
 test_that("cross-level interactions with a random slope are re-scaled (#74)", {
   # continuous and binary higher-level covariate; three-way interaction (the
-  # higher-level part, C1:B1, is a scaled column); ordinal model (thresholds
-  # instead of an intercept). The variables of the interactions are complete.
+  # higher-level part, C1:B1, is a scaled column); spline of the random-slope
+  # variable (one product per spline column); binomial model; ordinal model
+  # (thresholds instead of an intercept). The variables of the interactions
+  # are complete.
   cases <- list(
     quote(lme_imp(
       y ~ C1 * time + B1 * time + c1 + (time | id),
       data = longDF
     )),
     quote(lme_imp(y ~ C1 * B1 * time + (time | id), data = longDF)),
+    quote(lme_imp(
+      y ~ ns(time, df = 2) * C1 + (ns(time, df = 2) | id),
+      data = longDF
+    )),
+    quote(glme_imp(
+      b1 ~ C1 * time + (time | id),
+      family = binomial(),
+      data = longDF
+    )),
     quote(clmm_imp(o1 ~ C1 * time + (time | id), data = longDF))
   )
   set.seed(2020)
