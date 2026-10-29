@@ -65,6 +65,11 @@
   least two dimensions" when the MCMC sample of a chain had only one
   iteration (e.g., `n.iter = 1`, or `n.iter = 2` with `thin = 2`) and
   variables were scaled.
+* Ordinal outcomes that were modelled with their own formula, but not as the
+  first formula in the list (e.g., `stage ~ age + (1 | id)` in `JM_imp()`, or
+  `lm_imp(list(y ~ ..., O2 ~ ...))`), had an intercept in addition to the
+  thresholds, so that the model was not identified (#71). This was
+  introduced in version 1.1.0.
 
 # JointAI 1.1.0
 
