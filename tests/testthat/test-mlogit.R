@@ -8,46 +8,112 @@ run_mlogit_models <- function() {
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({
-
     models <- list(
       # no covariates
-      m0a = mlogit_imp(M1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
-                       seed = 2020, mess = FALSE, warn = FALSE),
-      m0b = mlogit_imp(M2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
-                       seed = 2020, mess = FALSE, warn = FALSE),
+      m0a = mlogit_imp(
+        M1 ~ 1,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
+      m0b = mlogit_imp(
+        M2 ~ 1,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
 
       # only complete
-      m1a = mlogit_imp(M1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
-                       seed = 2020, mess = FALSE, warn = FALSE),
-      m1b = mlogit_imp(M2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
-                       seed = 2020, mess = FALSE, warn = FALSE),
+      m1a = mlogit_imp(
+        M1 ~ C1,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
+      m1b = mlogit_imp(
+        M2 ~ C1,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
 
       # only incomplete
-      m2a = mlogit_imp(M1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
-                       seed = 2020, mess = FALSE, warn = FALSE),
-      m2b = mlogit_imp(M2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
-                       seed = 2020, mess = FALSE, warn = FALSE),
+      m2a = mlogit_imp(
+        M1 ~ C2,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
+      m2b = mlogit_imp(
+        M2 ~ C2,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
 
       # as covariate
-      m3a = lm_imp(C1 ~ M1, data = wideDF, n.adapt = 5, n.iter = 10,
-                   seed = 2020, mess = FALSE, warn = FALSE),
-      m3b = lm_imp(C1 ~ M2, data = wideDF, n.adapt = 5, n.iter = 10,
-                   seed = 2020, mess = FALSE, warn = FALSE),
-
+      m3a = lm_imp(
+        C1 ~ M1,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
+      m3b = lm_imp(
+        C1 ~ M2,
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        mess = FALSE,
+        warn = FALSE
+      ),
 
       # complex structures
-      m4a = mlogit_imp(M1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF,
-                    n.adapt = 5, n.iter = 10, seed = 2020,
-                    monitor_params = list(other = "p_M1"),
-                    mess = FALSE, warn = FALSE),
-      m4b = mlogit_imp(M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) *
-                      abs(C1 - C2) + log(C1), data = wideDF,
-                    n.adapt = 5, n.iter = 10, seed = 2020,
-                    monitor_params = list(other = "p_M1"),
-                    mess = FALSE, warn = FALSE)
+      m4a = mlogit_imp(
+        M1 ~ M2 + O2 * abs(C1 - C2) + log(C1),
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        monitor_params = list(other = "p_M1"),
+        mess = FALSE,
+        warn = FALSE
+      ),
+      m4b = mlogit_imp(
+        M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) *
+          abs(C1 - C2) +
+          log(C1),
+        data = wideDF,
+        n.adapt = 5,
+        n.iter = 10,
+        seed = 2020,
+        monitor_params = list(other = "p_M1"),
+        mess = FALSE,
+        warn = FALSE
+      )
     )
-  }
-  )))
+  })))
   models
 }
 
@@ -107,44 +173,75 @@ test_that("summary output remained the same", {
 
 
 test_that("prediction works", {
-  expect_equal(class(predict(models$m4a, type = "lp", warn = FALSE)$fitted),
-               "array")
-  expect_equal(class(predict(models$m4a, type = "prob", warn = FALSE)$fitted),
-               "array")
+  expect_equal(
+    class(predict(models$m4a, type = "lp", warn = FALSE)$fitted),
+    "array"
+  )
+  expect_equal(
+    class(predict(models$m4a, type = "prob", warn = FALSE)$fitted),
+    "array"
+  )
 
-  expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$fitted,
-                  "data.frame")
-  expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$fitted,
-                  "data.frame")
+  expect_s3_class(
+    predict(models$m4a, type = "class", warn = FALSE)$fitted,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "response", warn = FALSE)$fitted,
+    "data.frame"
+  )
 
-  expect_s3_class(predict(models$m4a, type = "lp", warn = FALSE)$newdata,
-                  "data.frame")
-  expect_s3_class(predict(models$m4a, type = "prob", warn = FALSE)$newdata,
-                  "data.frame")
-  expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$newdata,
-                  "data.frame")
-  expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$newdata,
-                  "data.frame")
+  expect_s3_class(
+    predict(models$m4a, type = "lp", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "prob", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "class", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "response", warn = FALSE)$newdata,
+    "data.frame"
+  )
 
-  expect_equal(class(predict(models$m4b, type = "lp", warn = FALSE)$fitted),
-               "array")
-  expect_equal(class(predict(models$m4b, type = "prob", warn = FALSE)$fitted),
-               "array")
+  expect_equal(
+    class(predict(models$m4b, type = "lp", warn = FALSE)$fitted),
+    "array"
+  )
+  expect_equal(
+    class(predict(models$m4b, type = "prob", warn = FALSE)$fitted),
+    "array"
+  )
 
-  expect_s3_class(predict(models$m4b, type = "class", warn = FALSE)$fitted,
-                  "data.frame")
-  expect_s3_class(predict(models$m4b, type = "response", warn = FALSE)$fitted,
-                  "data.frame")
+  expect_s3_class(
+    predict(models$m4b, type = "class", warn = FALSE)$fitted,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4b, type = "response", warn = FALSE)$fitted,
+    "data.frame"
+  )
 
-  expect_s3_class(predict(models$m4b, type = "lp", warn = FALSE)$newdata,
-                  "data.frame")
-  expect_s3_class(predict(models$m4b, type = "prob", warn = FALSE)$newdata,
-                  "data.frame")
-  expect_s3_class(predict(models$m4b, type = "class", warn = FALSE)$newdata,
-                  "data.frame")
-  expect_s3_class(predict(models$m4b, type = "response", warn = FALSE)$newdata,
-                  "data.frame")
-
+  expect_s3_class(
+    predict(models$m4b, type = "lp", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4b, type = "prob", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4b, type = "class", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4b, type = "response", warn = FALSE)$newdata,
+    "data.frame"
+  )
 
   expect_equal(check_predprob(models$m4a), 0)
   expect_equal(check_predprob(models$m4b), 0)

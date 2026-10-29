@@ -259,7 +259,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
       # bugfixes -----------------------------------------------------------------
       # bugfix in model with ordinal longitudinal covariate"
-      models$m7a = lme_imp(
+      models$m7a <- lme_imp(
         y ~ C1 + o1 + o2 + x + time,
         random = ~ 1 | id,
         data = longDF,
@@ -269,7 +269,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
       )
 
       # parameters for clmm models without baseline covariates work
-      models$m7b = lme_imp(
+      models$m7b <- lme_imp(
         y ~ o2 + o1 + c2 + b2,
         data = longDF,
         random = ~ 1 | id,
