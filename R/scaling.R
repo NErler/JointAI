@@ -85,73 +85,112 @@ find_scalevars <- function(mat, refs, fcts_all, interactions, data) {
 
 
 # re-scale ---------------------------------------------------------------------
+#' Transform the MCMC sample back to the scale of the original data
+#'
+#' Continuous covariates are centred and scaled before they are passed to
+#' JAGS (see `get_scale_pars()`). After sampling, all parameters that depend
+#' on this scaling are transformed back, so that they refer to the original
+#' variables: the regression coefficients (`rescale_coefs()`), and the random
+#' effects and their variance-covariance matrices (`rescale_rd_vcov()`,
+#' `rescale_ranefs()`).
+#'
+#' Used by `model_imp()` and `add_samples()`, and by the package remiod
+#' (frozen: the arguments and the returned object must not change).
+#'
+#' @param MCMC MCMC sample of one chain (`mcmc` object or matrix), on the
+#'   scale used in JAGS.
+#' @param coefs `data.frame` with one row per regression coefficient
+#'   (`do.call(rbind, get_coef_names(info_list))`).
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column;
+#'   `do.call(rbind, unname(Mlist$scale_pars))`). `NA` means not scaled.
+#' @param info_list list with the model info of each sub-model.
+#' @param data_list data list passed to JAGS (for the random-effects design
+#'   matrices).
+#' @param groups list of grouping information (`Mlist$groups`).
+#'
+#' @return Matrix with the same columns as `MCMC`, on the original scale.
+#' @noRd
 rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
-  # After the MCMC has been obtained from rjags, regression coefficients
-  # relating to variables that were scaled in the JAGS model need to be scaled
-  # back to the scale of the original variables
-  # - MCMC: a mcmc object (only one element of the mcmc.list)
-  # - coefs: combined coef_list (do.call(rbind, coef_list))
-  # - scale_pars: combined scaling parameters
-  #               (do.call(rbind, unname(Mlist$scale_pars)))
-  # - info_list: list of model info used to create the JAGS syntax; used here
-  #              to get the names of the covariates used in each sub-model
-
+  # NA: column not scaled; centre 0 and scale 1 leave it unchanged
   scale_pars$center[is.na(scale_pars$center)] <- 0
   scale_pars$scale[is.na(scale_pars$scale)] <- 1
 
-  MCMC <- sapply(colnames(MCMC), function(k) {
-    if (k %in% coefs$coef) {
-      # variable name
-      varnam <- coefs$varname[which(coefs$coef == k)]
-
-      if (varnam == "(Intercept)") {
-        outcome <- coefs$outcome[which(coefs$coef == k)]
-        k_nr <- gsub("[[:alpha:]]+\\[*|\\]*", "", k)
-
-        parelmts <- info_list[[outcome]]$parelmts
-
-        parelmts <- if (any(sapply(parelmts, is.list))) {
-          lapply(1:max(sapply(parelmts, length)), function(j) {
-            pe <- unlist(unname(lapply(parelmts, "[[", j)))
-            if (k_nr %in% pe) {
-              pe
-            }
-          })
-        } else {
-          unlist(unname(parelmts))
-        }
-
-        parnames <- if (length(parelmts) > 1) {
-          parnames <- sapply(unlist(parelmts), gsub, pattern = k_nr, x = k)
-          setdiff(parnames, k)
-        }
-
-        if (length(parnames) > 0) {
-          scaled_covs <- sapply(parnames, function(j) {
-            covname <- coefs$varname[coefs$coef == j]
-            MCMC[, j, drop = FALSE] *
-              scale_pars[covname, 'center'] /
-              scale_pars[covname, 'scale']
-          })
-
-          MCMC[, k] - rowSums(scaled_covs)
-        } else {
-          MCMC[, k]
-        }
-      } else {
-        # scaling parameters
-        sp <- scale_pars[varnam, ]
-
-        MCMC[, k] / sp$scale
-      }
-    } else {
-      MCMC[, k]
-    }
-  })
+  MCMC <- rescale_coefs(MCMC, coefs, scale_pars, info_list)
 
   rdvcov_scale <- get_rdvcov_scalemat(scale_pars, info_list, data_list, groups)
   MCMC <- rescale_rd_vcov(MCMC, rdvcov_scale)
   rescale_ranefs(MCMC, rdvcov_scale, groups)
+}
+
+
+#' Transform regression coefficients back to the original scale
+#'
+#' In JAGS, a covariate `x` enters a linear predictor as
+#' `(x - center) / scale`, with coefficient `beta_s`. On the original scale:
+#' * coefficient of a covariate: `beta = beta_s / scale`
+#' * intercept: `beta0 = beta0_s - sum(beta_s * center / scale)`, summing over
+#'   all covariate coefficients of the same linear predictor.
+#'
+#' A linear predictor is identified by the outcome and, for models with
+#' category-specific coefficients (e.g. multinomial models), the category
+#' (`coefs$outcat`; `NA` otherwise). All matching is done by name: parameters
+#' by their name in `MCMC` (`coefs$coef`), scaling parameters by the name of
+#' the design-matrix column (`coefs$varname`).
+#'
+#' @inheritParams rescale
+#' @param scale_pars as in `rescale()`, but without missing values.
+#'
+#' @return Matrix with the same columns as `MCMC`; all other parameters are
+#'   unchanged.
+#' @noRd
+rescale_coefs <- function(MCMC, coefs, scale_pars, info_list) {
+  rescaled <- matrix(
+    MCMC,
+    nrow = nrow(MCMC),
+    dimnames = list(NULL, colnames(MCMC))
+  )
+
+  # Not (yet) shifted (#62): the intercept of survreg models
+  survreg <- vapply(info_list, "[[", "modeltype", FUN.VALUE = "") == "survreg"
+  not_shifted <- unlist(lapply(info_list[survreg], "[[", "varname"))
+
+  is_intercept <- coefs$varname == "(Intercept)"
+  monitored <- coefs$coef %in% colnames(MCMC)
+
+  # Intercepts first, because rescaling them requires coefficients on the scale
+  # used in JAGS
+  shift_intercept <- is_intercept & monitored & !coefs$outcome %in% not_shifted
+  for (i in which(shift_intercept)) {
+    # identify all other coefficients from the same linear predictor
+    # (`%in%`, so that NA matches NA)
+    same_lp <- coefs$outcome == coefs$outcome[i] &
+      coefs$outcat %in% coefs$outcat[i] &
+      !is_intercept
+    lp_coefs <- coefs[same_lp, ]
+    if (nrow(lp_coefs) == 0L) {
+      next
+    }
+
+    # rescaling intercepts needs all coefficients from that linear predictor:
+    # if one was not monitored, this fails
+    beta_s <- MCMC[, lp_coefs$coef, drop = FALSE]
+    shift <- t(
+      t(beta_s) *
+        scale_pars[lp_coefs$varname, "center"] /
+        scale_pars[lp_coefs$varname, "scale"]
+    )
+    rescaled[, coefs$coef[i]] <- MCMC[, coefs$coef[i]] - rowSums(shift)
+  }
+
+  # Coefficients of covariates
+  covar_coefs <- coefs[!is_intercept & monitored, ]
+  rescaled[, covar_coefs$coef] <- t(
+    t(MCMC[, covar_coefs$coef, drop = FALSE]) /
+      scale_pars[covar_coefs$varname, "scale"]
+  )
+
+  rescaled
 }
 
 
