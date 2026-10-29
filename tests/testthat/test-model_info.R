@@ -237,6 +237,49 @@ extra_cases <- list(
   ))
 )
 
+test_that("ordinal outcomes in additional formulas have no intercept (#71)", {
+  # the thresholds take the role of the intercept; with an intercept, the
+  # model is not identified
+  mods <- list(
+    clm = setup_model(lm_imp, list(C1 ~ O2 + C2, O2 ~ C2), data = wideDF),
+    clmm = setup_model(
+      lme_imp,
+      list(y ~ C1 + time + (1 | id), o1 ~ C1 + (1 | id)),
+      data = longDF
+    ),
+    JM = setup_model(
+      JM_imp,
+      list(
+        Surv(futime, status != "censored") ~ age + stage + (1 | id),
+        stage ~ age + (1 | id)
+      ),
+      timevar = "day",
+      data = PBC
+    )
+  )
+  ord <- c(clm = "O2", clmm = "o1", JM = "stage")
+
+  for (k in names(mods)) {
+    info <- mods[[k]]$info_list[[ord[k]]]
+    expect_identical(info$modeltype, sub("JM", "clmm", k), label = k)
+    expect_false(
+      "(Intercept)" %in% mods[[k]]$coef_list[[ord[k]]]$varname,
+      label = k
+    )
+  }
+
+  # other outcomes in additional formulas keep their intercept
+  expect_true("(Intercept)" %in% mods$clm$coef_list$C1$varname)
+  expect_true(
+    "(Intercept)" %in%
+      setup_model(
+        lm_imp,
+        list(C1 ~ B2, B2 ~ C2),
+        data = wideDF
+      )$coef_list$B2$varname
+  )
+})
+
 # all parameter numbers of one sub-model (also of non-proportional effects)
 all_parelmts <- function(parelmts) {
   unlist(lapply(parelmts, function(x) c(unlist(x), unlist(attr(x, "nonprop")))))
