@@ -70,6 +70,7 @@
 <code>scale_vars</code> given as a character vector of variable names failed with “invalid argument type”, and <code>scale_vars = TRUE</code> switched scaling off. Now only the named variables are scaled, and <code>TRUE</code> is the same as the default.</li>
 <li>
 <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> for proportional hazards models (<code><a href="../reference/model_imp.html">coxph_imp()</a></code>) failed with “non-conformable arguments” when no variables were scaled (<code>scale_vars = FALSE</code>).</li>
+<li>Model fitting (and <code><a href="../reference/add_samples.html">add_samples()</a></code>) failed with “‘x’ must be an array of at least two dimensions” when the MCMC sample of a chain had only one iteration (e.g., <code>n.iter = 1</code>, or <code>n.iter = 2</code> with <code>thin = 2</code>) and variables were scaled.</li>
 </ul></div>
 </div>
     <div class="section level2">
