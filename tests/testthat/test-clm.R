@@ -1,6 +1,5 @@
 library("JointAI")
 
-skip_on_cran()
 # Sys.setenv(IS_CHECK = "true")
 
 run_clm_models <- function() {
@@ -186,10 +185,13 @@ run_clm_models <- function() {
   models
 }
 
-models <- run_clm_models()
-models0 <- set0_list(models)
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+  models <- run_clm_models()
+  models0 <- set0_list(models)
+}
 
 test_that("models run", {
+  skip_on_cran()
   for (k in seq_along(models)) {
     expect_s3_class(models[[k]], "JointAI")
   }
@@ -197,17 +199,20 @@ test_that("models run", {
 
 
 test_that("there are no duplicate betas/alphas in the jagsmodel", {
+  skip_on_cran()
   expect_null(unlist(lapply(models, find_dupl_parms)))
 })
 
 
 test_that("MCMC is mcmc.list", {
+  skip_on_cran()
   for (i in seq_along(models)) {
     expect_s3_class(models[[i]]$MCMC, "mcmc.list")
   }
 })
 
 test_that("MCMC samples can be plottet", {
+  skip_on_cran()
   for (k in seq_along(models)) {
     expect_silent(traceplot(models[[k]]))
     expect_silent(densplot(models[[k]]))
@@ -217,17 +222,18 @@ test_that("MCMC samples can be plottet", {
 
 
 test_that("data_list remains the same", {
-  # skip_on_cran()
+  skip_on_cran()
   expect_snapshot(lapply(models, "[[", "data_list"))
 })
 
 test_that("jagsmodel remains the same", {
+  skip_on_cran()
   expect_snapshot(lapply(models, "[[", "jagsmodel"))
 })
 
 
 test_that("GRcrit and MCerror give same result", {
-  # skip_on_cran()
+  skip_on_cran()
   expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
   expect_snapshot(lapply(models0, MC_error))
 })
@@ -245,7 +251,7 @@ test_that("GRcrit and MCerror give same result", {
 # })
 
 test_that("summary output remained the same", {
-  # skip_on_cran()
+  skip_on_cran()
   # skip_on_os(c("windows"))
   expect_snapshot(lapply(models0, print))
   expect_snapshot(lapply(models0, coef))
@@ -256,6 +262,7 @@ test_that("summary output remained the same", {
 
 
 test_that("prediction works", {
+  skip_on_cran()
   expect_equal(
     class(predict(models$m4a, type = "lp", warn = FALSE)$fitted),
     "array"
@@ -346,12 +353,14 @@ test_that("prediction works", {
 
 
 test_that("residuals", {
+  skip_on_cran()
   # residuals are not yet implemented
   expect_error(residuals(models$m4a, type = "working"))
 })
 
 
 test_that("model can be plottet", {
+  skip_on_cran()
   for (i in seq_along(models)) {
     if (models[[i]]$analysis_type == "clm") {
       expect_error(plot(models[[i]]))
@@ -363,6 +372,7 @@ test_that("model can be plottet", {
 
 
 test_that("wrong models give errors", {
+  skip_on_cran()
   expect_error(clm_imp(y ~ O1 + C1 + C2, data = wideDF))
   expect_error(clm_imp(
     O2 ~ O1 + C1 + C2 + (1 | id),

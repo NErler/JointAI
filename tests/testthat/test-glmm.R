@@ -4,8 +4,6 @@ library("splines")
 options(useFancyQuotes = TRUE)
 
 # Sys.setenv(IS_CHECK = "true")
-skip_on_cran()
-
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   set_seed(1234)
   longDF <- JointAI::longDF
@@ -720,114 +718,125 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   models <- run_glmm_models()
   models0 <- set0_list(models)
+}
 
-  test_that("models run", {
-    for (k in seq_along(models)) {
-      expect_s3_class(models[[k]], "JointAI")
-    }
-  })
+test_that("models run", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
+    expect_s3_class(models[[k]], "JointAI")
+  }
+})
 
-  test_that("there are no duplicate betas/alphas in the jagsmodel", {
-    expect_null(unlist(lapply(models, find_dupl_parms)))
-  })
+test_that("there are no duplicate betas/alphas in the jagsmodel", {
+  skip_on_cran()
+  expect_null(unlist(lapply(models, find_dupl_parms)))
+})
 
-  test_that("MCMC is mcmc.list", {
-    for (i in seq_along(models)) {
-      expect_s3_class(models[[i]]$MCMC, "mcmc.list")
-    }
-  })
+test_that("MCMC is mcmc.list", {
+  skip_on_cran()
+  for (i in seq_along(models)) {
+    expect_s3_class(models[[i]]$MCMC, "mcmc.list")
+  }
+})
 
-  test_that("MCMC samples can be plottet", {
-    for (k in seq_along(models)) {
-      expect_silent(traceplot(models[[k]]))
-      expect_silent(densplot(models[[k]]))
-      expect_silent(plot(MC_error(models[[k]])))
-    }
-  })
+test_that("MCMC samples can be plottet", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
+    expect_silent(traceplot(models[[k]]))
+    expect_silent(densplot(models[[k]]))
+    expect_silent(plot(MC_error(models[[k]])))
+  }
+})
 
-  test_that("data_list remains the same", {
-    # skip_on_os("linux")
-    expect_snapshot(normalize_numeric(lapply(models, "[[", "data_list")))
-  })
+test_that("data_list remains the same", {
+  skip_on_cran()
+  # skip_on_os("linux")
+  expect_snapshot(normalize_numeric(lapply(models, "[[", "data_list")))
+})
 
-  test_that("jagsmodel remains the same", {
-    expect_snapshot(lapply(models, "[[", "jagsmodel"))
-  })
+test_that("jagsmodel remains the same", {
+  skip_on_cran()
+  expect_snapshot(lapply(models, "[[", "jagsmodel"))
+})
 
-  test_that("GRcrit and MCerror give same result", {
-    expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
-    expect_snapshot(lapply(models0, MC_error))
-  })
+test_that("GRcrit and MCerror give same result", {
+  skip_on_cran()
+  expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
+  expect_snapshot(lapply(models0, MC_error))
+})
 
-  test_that("summary output remained the same", {
-    expect_snapshot(lapply(models0, print))
-    expect_snapshot(lapply(models0, coef))
-    expect_snapshot(lapply(models0, confint))
-    expect_snapshot(lapply(models0, summary, missinfo = TRUE))
-    expect_snapshot(lapply(models0, function(x) coef(summary(x))))
-  })
+test_that("summary output remained the same", {
+  skip_on_cran()
+  expect_snapshot(lapply(models0, print))
+  expect_snapshot(lapply(models0, coef))
+  expect_snapshot(lapply(models0, confint))
+  expect_snapshot(lapply(models0, summary, missinfo = TRUE))
+  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
+})
 
-  test_that("prediction works", {
-    for (k in seq_along(models)) {
-      expect_s3_class(
-        predict(models[[k]], type = "link", warn = FALSE)$fitted,
-        "data.frame"
-      )
-      expect_s3_class(
-        predict(models[[k]], type = "response", warn = FALSE)$fitted,
-        "data.frame"
-      )
-    }
-
-    # prediction without specifying the type
-    expect_s3_class(predict(models$m5a, warn = FALSE)$fitted, "data.frame")
-
-    # prediction with newdata
-    ndf <- predDF(models$m5a, vars = ~c2)
-    expect_s3_class(ndf, "data.frame")
+test_that("prediction works", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
     expect_s3_class(
-      predict(models$m5a, newdata = ndf, warn = FALSE)$fitted,
+      predict(models[[k]], type = "link", warn = FALSE)$fitted,
       "data.frame"
     )
-  })
+    expect_s3_class(
+      predict(models[[k]], type = "response", warn = FALSE)$fitted,
+      "data.frame"
+    )
+  }
 
-  test_that("residuals", {
-    for (k in seq_along(models)[8]) {
+  # prediction without specifying the type
+  expect_s3_class(predict(models$m5a, warn = FALSE)$fitted, "data.frame")
+
+  # prediction with newdata
+  ndf <- predDF(models$m5a, vars = ~c2)
+  expect_s3_class(ndf, "data.frame")
+  expect_s3_class(
+    predict(models$m5a, newdata = ndf, warn = FALSE)$fitted,
+    "data.frame"
+  )
+})
+
+test_that("residuals", {
+  skip_on_cran()
+  for (k in seq_along(models)[8]) {
+    expect_type(
+      residuals(models[[k]], type = "response", warn = FALSE),
+      "double"
+    )
+
+    if (models[[k]]$analysis_type %in% c("beta", "glmm_beta")) {
+      expect_error(residuals(models[[k]], type = "working", warn = FALSE))
+      expect_error(residuals(models[[k]], type = "pearson", warn = FALSE))
+    } else {
       expect_type(
-        residuals(models[[k]], type = "response", warn = FALSE),
+        residuals(models[[k]], type = "working", warn = FALSE),
         "double"
       )
-
-      if (models[[k]]$analysis_type %in% c("beta", "glmm_beta")) {
-        expect_error(residuals(models[[k]], type = "working", warn = FALSE))
-        expect_error(residuals(models[[k]], type = "pearson", warn = FALSE))
-      } else {
-        expect_type(
-          residuals(models[[k]], type = "working", warn = FALSE),
-          "double"
-        )
-        expect_type(
-          residuals(models[[k]], type = "pearson", warn = FALSE),
-          "double"
-        )
-      }
+      expect_type(
+        residuals(models[[k]], type = "pearson", warn = FALSE),
+        "double"
+      )
     }
-    expect_type(residuals(models$m5a, warn = FALSE), "double")
-  })
+  }
+  expect_type(residuals(models$m5a, warn = FALSE), "double")
+})
 
-  test_that("model can be plottet", {
-    for (i in seq_along(models)) {
-      if (
-        models[[i]]$analysis_type %in%
-          c("lognorm", "glmm_lognorm", "beta", "glmm_beta")
-      ) {
-        expect_error(plot(models[[i]]))
-      } else {
-        expect_silent(plot(models[[i]]))
-      }
+test_that("model can be plottet", {
+  skip_on_cran()
+  for (i in seq_along(models)) {
+    if (
+      models[[i]]$analysis_type %in%
+        c("lognorm", "glmm_lognorm", "beta", "glmm_beta")
+    ) {
+      expect_error(plot(models[[i]]))
+    } else {
+      expect_silent(plot(models[[i]]))
     }
-  })
-}
+  }
+})
 
 # test_that("wrong models give errors", {
 #
