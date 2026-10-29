@@ -50,6 +50,10 @@
 * `predict()` for proportional hazards models (`coxph_imp()`) failed with
   "non-conformable arguments" when no variables were scaled
   (`scale_vars = FALSE`).
+* Model fitting (and `add_samples()`) failed with "'x' must be an array of at
+  least two dimensions" when the MCMC sample of a chain had only one
+  iteration (e.g., `n.iter = 1`, or `n.iter = 2` with `thin = 2`) and
+  variables were scaled.
 
 # JointAI 1.1.0
 
