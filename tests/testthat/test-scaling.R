@@ -257,6 +257,9 @@ linear_predictors <- function(info) {
 
 # linear predictor X %*% beta for each draw (columns: draws)
 lp_values <- function(fit, terms, draws, scaled) {
+  if (nrow(terms) == 0) {
+    return(0)
+  }
   X <- design_mat(fit, split(terms$column, terms$matrix), scaled = scaled)
   X %*% t(draws[, unlist(split(terms$par, terms$matrix)), drop = FALSE])
 }
@@ -376,49 +379,84 @@ test_that("rescale() changes coefficients only", {
 
 
 # Random effects and their variance-covariance matrix --------------------------
-# Z b (Z: random effects design matrix) and Z D Z' must be the same on the
-# original and the scaled scale. Not included: rd_vcov = "full" with several
-# outcomes (lme_two_outcomes_full), where b and D are not re-scaled (#63).
+# The random effects b and their variance-covariance matrix D are transformed
+# back to the original scale. Tested via what must not change:
+# * Z D Z' (Z: random-effects design matrix, rows of the lowest level),
+# * Z b, up to a constant that is the same for all rows (also rows that are not
+#   in the data),
+# * the linear predictor of a subject: offset + sum over the levels of Z b +
+#   X beta, with X the covariates that are not in the means of the random
+#   effects (hierarchical centring).
 
 z_mat <- function(fit, lvl_info, scaled) {
   z_names <- attr(lvl_info, "z_names")
   slopes <- lvl_info$rd_slope_coefs
-  columns <- split(slopes$term, slopes$matrix)
-  Z <- design_mat(fit, columns, scaled = scaled)
+  n <- length(fit$Mlist$groups[[1]])
+  Z <- if (NROW(slopes) > 0) {
+    design_mat(fit, split(slopes$term, slopes$matrix), scaled = scaled)
+  } else {
+    matrix(nrow = n, ncol = 0)
+  }
   if (attr(lvl_info, "rd_intercept")) {
-    Z <- cbind("(Intercept)" = 1, Z)
+    Z <- cbind("(Intercept)" = rep(1, nrow(Z)), Z)
   }
   Z[, z_names, drop = FALSE]
 }
 
-ranef_cases <- c(
-  "glme_complex",
-  "lme_indep",
-  "lme_interaction_random",
-  "lme_nested",
-  "lme_spline_random",
-  "lognormmm_random_slope",
-  "mlogitmm_random_interaction",
-  "jm_assoc_type"
-)
-
-expect_ranefs_invariant <- function(fit, outcome, lvl) {
+# Names of the random effects of an outcome at a grouping level (matrix: one
+# row per group, one column per random effect), the name of their
+# variance-covariance matrix, and the columns of that matrix that belong to the
+# outcome. With rd_vcov = "full", the random effects of several outcomes form
+# one vector b_<lvl> with covariance matrix D_<lvl>; "ranef_index" gives the
+# columns of each outcome (e.g. "1:2").
+ranef_names <- function(fit, outcome, lvl) {
   info <- fit$info_list[[outcome]]
-  lvl_info <- info$hc_list$hcvars[[lvl]]
-  nz <- length(attr(lvl_info, "z_names"))
+  nz <- length(attr(info$hc_list$hcvars[[lvl]], "z_names"))
   ng <- max(fit$Mlist$groups[[lvl]])
-  b_names <- sprintf(
-    "b_%s_%s[%d,%d]",
-    info$varname,
-    lvl,
+  rd_vcov <- info$rd_vcov[[lvl]]
+
+  if (identical(as.character(rd_vcov), "full")) {
+    name <- lvl
+    cols <- eval(str2lang(attr(rd_vcov, "ranef_index")[[outcome]]))
+  } else {
+    name <- paste0(info$varname, "_", lvl)
+    cols <- seq_len(nz)
+  }
+
+  b <- sprintf(
+    "b_%s[%d,%d]",
+    name,
     rep(seq_len(ng), nz),
-    rep(seq_len(nz), each = ng)
+    rep(cols, each = ng)
   )
+  list(b = matrix(b, nrow = ng), D = paste0("D_", name), cols = cols)
+}
+
+# Z b for each draw (rows: lowest level; columns: draws)
+zb_values <- function(fit, lvl_info, grp, b_names, draws, scaled) {
+  Z <- z_mat(fit, lvl_info, scaled = scaled)
+  out <- matrix(NA_real_, nrow(Z), nrow(draws))
+  for (r in seq_len(nrow(draws))) {
+    b <- matrix(draws[r, b_names], ncol = ncol(Z))
+    out[, r] <- rowSums(Z * b[grp, , drop = FALSE])
+  }
+  out
+}
+
+# Z D Z' for all outcomes that share one D (one outcome, or several with
+# rd_vcov = "full"), including the blocks between outcomes; Z b, and Z b at
+# rows with arbitrary values of the random-slope variables
+expect_ranefs_invariant <- function(fit, outcomes, lvl) {
+  rn <- lapply(outcomes, function(o) ranef_names(fit, o, lvl))
+  nz <- max(unlist(lapply(rn, "[[", "cols")))
   ij <- which(upper.tri(diag(nz), diag = TRUE), arr.ind = TRUE)
-  D_names <- sprintf("D_%s_%s[%d,%d]", info$varname, lvl, ij[, 1], ij[, 2])
+  D_names <- sprintf("%s[%d,%d]", rn[[1]]$D, ij[, 1], ij[, 2])
 
   # D on the scaled scale must be positive definite
-  draws <- scaled_draws(fit, extra = c(b_names, D_names))
+  draws <- scaled_draws(
+    fit,
+    extra = c(unlist(lapply(rn, "[[", "b")), D_names)
+  )
   D_scaled <- lapply(seq_len(nrow(draws)), function(r) {
     crossprod(matrix(rnorm(nz^2), nz))
   })
@@ -427,46 +465,178 @@ expect_ranefs_invariant <- function(fit, outcome, lvl) {
   }
   rescaled <- rescale_draws(fit, draws)
 
-  Z <- z_mat(fit, lvl_info, scaled = FALSE)
-  Z_scaled <- z_mat(fit, lvl_info, scaled = TRUE)
-  grp <- fit$Mlist$groups[[lvl]]
-  for (r in seq_len(nrow(draws))) {
-    b <- matrix(rescaled[r, b_names], ng)
-    b_scaled <- matrix(draws[r, b_names], ng)
-    expect_equal(
-      rowSums(Z * b[grp, ]),
-      rowSums(Z_scaled * b_scaled[grp, ]),
-      info = paste(outcome, lvl)
-    )
+  lvl_infos <- lapply(outcomes, function(o) {
+    fit$info_list[[o]]$hc_list$hcvars[[lvl]]
+  })
+  Z <- lapply(lvl_infos, z_mat, fit = fit, scaled = FALSE)
+  Z_scaled <- lapply(lvl_infos, z_mat, fit = fit, scaled = TRUE)
 
+  for (r in seq_len(nrow(draws))) {
     D <- matrix(NA_real_, nz, nz)
     D[ij] <- rescaled[r, D_names]
     D[ij[, 2:1]] <- rescaled[r, D_names]
-    expect_equal(
-      Z %*% D %*% t(Z),
-      Z_scaled %*% D_scaled[[r]] %*% t(Z_scaled),
-      info = paste(outcome, lvl)
+    for (o in seq_along(outcomes)) {
+      for (p in seq_along(outcomes)) {
+        co <- rn[[o]]$cols
+        cp <- rn[[p]]$cols
+        expect_equal(
+          Z[[o]] %*% D[co, cp, drop = FALSE] %*% t(Z[[p]]),
+          Z_scaled[[o]] %*%
+            D_scaled[[r]][co, cp, drop = FALSE] %*%
+            t(Z_scaled[[p]]),
+          info = paste(outcomes[o], outcomes[p], lvl)
+        )
+      }
+    }
+  }
+
+  # Z b on the original scale differs from Z b on the scaled scale by a
+  # constant (the part of the fixed effects that moves into the random
+  # intercepts), also for values of the random-slope variables that are not
+  # in the data
+  for (o in seq_along(outcomes)) {
+    z_names <- attr(lvl_infos[[o]], "z_names")
+    ng <- nrow(rn[[o]]$b)
+    grp <- rep(seq_len(ng), 2)
+    sp <- do.call(rbind, unname(fit$Mlist$scale_pars))
+    sp$center[is.na(sp$center)] <- 0
+    sp$scale[is.na(sp$scale)] <- 1
+    Z_new <- matrix(
+      rnorm(length(grp) * length(z_names), 0, 3),
+      ncol = length(z_names),
+      dimnames = list(NULL, z_names)
     )
+    Z_new[, z_names == "(Intercept)"] <- 1
+    Z_new_scaled <- sweep(Z_new, 2, sp[z_names, "center"])
+    Z_new_scaled <- sweep(Z_new_scaled, 2, sp[z_names, "scale"], "/")
+    for (r in seq_len(nrow(draws))) {
+      b <- matrix(rescaled[r, rn[[o]]$b], ng)
+      b_scaled <- matrix(draws[r, rn[[o]]$b], ng)
+      d <- rowSums(Z_new * b[grp, , drop = FALSE]) -
+        rowSums(Z_new_scaled * b_scaled[grp, , drop = FALSE])
+      expect_equal(d, rep(d[1], length(d)), info = paste(outcomes[o], lvl))
+    }
   }
 }
+
+# outcomes with random effects, by grouping level and covariance matrix
+ranef_groups <- function(fit) {
+  out <- list()
+  for (outcome in names(fit$info_list)) {
+    for (lvl in names(fit$info_list[[outcome]]$hc_list$hcvars)) {
+      key <- paste(lvl, ranef_names(fit, outcome, lvl)$D)
+      out[[key]] <- list(lvl = lvl, outcomes = c(out[[key]]$outcomes, outcome))
+    }
+  }
+  out
+}
+
+ranef_cases <- c(
+  "glme_complex",
+  "lme_indep",
+  "lme_interaction_random",
+  "lme_nested",
+  "lme_spline_random",
+  "lme_two_outcomes_full",
+  "lognormmm_random_slope",
+  "mlogitmm_random_interaction",
+  "jm_assoc_type"
+)
 
 for (case in ranef_cases) {
   test_that(paste("re-scaled random effects and D are consistent:", case), {
     set.seed(2020)
     fit <- golden_case(case)
-    for (outcome in names(fit$info_list)) {
-      hcvars <- fit$info_list[[outcome]]$hc_list$hcvars
-      for (lvl in names(hcvars)) {
-        # random slopes only
-        if (length(attr(hcvars[[lvl]], "z_names")) > 1) {
-          expect_ranefs_invariant(fit, outcome, lvl)
-        }
-      }
+    for (g in ranef_groups(fit)) {
+      expect_ranefs_invariant(fit, g$outcomes, g$lvl)
     }
   })
 }
 
-test_that("random effects are not re-scaled if a random slope is incomplete", {
+# Linear predictor of a subject: offset + sum over the levels of Z b + X beta,
+# with X the covariates that are not in the means of the random effects
+# (these enter through b).
+expect_subject_lp_invariant <- function(fit, outcome) {
+  info <- fit$info_list[[outcome]]
+  hcvars <- info$hc_list$hcvars
+  rn <- lapply(names(hcvars), function(lvl) ranef_names(fit, outcome, lvl))
+
+  mean_terms <- character(0)
+  for (lvl_info in hcvars) {
+    slopes <- lvl_info$rd_slope_coefs
+    mean_terms <- c(
+      mean_terms,
+      lvl_info$rd_intercept_coefs$term,
+      slopes$term[!is.na(slopes$parelmts)],
+      lvl_info$rd_slope_interact_coefs$term
+    )
+  }
+
+  lps <- linear_predictors(info)
+  draws <- scaled_draws(
+    fit,
+    extra = c(
+      unlist(lapply(lps, "[[", "offsets")),
+      unlist(lapply(rn, "[[", "b"))
+    )
+  )
+  rescaled <- rescale_draws(fit, draws)
+
+  zb_all <- function(d, scaled) {
+    out <- 0
+    for (k in seq_along(hcvars)) {
+      grp <- fit$Mlist$groups[[names(hcvars)[k]]]
+      out <- out + zb_values(fit, hcvars[[k]], grp, rn[[k]]$b, d, scaled)
+    }
+    out
+  }
+
+  for (lp in lps) {
+    terms <- lp$terms[!lp$terms$column %in% mean_terms, ]
+    expect_offsets_invariant(
+      eta = lp_values(fit, terms, rescaled, scaled = FALSE) +
+        zb_all(rescaled, scaled = FALSE),
+      eta_scaled = lp_values(fit, terms, draws, scaled = TRUE) +
+        zb_all(draws, scaled = TRUE),
+      lp = lp,
+      rescaled = rescaled,
+      draws = draws,
+      info = paste(outcome, "subject level")
+    )
+  }
+}
+
+mixed_outcomes <- function(fit) {
+  Filter(
+    function(o) !is.null(fit$info_list[[o]]$hc_list$hcvars),
+    names(fit$info_list)
+  )
+}
+
+for (case in lp_cases) {
+  fit <- golden_case(case)
+  outcomes <- mixed_outcomes(fit)
+  if (length(outcomes) == 0) {
+    next
+  }
+  test_that(paste("linear predictor of a subject is the same:", case), {
+    set.seed(2020)
+    for (outcome in outcomes) {
+      expect_subject_lp_invariant(fit, outcome)
+    }
+  })
+}
+
+test_that("linear predictor of a subject with a cross-level interaction", {
+  set.seed(2020)
+  fit <- golden_fit(
+    quote(lme_imp(y ~ C1 * time + B1 * time + c1 + (time | id), data = longDF)),
+    list(longDF = JointAI::longDF)
+  )
+  expect_subject_lp_invariant(fit, "y")
+})
+
+test_that("random effects are re-scaled if a random slope is incomplete", {
   set.seed(2020)
   fit <- golden_fit(
     quote(lme_imp(y ~ C1 + c2 + time + (c2 | id), data = longDF)),
@@ -475,44 +645,26 @@ test_that("random effects are not re-scaled if a random slope is incomplete", {
   hc <- fit$info_list$y$hc_list
   expect_true(attr(hc$hcvars$id, "incomplete")[["c2"]])
   expect_false(is.na(fit$Mlist$scale_pars$M_lvlone["c2", "center"]))
-  # warning that is shown in the summary
-  expect_match(attr(hc, "warnings")$id, "not be possible to re-scale")
+  # no warning any more (the summary shows the warnings)
+  expect_null(unlist(attr(hc, "warnings")))
 
-  ranefs <- c(
-    sprintf("b_y_id[%d,%d]", 1:3, 1L),
-    sprintf("b_y_id[%d,%d]", 1:3, 2L),
-    "D_y_id[1,1]",
-    "D_y_id[1,2]",
-    "D_y_id[2,2]"
-  )
-  draws <- scaled_draws(fit, extra = ranefs)
-  rescaled <- rescale_draws(fit, draws)
-  expect_identical(rescaled[, ranefs], draws[, ranefs])
-  # the fixed effects are re-scaled
-  expect_lp_invariant(fit, "y")
+  expect_ranefs_invariant(fit, "y", "id")
+  expect_subject_lp_invariant(fit, "y")
 })
 
-test_that("rescale_rd_vcov() transforms each iteration of D (#67)", {
-  # the transformation is A D A' with A = z_inv %*% z_scaled; here constructed
-  # directly (a scaled 1 x 1 D occurs for a random slope without random
-  # intercept, for which A is not yet computed correctly, #66)
-  rdvcov_scale <- list(
-    y = list(id = list(z_inv = matrix(0.5), z_scaled = matrix(4)))
-  )
+test_that("rescale_vcov() transforms each iteration of D (#67)", {
+  # 1 x 1 (occurs for a random slope without random intercept)
   MCMC <- cbind("D_y_id[1,1]" = c(1, 2, 3), other = c(5, 6, 7))
-  rescaled <- rescale_rd_vcov(MCMC, rdvcov_scale)
+  rescaled <- rescale_vcov(MCMC, "D_y_id", A = matrix(2))
   expect_equal(rescaled[, "D_y_id[1,1]"], c(4, 8, 12))
   expect_identical(rescaled[, "other"], MCMC[, "other"])
 
   # 2 x 2: A D A' per iteration
   A <- matrix(c(1, 0.5, 0, 2), 2)
-  rdvcov_scale <- list(
-    y = list(id = list(z_inv = diag(2), z_scaled = A))
-  )
   D_names <- c("D_y_id[1,1]", "D_y_id[1,2]", "D_y_id[2,2]")
   MCMC <- rbind(c(1, 0.2, 2), c(3, -0.5, 1))
   colnames(MCMC) <- D_names
-  rescaled <- rescale_rd_vcov(MCMC, rdvcov_scale)
+  rescaled <- rescale_vcov(MCMC, "D_y_id", A = A)
   for (r in 1:2) {
     D <- matrix(MCMC[r, c(1, 2, 2, 3)], 2)
     expect_equal(
