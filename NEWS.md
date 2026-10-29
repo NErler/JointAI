@@ -29,6 +29,13 @@
   without random intercept, `(0 + time | id)`) had the same value in all
   iterations of a chain (that of the first iteration), so that `GR_crit()`
   was `Inf` (#67).
+* With scaled covariates (the default), the coefficients of mixed models with
+  an interaction between a covariate of a higher level (e.g., a baseline
+  variable) and a variable with a random slope, e.g.,
+  `lme_imp(y ~ trt * time + (time | id))`, were transformed back incorrectly:
+  the interaction, its main effects and the intercept (or the thresholds /
+  baseline hazard) did not correspond to the fitted model. Predictions of
+  such models change accordingly (#74).
 * The error message for variables of an unsupported class now names each
   variable correctly (it showed, e.g., "x1", "x2" for a variable "x" with two
   classes) (#17).
