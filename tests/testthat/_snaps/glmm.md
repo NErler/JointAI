@@ -46761,19 +46761,6 @@
       D_y_id[1,3]    0  0    0     0          0     NaN    NaN
       D_y_id[2,3]    0  0    0     0          0     NaN    NaN
       D_y_id[3,3]    0  0    0     0                NaN    NaN
-    Condition
-      Warning:
-      
-      There are missing values in a variable for which a random effect is
-      specified (“c2”). It will not be possible to re-scale the random
-      effects “b_y_id” and their variance covariance matrix “D_y_id” back to
-      the original scale of the data. If you are not interested in the
-      estimated random effects or their (co)variances this is not a problem.
-      The fixed effects estimates are not affected by this.  If you are
-      interested in the random effects or the (co)variances you need to
-      specify that “time” and “c2” are not scaled (using the argument
-      “scale_params”).
-    Output
       
       
       Posterior summary of residual std. deviation:
@@ -46834,19 +46821,6 @@
       D_y_id[1,3]    0  0    0     0          0     NaN    NaN
       D_y_id[2,3]    0  0    0     0          0     NaN    NaN
       D_y_id[3,3]    0  0    0     0                NaN    NaN
-    Condition
-      Warning:
-      
-      There are missing values in a variable for which a random effect is
-      specified (“c2”). It will not be possible to re-scale the random
-      effects “b_y_id” and their variance covariance matrix “D_y_id” back to
-      the original scale of the data. If you are not interested in the
-      estimated random effects or their (co)variances this is not a problem.
-      The fixed effects estimates are not affected by this.  If you are
-      interested in the random effects or the (co)variances you need to
-      specify that “time” and “c2” are not scaled (using the argument
-      “scale_params”).
-    Output
       
       
       Posterior summary of residual std. deviation:
@@ -47036,19 +47010,6 @@
       D_y_id[1,3]    0  0    0     0          0     NaN    NaN
       D_y_id[2,3]    0  0    0     0          0     NaN    NaN
       D_y_id[3,3]    0  0    0     0                NaN    NaN
-    Condition
-      Warning:
-      
-      There are missing values in a variable for which a random effect is
-      specified (“c2”). It will not be possible to re-scale the random
-      effects “b_y_id” and their variance covariance matrix “D_y_id” back to
-      the original scale of the data. If you are not interested in the
-      estimated random effects or their (co)variances this is not a problem.
-      The fixed effects estimates are not affected by this.  If you are
-      interested in the random effects or the (co)variances you need to
-      specify that “time” and “c2” are not scaled (using the argument
-      “scale_params”).
-    Output
       
       
       Posterior summary of residual std. deviation:
@@ -47114,19 +47075,6 @@
       D_y_id[1,3]    0  0    0     0          0     NaN    NaN
       D_y_id[2,3]    0  0    0     0          0     NaN    NaN
       D_y_id[3,3]    0  0    0     0                NaN    NaN
-    Condition
-      Warning:
-      
-      There are missing values in a variable for which a random effect is
-      specified (“c2”). It will not be possible to re-scale the random
-      effects “b_y_id” and their variance covariance matrix “D_y_id” back to
-      the original scale of the data. If you are not interested in the
-      estimated random effects or their (co)variances this is not a problem.
-      The fixed effects estimates are not affected by this.  If you are
-      interested in the random effects or the (co)variances you need to
-      specify that “time” and “c2” are not scaled (using the argument
-      “scale_params”).
-    Output
       
       
       Posterior summary of residual std. deviation:
@@ -47192,19 +47140,6 @@
       D_y_id[1,3]    0  0    0     0          0     NaN    NaN
       D_y_id[2,3]    0  0    0     0          0     NaN    NaN
       D_y_id[3,3]    0  0    0     0                NaN    NaN
-    Condition
-      Warning:
-      
-      There are missing values in a variable for which a random effect is
-      specified (“c2”). It will not be possible to re-scale the random
-      effects “b_y_id” and their variance covariance matrix “D_y_id” back to
-      the original scale of the data. If you are not interested in the
-      estimated random effects or their (co)variances this is not a problem.
-      The fixed effects estimates are not affected by this.  If you are
-      interested in the random effects or the (co)variances you need to
-      specify that “time” and “c2” are not scaled (using the argument
-      “scale_params”).
-    Output
       
       
       Posterior summary of residual std. deviation:
@@ -47400,19 +47335,6 @@
       D_y_id[1,3]    0  0    0     0          0     NaN    NaN
       D_y_id[2,3]    0  0    0     0          0     NaN    NaN
       D_y_id[3,3]    0  0    0     0                NaN    NaN
-    Condition
-      Warning:
-      
-      There are missing values in a variable for which a random effect is
-      specified (“c2”). It will not be possible to re-scale the random
-      effects “b_y_id” and their variance covariance matrix “D_y_id” back to
-      the original scale of the data. If you are not interested in the
-      estimated random effects or their (co)variances this is not a problem.
-      The fixed effects estimates are not affected by this.  If you are
-      interested in the random effects or the (co)variances you need to
-      specify that “time” and “c2” are not scaled (using the argument
-      “scale_params”).
-    Output
       
       
       Posterior summary of residual std. deviation:
@@ -47478,19 +47400,6 @@
       D_y_id[1,3]    0  0    0     0          0     NaN    NaN
       D_y_id[2,3]    0  0    0     0          0     NaN    NaN
       D_y_id[3,3]    0  0    0     0                NaN    NaN
-    Condition
-      Warning:
-      
-      There are missing values in a variable for which a random effect is
-      specified (“c2”). It will not be possible to re-scale the random
-      effects “b_y_id” and their variance covariance matrix “D_y_id” back to
-      the original scale of the data. If you are not interested in the
-      estimated random effects or their (co)variances this is not a problem.
-      The fixed effects estimates are not affected by this.  If you are
-      interested in the random effects or the (co)variances you need to
-      specify that “time” and “c2” are not scaled (using the argument
-      “scale_params”).
-    Output
       
       
       Posterior summary of residual std. deviation:
