@@ -117,7 +117,7 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
   scale_pars$center[is.na(scale_pars$center)] <- 0
   scale_pars$scale[is.na(scale_pars$scale)] <- 1
 
-  MCMC <- rescale_coefs(MCMC, coefs, scale_pars, info_list)
+  MCMC <- rescale_coefs(MCMC, coefs, scale_pars, info_list, data_list)
 
   rdvcov_scale <- get_rdvcov_scalemat(scale_pars, info_list, data_list, groups)
   MCMC <- rescale_rd_vcov(MCMC, rdvcov_scale)
@@ -140,6 +140,14 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
 #' (`beta_Bh0_<y>`; all by the same amount, because the rows of the B-spline
 #' basis sum to 1).
 #'
+#' Cross-level interactions in the mean of a random slope (hierarchical
+#' centring; e.g. `C1:time` with `(time | id)`) enter JAGS as the product of
+#' the separately scaled variables `w` (higher level) and `z` (random-slope
+#' variable): `(w - c_w) / s_w * (z - c_z) / s_z`. The coefficient is divided by
+#' `s_w * s_z`, the coefficients of `w` and `z` change by
+#' `-beta_s * c_z / (s_w * s_z)` and `-beta_s * c_w / (s_w * s_z)`, and the
+#' intercept by `+beta_s * c_w * c_z / (s_w * s_z)`.
+#'
 #' A linear predictor is identified by the outcome and, for models with
 #' category-specific coefficients (e.g. multinomial models), the category
 #' (`coefs$outcat`; `NA` otherwise). All matching is done by name: parameters
@@ -152,23 +160,41 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
 #' @return Matrix with the same columns as `MCMC`; all other parameters are
 #'   unchanged.
 #' @noRd
-rescale_coefs <- function(MCMC, coefs, scale_pars, info_list) {
+rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
   rescaled <- matrix(
     MCMC,
     nrow = nrow(MCMC),
     dimnames = list(NULL, colnames(MCMC))
   )
 
+  # no regression coefficients (e.g., ordinal model without covariates)
+  if (NROW(coefs) == 0L) {
+    return(rescaled)
+  }
+
+  # Per coefficient: the term is (x - center) / divisor in JAGS, with x the
+  # column of the design matrix (scaled separately), or, for cross-level
+  # interactions, x = w * z, center = -c_w * c_z and divisor = s_w * s_z (the
+  # remaining terms of the product are handled below).
+  coefs$center <- scale_pars[coefs$varname, "center"]
+  coefs$divisor <- scale_pars[coefs$varname, "scale"]
+  ia <- get_slope_interactions(info_list, data_list)
+  ia_row <- match(
+    paste(coefs$outcome, coefs$varname),
+    paste(ia$outcome, ia$term)
+  )
+  is_product <- !is.na(ia_row)
+  sp_w <- scale_pars[ia$w[ia_row[is_product]], ]
+  sp_z <- scale_pars[ia$z[ia_row[is_product]], ]
+  coefs$center[is_product] <- -sp_w$center * sp_z$center
+  coefs$divisor[is_product] <- sp_w$scale * sp_z$scale
+
   # Shift of a linear predictor caused by the centring, sum(beta_s * center /
-  # scale), from the coefficients on the scale used in JAGS. It needs all
+  # divisor), from the coefficients on the scale used in JAGS. It needs all
   # coefficients of the linear predictor: if one was not monitored, this fails.
   lp_shift <- function(lp_coefs) {
     beta_s <- MCMC[, lp_coefs$coef, drop = FALSE]
-    shift <- t(
-      t(beta_s) *
-        scale_pars[lp_coefs$varname, "center"] /
-        scale_pars[lp_coefs$varname, "scale"]
-    )
+    shift <- t(t(beta_s) * lp_coefs$center / lp_coefs$divisor)
     rowSums(shift)
   }
 
@@ -220,11 +246,67 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list) {
   # Coefficients of covariates
   covar_coefs <- coefs[!is_intercept & monitored, ]
   rescaled[, covar_coefs$coef] <- t(
-    t(MCMC[, covar_coefs$coef, drop = FALSE]) /
-      scale_pars[covar_coefs$varname, "scale"]
+    t(MCMC[, covar_coefs$coef, drop = FALSE]) / covar_coefs$divisor
   )
 
+  # Cross-level interactions: the centring of w (z) in the product also
+  # changes the coefficient of z (w) of the same linear predictor
+  for (k in which(is_product & monitored)) {
+    lp_coefs <- coefs[
+      coefs$outcome == coefs$outcome[k] & coefs$outcat %in% coefs$outcat[k],
+    ]
+    w <- ia$w[ia_row[k]]
+    z <- ia$z[ia_row[k]]
+    targets <- lp_coefs$coef[match(c(w, z), lp_coefs$varname)]
+    other_center <- c(scale_pars[z, "center"], scale_pars[w, "center"])
+    for (j in which(targets %in% colnames(MCMC))) {
+      rescaled[, targets[j]] <- rescaled[, targets[j]] -
+        MCMC[, coefs$coef[k]] * other_center[j] / coefs$divisor[k]
+    }
+  }
+
   rescaled
+}
+
+
+#' Cross-level interactions in the means of random slopes
+#'
+#' With hierarchical centring, an interaction of a covariate `w` of a higher
+#' level with a random-slope variable `z` enters the mean of that random slope,
+#' so that the JAGS model contains `beta * w * z` with `w` and `z` scaled
+#' separately (not the scaled column `w:z`).
+#'
+#' @inheritParams rescale
+#' @return `data.frame` with one row per such term: `outcome` (name of the
+#'   outcome as in `coefs`), `term` (column name of the interaction), `w` and
+#'   `z` (column names of the two variables); `NULL` if there are none.
+#' @noRd
+get_slope_interactions <- function(info_list, data_list) {
+  do.call(
+    rbind,
+    lapply(info_list, function(info) {
+      do.call(
+        rbind,
+        lapply(info$hc_list$hcvars, function(lvl) {
+          ia <- lvl$rd_slope_interact_coefs
+          if (NROW(ia) == 0L) {
+            return(NULL)
+          }
+          slopes <- lvl$rd_slope_coefs
+          data.frame(
+            outcome = unname(info$varname),
+            term = ia$term,
+            w = vapply(
+              seq_len(nrow(ia)),
+              function(k) colnames(data_list[[ia$matrix[k]]])[ia$cols[k]],
+              character(1L)
+            ),
+            z = slopes$term[match(ia$rd_effect, slopes$rd_effect)]
+          )
+        })
+      )
+    })
+  )
 }
 
 
