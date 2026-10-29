@@ -572,13 +572,21 @@ expect_subject_lp_invariant <- function(fit, outcome) {
     )
   }
 
+  # random effects of all outcomes that share a covariance matrix with this
+  # outcome (rd_vcov = "full"): they are transformed back together
+  b_shared <- character(0)
+  for (g in ranef_groups(fit)) {
+    if (outcome %in% g$outcomes) {
+      for (o in g$outcomes) {
+        b_shared <- c(b_shared, ranef_names(fit, o, g$lvl)$b)
+      }
+    }
+  }
+
   lps <- linear_predictors(info)
   draws <- scaled_draws(
     fit,
-    extra = c(
-      unlist(lapply(lps, "[[", "offsets")),
-      unlist(lapply(rn, "[[", "b"))
-    )
+    extra = c(unlist(lapply(lps, "[[", "offsets")), b_shared)
   )
   rescaled <- rescale_draws(fit, draws)
 
