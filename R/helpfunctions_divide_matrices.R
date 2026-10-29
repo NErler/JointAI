@@ -248,8 +248,9 @@ extract_outcome_data <- function(
       if (i == 1L) {
         attr(fixed[[i]], "type") <- paste_analysis_type(analysis_type)
       } else {
+        # the variable, not the one-column data.frame
         attr(fixed[[i]], "type") <- choose_default_model(
-          outcomes[[i]],
+          outcomes[[i]][[1L]],
           lvls[varlvl],
           max(lvls)
         )
