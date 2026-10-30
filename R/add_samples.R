@@ -47,35 +47,54 @@
 #'                     add = FALSE)
 #'
 
-add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
-                        monitor_params = NULL, progress.bar = "text",
-                        mess = TRUE) {
-
-  if (!inherits(object, "JointAI"))
+add_samples <- function(
+  object,
+  n.iter,
+  add = TRUE,
+  thin = NULL,
+  monitor_params = NULL,
+  progress.bar = "text",
+  mess = TRUE
+) {
+  if (!inherits(object, "JointAI")) {
     errormsg("Use only with 'JointAI' objects.")
+  }
 
   # check/set settings -----------------------------------------------------
-  thin <- check_add_thinning(object = object, thin = thin, add = add,
-                             mess = mess)
+  thin <- check_add_thinning(
+    object = object,
+    thin = thin,
+    add = add,
+    mess = mess
+  )
 
-  var_names <- check_add_varnames(object = object,
-                                  monitor_params = monitor_params,
-                                  add = add, mess = mess)
-
+  var_names <- check_add_varnames(
+    object = object,
+    monitor_params = monitor_params,
+    add = add,
+    mess = mess
+  )
 
   # run mcmc ----------------------------------------------------------------
 
-  jags_res <- run_parallel(n_adapt = NULL, n_iter = n.iter,
-                           n_chains = object$mcmc_settings$n.chains,
-                           inits = NULL, thin = thin,
-                           data_list = NULL, var_names = var_names,
-                           modelfile = NULL, quiet = TRUE,
-                           progress_bar = progress.bar, mess = mess,
-                           warn = TRUE, add_samples = TRUE,
-                           models = object$model)
+  jags_res <- run_parallel(
+    n_adapt = NULL,
+    n_iter = n.iter,
+    n_chains = object$mcmc_settings$n.chains,
+    inits = NULL,
+    thin = thin,
+    data_list = NULL,
+    var_names = var_names,
+    modelfile = NULL,
+    quiet = TRUE,
+    progress_bar = progress.bar,
+    mess = mess,
+    warn = TRUE,
+    add_samples = TRUE,
+    models = object$model
+  )
   adapt <- jags_res$adapt
   mcmc <- jags_res$mcmc
-
 
   # process MCMC samples --------------------------------------------------------
   MCMC <- mcmc
@@ -85,12 +104,15 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
 
     for (k in seq_len(length(MCMC))) {
       MCMC[[k]] <- coda::as.mcmc(
-        rescale(MCMC[[k]],
-                coefs = do.call(rbind, coefs),
-                scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
-                info_list = object$info_list,
-                data_list = object$data_list,
-                groups = object$Mlist$groups))
+        rescale(
+          MCMC[[k]],
+          coefs = do.call(rbind, coefs),
+          scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
+          info_list = object$info_list,
+          data_list = object$data_list,
+          groups = object$Mlist$groups
+        )
+      )
 
       attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
     }
@@ -100,29 +122,33 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (isTRUE(add)) {
     newmcmc <- if (!is.null(object$sample)) {
       coda::as.mcmc.list(
-        lapply(seq_len(length(mcmc)),
-               function(x) coda::mcmc(rbind(object$sample[[x]],
-                                            mcmc[[x]]),
-                                      start = start(object$sample),
-                                      end = end(object$sample) +
-                                        coda::niter(mcmc[[x]])
-               )
-        ))
+        lapply(seq_len(length(mcmc)), function(x) {
+          coda::mcmc(
+            rbind(object$sample[[x]], mcmc[[x]]),
+            start = start(object$sample),
+            end = end(object$sample) +
+              coda::niter(mcmc[[x]])
+          )
+        })
+      )
     }
 
     newMCMC <- coda::as.mcmc.list(
-      lapply(seq_len(length(MCMC)), function(k)
-        coda::mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
-                   start = start(object$MCMC),
-                   end = end(object$MCMC) + coda::niter(mcmc[[k]]) *
-                     coda::thin(mcmc[[k]]),
-                   thin = coda::thin(mcmc[[k]]))
-      ))
+      lapply(seq_len(length(MCMC)), function(k) {
+        coda::mcmc(
+          rbind(object$MCMC[[k]], MCMC[[k]]),
+          start = start(object$MCMC),
+          end = end(object$MCMC) +
+            coda::niter(mcmc[[k]]) *
+              coda::thin(mcmc[[k]]),
+          thin = coda::thin(mcmc[[k]])
+        )
+      })
+    )
   } else {
     newmcmc <- if (!is.null(object$sample)) mcmc
     newMCMC <- MCMC
   }
-
 
   # create new JointAI object --------------------------------------------------
   newobject <- object
@@ -130,8 +156,10 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$MCMC <- newMCMC
   newobject$call <- c(object$call, match.call())
   newobject$mcmc_settings$variable.names <- var_names
-  newobject$comp_info$parallel <- c(object$comp_info$parallel,
-                                  jags_res$parallel)
+  newobject$comp_info$parallel <- c(
+    object$comp_info$parallel,
+    jags_res$parallel
+  )
   newobject$model <- if (isTRUE(jags_res$parallel)) {
     adapt
   } else {
@@ -141,55 +169,79 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   # add/set new argument values n.iter and thin to/in JointAI object
   newobject$mcmc_settings$n.iter <- c(object$mcmc_settings$n.iter, n.iter)
 
-  newobject$mcmc_settings$thin <- c(object$mcmc_settings$thin,
-                                    coda::thin(newMCMC))
+  newobject$mcmc_settings$thin <- c(
+    object$mcmc_settings$thin,
+    coda::thin(newMCMC)
+  )
 
   # add computational time to JointAI object
   newobject$comp_info$duration <- rbind_duration(
     object$comp_info$duration,
-    list("adapt" = jags_res$time_adapt,
-         "sample" = jags_res$time_sample))
+    list("adapt" = jags_res$time_adapt, "sample" = jags_res$time_sample)
+  )
 
   return(newobject)
 }
 
 
-
-
 check_add_thinning <- function(thin, object, add, mess = TRUE) {
-
   if (is.null(thin)) {
     thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
   } else {
-    if (add &
-        thin != object$mcmc_settings$thin[length(object$mcmc_settings$thin)]) {
+    if (
+      add &
+        thin != object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
+    ) {
       thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
 
-      if (mess)
-        msg("When adding samples (%s) the thinning interval cannot be
+      if (mess) {
+        msg(
+          "When adding samples (%s) the thinning interval cannot be
            changed. I will use the setting of the existing object
-          (%s).", dQuote("add = TRUE"), dQuote(paste0("thin = ", thin)))
+          (%s).",
+          dQuote("add = TRUE"),
+          dQuote(paste0("thin = ", thin))
+        )
+      }
     }
   }
   thin
 }
 
 
-
 check_add_varnames <- function(object, monitor_params, mess = TRUE, add) {
-
   if (is.null(monitor_params)) {
     var_names <- object$mcmc_settings$variable.names
   } else {
-    var_names <- do.call(get_params,
-                         c(list(Mlist = get_Mlist(object),
-                                info_list = object$info_list,
-                                mess = mess),
-                           monitor_params))
+    var_names <- do.call(
+      get_params,
+      c(
+        list(
+          Mlist = get_Mlist(object),
+          info_list = object$info_list,
+          mess = mess
+        ),
+        monitor_params
+      )
+    )
+
+    # with scaled covariates, monitored random effects can only be
+    # transformed back if some other parameters are monitored as well
+    if (any(!is.na(unlist(object$Mlist$scale_pars)))) {
+      var_names <- complete_ranef_monitoring(
+        var_names,
+        object$info_list,
+        mess = mess
+      )
+    }
   }
-  if (!identical(var_names, object$mcmc_settings$variable.names) & add)
-    errormsg("When %s it is not possible to monitor different parameters than
-             were monitored in the original model.", dQuote("add = TRUE"))
+  if (!identical(var_names, object$mcmc_settings$variable.names) & add) {
+    errormsg(
+      "When %s it is not possible to monitor different parameters than
+             were monitored in the original model.",
+      dQuote("add = TRUE")
+    )
+  }
 
   var_names
 }
