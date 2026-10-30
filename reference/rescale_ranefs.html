@@ -108,7 +108,7 @@ columns).</p></dd>
 
 <dt id="arg-groups">groups<a class="anchor" aria-label="anchor" href="#arg-groups"></a></dt>
 <dd><p>list of grouping information (<code>Mlist$groups</code>; for the number
-of groups per level).</p></dd>
+of groups per level, and to find the rows of covariates per group).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -125,8 +125,12 @@ within a group and moves to the random intercept
 contain fixed effects. These are transformed back separately
 (<code>rescale_coefs()</code>, e.g. the intercept takes the centring of all
 covariates); <code>delta</code> keeps <code>b</code> consistent with them (<code><a href="ranef_shift.html">ranef_shift()</a></code>).</p></li>
-</ul><p>Neither needs the data, so the random effects are transformed back also
-when a random-slope variable has missing values.</p>
+</ul><p><code>A</code> does not need the data, so the random effects are transformed back
+also when a random-slope variable has missing values. <code>delta</code> usually does
+not need the data either. If it depends on covariates (see
+<code><a href="ranef_covariate_shift.html">ranef_covariate_shift()</a></code>), the values of each group are used: observed or,
+if missing, imputed values (if they were monitored). Without them, the
+random effects of that group are set to <code>NA</code>, with a warning.</p>
 <p>The random effects are transformed per "block": the random effects that
 share one covariance matrix (<code><a href="get_ranef_blocks.html">get_ranef_blocks()</a></code>). Usually, a block holds
 the random effects of one outcome at one grouping level; with

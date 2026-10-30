@@ -85,9 +85,10 @@ columns).</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>data.frame</code> with one row per term: <code>rd_effect</code> (the random effect
 whose mean contains the term), <code>coef_term</code> (column name of the term, to
-find its coefficient) and <code>w</code> (column name of the covariate the
+find its coefficient), <code>w</code> (column name of the covariate the
 coefficient is multiplied with; <code>NA</code> for a constant, i.e. the intercept or
-the coefficient of the random-slope variable itself).</p>
+the coefficient of the random-slope variable itself), and <code>w_matrix</code> and
+<code>w_col</code> (data matrix and column number of <code>w</code>; <code>NA</code> for a constant).</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

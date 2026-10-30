@@ -48,7 +48,7 @@ rescale_ranefs(rescaled, MCMC, coefs, scale_pars, info_list, data_list, groups)
 - groups:
 
   list of grouping information (`Mlist$groups`; for the number of groups
-  per level).
+  per level, and to find the rows of covariates per group).
 
 ## Value
 
@@ -69,8 +69,13 @@ transformed back.
   covariates); `delta` keeps `b` consistent with them
   ([`ranef_shift()`](https://nerler.github.io/JointAI/reference/ranef_shift.md)).
 
-Neither needs the data, so the random effects are transformed back also
-when a random-slope variable has missing values.
+`A` does not need the data, so the random effects are transformed back
+also when a random-slope variable has missing values. `delta` usually
+does not need the data either. If it depends on covariates (see
+[`ranef_covariate_shift()`](https://nerler.github.io/JointAI/reference/ranef_covariate_shift.md)),
+the values of each group are used: observed or, if missing, imputed
+values (if they were monitored). Without them, the random effects of
+that group are set to `NA`, with a warning.
 
 The random effects are transformed per "block": the random effects that
 share one covariance matrix

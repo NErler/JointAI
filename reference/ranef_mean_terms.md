@@ -26,6 +26,7 @@ ranef_mean_terms(lvl_info, data_list)
 
 `data.frame` with one row per term: `rd_effect` (the random effect whose
 mean contains the term), `coef_term` (column name of the term, to find
-its coefficient) and `w` (column name of the covariate the coefficient
-is multiplied with; `NA` for a constant, i.e. the intercept or the
-coefficient of the random-slope variable itself).
+its coefficient), `w` (column name of the covariate the coefficient is
+multiplied with; `NA` for a constant, i.e. the intercept or the
+coefficient of the random-slope variable itself), and `w_matrix` and
+`w_col` (data matrix and column number of `w`; `NA` for a constant).

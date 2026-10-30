@@ -70,6 +70,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/get_nranef.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_ranef_blocks.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_resp_mat.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/group_covariate_values.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/hc_rdslope_info.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/hc_rdslope_interact.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/index.html</loc></url>
@@ -96,6 +97,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/predDF.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/predict.JointAI.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/prep_arglist.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/ranef_covariate_shift.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ranef_mean_terms.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ranef_shift.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ranef_transformation.html</loc></url>
