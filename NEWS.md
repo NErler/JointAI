@@ -45,6 +45,19 @@
   coefficient did not correspond to the model. It is now only part of the
   mean of the random effects of the highest level. Results of such models
   fitted with earlier versions differ (#76).
+* With scaled covariates (the default), the random effects of mixed models
+  with more than one grouping level were transformed back incorrectly when a
+  covariate is in a cross-level interaction with a random-slope variable and
+  its main effect is in the mean of random effects of a higher level, e.g.,
+  `lme_imp(y ~ C1 * time + (time | id) + (C1 | center))` or
+  `lme_imp(y ~ Zc * time + (time | id) + (1 | center))` with `Zc` a
+  center-level covariate: part of the effect of the covariate was in the
+  random effects of the wrong level (or, in the first example, counted
+  twice). This back-transformation needs the value of the covariate per
+  group; if it has missing values, the random effects of these groups are
+  only transformed back when the imputed values are monitored
+  (`monitor_params = c(imps = TRUE)`), otherwise they are set to `NA` with a
+  warning (#83).
 * With scaled covariates (the default), the random effects of mixed models and
   their variance-covariance matrices were not always transformed back
   correctly: the random effects did not take into account the centring of
