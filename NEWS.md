@@ -46,6 +46,11 @@
   transformed back at all (#63). Random effects and their covariance matrix
   are now also transformed back when a variable with a random slope has
   missing values; the warning that this was not possible is removed.
+  When only some random effects or elements of their covariance matrix are
+  monitored, the parameters needed for the back-transformation are added
+  to the monitored parameters (only the other random effects of the
+  selected groups, the covariance matrix, and the regression coefficients
+  of the model), with a message (see `monitor_params` in `?model_imp`).
 * The error message for variables of an unsupported class now names each
   variable correctly (it showed, e.g., "x1", "x2" for a variable "x" with two
   classes) (#17).
