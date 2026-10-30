@@ -665,6 +665,111 @@ complete_ranef_monitoring <- function(var_names, info_list, mess = TRUE) {
 }
 
 
+#' Complete the monitored parameters for transforming coefficients back
+#'
+#' With scaled covariates, the coefficients are transformed back after
+#' sampling (`rescale_coefs()`). The intercept, the thresholds (ordinal models)
+#' and the coefficients of the baseline hazard (proportional hazards models)
+#' of a sub-model take the centring of all its covariates, and the
+#' coefficients of the variables in cross-level interactions are corrected
+#' with the coefficients of the interactions. Therefore, if a coefficient, a
+#' threshold or a coefficient of the baseline hazard of a sub-model is
+#' monitored, all regression coefficients of that sub-model are monitored
+#' (not those of other sub-models).
+#'
+#' @param var_names character vector of the parameters (nodes) to monitor, as
+#'   passed to JAGS (`get_params()`).
+#' @param info_list list with the model information of each sub-model
+#'   (`get_model_info()`).
+#' @param mess logical; show a message about the added parameters?
+#' @return `var_names` with the parameters that need to be added.
+#' @keywords internal
+complete_coef_monitoring <- function(var_names, info_list, mess = TRUE) {
+  # nothing monitored
+  if (length(var_names) == 0L) {
+    return(var_names)
+  }
+
+  coefs <- do.call(rbind, get_coef_names(info_list))
+  added <- character(0L)
+
+  for (info in info_list) {
+    model_coefs <- coefs$coef[coefs$outcome %in% info$varname]
+    # no coefficients, or all of them are monitored (whole node)
+    if (length(model_coefs) == 0L || info$parname %in% var_names) {
+      next
+    }
+
+    is_monitored <- vapply(
+      model_coefs,
+      coef_is_monitored,
+      logical(1L),
+      var_names = var_names
+    )
+
+    # thresholds and baseline hazard, as whole node or single elements
+    other_nodes <- paste0(c("gamma_", "beta_Bh0_"), info$varname)
+    uses_coefs <- any(is_monitored)
+    for (node in other_nodes) {
+      if (
+        node %in% var_names || any(startsWith(var_names, paste0(node, "[")))
+      ) {
+        uses_coefs <- TRUE
+      }
+    }
+
+    if (uses_coefs && !all(is_monitored)) {
+      new <- model_coefs[!is_monitored]
+      var_names <- c(var_names, new)
+      added <- c(added, new)
+    }
+  }
+
+  if (mess && length(added) > 0L) {
+    msg(
+      "Note: To transform the monitored parameters back to the scale of the
+      original (unscaled) covariates, the following parameters were added to
+      the monitored parameters: %s.",
+      paste_and(dQuote(added))
+    )
+  }
+  var_names
+}
+
+
+#' Is a regression coefficient monitored?
+#'
+#' @param coef name of the coefficient, e.g. `"alpha[3]"` (or `"beta"` for a
+#'   single coefficient, as in `coef_list`).
+#' @param var_names character vector of the parameters (nodes) to monitor.
+#' @return `TRUE` if the coefficient is monitored, as the whole node (e.g.
+#'   `"alpha"`), as element (`"alpha[3]"`), or as part of a range of elements
+#'   (`"alpha[2:4]"`).
+#' @keywords internal
+coef_is_monitored <- function(coef, var_names) {
+  node <- sub("\\[.*$", "", coef)
+  if (coef %in% var_names || node %in% var_names) {
+    return(TRUE)
+  }
+  # a single coefficient without index (named like the node)
+  if (coef == node) {
+    return(FALSE)
+  }
+
+  # ranges of elements of the same node
+  index <- as.integer(sub("^.*\\[([0-9]+)\\]$", "\\1", coef))
+  ranges <- var_names[startsWith(var_names, paste0(node, "["))]
+  ranges <- sub("^[^[]*\\[(.*)\\]$", "\\1", ranges)
+  ranges <- ranges[grepl("^[0-9]+:[0-9]+$", ranges)]
+  for (r in ranges) {
+    if (index %in% index_range(r)) {
+      return(TRUE)
+    }
+  }
+  FALSE
+}
+
+
 #' Positions given as text
 #'
 #' @param x character string with one position (e.g. `"3"`) or a range of

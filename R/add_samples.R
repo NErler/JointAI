@@ -225,9 +225,15 @@ check_add_varnames <- function(object, monitor_params, mess = TRUE, add) {
       )
     )
 
-    # with scaled covariates, monitored random effects can only be
-    # transformed back if some other parameters are monitored as well
+    # with scaled covariates, monitored coefficients, thresholds, baseline
+    # hazards and random effects can only be transformed back if some other
+    # parameters are monitored as well
     if (any(!is.na(unlist(object$Mlist$scale_pars)))) {
+      var_names <- complete_coef_monitoring(
+        var_names,
+        object$info_list,
+        mess = mess
+      )
       var_names <- complete_ranef_monitoring(
         var_names,
         object$info_list,

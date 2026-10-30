@@ -1055,3 +1055,140 @@ test_that("monitored random effects are transformed back (short MCMC run)", {
     fit$sample[[1]][, "b_y_id[5,2]"]
   )))
 })
+
+test_that("a monitored beta[...] is not monitored twice (F8)", {
+  fit <- suppressMessages(lm_imp(
+    y ~ C1 + C2,
+    data = wideDF,
+    monitor_params = c(analysis_main = FALSE, other = "beta[2]"),
+    n.adapt = 0,
+    n.iter = 0,
+    seed = 2020,
+    warn = FALSE
+  ))
+  # "beta" (all coefficients) is monitored instead of "beta[2]"
+  expect_identical(fit$mcmc_settings$variable.names, "beta")
+})
+
+# With scaled covariates, the intercept, the thresholds and the baseline hazard
+# of a sub-model are transformed back with all its coefficients, and the
+# coefficients of variables in cross-level interactions with the coefficients
+# of the interactions. If a coefficient, threshold or baseline-hazard
+# parameter of a sub-model is monitored, all its coefficients are therefore
+# monitored as well.
+setup_coef_monitor <- function(fun, ..., monitor_params, scale_vars = NULL) {
+  fun(
+    ...,
+    monitor_params = monitor_params,
+    scale_vars = scale_vars,
+    n.adapt = 0,
+    n.iter = 0,
+    seed = 2020,
+    warn = FALSE
+  )
+}
+
+test_that("monitoring of coefficients is completed for re-scaling (F11)", {
+  # (suppressMessages() for the note that no MCMC sample is created)
+
+  # intercept of a covariate model: the other coefficients of that model are
+  # added, not those of other models
+  setup_C2 <- function(other) {
+    setup_coef_monitor(
+      lm_imp,
+      y ~ C1 + C2 + B2,
+      data = wideDF,
+      models = c(C2 = "lm", B2 = "glm_binomial_logit"),
+      monitor_params = list(analysis_main = FALSE, other = other)
+    )
+  }
+  intercept_C2 <- suppressMessages(setup_C2(NULL))$coef_list$C2$coef[1]
+  suppressMessages(expect_message(
+    fit <- setup_C2(intercept_C2),
+    "were added"
+  ))
+  vn <- fit$mcmc_settings$variable.names
+  expect_true(all(fit$coef_list$C2$coef %in% vn))
+  expect_false(any(fit$coef_list$B2$coef %in% vn))
+  expect_false(any(fit$coef_list$y$coef %in% vn))
+
+  # thresholds of an ordinal model
+  suppressMessages(expect_message(
+    fit <- setup_coef_monitor(
+      clm_imp,
+      O1 ~ C1 + C2,
+      data = wideDF,
+      monitor_params = c(analysis_main = FALSE, gamma_main = TRUE)
+    ),
+    "beta\\[1\\]"
+  ))
+  vn <- fit$mcmc_settings$variable.names
+  expect_true(all(c("gamma_O1", fit$coef_list$O1$coef) %in% vn))
+
+  # thresholds of an ordinal covariate model
+  suppressMessages(
+    fit <- setup_coef_monitor(
+      lm_imp,
+      y ~ C1 + O2,
+      data = wideDF,
+      monitor_params = c(analysis_main = FALSE, gamma_other = TRUE)
+    )
+  )
+  vn <- fit$mcmc_settings$variable.names
+  expect_true(all(fit$coef_list$O2$coef %in% vn))
+
+  # baseline hazard of a proportional hazards model
+  suppressMessages(
+    fit <- setup_coef_monitor(
+      coxph_imp,
+      Surv(futime, status != "censored") ~ age + sex,
+      data = golden_data()$PBC2_small,
+      monitor_params = c(analysis_main = FALSE, basehaz = TRUE)
+    )
+  )
+  vn <- fit$mcmc_settings$variable.names
+  outcome <- names(fit$coef_list)[1]
+  expect_true(all(fit$coef_list[[outcome]]$coef %in% vn))
+
+  # a coefficient of a covariate model: all coefficients of that model
+  suppressMessages(
+    fit <- setup_coef_monitor(
+      lm_imp,
+      y ~ C1 + C2,
+      data = wideDF,
+      models = c(C2 = "lm"),
+      monitor_params = c(analysis_main = FALSE, other = "alpha[2]")
+    )
+  )
+  expect_true(all(
+    fit$coef_list$C2$coef %in% fit$mcmc_settings$variable.names
+  ))
+
+  # without scaling, nothing is added
+  suppressMessages(expect_no_message(
+    fit <- setup_coef_monitor(
+      lm_imp,
+      y ~ C1 + C2,
+      data = wideDF,
+      models = c(C2 = "lm"),
+      monitor_params = c(analysis_main = FALSE, other = "alpha[1]"),
+      scale_vars = FALSE
+    ),
+    message = "re-scal|transform"
+  ))
+  expect_identical(fit$mcmc_settings$variable.names, "alpha[1]")
+})
+
+test_that("an intercept of a covariate model can be monitored alone (F11, short MCMC run)", {
+  fit <- suppressMessages(lm_imp(
+    y ~ C1 + C2,
+    data = wideDF,
+    models = c(C2 = "lm"),
+    monitor_params = c(analysis_main = FALSE, other = "alpha[1]"),
+    n.adapt = 10,
+    n.iter = 5,
+    seed = 2020,
+    warn = FALSE
+  ))
+  expect_true("alpha[1]" %in% colnames(fit$MCMC[[1]]))
+})

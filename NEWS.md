@@ -79,6 +79,14 @@
   center-level covariate, could not be fitted (JAGS stopped with "Index out
   of range"). The covariate is now taken from the correct rows and is
   scaled (#77).
+* With scaled covariates (the default), monitoring only some parameters
+  failed with "subscript out of bounds" after sampling when the intercept
+  of a covariate model (e.g., `other = "alpha[1]"`), the thresholds of an
+  ordinal model (`gamma_main`, `gamma_other`) or the baseline hazard
+  (`basehaz`) were monitored without the other regression coefficients of
+  that model. These coefficients are now added to the monitored parameters
+  (with a message), as was already the case for the main model(s). A
+  monitored `beta[...]` is no longer monitored twice.
 * The error message for variables of an unsupported class now names each
   variable correctly (it showed, e.g., "x1", "x2" for a variable "x" with two
   classes) (#17).
