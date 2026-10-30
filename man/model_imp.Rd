@@ -643,6 +643,30 @@ For a linear model, \code{monitor_params = c(imps = TRUE)} would monitor
 \code{betas}, and \code{sigma_main} (because \code{analysis_main = TRUE} by
 default) as well as the imputed values.
 
+\strong{Scaled covariates:}\cr
+When continuous covariates are scaled (see \code{scale_vars}), the
+parameters are transformed back to the scale of the original covariates
+after sampling. This requires some parameters to be monitored together,
+and these are added to the monitored parameters automatically (with a
+message):
+\itemize{
+\item if a regression coefficient of a main model is monitored (e.g.,
+\code{other = "beta[2]"}), all regression coefficients of the main
+model(s) (\code{betas = TRUE});
+\item if random effects are monitored, the regression coefficients of the
+corresponding model, and, if only some random effects of a group are
+selected, the other random effects of that group: e.g.,
+\code{other = "b_y_id[5,2]"} (the second random effect of the fifth
+group) is extended to \code{"b_y_id[5,1:2]"} (when there are two
+random effects per group). Random effects of other groups are not
+added, so that a subset of groups can be monitored;
+\item if some elements of the covariance matrix of the random effects are
+monitored (e.g., \code{other = "D_y_id[1,2]"}), all its elements.
+}
+To monitor exactly the specified parameters, the covariates can be left
+unscaled (\code{scale_vars = FALSE}); this may make the MCMC sampling less
+efficient.
+
 \loadmathjax
 }
 

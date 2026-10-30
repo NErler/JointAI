@@ -224,6 +224,16 @@ check_add_varnames <- function(object, monitor_params, mess = TRUE, add) {
         monitor_params
       )
     )
+
+    # with scaled covariates, monitored random effects can only be
+    # transformed back if some other parameters are monitored as well
+    if (any(!is.na(unlist(object$Mlist$scale_pars)))) {
+      var_names <- complete_ranef_monitoring(
+        var_names,
+        object$info_list,
+        mess = mess
+      )
+    }
   }
   if (!identical(var_names, object$mcmc_settings$variable.names) & add) {
     errormsg(

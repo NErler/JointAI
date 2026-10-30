@@ -525,6 +525,89 @@ get_ranef_blocks <- function(info_list) {
 }
 
 
+#' Complete the monitored parameters for transforming random effects back
+#'
+#' With scaled covariates, the random effects and their covariance matrices are
+#' transformed back after sampling (`rescale_ranefs()`). This needs, per block
+#' of random effects (`get_ranef_blocks()`):
+#' * all random effects of a monitored group (one row of `b`), because `A`
+#'   combines the random effects of a group,
+#' * all elements of the covariance matrix `D`, because `D = A D_s A'`,
+#' * the regression coefficients of the sub-model, for the shift `delta`.
+#'
+#' Only these are added: if some random effects of a few groups are monitored
+#' (e.g. `b_y_id[5,2]`), only the rest of their rows is added (`b_y_id[5,1:2]`),
+#' not the random effects of all groups.
+#'
+#' @param var_names character vector of the parameters (nodes) to monitor, as
+#'   passed to JAGS (`get_params()`).
+#' @param info_list list with the model information of each sub-model
+#'   (`get_model_info()`).
+#' @param mess logical; show a message about the added parameters?
+#' @return `var_names` with the parameters that need to be added.
+#' @keywords internal
+complete_ranef_monitoring <- function(var_names, info_list, mess = TRUE) {
+  coefs <- do.call(rbind, get_coef_names(info_list))
+  added <- character(0L)
+
+  for (block in get_ranef_blocks(info_list)) {
+    # number of random effects in the block (see `rescale_ranefs()`)
+    nz <- max(unlist(lapply(block$parts, "[[", "cols")))
+    b_node <- paste0("b_", block$name)
+    D_node <- paste0("D_", block$name)
+
+    # covariance matrix: if some of its elements are monitored, monitor all
+    # elements of the upper triangle (as when D is monitored by default)
+    if (any(startsWith(var_names, paste0(D_node, "[")))) {
+      ij <- which(upper.tri(diag(nz), diag = TRUE), arr.ind = TRUE)
+      D_all <- sprintf("%s[%d,%d]", D_node, ij[, 1L], ij[, 2L])
+      new <- setdiff(D_all, var_names)
+      var_names <- c(var_names, new)
+      added <- c(added, new)
+    }
+
+    # random effects: if single elements are monitored, e.g. "b_y_id[5,2]",
+    # monitor the whole row of these groups instead, e.g. "b_y_id[5,1:2]"
+    is_b_element <- startsWith(var_names, paste0(b_node, "["))
+    for (k in which(is_b_element)) {
+      inside <- sub("^[^[]*\\[(.*)\\]$", "\\1", var_names[k])
+      group_index <- sub(",.*$", "", inside)
+      row <- sprintf("%s[%s,1:%d]", b_node, group_index, nz)
+      if (row != var_names[k]) {
+        var_names[k] <- row
+        added <- c(added, row)
+      }
+    }
+    var_names <- unique(var_names)
+
+    # regression coefficients of the sub-models whose random effects are
+    # monitored (needed for the shift delta)
+    if (b_node %in% var_names || any(is_b_element)) {
+      for (part in block$parts) {
+        if (part$info$parname %in% var_names) {
+          next
+        }
+        needed <- coefs$coef[coefs$outcome %in% part$info$varname]
+        new <- setdiff(needed, var_names)
+        var_names <- c(var_names, new)
+        added <- c(added, new)
+      }
+    }
+  }
+
+  if (mess && length(added) > 0L) {
+    msg(
+      "Note: To transform the monitored random effects and/or their
+      covariance matrices back to the scale of the original (unscaled)
+      covariates, the following parameters were added to the monitored
+      parameters: %s.",
+      paste_and(dQuote(unique(added)))
+    )
+  }
+  var_names
+}
+
+
 #' Positions given as text
 #'
 #' @param x character string with one position (e.g. `"3"`) or a range of
