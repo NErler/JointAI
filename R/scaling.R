@@ -380,19 +380,34 @@ par_names <- function(name, n) {
 #'   covariates); `delta` keeps `b` consistent with them (`ranef_shift()`).
 #'
 #' Neither needs the data, so the random effects are transformed back also
-#' when a random-slope variable has missing values. Random effects of several
-#' outcomes can share one covariance matrix (`rd_vcov = "full"`); then `A` is
-#' block-diagonal (`get_ranef_blocks()`).
+#' when a random-slope variable has missing values.
+#'
+#' The random effects are transformed per "block": the random effects that
+#' share one covariance matrix (`get_ranef_blocks()`). Usually, a block holds
+#' the random effects of one outcome at one grouping level; with
+#' `rd_vcov = "full"`, it holds those of several outcomes, and `A` then has one
+#' submatrix on the diagonal per outcome (zero elsewhere).
 #'
 #' @param rescaled MCMC sample (matrix) in which the coefficients are already
 #'   transformed back (`rescale_coefs()`).
-#' @param MCMC MCMC sample on the scale used in JAGS.
-#' @inheritParams rescale
-#' @param scale_pars as in `rescale()`, but without missing values.
+#' @param MCMC MCMC sample of one chain on the scale used in JAGS (`mcmc`
+#'   object or matrix).
+#' @param coefs `data.frame` with one row per regression coefficient
+#'   (`do.call(rbind, get_coef_names(info_list))`); used to find the
+#'   coefficients in the means of the random effects.
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column), with
+#'   centre 0 and scale 1 for columns that are not scaled.
+#' @param info_list list with the model information of each sub-model
+#'   (`get_model_info()`).
+#' @param data_list data list passed to JAGS (for the names of design-matrix
+#'   columns).
+#' @param groups list of grouping information (`Mlist$groups`; for the number
+#'   of groups per level).
 #'
 #' @return `rescaled`, with the random effects and their covariance matrices
 #'   transformed back.
-#' @noRd
+#' @keywords internal
 rescale_ranefs <- function(
   rescaled,
   MCMC,
@@ -404,24 +419,36 @@ rescale_ranefs <- function(
 ) {
   MCMC <- as.matrix(MCMC)
 
+  # iterate through the blocks of random effects, where a block consists of
+  # all random effects that share a covariance matrix:
   for (block in get_ranef_blocks(info_list)) {
-    # A of the block: block-diagonal, one block per outcome
+    # build A for the block: one submatrix on the diagonal per outcome (at the
+    # positions `cols` of the outcome's random effects), zero elsewhere
+    # nz: dimension of A, i.e., the number of random effects in the block,
+    # determined as the largest position
     nz <- max(unlist(lapply(block$parts, "[[", "cols")))
     A <- matrix(0, nz, nz)
     for (part in block$parts) {
+      # for each outcome (part), its submatrix of A from the scaling
+      # parameters of its random-slope variables
       A[part$cols, part$cols] <- ranef_transformation(
         part$lvl_info,
         scale_pars
       )
     }
 
+    # transform the covariance matrix of the random effects of this block back
+    # (basically calculates D = A D_s A')
     rescaled <- rescale_vcov(rescaled, paste0("D_", block$name), A)
 
-    # random effects, if monitored: one row of b per group
+    # random effects back transformation
+    # ng: number of groups at the block's level
     ng <- max(groups[[block$lvl]])
+    # construct the names of the random effect columns in the mcmc sample
     b_cols <- lapply(seq_len(ng), function(g) {
       sprintf("b_%s[%d,%d]", block$name, g, seq_len(nz))
     })
+    # for each group: are all its random effects (one row of b) in the sample?
     monitored <- vapply(
       b_cols,
       function(cols) all(cols %in% colnames(MCMC)),
@@ -431,6 +458,7 @@ rescale_ranefs <- function(
       next
     }
 
+    # construct the shift (delta) of the random effects of this block
     delta <- matrix(0, nrow(MCMC), nz)
     for (part in block$parts) {
       delta[, part$cols] <- ranef_shift(
@@ -444,6 +472,7 @@ rescale_ranefs <- function(
       )
     }
 
+    # apply scaling and shift to the random effects estimates
     for (cols in b_cols[monitored]) {
       rescaled[, cols] <- MCMC[, cols, drop = FALSE] %*% t(A) + delta
     }
@@ -460,12 +489,13 @@ rescale_ranefs <- function(
 #' `b_<lvl>` with covariance matrix `D_<lvl>`; the attribute "ranef_index" of
 #' `rd_vcov` gives the positions of each outcome in it (e.g. `"1:2"`).
 #'
-#' @inheritParams rescale
+#' @param info_list list with the model information of each sub-model
+#'   (`get_model_info()`).
 #' @return List with one element per covariance matrix: `name` (`b_<name>`,
 #'   `D_<name>`), `lvl` (grouping level), and `parts`, one per outcome, with
 #'   `info` (model info), `lvl_info` (hierarchical-centring information of the
 #'   level) and `cols` (positions of the outcome's random effects).
-#' @noRd
+#' @keywords internal
 get_ranef_blocks <- function(info_list) {
   blocks <- list()
 
@@ -495,8 +525,12 @@ get_ranef_blocks <- function(info_list) {
 }
 
 
-#' Positions given as text, e.g. "1:2" or "3"
-#' @noRd
+#' Positions given as text
+#'
+#' @param x character string with one position (e.g. `"3"`) or a range of
+#'   positions (e.g. `"1:2"`), as in the attribute "ranef_index" of `rd_vcov`.
+#' @return Integer vector of the positions.
+#' @keywords internal
 index_range <- function(x) {
   bounds <- as.integer(strsplit(x, ":", fixed = TRUE)[[1L]])
   seq(bounds[1L], bounds[length(bounds)])
@@ -514,11 +548,13 @@ index_range <- function(x) {
 #' Without random intercept the centring has nowhere to go; it changes the
 #' model (#66), and only the scaling is undone here.
 #'
-#' @param lvl_info hierarchical-centring information of the level (element of
-#'   `hc_list$hcvars`).
-#' @inheritParams rescale_ranefs
+#' @param lvl_info hierarchical-centring information of one grouping level
+#'   (element of `hc_list$hcvars` of a sub-model).
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column), with
+#'   centre 0 and scale 1 for columns that are not scaled.
 #' @return Square matrix, one row and column per random effect.
-#' @noRd
+#' @keywords internal
 ranef_transformation <- function(lvl_info, scale_pars) {
   z_names <- attr(lvl_info, "z_names")
   sp <- scale_pars[match(z_names, rownames(scale_pars)), ]
@@ -542,14 +578,16 @@ ranef_transformation <- function(lvl_info, scale_pars) {
 #' coefficient of the random-slope variable and its cross-level interactions
 #' (random slopes).
 #'
-#' @inheritParams ranef_transformation
-#' @inheritParams rescale
+#' @param lvl_info hierarchical-centring information of one grouping level
+#'   (element of `hc_list$hcvars` of a sub-model).
+#' @param data_list data list passed to JAGS (for the names of design-matrix
+#'   columns).
 #' @return `data.frame` with one row per term: `rd_effect` (the random effect
 #'   whose mean contains the term), `coef_term` (column name of the term, to
 #'   find its coefficient) and `w` (column name of the covariate the
 #'   coefficient is multiplied with; `NA` for a constant, i.e. the intercept or
 #'   the coefficient of the random-slope variable itself).
-#' @noRd
+#' @keywords internal
 ranef_mean_terms <- function(lvl_info, data_list) {
   column_names <- function(coefs) {
     vapply(
@@ -617,12 +655,24 @@ ranef_mean_terms <- function(lvl_info, data_list) {
 #' original scale, only the constant terms remain; on the scaled scale, a
 #' covariate `w` at 0 has the value `-c_w / s_w`.
 #'
-#' @param part element of the `parts` of a block (`get_ranef_blocks()`).
-#' @param A_part transformation matrix of this outcome
+#' @param part one outcome of a block of random effects: element of the
+#'   `parts` of a block (`get_ranef_blocks()`), with `info`, `lvl_info` and
+#'   `cols`.
+#' @param A_part transformation matrix of the random effects of this outcome
 #'   (`ranef_transformation()`).
-#' @inheritParams rescale_ranefs
+#' @param MCMC MCMC sample (matrix) on the scale used in JAGS.
+#' @param rescaled MCMC sample (matrix) in which the coefficients are already
+#'   transformed back (`rescale_coefs()`).
+#' @param coefs `data.frame` with one row per regression coefficient
+#'   (`do.call(rbind, get_coef_names(info_list))`); used to find the
+#'   coefficients in the means of the random effects.
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column), with
+#'   centre 0 and scale 1 for columns that are not scaled.
+#' @param data_list data list passed to JAGS (for the names of design-matrix
+#'   columns).
 #' @return Matrix with one row per iteration and one column per random effect.
-#' @noRd
+#' @keywords internal
 ranef_shift <- function(
   part,
   A_part,
@@ -668,7 +718,7 @@ ranef_shift <- function(
 #' @param A transformation matrix (`ranef_transformation()`).
 #' @return `MCMC` with the covariance matrix transformed back, in each
 #'   iteration; unchanged if the matrix is not (completely) in the sample.
-#' @noRd
+#' @keywords internal
 rescale_vcov <- function(MCMC, D_name, A) {
   nz <- nrow(A)
   ij <- which(upper.tri(diag(nz), diag = TRUE), arr.ind = TRUE)
