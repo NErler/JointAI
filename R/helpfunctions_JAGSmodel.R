@@ -203,17 +203,29 @@ get_rds_lp <- function(
       paste_coef(parname = parname, parelmts = rds$parelmts)
     )
     rdsi_terms <- if (isTRUE(nrow(rdsi) > 0L)) {
+      # covariates of the current level are indexed with the index of this
+      # level; covariates of a higher level via the rows of the lowest level
+      # that correspond to the current index value (as in get_index())
+      rdsi_lvl <- sub("^M_", "", rdsi$matrix)
+      rdsi_index <- ifelse(
+        rdsi$matrix == mat,
+        index[lvl],
+        paste0("group_", rdsi_lvl, "[pos_", lvl, "[", index[lvl], "]]")
+      )
+
+      # each covariate is scaled with the scaling parameters of its own data
+      # matrix
       paste(
         paste_scaling(
           x = paste_data(
             matnam = rdsi$matrix,
-            index = index[lvl],
+            index = rdsi_index,
             col = rdsi$cols,
             isgk
           ),
           rows = rdsi$cols,
-          scale_pars = scale_pars[rep(mat, length(rdsi$cols))],
-          scalemat = rep(paste0("sp", mat), length(rdsi$cols))
+          scale_pars = scale_pars[rdsi$matrix],
+          scalemat = paste0("sp", rdsi$matrix)
         ),
         paste_coef(parname = parname, parelmts = rdsi$parelmts),
         sep = " * "
