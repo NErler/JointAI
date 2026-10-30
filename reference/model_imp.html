@@ -674,6 +674,11 @@ and these are added to the monitored parameters automatically (with a
 message):</p><ul><li><p>if a regression coefficient of a main model is monitored (e.g.,
 <code>other = "beta[2]"</code>), all regression coefficients of the main
 model(s) (<code>betas = TRUE</code>);</p></li>
+<li><p>if a regression coefficient of a covariate model (e.g.,
+<code>other = "alpha[1]"</code>), the thresholds of an ordinal model
+(<code>gamma_main</code>, <code>gamma_other</code>) or the baseline hazard of a
+proportional hazards model (<code>basehaz</code>) are monitored, all
+regression coefficients of that model;</p></li>
 <li><p>if random effects are monitored, the regression coefficients of the
 corresponding model, and, if only some random effects of a group are
 selected, the other random effects of that group: e.g.,

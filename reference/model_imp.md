@@ -654,6 +654,12 @@ message):
   `other = "beta[2]"`), all regression coefficients of the main model(s)
   (`betas = TRUE`);
 
+- if a regression coefficient of a covariate model (e.g.,
+  `other = "alpha[1]"`), the thresholds of an ordinal model
+  (`gamma_main`, `gamma_other`) or the baseline hazard of a proportional
+  hazards model (`basehaz`) are monitored, all regression coefficients
+  of that model;
+
 - if random effects are monitored, the regression coefficients of the
   corresponding model, and, if only some random effects of a group are
   selected, the other random effects of that group: e.g.,
