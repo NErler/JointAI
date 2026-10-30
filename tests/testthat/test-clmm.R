@@ -1,7 +1,5 @@
 library("JointAI")
 
-skip_on_cran()
-
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   run_clmm_models <- function() {
     set_seed(1234)
@@ -259,7 +257,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
       # bugfixes -----------------------------------------------------------------
       # bugfix in model with ordinal longitudinal covariate"
-      models$m7a = lme_imp(
+      models$m7a <- lme_imp(
         y ~ C1 + o1 + o2 + x + time,
         random = ~ 1 | id,
         data = longDF,
@@ -269,7 +267,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
       )
 
       # parameters for clmm models without baseline covariates work
-      models$m7b = lme_imp(
+      models$m7b <- lme_imp(
         y ~ o2 + o1 + c2 + b2,
         data = longDF,
         random = ~ 1 | id,
@@ -283,205 +281,213 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   models <- run_clmm_models()
   models0 <- set0_list(models)
-
-  test_that("models run", {
-    for (k in seq_along(models)) {
-      expect_s3_class(models[[k]], "JointAI")
-    }
-  })
-
-  test_that("there are no duplicate betas/alphas in the jagsmodel", {
-    expect_null(unlist(lapply(models, find_dupl_parms)))
-  })
-
-  test_that("MCMC is mcmc.list", {
-    for (i in seq_along(models)) {
-      expect_s3_class(models[[i]]$MCMC, "mcmc.list")
-    }
-  })
-
-  test_that("MCMC samples can be plotted", {
-    for (k in seq_along(models)) {
-      expect_silent(traceplot(models[[k]]))
-      expect_silent(densplot(models[[k]]))
-      expect_silent(plot(MC_error(models[[k]])))
-    }
-  })
-
-  test_that("data_list remains the same", {
-    skip_on_cran()
-    #testthat::skip_on_os("linux")
-    expect_snapshot(normalize_numeric(lapply(models, "[[", "data_list")))
-  })
-
-  test_that("jagsmodel remains the same", {
-    skip_on_cran()
-    expect_snapshot(lapply(models, "[[", "jagsmodel"))
-  })
-
-  test_that("GRcrit and MCerror give same result", {
-    skip_on_cran()
-    expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
-    expect_snapshot(lapply(models0, MC_error))
-  })
-
-  # test_that("summary output remained the same on Windows", {
-  #   skip_on_cran()
-  #   skip_on_os(c("mac", "linux", "solaris"))
-  #   expect_snapshot(lapply(models0, print))
-  #   expect_snapshot(lapply(models0, coef))
-  #   expect_snapshot(lapply(models0, confint))
-  #   expect_snapshot(lapply(models0, summary))
-  #   expect_snapshot(lapply(models0, function(x) coef(summary(x))))
-  # })
-
-  test_that("summary output remained the same", {
-    skip_on_cran()
-    # skip_on_os(c("windows"))
-    expect_snapshot(lapply(models0, print))
-    expect_snapshot(lapply(models0, coef))
-    expect_snapshot(lapply(models0, confint))
-    expect_snapshot(lapply(models0, summary))
-    expect_snapshot(lapply(models0, function(x) coef(summary(x))))
-  })
-
-  test_that("prediction works", {
-    expect_equal(
-      class(predict(models$m4a, type = "lp", warn = FALSE)$fitted),
-      "array"
-    )
-    expect_equal(
-      class(predict(models$m4a, type = "prob", warn = FALSE)$fitted),
-      "array"
-    )
-
-    expect_s3_class(
-      predict(models$m4a, type = "class", warn = FALSE)$fitted,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m4a, type = "response", warn = FALSE)$fitted,
-      "data.frame"
-    )
-
-    expect_s3_class(
-      predict(models$m4a, type = "lp", warn = FALSE)$newdata,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m4a, type = "prob", warn = FALSE)$newdata,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m4a, type = "class", warn = FALSE)$newdata,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m4a, type = "response", warn = FALSE)$newdata,
-      "data.frame"
-    )
-
-    expect_equal(
-      class(predict(models$m5d, type = "lp", warn = FALSE)$fitted),
-      "array"
-    )
-    expect_equal(
-      class(predict(models$m5d, type = "prob", warn = FALSE)$fitted),
-      "array"
-    )
-
-    expect_s3_class(
-      predict(models$m5d, type = "class", warn = FALSE)$fitted,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m5d, type = "response", warn = FALSE)$fitted,
-      "data.frame"
-    )
-
-    expect_s3_class(
-      predict(models$m5d, type = "lp", warn = FALSE)$newdata,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m5d, type = "prob", warn = FALSE)$newdata,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m5d, type = "class", warn = FALSE)$newdata,
-      "data.frame"
-    )
-    expect_s3_class(
-      predict(models$m5d, type = "response", warn = FALSE)$newdata,
-      "data.frame"
-    )
-
-    expect_s3_class(
-      predict(models$m5e, type = "prob", warn = FALSE)$newdata,
-      "data.frame"
-    )
-
-    # expect_equal(check_predprob(m5a), 0)
-    # expect_equal(check_predprob(m5b), 0)
-    # expect_equal(check_predprob(m5c), 0)
-    # expect_equal(check_predprob(m5d), 0)
-    # expect_equal(check_predprob(m5e), 0)
-    #
-    # expect_equal(check_predprob(m6a), 0)
-    # expect_equal(check_predprob(m6b), 0)
-    # expect_equal(check_predprob(m6c), 0)
-    # expect_equal(check_predprob(m6d), 0)
-    # expect_equal(check_predprob(m6e), 0)
-  })
-
-  test_that("residuals work if implemented", {
-    # residuals are not yet implemented
-    expect_error(residuals(models$m4a, type = "working", warn = FALSE))
-  })
-
-  test_that("model can be plottet", {
-    for (i in seq_along(models)) {
-      if (models[[i]]$analysis_type == "clmm") {
-        expect_error(plot(models[[i]]))
-      } else {
-        expect_silent(plot(models[[i]]))
-      }
-    }
-  })
-
-  test_that("wrong models give errors", {
-    # wrong type of outcome variable
-    expect_error(clmm_imp(
-      y ~ O1 + C1 + C2 + (1 | id),
-      data = longDF,
-      warn = FALSE
-    ))
-    # wrong model function used
-    expect_error(clm_imp(
-      o2 ~ O1 + C1 + C2 + (1 | id),
-      data = longDF,
-      warn = FALSE
-    ))
-    # variable not in data
-    expect_error(clmm_imp(
-      o2 ~ O1 + C1 + C2 + (1 | id),
-      data = wideDF,
-      warn = FALSE
-    ))
-    # model formula that can't be used
-    expect_s3_class(
-      suppressWarnings(
-        clmm_imp(o2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE, data = longDF)
-      ),
-      "JointAI_errored"
-    )
-    # # non-proportional effect not in main formula
-    expect_error(clmm_imp(
-      o2 ~ O1 + C1 + (1 | id),
-      data = longDF,
-      nonprop = list(o2 = ~C2),
-      warn = FALSE
-    ))
-  })
 }
+
+test_that("models run", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
+    expect_s3_class(models[[k]], "JointAI")
+  }
+})
+
+test_that("there are no duplicate betas/alphas in the jagsmodel", {
+  skip_on_cran()
+  expect_null(unlist(lapply(models, find_dupl_parms)))
+})
+
+test_that("MCMC is mcmc.list", {
+  skip_on_cran()
+  for (i in seq_along(models)) {
+    expect_s3_class(models[[i]]$MCMC, "mcmc.list")
+  }
+})
+
+test_that("MCMC samples can be plotted", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
+    expect_silent(traceplot(models[[k]]))
+    expect_silent(densplot(models[[k]]))
+    expect_silent(plot(MC_error(models[[k]])))
+  }
+})
+
+test_that("data_list remains the same", {
+  skip_on_cran()
+  #testthat::skip_on_os("linux")
+  expect_snapshot(normalize_numeric(lapply(models, "[[", "data_list")))
+})
+
+test_that("jagsmodel remains the same", {
+  skip_on_cran()
+  expect_snapshot(lapply(models, "[[", "jagsmodel"))
+})
+
+test_that("GRcrit and MCerror give same result", {
+  skip_on_cran()
+  expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
+  expect_snapshot(lapply(models0, MC_error))
+})
+
+# test_that("summary output remained the same on Windows", {
+#   skip_on_cran()
+#   skip_on_os(c("mac", "linux", "solaris"))
+#   expect_snapshot(lapply(models0, print))
+#   expect_snapshot(lapply(models0, coef))
+#   expect_snapshot(lapply(models0, confint))
+#   expect_snapshot(lapply(models0, summary))
+#   expect_snapshot(lapply(models0, function(x) coef(summary(x))))
+# })
+
+test_that("summary output remained the same", {
+  skip_on_cran()
+  # skip_on_os(c("windows"))
+  expect_snapshot(lapply(models0, print))
+  expect_snapshot(lapply(models0, coef))
+  expect_snapshot(lapply(models0, confint))
+  expect_snapshot(lapply(models0, summary))
+  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
+})
+
+test_that("prediction works", {
+  skip_on_cran()
+  expect_equal(
+    class(predict(models$m4a, type = "lp", warn = FALSE)$fitted),
+    "array"
+  )
+  expect_equal(
+    class(predict(models$m4a, type = "prob", warn = FALSE)$fitted),
+    "array"
+  )
+
+  expect_s3_class(
+    predict(models$m4a, type = "class", warn = FALSE)$fitted,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "response", warn = FALSE)$fitted,
+    "data.frame"
+  )
+
+  expect_s3_class(
+    predict(models$m4a, type = "lp", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "prob", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "class", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m4a, type = "response", warn = FALSE)$newdata,
+    "data.frame"
+  )
+
+  expect_equal(
+    class(predict(models$m5d, type = "lp", warn = FALSE)$fitted),
+    "array"
+  )
+  expect_equal(
+    class(predict(models$m5d, type = "prob", warn = FALSE)$fitted),
+    "array"
+  )
+
+  expect_s3_class(
+    predict(models$m5d, type = "class", warn = FALSE)$fitted,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m5d, type = "response", warn = FALSE)$fitted,
+    "data.frame"
+  )
+
+  expect_s3_class(
+    predict(models$m5d, type = "lp", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m5d, type = "prob", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m5d, type = "class", warn = FALSE)$newdata,
+    "data.frame"
+  )
+  expect_s3_class(
+    predict(models$m5d, type = "response", warn = FALSE)$newdata,
+    "data.frame"
+  )
+
+  expect_s3_class(
+    predict(models$m5e, type = "prob", warn = FALSE)$newdata,
+    "data.frame"
+  )
+
+  # expect_equal(check_predprob(m5a), 0)
+  # expect_equal(check_predprob(m5b), 0)
+  # expect_equal(check_predprob(m5c), 0)
+  # expect_equal(check_predprob(m5d), 0)
+  # expect_equal(check_predprob(m5e), 0)
+  #
+  # expect_equal(check_predprob(m6a), 0)
+  # expect_equal(check_predprob(m6b), 0)
+  # expect_equal(check_predprob(m6c), 0)
+  # expect_equal(check_predprob(m6d), 0)
+  # expect_equal(check_predprob(m6e), 0)
+})
+
+test_that("residuals work if implemented", {
+  skip_on_cran()
+  # residuals are not yet implemented
+  expect_error(residuals(models$m4a, type = "working", warn = FALSE))
+})
+
+test_that("model can be plottet", {
+  skip_on_cran()
+  for (i in seq_along(models)) {
+    if (models[[i]]$analysis_type == "clmm") {
+      expect_error(plot(models[[i]]))
+    } else {
+      expect_silent(plot(models[[i]]))
+    }
+  }
+})
+
+test_that("wrong models give errors", {
+  skip_on_cran()
+  # wrong type of outcome variable
+  expect_error(clmm_imp(
+    y ~ O1 + C1 + C2 + (1 | id),
+    data = longDF,
+    warn = FALSE
+  ))
+  # wrong model function used
+  expect_error(clm_imp(
+    o2 ~ O1 + C1 + C2 + (1 | id),
+    data = longDF,
+    warn = FALSE
+  ))
+  # variable not in data
+  expect_error(clmm_imp(
+    o2 ~ O1 + C1 + C2 + (1 | id),
+    data = wideDF,
+    warn = FALSE
+  ))
+  # model formula that can't be used
+  expect_s3_class(
+    suppressWarnings(
+      clmm_imp(o2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE, data = longDF)
+    ),
+    "JointAI_errored"
+  )
+  # # non-proportional effect not in main formula
+  expect_error(clmm_imp(
+    o2 ~ O1 + C1 + (1 | id),
+    data = longDF,
+    nonprop = list(o2 = ~C2),
+    warn = FALSE
+  ))
+})
 # Sys.setenv(IS_CHECK = "")

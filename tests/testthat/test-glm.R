@@ -1,7 +1,5 @@
 library("JointAI")
 
-skip_on_cran()
-
 cat("ON CRAN:", testthat:::on_cran(), "\n")
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
@@ -595,149 +593,158 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   models <- run_glm_models()
   models0 <- set0_list(models)
+}
 
-  test_that("models run", {
-    for (k in seq_along(models)) {
-      expect_s3_class(models[[k]], "JointAI")
-    }
-  })
+test_that("models run", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
+    expect_s3_class(models[[k]], "JointAI")
+  }
+})
 
-  test_that("there are no duplicate betas/alphas in the jagsmodel", {
-    expect_null(unlist(lapply(models, find_dupl_parms)))
-  })
+test_that("there are no duplicate betas/alphas in the jagsmodel", {
+  skip_on_cran()
+  expect_null(unlist(lapply(models, find_dupl_parms)))
+})
 
-  test_that("MCMC is mcmc.list", {
-    for (i in seq_along(models)) {
-      expect_s3_class(models[[i]]$MCMC, "mcmc.list")
-    }
-  })
+test_that("MCMC is mcmc.list", {
+  skip_on_cran()
+  for (i in seq_along(models)) {
+    expect_s3_class(models[[i]]$MCMC, "mcmc.list")
+  }
+})
 
-  test_that("MCMC samples can be plottet", {
-    for (k in seq_along(models)) {
-      expect_silent(traceplot(models[[k]]))
-      expect_silent(densplot(models[[k]]))
-      expect_silent(plot(MC_error(models[[k]])))
-    }
-  })
+test_that("MCMC samples can be plottet", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
+    expect_silent(traceplot(models[[k]]))
+    expect_silent(densplot(models[[k]]))
+    expect_silent(plot(MC_error(models[[k]])))
+  }
+})
 
-  test_that("data_list remains the same", {
-    expect_snapshot(lapply(models, "[[", "data_list"))
-  })
+test_that("data_list remains the same", {
+  skip_on_cran()
+  expect_snapshot(lapply(models, "[[", "data_list"))
+})
 
-  test_that("jagsmodel remains the same", {
-    skip_on_cran()
-    expect_snapshot(lapply(models, "[[", "jagsmodel"))
-  })
+test_that("jagsmodel remains the same", {
+  skip_on_cran()
+  expect_snapshot(lapply(models, "[[", "jagsmodel"))
+})
 
-  test_that("GRcrit and MCerror give same result", {
-    skip_on_cran()
-    expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
-    expect_snapshot(lapply(models0, MC_error))
-  })
+test_that("GRcrit and MCerror give same result", {
+  skip_on_cran()
+  expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
+  expect_snapshot(lapply(models0, MC_error))
+})
 
-  test_that("summary output remained the same", {
-    skip_on_cran()
-    expect_snapshot(lapply(models0, print))
-    expect_snapshot(lapply(models0, coef))
-    expect_snapshot(lapply(models0, confint))
-    expect_snapshot(lapply(models0, summary, missinfo = TRUE))
-    expect_snapshot(lapply(models0, function(x) coef(summary(x))))
-  })
+test_that("summary output remained the same", {
+  skip_on_cran()
+  expect_snapshot(lapply(models0, print))
+  expect_snapshot(lapply(models0, coef))
+  expect_snapshot(lapply(models0, confint))
+  expect_snapshot(lapply(models0, summary, missinfo = TRUE))
+  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
+})
 
-  test_that("prediction works", {
-    for (k in seq_along(models)) {
-      expect_s3_class(
-        predict(models[[k]], type = "link", warn = FALSE)$fitted,
-        "data.frame"
-      )
-      expect_s3_class(
-        predict(models[[k]], type = "response", warn = FALSE)$fitted,
-        "data.frame"
-      )
-    }
-
-    # prediction without specifying the type
-    expect_s3_class(predict(models$m5a1, warn = FALSE)$fitted, "data.frame")
-
-    # prediction with newdata
-    ndf <- predDF(models$m5a1, vars = ~C2)
-    expect_s3_class(ndf, "data.frame")
+test_that("prediction works", {
+  skip_on_cran()
+  for (k in seq_along(models)) {
     expect_s3_class(
-      predict(models$m5a1, newdata = ndf, warn = FALSE)$fitted,
+      predict(models[[k]], type = "link", warn = FALSE)$fitted,
       "data.frame"
     )
-  })
+    expect_s3_class(
+      predict(models[[k]], type = "response", warn = FALSE)$fitted,
+      "data.frame"
+    )
+  }
 
-  test_that("residuals", {
-    for (k in seq_along(models)[9:20]) {
-      expect_type(residuals(models[[k]], type = "response"), "double")
+  # prediction without specifying the type
+  expect_s3_class(predict(models$m5a1, warn = FALSE)$fitted, "data.frame")
 
-      if (models[[k]]$analysis_type == "beta") {
-        expect_error(residuals(models[[k]], type = "working"))
-        expect_error(residuals(models[[k]], type = "pearson"))
-      } else {
-        expect_type(residuals(models[[k]], type = "working"), "double")
-        expect_type(residuals(models[[k]], type = "pearson"), "double")
-      }
+  # prediction with newdata
+  ndf <- predDF(models$m5a1, vars = ~C2)
+  expect_s3_class(ndf, "data.frame")
+  expect_s3_class(
+    predict(models$m5a1, newdata = ndf, warn = FALSE)$fitted,
+    "data.frame"
+  )
+})
+
+test_that("residuals", {
+  skip_on_cran()
+  for (k in seq_along(models)[9:20]) {
+    expect_type(residuals(models[[k]], type = "response"), "double")
+
+    if (models[[k]]$analysis_type == "beta") {
+      expect_error(residuals(models[[k]], type = "working"))
+      expect_error(residuals(models[[k]], type = "pearson"))
+    } else {
+      expect_type(residuals(models[[k]], type = "working"), "double")
+      expect_type(residuals(models[[k]], type = "pearson"), "double")
     }
-    expect_type(residuals(models$m5a1), "double")
-  })
+  }
+  expect_type(residuals(models$m5a1), "double")
+})
 
-  test_that("model can be plottet", {
-    for (i in seq_along(models)) {
-      if (models[[i]]$analysis_type %in% c("lognorm", "beta")) {
-        expect_error(plot(models[[i]]))
-      } else {
-        expect_silent(plot(models[[i]]))
-      }
+test_that("model can be plottet", {
+  skip_on_cran()
+  for (i in seq_along(models)) {
+    if (models[[i]]$analysis_type %in% c("lognorm", "beta")) {
+      expect_error(plot(models[[i]]))
+    } else {
+      expect_silent(plot(models[[i]]))
     }
-  })
+  }
+})
 
-  test_that("wrong models give errors", {
-    # cauchit link is not implemented
-    expect_error(glm_imp(
-      B1 ~ 1,
-      family = binomial(link = "cauchit"),
-      data = wideDF,
-      seed = 2020,
-      warn = FALSE,
-      mess = FALSE
-    ))
+test_that("wrong models give errors", {
+  skip_on_cran()
+  # cauchit link is not implemented
+  expect_error(glm_imp(
+    B1 ~ 1,
+    family = binomial(link = "cauchit"),
+    data = wideDF,
+    seed = 2020,
+    warn = FALSE,
+    mess = FALSE
+  ))
 
-    # sqrt is not an allowed link (not implemented)
-    expect_error(glm_imp(
-      P1 ~ 1,
-      family = poisson(link = "sqrt"),
-      data = wideDF,
-      seed = 2020,
-      warn = FALSE,
-      mess = FALSE
-    ))
+  # sqrt is not an allowed link (not implemented)
+  expect_error(glm_imp(
+    P1 ~ 1,
+    family = poisson(link = "sqrt"),
+    data = wideDF,
+    seed = 2020,
+    warn = FALSE,
+    mess = FALSE
+  ))
 
-    # gives JAGS model error (no dedicated error message)
-    # glm_imp(time ~ 1, family = Gamma(link = "identity"), data = wideDF,
-    #                 n.adapt = 5, n.iter = 10, seed = 2020)
+  # gives JAGS model error (no dedicated error message)
+  # glm_imp(time ~ 1, family = Gamma(link = "identity"), data = wideDF,
+  #                 n.adapt = 5, n.iter = 10, seed = 2020)
 
-    # no family specified
-    expect_error(glm_imp(
-      B1 ~ C1,
-      data = wideDF,
-      seed = 2020,
-      warn = FALSE,
-      mess = FALSE
-    ))
+  # no family specified
+  expect_error(glm_imp(
+    B1 ~ C1,
+    data = wideDF,
+    seed = 2020,
+    warn = FALSE,
+    mess = FALSE
+  ))
 
-    # unknown covariate model type
-    expect_error(lm_imp(
-      C1 ~ C2 + Be2,
-      data = wideDF,
-      n.adapt = 5,
-      n.iter = 10,
-      seed = 2020,
-      models = c(Be2 = "betareg"),
-      warn = FALSE,
-      mess = FALSE
-    ))
-  })
-}
+  # unknown covariate model type
+  expect_error(lm_imp(
+    C1 ~ C2 + Be2,
+    data = wideDF,
+    n.adapt = 5,
+    n.iter = 10,
+    seed = 2020,
+    models = c(Be2 = "betareg"),
+    warn = FALSE,
+    mess = FALSE
+  ))
+})
 # Sys.setenv(IS_CHECK = "")
