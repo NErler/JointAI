@@ -12864,9 +12864,9 @@
       100.4 -12.8093826
       
       $m3a$spM_id
-                      center     scale
-      C2          -0.6240921 0.6857108
-      (Intercept)         NA        NA
+                  center     scale
+      C2               0 0.9308724
+      (Intercept)     NA        NA
       
       $m3a$mu_reg_norm
       [1] 0
@@ -13345,9 +13345,9 @@
       100.4  0
       
       $m3b$spM_id
-                      center     scale
-      C2          -0.6240921 0.6857108
-      (Intercept)         NA        NA
+                  center     scale
+      C2               0 0.9308724
+      (Intercept)     NA        NA
       
       $m3b$mu_reg_norm
       [1] 0
@@ -13832,9 +13832,9 @@
       100.4 0.10043925
       
       $m3c$spM_id
-                      center     scale
-      C2          -0.6240921 0.6857108
-      (Intercept)         NA        NA
+                  center     scale
+      C2               0 0.9308724
+      (Intercept)     NA        NA
       
       $m3c$mu_reg_norm
       [1] 0
@@ -14325,9 +14325,9 @@
       100.4 NA
       
       $m3d$spM_id
-                      center     scale
-      C2          -0.6240921 0.6857108
-      (Intercept)         NA        NA
+                  center     scale
+      C2               0 0.9308724
+      (Intercept)     NA        NA
       
       $m3d$mu_reg_norm
       [1] 0
@@ -14812,9 +14812,9 @@
       100.4 0.10043925
       
       $m3e$spM_id
-                      center     scale
-      C2          -0.6240921 0.6857108
-      (Intercept)         NA        NA
+                  center     scale
+      C2               0 0.9308724
+      (Intercept)     NA        NA
       
       $m3e$mu_reg_norm
       [1] 0
@@ -15293,9 +15293,9 @@
       100.4 2.515993e-06
       
       $m3f$spM_id
-                      center     scale
-      C2          -0.6240921 0.6857108
-      (Intercept)         NA        NA
+                  center     scale
+      C2               0 0.9308724
+      (Intercept)     NA        NA
       
       $m3f$mu_reg_norm
       [1] 0
@@ -19552,7 +19552,7 @@
       y    -11.17337 6.249662
       b2          NA       NA
       b21         NA       NA
-      time   2.53394 1.381809
+      time   0.00000 2.889607
       
       $m6a$mu_reg_norm
       [1] 0
@@ -20043,11 +20043,11 @@
       B11                 NA        NA
       
       $m6b$spM_lvlone
-                   center     scale
-      b1               NA        NA
-      c1        0.2559996 0.6718095
-      time      2.5339403 1.3818094
-      I(time^2) 8.3244468 7.0900029
+                   center      scale
+      b1               NA         NA
+      c1        0.2559996  0.6718095
+      time      0.0000000  2.8896066
+      I(time^2) 0.0000000 10.9442143
       
       $m6b$mu_reg_norm
       [1] 0
