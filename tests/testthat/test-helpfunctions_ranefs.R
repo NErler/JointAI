@@ -160,6 +160,75 @@ test_that("get_rds_lp", {
   )
 })
 
+
+test_that("get_rds_lp() indexes and scales higher-level covariates (#77)", {
+  # interaction of the random slope of `time` (level id) with a covariate of
+  # the same level (C1, in M_id) and one of a higher level (Zc, in M_center)
+  rd_slope_coefs <- data.frame(rd_effect = "time", parelmts = 4)
+  rd_slope_interact_coefs <- data.frame(
+    rd_effect = "time",
+    matrix = c("M_id", "M_center"),
+    parelmts = c(5, 6),
+    cols = c(2, 2)
+  )
+  index <- c(lvlone = "i", id = "ii", center = "iii")
+  scale_pars <- list(
+    M_center = data.frame(
+      center = c(NA, 5),
+      scale = c(NA, 2),
+      row.names = c("(Intercept)", "Zc")
+    ),
+    M_id = data.frame(
+      center = c(NA, 1),
+      scale = c(NA, 3),
+      row.names = c("(Intercept)", "C1")
+    )
+  )
+
+  # the higher-level covariate is indexed via the rows of the lowest level
+  # and scaled with the scaling parameters of its own data matrix
+  expect_equal(
+    get_rds_lp(
+      rd_slope_coefs = rd_slope_coefs,
+      rd_slope_interact_coefs = rd_slope_interact_coefs,
+      lvl = "id",
+      index = index,
+      parname = "beta",
+      scale_pars = scale_pars
+    ),
+    list(
+      time = paste(
+        "beta[4]",
+        "(M_id[ii, 2] - spM_id[2, 1])/spM_id[2, 2] * beta[5]",
+        paste0(
+          "(M_center[group_center[pos_id[ii]], 2] - spM_center[2, 1])/",
+          "spM_center[2, 2] * beta[6]"
+        ),
+        sep = " + "
+      )
+    )
+  )
+
+  # without scaling
+  expect_equal(
+    get_rds_lp(
+      rd_slope_coefs = rd_slope_coefs,
+      rd_slope_interact_coefs = rd_slope_interact_coefs,
+      lvl = "id",
+      index = index,
+      parname = "beta"
+    ),
+    list(
+      time = paste(
+        "beta[4]",
+        "M_id[ii, 2] * beta[5]",
+        "M_center[group_center[pos_id[ii]], 2] * beta[6]",
+        sep = " + "
+      )
+    )
+  )
+})
+
 # hc_rdslope_info(list(time = list(main = c(M_lvlone = 3),
 #                                  interact = NULL)),
 #                 parelmts = list(M_id = c("(Intercept)" = 1,
