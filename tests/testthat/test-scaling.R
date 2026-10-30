@@ -660,6 +660,31 @@ test_that("random effects are re-scaled if a random slope is incomplete", {
   expect_subject_lp_invariant(fit, "y")
 })
 
+test_that("random effects are re-scaled if a coefficient could be in two levels (#76)", {
+  # the coefficient is in the means of the random effects of the highest
+  # level only (center). The issue example, `C1 * time + (time | id) +
+  # (C1 | center)`, is not included: with the interaction C1:time in the mean
+  # of the random slope of time, the random effects of the center level are
+  # not transformed back correctly (also before #76; F21 in the dev notes).
+  cases <- list(
+    quote(lme_imp(y ~ C1 + time + (time | id) + (C1 | center), data = longDF)),
+    quote(lme_imp(y ~ time + (time | id) + (time | center), data = longDF)),
+    quote(lme_imp(
+      y ~ C1 * time + (time | id) + (C1 * time | center),
+      data = longDF
+    ))
+  )
+  set.seed(2020)
+  for (case in cases) {
+    fit <- golden_fit(case, golden_data())
+    expect_lp_invariant(fit, "y")
+    for (g in ranef_groups(fit)) {
+      expect_ranefs_invariant(fit, g$outcomes, g$lvl)
+    }
+    expect_subject_lp_invariant(fit, "y")
+  }
+})
+
 test_that("rescale_vcov() transforms each iteration of D (#67)", {
   # 1 x 1 (occurs for a random slope without random intercept)
   MCMC <- cbind("D_y_id[1,1]" = c(1, 2, 3), other = c(5, 6, 7))

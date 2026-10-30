@@ -357,6 +357,84 @@ test_that("the model information is consistent with the model", {
   }
 })
 
+# hierarchical centring ---------------------------------------------------------
+# models in which the same coefficient could be the mean of random effects of
+# two levels (#76); the last one is a control (c1 is of the lowest level)
+two_level_ranef_cases <- list(
+  slope_intercept = quote(lme_imp(
+    y ~ C1 * time + (time | id) + (C1 | center),
+    data = longDF
+  )),
+  slope_slope = quote(lme_imp(
+    y ~ time + (time | id) + (time | center),
+    data = longDF
+  )),
+  slope_interaction = quote(lme_imp(
+    y ~ C1 * time + (time | id) + (C1 * time | center),
+    data = longDF
+  )),
+  lowest_level = quote(lme_imp(
+    y ~ C1 + c1 + time + (time | id) + (c1 | center),
+    data = longDF
+  ))
+)
+
+# the coefficients in the means of the random effects of one level
+hc_level_parelmts <- function(lvl_info) {
+  pe <- unlist(lapply(unclass(lvl_info), function(x) x$parelmts))
+  unique(pe[!is.na(pe)])
+}
+
+test_that("each coefficient is used once in the hierarchical centring (#76)", {
+  for (case in c(golden_cases(), extra_cases, two_level_ranef_cases)) {
+    fit <- setup_case(case)
+    lab <- deparse1(case)
+
+    for (k in names(fit$info_list)) {
+      hc <- fit$info_list[[k]]$hc_list
+      if (is.null(hc)) {
+        next
+      }
+      # in the means of the random effects of one level at most, or in none
+      # (othervars, or non-proportional effects)
+      in_means <- unlist(lapply(hc$hcvars, hc_level_parelmts))
+      othervars <- unlist(lapply(hc$othervars, function(x) {
+        if (is.data.frame(x)) x$parelmts else lapply(x, "[[", "parelmts")
+      }))
+      nonprop <- unlist(lapply(hc$nonprop, function(x) {
+        lapply(x, "[[", "parelmts")
+      }))
+      expect_identical(
+        sort(as.integer(c(in_means, othervars, nonprop))),
+        sort(as.integer(all_parelmts(fit$info_list[[k]]$parelmts))),
+        label = paste(k, "in", lab)
+      )
+    }
+  }
+})
+
+test_that("a coefficient is in the random-effect means of the highest level (#76)", {
+  # issue example: C1 (beta[2]) is the mean of the random slope of C1 on the
+  # center level, not part of the mean of the random intercept on the id level
+  fit <- setup_case(two_level_ranef_cases$slope_intercept)
+  jagsmodel <- gsub("\\s+", " ", fit$jagsmodel)
+  expect_match(jagsmodel, "mu_b_y_center[iii, 2] <- beta[2]", fixed = TRUE)
+  expect_match(jagsmodel, "mu_b_y_id[ii, 1] <- 0", fixed = TRUE)
+
+  # random slope of time on both levels: the id-level slope has mean 0
+  fit <- setup_case(two_level_ranef_cases$slope_slope)
+  jagsmodel <- gsub("\\s+", " ", fit$jagsmodel)
+  expect_match(jagsmodel, "mu_b_y_center[iii, 2] <- beta[2]", fixed = TRUE)
+  expect_match(jagsmodel, "mu_b_y_id[ii, 2] <- 0", fixed = TRUE)
+
+  # also the interaction C1:time (beta[4]) is in the center level only
+  fit <- setup_case(two_level_ranef_cases$slope_interaction)
+  jagsmodel <- gsub("\\s+", " ", fit$jagsmodel)
+  expect_match(jagsmodel, "mu_b_y_center[iii, 4] <- beta[4]", fixed = TRUE)
+  expect_match(jagsmodel, "mu_b_y_id[ii, 1] <- 0", fixed = TRUE)
+  expect_match(jagsmodel, "mu_b_y_id[ii, 2] <- 0", fixed = TRUE)
+})
+
 test_that("time-varying covariates and association types of a joint model", {
   fit <- setup_case(golden_cases()$jm_three_longitudinal)
   info <- fit$info_list[[1L]]
