@@ -41,6 +41,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/combine_formula_lists.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/combine_formulas.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/compare_data_structure.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/complete_ranef_monitoring.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/convert_labelled.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/convert_variables.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/cross_corr.html</loc></url>
@@ -67,10 +68,12 @@
 <url><loc>https://nerler.github.io/JointAI/reference/get_missinfo.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_modeltype.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_nranef.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/get_ranef_blocks.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_resp_mat.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/hc_rdslope_info.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/hc_rdslope_interact.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/index.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/index_range.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/internal_clean_survname.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/labelled_to_factor.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/list_models.html</loc></url>
@@ -93,6 +96,9 @@
 <url><loc>https://nerler.github.io/JointAI/reference/predDF.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/predict.JointAI.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/prep_arglist.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/ranef_mean_terms.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/ranef_shift.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/ranef_transformation.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/rd_terms_by_grouping.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/rd_vcov.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/reformat_difftime.html</loc></url>
@@ -101,6 +107,8 @@
 <url><loc>https://nerler.github.io/JointAI/reference/remove_labelled_class.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/remove_lhs.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/replace_nan_with_na.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/rescale_ranefs.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/rescale_vcov.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/residuals.JointAI.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/resolve_family_obj.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/restore_var_labels.html</loc></url>

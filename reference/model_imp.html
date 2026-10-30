@@ -666,6 +666,26 @@ deviation <code>sigma_main</code>.</p>
 <p>For a linear model, <code>monitor_params = c(imps = TRUE)</code> would monitor
 <code>betas</code>, and <code>sigma_main</code> (because <code>analysis_main = TRUE</code> by
 default) as well as the imputed values.</p>
+<p><strong>Scaled covariates:</strong><br>
+When continuous covariates are scaled (see <code>scale_vars</code>), the
+parameters are transformed back to the scale of the original covariates
+after sampling. This requires some parameters to be monitored together,
+and these are added to the monitored parameters automatically (with a
+message):</p><ul><li><p>if a regression coefficient of a main model is monitored (e.g.,
+<code>other = "beta[2]"</code>), all regression coefficients of the main
+model(s) (<code>betas = TRUE</code>);</p></li>
+<li><p>if random effects are monitored, the regression coefficients of the
+corresponding model, and, if only some random effects of a group are
+selected, the other random effects of that group: e.g.,
+<code>other = "b_y_id[5,2]"</code> (the second random effect of the fifth
+group) is extended to <code>"b_y_id[5,1:2]"</code> (when there are two
+random effects per group). Random effects of other groups are not
+added, so that a subset of groups can be monitored;</p></li>
+<li><p>if some elements of the covariance matrix of the random effects are
+monitored (e.g., <code>other = "D_y_id[1,2]"</code>), all its elements.</p></li>
+</ul><p>To monitor exactly the specified parameters, the covariates can be left
+unscaled (<code>scale_vars = FALSE</code>); this may make the MCMC sampling less
+efficient.</p>
 <p><script>MathJax = {output: {font: "mathjax-newcm", fontPath: "../../mathjaxr/doc/mathjax/font",}};</script><script defer src="../../mathjaxr/doc/mathjax/tex-chtml.js"></script></p>
     </div>
     <div class="section level2">

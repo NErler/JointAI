@@ -55,6 +55,26 @@
   the thresholds / baseline hazard) did not correspond to the fitted
   model. Predictions of such models change accordingly
   ([\#74](https://github.com/nerler/JointAI/issues/74)).
+- With scaled covariates (the default), the random effects of mixed
+  models and their variance-covariance matrices were not always
+  transformed back correctly: the random effects did not take into
+  account the centring of covariates that is moved into the intercept
+  (or thresholds / baseline hazard)
+  ([\#70](https://github.com/nerler/JointAI/issues/70)); for groups with
+  fewer distinct observations than random effects, the random effects
+  were wrong ([\#64](https://github.com/nerler/JointAI/issues/64)); with
+  `rd_vcov = "full"` and several outcomes, random effects and their
+  covariance matrix were not transformed back at all
+  ([\#63](https://github.com/nerler/JointAI/issues/63)). Random effects
+  and their covariance matrix are now also transformed back when a
+  variable with a random slope has missing values; the warning that this
+  was not possible is removed. When only some random effects or elements
+  of their covariance matrix are monitored, the parameters needed for
+  the back-transformation are added to the monitored parameters (only
+  the other random effects of the selected groups, the covariance
+  matrix, and the regression coefficients of the model), with a message
+  (see `monitor_params` in
+  [`?model_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)).
 - The error message for variables of an unsupported class now names each
   variable correctly (it showed, e.g., “x1”, “x2” for a variable “x”
   with two classes)
