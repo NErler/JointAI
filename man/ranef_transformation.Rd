@@ -25,7 +25,7 @@ The random-slope variables enter JAGS as \code{(z_j - c_j) / s_j}, so
 group and moves to the random intercept.
 }
 \details{
-Without random intercept the centring has nowhere to go; it changes the
-model (#66), and only the scaling is undone here.
+Without random intercept, the random-slope variables are not centred
+(\code{get_uncentred_columns()}), so that only the scaling is undone here.
 }
 \keyword{internal}

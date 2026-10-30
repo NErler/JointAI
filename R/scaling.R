@@ -84,6 +84,104 @@ find_scalevars <- function(mat, refs, fcts_all, interactions, data) {
 }
 
 
+#' Columns that are scaled but must not be centred
+#'
+#' Centring a covariate moves part of its effect into a parameter that takes
+#' the role of an intercept: the intercept, the thresholds (ordinal models),
+#' the baseline hazard (proportional hazards models), or a random intercept.
+#' Where there is no such parameter, centring changes the model (#66). These
+#' columns are only scaled:
+#' * all covariates of a sub-model without intercept (that is not an ordinal or
+#'   proportional hazards model);
+#' * the random-slope variables of a grouping level without random intercept;
+#' * in a cross-level interaction `w:z` in the mean of a random slope
+#'   (`get_slope_interactions()`): `z` if the main effect of `w` is not in the
+#'   model, and `w` if the main effect of `z` is not in the model (the product
+#'   of the centred variables contains `c_z * w` and `c_w * z`).
+#'
+#' A column is used by all sub-models, so it is not centred if one of them
+#' needs this.
+#'
+#' @param info_list list with the model information of each sub-model
+#'   (`get_model_info()`).
+#' @param Mlist list of data matrices and related information
+#'   (`divide_matrices()`).
+#' @return Character vector of column names.
+#' @keywords internal
+get_uncentred_columns <- function(info_list, Mlist) {
+  coefs <- do.call(rbind, get_coef_names(info_list))
+  out <- character(0L)
+
+  for (info in info_list) {
+    model_coefs <- coefs[coefs$outcome %in% info$varname, ]
+
+    # sub-model without intercept or intercept-like parameters
+    no_intercept <- !any(model_coefs$varname == "(Intercept)") &&
+      !info$modeltype %in% c("clm", "clmm", "coxph", "JM")
+    if (no_intercept) {
+      out <- c(out, model_coefs$varname)
+    }
+
+    # grouping levels with random slopes but without random intercept
+    for (lvl_info in info$hc_list$hcvars) {
+      if (!isTRUE(attr(lvl_info, "rd_intercept"))) {
+        z_names <- attr(lvl_info, "z_names")
+        out <- c(out, z_names[z_names != "(Intercept)"])
+      }
+    }
+  }
+
+  # cross-level interactions without a main effect
+  slope_ia <- get_slope_interactions(info_list, Mlist$M)
+  for (k in seq_len(nrow(slope_ia))) {
+    in_model <- coefs$varname[coefs$outcome %in% slope_ia$outcome[k]]
+    if (!slope_ia$w[k] %in% in_model) {
+      out <- c(out, slope_ia$z[k])
+    }
+    if (!slope_ia$z[k] %in% in_model) {
+      out <- c(out, slope_ia$w[k])
+    }
+  }
+
+  unique(out)
+}
+
+
+#' Scale columns without centring them
+#'
+#' Sets the centre of the given columns to 0 and their scale to the root mean
+#' square (as `scale(x, center = FALSE)`), calculated, like the other scaling
+#' parameters, from one value per group of the level of the data matrix (the
+#' data matrices in `Mlist` have one row per group). Columns that are not
+#' scaled at all are not changed.
+#'
+#' @param scale_pars list of `data.frame`s of scaling parameters, one per data
+#'   matrix (`Mlist$scale_pars`).
+#' @param columns character vector of column names
+#'   (`get_uncentred_columns()`).
+#' @param Mlist list of data matrices and related information
+#'   (`divide_matrices()`).
+#' @return `scale_pars` with the changed rows.
+#' @keywords internal
+remove_centring <- function(scale_pars, columns, Mlist) {
+  for (m in names(scale_pars)) {
+    sp <- scale_pars[[m]]
+    rows_to_change <- intersect(columns, rownames(sp)[!is.na(sp$center)])
+    if (length(rows_to_change) == 0L) {
+      next
+    }
+
+    for (k in rows_to_change) {
+      x <- Mlist$M[[m]][, k]
+      sp[k, "center"] <- 0
+      sp[k, "scale"] <- attr(scale(x, center = FALSE), "scaled:scale")
+    }
+    scale_pars[[m]] <- sp
+  }
+  scale_pars
+}
+
+
 # re-scale ---------------------------------------------------------------------
 #' Transform the MCMC sample back to the scale of the original data
 #'
@@ -790,8 +888,8 @@ index_range <- function(x) {
 #' `A[1, j] = -c_j / s_j`: the centring is the same for all observations of a
 #' group and moves to the random intercept.
 #'
-#' Without random intercept the centring has nowhere to go; it changes the
-#' model (#66), and only the scaling is undone here.
+#' Without random intercept, the random-slope variables are not centred
+#' (`get_uncentred_columns()`), so that only the scaling is undone here.
 #'
 #' @param lvl_info hierarchical-centring information of one grouping level
 #'   (element of `hc_list$hcvars` of a sub-model).
