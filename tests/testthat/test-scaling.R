@@ -1192,3 +1192,71 @@ test_that("an intercept of a covariate model can be monitored alone (F11, short 
   ))
   expect_true("alpha[1]" %in% colnames(fit$MCMC[[1]]))
 })
+
+
+# Columns that are scaled but not centred (#66) -------------------------------
+# Centring a covariate moves part of its effect into an intercept (or the
+# thresholds, the baseline hazard, a random intercept). Where there is no such
+# parameter, centring would change the model, so these columns are only
+# scaled (centre 0).
+
+# centres and scales of the columns, by column name
+column_scaling <- function(fit) {
+  do.call(rbind, unname(fit$Mlist$scale_pars))
+}
+
+test_that("covariates of a model without intercept are not centred (#66)", {
+  set.seed(2020)
+  fit <- golden_fit(
+    quote(lm_imp(y ~ 0 + C1 + C2, data = wideDF)),
+    list(wideDF = JointAI::wideDF)
+  )
+  sp <- column_scaling(fit)
+  expect_identical(sp[c("C1", "C2"), "center"], c(0, 0))
+  expect_true(all(sp[c("C1", "C2"), "scale"] > 0))
+  expect_lp_invariant(fit, "y")
+})
+
+test_that("a random slope without random intercept is not centred (#66)", {
+  set.seed(2020)
+  fit <- golden_fit(
+    quote(lme_imp(y ~ C1 + time + (0 + time | id), data = longDF)),
+    list(longDF = JointAI::longDF)
+  )
+  sp <- column_scaling(fit)
+  expect_identical(sp["time", "center"], 0)
+  expect_true(sp["time", "scale"] > 0)
+  # C1 (id level, in the fixed part only) is still centred
+  expect_false(isTRUE(sp["C1", "center"] == 0))
+
+  expect_lp_invariant(fit, "y")
+  expect_ranefs_invariant(fit, "y", "id")
+  expect_subject_lp_invariant(fit, "y")
+})
+
+test_that("cross-level interactions without a main effect (#66)", {
+  # without the main effect of time, C1 is not centred; without the main
+  # effect of C1, time is not centred
+  cases <- list(
+    list(
+      quote(lme_imp(y ~ C1 + C1:time + (time | id), data = longDF)),
+      uncentred = "C1"
+    ),
+    list(
+      quote(lme_imp(y ~ time + C1:time + (time | id), data = longDF)),
+      uncentred = "time"
+    )
+  )
+  set.seed(2020)
+  for (case in cases) {
+    fit <- golden_fit(case[[1]], list(longDF = JointAI::longDF))
+    sp <- column_scaling(fit)
+    expect_identical(
+      sp[case$uncentred, "center"],
+      0,
+      label = deparse1(case[[1]])
+    )
+    expect_lp_invariant(fit, "y")
+    expect_subject_lp_invariant(fit, "y")
+  }
+})

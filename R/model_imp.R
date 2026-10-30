@@ -94,7 +94,14 @@
 #'                 columns created by functions or interactions, the column
 #'                 name in the model matrix, e.g., \code{"C1:C2"}).
 #'                 \code{TRUE} is the same as the default; if set to
-#'                 \code{FALSE} no scaling will be done.}
+#'                 \code{FALSE} no scaling will be done.
+#'                 Variables are only scaled, not centred, where centring
+#'                 would change the model because no intercept takes up the
+#'                 shift: in models without intercept, random-slope
+#'                 variables of a grouping level without random intercept,
+#'                 and variables in an interaction with a random-slope
+#'                 variable when the main effect of the other variable is
+#'                 not in the model.}
 #'            \item{`custom`}{named list of JAGS model chunks (character strings)
 #'                 that replace the model for the given variable.}
 #'            \item{`append_data_list`}{list that will be appended to the list
@@ -873,6 +880,18 @@ model_imp <- function(
     assoc_type = assoc_type,
     custom = custom
   )
+
+  # * scaling without centring -------------------------------------------------
+  # where no intercept (or random intercept, ...) takes the centring of a
+  # covariate, the covariate is only scaled (the centring would change the
+  # model); the scaling parameters are also part of the model info
+  uncentred <- get_uncentred_columns(info_list, Mlist)
+  if (length(uncentred) > 0L) {
+    Mlist$scale_pars <- remove_centring(Mlist$scale_pars, uncentred, Mlist)
+    for (k in names(info_list)) {
+      info_list[[k]]$scale_pars <- Mlist$scale_pars
+    }
+  }
 
   # * data list ----------------------------------------------------------------
   data_list <- get_data_list(Mlist, info_list, hyperpars, append_data_list)
