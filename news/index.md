@@ -75,6 +75,13 @@
   matrix, and the regression coefficients of the model), with a message
   (see `monitor_params` in
   [`?model_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)).
+- Mixed models with more than one grouping level and an interaction
+  between a random-slope variable and a covariate of a higher grouping
+  level, e.g., `lme_imp(y ~ Zc * time + (time | id) + (1 | center))`
+  with `Zc` a center-level covariate, could not be fitted (JAGS stopped
+  with “Index out of range”). The covariate is now taken from the
+  correct rows and is scaled
+  ([\#77](https://github.com/nerler/JointAI/issues/77)).
 - The error message for variables of an unsupported class now names each
   variable correctly (it showed, e.g., “x1”, “x2” for a variable “x”
   with two classes)
