@@ -36,6 +36,15 @@
   the interaction, its main effects and the intercept (or the thresholds /
   baseline hazard) did not correspond to the fitted model. Predictions of
   such models change accordingly (#74).
+* In mixed models with more than one grouping level, a fixed effect could be
+  part of the mean of random effects on two levels, e.g., the effect of `C1`
+  in `lme_imp(y ~ C1 * time + (time | id) + (C1 | center))` (mean of the
+  random slope of `C1` on the center level and of the random intercept on
+  the id level), or the effect of `time` with random slopes of `time` on
+  both levels. The effect was then counted twice, so that the estimated
+  coefficient did not correspond to the model. It is now only part of the
+  mean of the random effects of the highest level. Results of such models
+  fitted with earlier versions differ (#76).
 * With scaled covariates (the default), the random effects of mixed models and
   their variance-covariance matrices were not always transformed back
   correctly: the random effects did not take into account the centring of

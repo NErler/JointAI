@@ -436,7 +436,14 @@ orga_hc_parelmts <- function(
   # - parelmts: vector of parameter elements (from info_list)
   # - lp: linear predictor (from info_list)
 
-  hc_vars <- nlapply(lvls, function(lvl) {
+  # A coefficient can only be in the means of the random effects of one level
+  # (otherwise it is counted twice in the linear predictor). It is kept on the
+  # highest level at which it can be such a mean, so the levels are processed
+  # from the highest to the lowest, and the coefficients already used on a
+  # higher level are excluded on the lower levels.
+  used_higher <- integer(0L)
+  hc_vars <- list()
+  for (lvl in names(sort(all_lvls[lvls], decreasing = TRUE))) {
     rd_slope_coefs <- hc_rdslope_info(hc_columns[[lvl]], parelmts)
     rd_slope_interact_coefs <- hc_rdslope_interact(
       hc_columns[[lvl]],
@@ -444,10 +451,27 @@ orga_hc_parelmts <- function(
       lvls
     )
 
+    # the random slope remains, but its mean does not get the coefficient
+    # (the mean is then 0)
+    if (NROW(rd_slope_coefs) > 0L) {
+      is_used <- rd_slope_coefs$parelmts %in% used_higher
+      rd_slope_coefs$parelmts[is_used] <- NA
+    }
+
+    # interactions with the random-slope variable that are used on a higher
+    # level are left out
+    if (NROW(rd_slope_interact_coefs) > 0L) {
+      is_used <- rd_slope_interact_coefs$parelmts %in% used_higher
+      rd_slope_interact_coefs <- rd_slope_interact_coefs[!is_used, ]
+    }
+
     elmts <- parelmts[[paste0("M_", lvl)]][
       !parelmts[[paste0("M_", lvl)]] %in%
         rbind(rd_slope_coefs, rd_slope_interact_coefs)$parelmts
     ]
+    if (!is.list(elmts)) {
+      elmts <- elmts[!elmts %in% used_higher]
+    }
 
     rd_intercept_coefs <- if (
       !is.null(elmts) &
@@ -471,7 +495,7 @@ orga_hc_parelmts <- function(
       }
     }
 
-    structure(
+    hc_vars[[lvl]] <- structure(
       list(
         rd_intercept_coefs = rd_intercept_coefs,
         rd_slope_coefs = rd_slope_coefs,
@@ -481,7 +505,16 @@ orga_hc_parelmts <- function(
       incomplete = attr(hc_columns[[lvl]], "incomplete"),
       z_names = attr(hc_columns[[lvl]], "z_names")
     )
-  })
+
+    used_lvl <- c(
+      rd_intercept_coefs$parelmts,
+      rd_slope_coefs$parelmts,
+      rd_slope_interact_coefs$parelmts
+    )
+    used_higher <- c(used_higher, used_lvl[!is.na(used_lvl)])
+  }
+  # in the original order of the levels
+  hc_vars <- hc_vars[lvls]
 
   used <- lapply(nlapply(hc_vars, do.call, what = rbind), "[[", "parelmts")
 
