@@ -355,6 +355,63 @@ test_that("cross-level interactions with a random slope are re-scaled (#74)", {
   }
 })
 
+# longDF with subjects nested in 5 centers and a covariate of the center level
+longDF_center <- function() {
+  df <- golden_data()$longDF
+  set.seed(2020)
+  Zc <- rnorm(nlevels(df$center), 5, 2)
+  df$Zc <- Zc[as.integer(df$center)]
+  df
+}
+
+higher_level_case <- quote(lme_imp(
+  y ~ Zc * time + C1 + (time | id) + (1 | center),
+  data = longDF
+))
+
+test_that("a higher-level covariate in the mean of a random slope (#77)", {
+  set.seed(2020)
+  fit <- golden_fit(higher_level_case, list(longDF = longDF_center()))
+
+  # Zc (column 2 of M_center) is indexed via the rows of the lowest level and
+  # scaled as in the mean of the random intercept of the center level (long
+  # lines of the model are wrapped, so whitespace is collapsed first)
+  jagsmodel <- gsub("\\s+", " ", fit$jagsmodel)
+  expect_match(
+    jagsmodel,
+    paste0(
+      "mu_b_y_id[ii, 2] <- beta[4] + ",
+      "(M_center[group_center[pos_id[ii]], 2] - spM_center[2, 1])/",
+      "spM_center[2, 2] * beta[5]"
+    ),
+    fixed = TRUE
+  )
+  expect_match(
+    jagsmodel,
+    "(M_center[iii, 2] - spM_center[2, 1])/spM_center[2, 2] * beta[2]",
+    fixed = TRUE
+  )
+
+  expect_gt(NROW(slope_interactions(fit)), 0)
+  expect_lp_invariant(fit, "y")
+})
+
+test_that("a model with a higher-level covariate in a random-slope mean runs (#77)", {
+  # before the fix, JAGS stopped with "Index out of range" (more subjects
+  # than centers)
+  fit <- lme_imp(
+    y ~ Zc * time + C1 + (time | id) + (1 | center),
+    data = longDF_center(),
+    n.adapt = 5,
+    n.iter = 5,
+    seed = 2020,
+    mess = FALSE,
+    warn = FALSE
+  )
+  expect_s3_class(fit$MCMC, "mcmc.list")
+  expect_equal(coda::niter(fit$MCMC), 5)
+})
+
 test_that("rescale() changes coefficients only", {
   set.seed(2020)
   fit <- golden_case("lm_spline_powers")
