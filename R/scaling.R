@@ -379,8 +379,12 @@ par_names <- function(name, n) {
 #'   (`rescale_coefs()`, e.g. the intercept takes the centring of all
 #'   covariates); `delta` keeps `b` consistent with them (`ranef_shift()`).
 #'
-#' Neither needs the data, so the random effects are transformed back also
-#' when a random-slope variable has missing values.
+#' `A` does not need the data, so the random effects are transformed back
+#' also when a random-slope variable has missing values. `delta` usually does
+#' not need the data either. If it depends on covariates (see
+#' `ranef_covariate_shift()`), the values of each group are used: observed or,
+#' if missing, imputed values (if they were monitored). Without them, the
+#' random effects of that group are set to `NA`, with a warning.
 #'
 #' The random effects are transformed per "block": the random effects that
 #' share one covariance matrix (`get_ranef_blocks()`). Usually, a block holds
@@ -403,7 +407,7 @@ par_names <- function(name, n) {
 #' @param data_list data list passed to JAGS (for the names of design-matrix
 #'   columns).
 #' @param groups list of grouping information (`Mlist$groups`; for the number
-#'   of groups per level).
+#'   of groups per level, and to find the rows of covariates per group).
 #'
 #' @return `rescaled`, with the random effects and their covariance matrices
 #'   transformed back.
@@ -458,23 +462,76 @@ rescale_ranefs <- function(
       next
     }
 
-    # construct the shift (delta) of the random effects of this block
+    # construct the shift (delta) of the random effects of this block, and
+    # the parts of the shift that depend on covariates (usually none)
     delta <- matrix(0, nrow(MCMC), nz)
+    cov_shifts <- list()
     for (part in block$parts) {
+      A_part <- A[part$cols, part$cols, drop = FALSE]
       delta[, part$cols] <- ranef_shift(
         part,
-        A[part$cols, part$cols, drop = FALSE],
+        A_part,
         MCMC,
         rescaled,
         coefs,
         scale_pars,
         data_list
       )
+      part_shifts <- ranef_covariate_shift(
+        part,
+        A_part,
+        MCMC,
+        rescaled,
+        coefs,
+        scale_pars,
+        data_list
+      )
+      for (cs in part_shifts) {
+        cs$cols <- part$cols
+        cov_shifts <- c(cov_shifts, list(cs))
+      }
     }
 
-    # apply scaling and shift to the random effects estimates
-    for (cols in b_cols[monitored]) {
-      rescaled[, cols] <- MCMC[, cols, drop = FALSE] %*% t(A) + delta
+    # apply scaling and shift to the random effects estimates, per group
+    missing_covs <- character(0L)
+    n_missing <- 0L
+    for (g in which(monitored)) {
+      delta_g <- delta
+      for (cs in cov_shifts) {
+        x <- group_covariate_values(
+          cs,
+          g,
+          block$lvl,
+          groups,
+          MCMC,
+          data_list
+        )
+        delta_g[, cs$cols] <- delta_g[, cs$cols] + cs$slope * x
+        if (anyNA(x)) {
+          missing_covs <- union(missing_covs, cs$w)
+        }
+      }
+      if (anyNA(delta_g)) {
+        n_missing <- n_missing + 1L
+      }
+      cols <- b_cols[[g]]
+      rescaled[, cols] <- MCMC[, cols, drop = FALSE] %*% t(A) + delta_g
+    }
+
+    if (n_missing > 0L) {
+      warnmsg(
+        paste(
+          "The random effects of %d group(s) of the level %s could not be",
+          "transformed back to the original scale and are set to NA:",
+          "the covariate(s) %s have missing values, and their imputed",
+          "values were not monitored. Monitor the imputed values",
+          "(%s) to transform these random effects back."
+        ),
+        n_missing,
+        dQuote(block$lvl),
+        paste_and(missing_covs, dQ = TRUE),
+        dQuote("monitor_params = c(imps = TRUE)")
+      )
     }
   }
   rescaled
@@ -667,9 +724,10 @@ ranef_transformation <- function(lvl_info, scale_pars) {
 #'   columns).
 #' @return `data.frame` with one row per term: `rd_effect` (the random effect
 #'   whose mean contains the term), `coef_term` (column name of the term, to
-#'   find its coefficient) and `w` (column name of the covariate the
+#'   find its coefficient), `w` (column name of the covariate the
 #'   coefficient is multiplied with; `NA` for a constant, i.e. the intercept or
-#'   the coefficient of the random-slope variable itself).
+#'   the coefficient of the random-slope variable itself), and `w_matrix` and
+#'   `w_col` (data matrix and column number of `w`; `NA` for a constant).
 #' @keywords internal
 ranef_mean_terms <- function(lvl_info, data_list) {
   column_names <- function(coefs) {
@@ -683,18 +741,27 @@ ranef_mean_terms <- function(lvl_info, data_list) {
   out <- data.frame(
     rd_effect = character(0L),
     coef_term = character(0L),
-    w = character(0L)
+    w = character(0L),
+    w_matrix = character(0L),
+    w_col = integer(0L)
   )
 
   # random intercept: intercept (constant) and covariates of the level
   ic <- lvl_info$rd_intercept_coefs
   if (NROW(ic) > 0L) {
     ic <- ic[!is.na(ic$parelmts), ]
+    is_const <- ic$term == "(Intercept)"
     w <- column_names(ic)
-    w[ic$term == "(Intercept)"] <- NA
+    w[is_const] <- NA
     out <- rbind(
       out,
-      data.frame(rd_effect = ic$rd_effect, coef_term = ic$term, w = w)
+      data.frame(
+        rd_effect = ic$rd_effect,
+        coef_term = ic$term,
+        w = w,
+        w_matrix = ifelse(is_const, NA_character_, ic$matrix),
+        w_col = ifelse(is_const, NA_integer_, as.integer(ic$cols))
+      )
     )
   }
 
@@ -707,7 +774,9 @@ ranef_mean_terms <- function(lvl_info, data_list) {
       data.frame(
         rd_effect = sc$rd_effect,
         coef_term = sc$term,
-        w = rep(NA_character_, nrow(sc))
+        w = rep(NA_character_, nrow(sc)),
+        w_matrix = rep(NA_character_, nrow(sc)),
+        w_col = rep(NA_integer_, nrow(sc))
       )
     )
   }
@@ -721,7 +790,9 @@ ranef_mean_terms <- function(lvl_info, data_list) {
       data.frame(
         rd_effect = ia$rd_effect,
         coef_term = ia$term,
-        w = column_names(ia)
+        w = column_names(ia),
+        w_matrix = ia$matrix,
+        w_col = as.integer(ia$cols)
       )
     )
   }
@@ -790,6 +861,136 @@ ranef_shift <- function(
   }
 
   mu - mu_s %*% t(A_part)
+}
+
+
+#' Part of the shift of the random effects that depends on covariates
+#'
+#' The shift of the random effects of group `g` is
+#' `delta_g = mu(x_g) - A mu_s(x_g)`, with `x_g` the covariates in the means
+#' of the random effects of that group. It is affine in `x_g`:
+#' `delta_g = delta + sum_w slope_w * x_gw`, with `delta` from
+#' `ranef_shift()`. Usually, `slope_w` is zero for each covariate (the
+#' covariates drop out, because the fixed effects are transformed back
+#' consistently), so that the data are not needed. It is not zero, e.g., in
+#' `y ~ C1 * time + (time | id) + (C1 | center)`: the part of `C1:time` that
+#' the back-transformation moves into the coefficient of C1 belongs to the
+#' center-level random slope of C1, not to the id-level random intercept.
+#'
+#' @param part one outcome of a block of random effects: element of the
+#'   `parts` of a block (`get_ranef_blocks()`), with `info`, `lvl_info` and
+#'   `cols`.
+#' @param A_part transformation matrix of the random effects of this outcome
+#'   (`ranef_transformation()`).
+#' @param MCMC MCMC sample (matrix) on the scale used in JAGS.
+#' @param rescaled MCMC sample (matrix) in which the coefficients are already
+#'   transformed back (`rescale_coefs()`).
+#' @param coefs `data.frame` with one row per regression coefficient
+#'   (`do.call(rbind, get_coef_names(info_list))`); used to find the
+#'   coefficients in the means of the random effects.
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column), with
+#'   centre 0 and scale 1 for columns that are not scaled.
+#' @param data_list data list passed to JAGS (for the names of design-matrix
+#'   columns).
+#' @return List with one element per covariate for which `slope_w` is not
+#'   zero: `w` (column name), `matrix` and `col` (data matrix and column
+#'   number), and `slope` (matrix with one row per iteration and one column
+#'   per random effect of this outcome).
+#' @keywords internal
+ranef_covariate_shift <- function(
+  part,
+  A_part,
+  MCMC,
+  rescaled,
+  coefs,
+  scale_pars,
+  data_list
+) {
+  z_names <- attr(part$lvl_info, "z_names")
+  terms <- ranef_mean_terms(part$lvl_info, data_list)
+  terms <- terms[!is.na(terms$w), ]
+  model_coefs <- coefs[
+    coefs$outcome %in% part$info$varname & is.na(coefs$outcat),
+  ]
+
+  out <- list()
+  for (w in unique(terms$w)) {
+    w_terms <- terms[terms$w == w, ]
+    sp_w <- scale_pars[match(w, rownames(scale_pars)), ]
+
+    # coefficient of w in mu(x) - A mu_s(x): the coefficient on the original
+    # scale in the mean of random effect j, minus column j of A times the
+    # coefficient on the scaled scale divided by the scale of w (the scaled
+    # covariate is (w - c_w) / s_w)
+    slope <- matrix(0, nrow(MCMC), length(z_names))
+    # sum of the absolute values of the parts, to judge if slope is zero
+    size <- matrix(0, nrow(MCMC), length(z_names))
+    for (k in seq_len(nrow(w_terms))) {
+      j <- match(w_terms$rd_effect[k], z_names)
+      coef <- model_coefs$coef[match(w_terms$coef_term[k], model_coefs$varname)]
+
+      on_original <- matrix(0, nrow(MCMC), length(z_names))
+      on_original[, j] <- rescaled[, coef]
+      on_scaled <- outer(MCMC[, coef] / sp_w$scale, A_part[, j])
+
+      slope <- slope + on_original - on_scaled
+      size <- size + abs(on_original) + abs(on_scaled)
+    }
+
+    if (all(abs(slope) <= sqrt(.Machine$double.eps) * size)) {
+      next
+    }
+    out[[w]] <- list(
+      w = w,
+      matrix = w_terms$w_matrix[1L],
+      col = w_terms$w_col[1L],
+      slope = slope
+    )
+  }
+  out
+}
+
+
+#' Values of a covariate for one group, per iteration
+#'
+#' @param cov_shift element of the output of `ranef_covariate_shift()` (with
+#'   `matrix` and `col`).
+#' @param g integer; the group (row of the random effects).
+#' @param lvl grouping level of the random effects.
+#' @param groups `data.frame` of grouping information (`Mlist$groups`; one
+#'   row per row of the lowest level).
+#' @param MCMC MCMC sample (matrix); contains the imputed values of the
+#'   covariate if they were monitored (columns `<matrix>[<row>,<col>]`).
+#' @param data_list data list passed to JAGS.
+#' @return Vector with one value per iteration: the observed value, the
+#'   imputed values, or `NA` if the value is missing and the imputed values
+#'   were not monitored.
+#' @keywords internal
+group_covariate_values <- function(
+  cov_shift,
+  g,
+  lvl,
+  groups,
+  MCMC,
+  data_list
+) {
+  # row of the data matrix of the covariate (same or higher level) that
+  # belongs to group g, via the rows of the lowest level
+  matrix_lvl <- sub("^M_", "", cov_shift$matrix)
+  row <- groups[[matrix_lvl]][match(g, groups[[lvl]])]
+
+  x <- data_list[[cov_shift$matrix]][row, cov_shift$col]
+  if (!is.na(x)) {
+    return(rep(x, nrow(MCMC)))
+  }
+
+  imp <- sprintf("%s[%d,%d]", cov_shift$matrix, row, cov_shift$col)
+  if (imp %in% colnames(MCMC)) {
+    MCMC[, imp]
+  } else {
+    rep(NA_real_, nrow(MCMC))
+  }
 }
 
 

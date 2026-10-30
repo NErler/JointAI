@@ -16,9 +16,10 @@ columns).}
 \value{
 \code{data.frame} with one row per term: \code{rd_effect} (the random effect
 whose mean contains the term), \code{coef_term} (column name of the term, to
-find its coefficient) and \code{w} (column name of the covariate the
+find its coefficient), \code{w} (column name of the covariate the
 coefficient is multiplied with; \code{NA} for a constant, i.e. the intercept or
-the coefficient of the random-slope variable itself).
+the coefficient of the random-slope variable itself), and \code{w_matrix} and
+\code{w_col} (data matrix and column number of \code{w}; \code{NA} for a constant).
 }
 \description{
 With hierarchical centring, the mean of a random effect contains fixed

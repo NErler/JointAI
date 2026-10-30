@@ -720,9 +720,7 @@ test_that("random effects are re-scaled if a random slope is incomplete", {
 test_that("random effects are re-scaled if a coefficient could be in two levels (#76)", {
   # the coefficient is in the means of the random effects of the highest
   # level only (center). The issue example, `C1 * time + (time | id) +
-  # (C1 | center)`, is not included: with the interaction C1:time in the mean
-  # of the random slope of time, the random effects of the center level are
-  # not transformed back correctly (also before #76; F21 in the dev notes).
+  # (C1 | center)`, is tested separately (#83, below).
   cases <- list(
     quote(lme_imp(y ~ C1 + time + (time | id) + (C1 | center), data = longDF)),
     quote(lme_imp(y ~ time + (time | id) + (time | center), data = longDF)),
@@ -739,6 +737,188 @@ test_that("random effects are re-scaled if a coefficient could be in two levels 
       expect_ranefs_invariant(fit, g$outcomes, g$lvl)
     }
     expect_subject_lp_invariant(fit, "y")
+  }
+})
+
+# C1 (id level) is in the interaction C1:time in the mean of the id-level
+# random slope of time, and C1 has a random slope on the center level. The
+# shift of the id-level random effects then depends on C1 of the subject, and
+# part of the effect of C1 moves into the center-level random slope of C1, so
+# that Z b of a level does not only change by a constant
+# (expect_ranefs_invariant() does not apply); the linear predictor of a
+# subject must still be the same.
+cross_level_slope_case <- quote(lme_imp(
+  y ~ C1 * time + (time | id) + (C1 | center),
+  data = longDF
+))
+
+# means of the random effects of each group (rows: groups, columns: random
+# effects) as in the JAGS model (hierarchical centring), on the original or
+# the scaled scale, for one draw of the coefficients
+ranef_means <- function(fit, outcome, lvl, draw, scaled) {
+  lvl_info <- fit$info_list[[outcome]]$hc_list$hcvars[[lvl]]
+  z_names <- attr(lvl_info, "z_names")
+  coefs <- coef_table(fit)
+  coefs <- coefs[coefs$outcome == outcome, ]
+  sp <- do.call(rbind, unname(fit$Mlist$scale_pars))
+  sp$center[is.na(sp$center)] <- 0
+  sp$scale[is.na(sp$scale)] <- 1
+
+  grp <- fit$Mlist$groups
+  ng <- max(grp[[lvl]])
+  # one row of the lowest level per group
+  first <- match(seq_len(ng), grp[[lvl]])
+  value <- function(matrix, col) {
+    x <- fit$data_list[[matrix]][grp[[sub("^M_", "", matrix)]][first], col]
+    if (scaled) {
+      nam <- colnames(fit$data_list[[matrix]])[col]
+      x <- (x - sp[nam, "center"]) / sp[nam, "scale"]
+    }
+    x
+  }
+  coef_of <- function(term) draw[[coefs$coef[match(term, coefs$varname)]]]
+
+  mu <- matrix(0, ng, length(z_names))
+  ic <- lvl_info$rd_intercept_coefs
+  for (k in which(!is.na(ic$parelmts))) {
+    x <- if (ic$term[k] == "(Intercept)") 1 else value(ic$matrix[k], ic$cols[k])
+    j <- match("(Intercept)", z_names)
+    mu[, j] <- mu[, j] + coef_of(ic$term[k]) * x
+  }
+  sc <- lvl_info$rd_slope_coefs
+  for (k in which(!is.na(sc$parelmts))) {
+    j <- match(sc$rd_effect[k], z_names)
+    mu[, j] <- mu[, j] + coef_of(sc$term[k])
+  }
+  ia <- lvl_info$rd_slope_interact_coefs
+  for (k in which(!is.na(ia$parelmts))) {
+    j <- match(ia$rd_effect[k], z_names)
+    mu[, j] <- mu[, j] + coef_of(ia$term[k]) * value(ia$matrix[k], ia$cols[k])
+  }
+  mu
+}
+
+# The deviations of the random effects from their means, b - mu(x_g), do not
+# depend on the fixed effects: Z (b - mu) must be the same on both scales, at
+# arbitrary values of the random-slope variables. (Stricter than the check of
+# Z b in expect_ranefs_invariant(): it also checks that each part of the
+# fixed effects is in the random effects of the right level.)
+expect_ranef_deviations_invariant <- function(fit, outcome, lvl) {
+  rn <- ranef_names(fit, outcome, lvl)
+  ng <- nrow(rn$b)
+  draws <- scaled_draws(fit, extra = rn$b)
+  rescaled <- rescale_draws(fit, draws)
+
+  z_names <- attr(fit$info_list[[outcome]]$hc_list$hcvars[[lvl]], "z_names")
+  sp <- do.call(rbind, unname(fit$Mlist$scale_pars))
+  sp$center[is.na(sp$center)] <- 0
+  sp$scale[is.na(sp$scale)] <- 1
+  grp <- rep(seq_len(ng), 2)
+  Z_new <- matrix(
+    rnorm(length(grp) * length(z_names), 0, 3),
+    ncol = length(z_names),
+    dimnames = list(NULL, z_names)
+  )
+  Z_new[, z_names == "(Intercept)"] <- 1
+  Z_new_scaled <- sweep(Z_new, 2, sp[z_names, "center"])
+  Z_new_scaled <- sweep(Z_new_scaled, 2, sp[z_names, "scale"], "/")
+
+  for (r in seq_len(nrow(draws))) {
+    dev <- matrix(rescaled[r, rn$b], ng) -
+      ranef_means(fit, outcome, lvl, rescaled[r, ], scaled = FALSE)
+    dev_scaled <- matrix(draws[r, rn$b], ng) -
+      ranef_means(fit, outcome, lvl, draws[r, ], scaled = TRUE)
+    expect_equal(
+      rowSums(Z_new * dev[grp, , drop = FALSE]),
+      rowSums(Z_new_scaled * dev_scaled[grp, , drop = FALSE]),
+      info = paste(outcome, lvl)
+    )
+  }
+}
+
+test_that("random effects with a cross-level interaction and a higher-level random slope (#83)", {
+  set.seed(2020)
+  fit <- golden_fit(cross_level_slope_case, golden_data())
+  expect_lp_invariant(fit, "y")
+  expect_subject_lp_invariant(fit, "y")
+  for (lvl in c("id", "center")) {
+    expect_ranef_deviations_invariant(fit, "y", lvl)
+  }
+})
+
+test_that("each level's random effects keep their part of the fixed effects (#83)", {
+  # the #77 model: the main effect of Zc (center level) is in the mean of the
+  # center-level random intercept, Zc:time in the mean of the id-level random
+  # slope of time; and models without such a structure (control)
+  cases <- list(
+    list(
+      higher_level_case,
+      list(longDF = longDF_center()),
+      c("id", "center")
+    ),
+    list(
+      quote(lme_imp(
+        y ~ C1 * time + B1 * time + c1 + (time | id),
+        data = longDF
+      )),
+      list(longDF = JointAI::longDF),
+      "id"
+    ),
+    list(
+      quote(lme_imp(y ~ C1 * time + (time | id) + (1 | center), data = longDF)),
+      golden_data(),
+      c("id", "center")
+    )
+  )
+  set.seed(2020)
+  for (case in cases) {
+    fit <- golden_fit(case[[1]], case[[2]])
+    for (lvl in case[[3]]) {
+      expect_ranef_deviations_invariant(fit, "y", lvl)
+    }
+  }
+})
+
+test_that("missing values in the covariate of a cross-level interaction (#83)", {
+  df <- golden_data()$longDF
+  df$C1[df$id %in% c(3, 8)] <- NA
+  set.seed(2020)
+  fit <- golden_fit(cross_level_slope_case, list(longDF = df))
+
+  col <- match("C1", colnames(fit$data_list$M_id))
+  mis <- which(is.na(fit$data_list$M_id[, col]))
+  expect_length(mis, 2L)
+  b_id <- ranef_names(fit, "y", "id")$b
+  b_center <- ranef_names(fit, "y", "center")$b
+  draws <- scaled_draws(fit, extra = c(b_id, b_center))
+
+  # imputed values not monitored: the random effects of these subjects are NA
+  expect_warning(
+    rescaled <- rescale_draws(fit, draws),
+    "imputed values"
+  )
+  expect_true(all(is.na(rescaled[, b_id[mis, ]])))
+  expect_false(anyNA(rescaled[, b_id[-mis, ]]))
+  expect_false(anyNA(rescaled[, b_center]))
+
+  # imputed values monitored: the same as if they had been observed
+  imp <- sprintf("M_id[%d,%d]", mis, col)
+  draws_imp <- cbind(
+    draws,
+    matrix(
+      rnorm(nrow(draws) * length(mis), 0.7, 0.02),
+      ncol = length(mis),
+      dimnames = list(NULL, imp)
+    )
+  )
+  rescaled_imp <- rescale_draws(fit, draws_imp)
+  for (r in seq_len(nrow(draws))) {
+    fit_obs <- fit
+    fit_obs$data_list$M_id[mis, col] <- draws_imp[r, imp]
+    expect_equal(
+      rescaled_imp[r, c(b_id, b_center)],
+      rescale_draws(fit_obs, draws[r, , drop = FALSE])[1, c(b_id, b_center)]
+    )
   }
 })
 
