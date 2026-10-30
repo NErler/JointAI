@@ -708,3 +708,88 @@ test_that("all betas are monitored if one beta is monitored and covariates are s
   )
   expect_identical(fit$mcmc_settings$variable.names, "beta[2]")
 })
+
+# With scaled covariates, transforming random effects back needs the whole row
+# of b of a group (A mixes the random effects of a group), the whole covariance
+# matrix (D = A D_s A'), and the regression coefficients of the sub-model (for
+# delta). Only these are added to the monitored parameters, not all random
+# effects.
+setup_monitor <- function(other, analysis_main = TRUE, scale_vars = NULL) {
+  lme_imp(
+    y ~ C1 + c1 + time + (time | id),
+    data = longDF,
+    monitor_params = list(analysis_main = analysis_main, other = other),
+    scale_vars = scale_vars,
+    n.adapt = 0,
+    n.iter = 0,
+    seed = 2020,
+    warn = FALSE
+  )
+}
+
+test_that("monitoring of random effects is completed for re-scaling", {
+  # (suppressMessages() for the note that no MCMC sample is created)
+
+  # one element of b: the rest of its row is added
+  suppressMessages(expect_message(
+    fit <- setup_monitor("b_y_id[5,2]"),
+    "b_y_id\\[5,1:2\\]"
+  ))
+  vn <- fit$mcmc_settings$variable.names
+  expect_true("b_y_id[5,1:2]" %in% vn)
+  expect_false("b_y_id[5,2]" %in% vn)
+
+  # random effects without the regression coefficients: the coefficients of
+  # the sub-model are added
+  suppressMessages(expect_message(
+    fit <- setup_monitor("b_y_id", analysis_main = FALSE),
+    "beta\\[1\\]"
+  ))
+  vn <- fit$mcmc_settings$variable.names
+  expect_true("b_y_id" %in% vn)
+  expect_true(all(fit$coef_list$y$coef %in% vn))
+
+  # one element of D: the whole matrix (upper triangle, as monitored by
+  # default) is added
+  suppressMessages(expect_message(
+    fit <- setup_monitor("D_y_id[1,2]", analysis_main = FALSE),
+    "D_y_id\\[1,1\\]"
+  ))
+  vn <- fit$mcmc_settings$variable.names
+  expect_true(all(c("D_y_id[1,1]", "D_y_id[1,2]", "D_y_id[2,2]") %in% vn))
+
+  # without scaling, nothing is added
+  suppressMessages(expect_no_message(
+    fit <- setup_monitor("b_y_id[5,2]", scale_vars = FALSE),
+    message = "re-scal"
+  ))
+  expect_identical(
+    sort(fit$mcmc_settings$variable.names),
+    sort(c(
+      "beta",
+      "sigma_y",
+      "D_y_id[1,1]",
+      "D_y_id[1,2]",
+      "D_y_id[2,2]",
+      "b_y_id[5,2]"
+    ))
+  )
+})
+
+test_that("monitored random effects are transformed back (short MCMC run)", {
+  fit <- suppressMessages(suppressWarnings(lme_imp(
+    y ~ C1 + c1 + time + (time | id),
+    data = longDF,
+    monitor_params = list(analysis_main = FALSE, other = "b_y_id[5,2]"),
+    n.adapt = 10,
+    n.iter = 5,
+    seed = 2020,
+    keep_scaled_mcmc = TRUE,
+    mess = FALSE
+  )))
+  # the transformed value differs from the one on the scaled scale
+  expect_false(isTRUE(all.equal(
+    fit$MCMC[[1]][, "b_y_id[5,2]"],
+    fit$sample[[1]][, "b_y_id[5,2]"]
+  )))
+})
