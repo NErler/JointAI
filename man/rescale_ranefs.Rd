@@ -28,7 +28,7 @@ centre 0 and scale 1 for columns that are not scaled.}
 columns).}
 
 \item{groups}{list of grouping information (\code{Mlist$groups}; for the number
-of groups per level).}
+of groups per level, and to find the rows of covariates per group).}
 }
 \value{
 \code{rescaled}, with the random effects and their covariance matrices
@@ -54,8 +54,12 @@ contain fixed effects. These are transformed back separately
 covariates); \code{delta} keeps \code{b} consistent with them (\code{ranef_shift()}).
 }
 
-Neither needs the data, so the random effects are transformed back also
-when a random-slope variable has missing values.
+\code{A} does not need the data, so the random effects are transformed back
+also when a random-slope variable has missing values. \code{delta} usually does
+not need the data either. If it depends on covariates (see
+\code{ranef_covariate_shift()}), the values of each group are used: observed or,
+if missing, imputed values (if they were monitored). Without them, the
+random effects of that group are set to \code{NA}, with a warning.
 
 The random effects are transformed per "block": the random effects that
 share one covariance matrix (\code{get_ranef_blocks()}). Usually, a block holds
