@@ -467,6 +467,11 @@
 #' \item if a regression coefficient of a main model is monitored (e.g.,
 #'       \code{other = "beta[2]"}), all regression coefficients of the main
 #'       model(s) (\code{betas = TRUE});
+#' \item if a regression coefficient of a covariate model (e.g.,
+#'       \code{other = "alpha[1]"}), the thresholds of an ordinal model
+#'       (\code{gamma_main}, \code{gamma_other}) or the baseline hazard of a
+#'       proportional hazards model (\code{basehaz}) are monitored, all
+#'       regression coefficients of that model;
 #' \item if random effects are monitored, the regression coefficients of the
 #'       corresponding model, and, if only some random effects of a group are
 #'       selected, the other random effects of that group: e.g.,
@@ -902,14 +907,10 @@ model_imp <- function(
     any(grepl("^beta\\[", unlist(monitor_params))) &
       any(!is.na(unlist(Mlist$scale_pars)))
   ) {
+    # all betas are monitored, so single elements are removed (they would be
+    # monitored twice)
     monitor_params <- c(
-      lapply(monitor_params, function(x) {
-        if (any(grepl("^beta[", x, fixed = TRUE))) {
-          x[-grep("^beta[", x, fixed = TRUE)]
-        } else {
-          x
-        }
-      }),
+      lapply(monitor_params, function(x) x[!grepl("^beta\\[", x)]),
       betas = TRUE
     )
 
@@ -929,9 +930,11 @@ model_imp <- function(
     c(list(Mlist = Mlist, info_list = info_list, mess = mess), monitor_params)
   )
 
-  # with scaled covariates, monitored random effects can only be transformed
-  # back if some other parameters are monitored as well
+  # with scaled covariates, monitored coefficients, thresholds, baseline
+  # hazards and random effects can only be transformed back if some other
+  # parameters are monitored as well
   if (any(!is.na(unlist(Mlist$scale_pars)))) {
+    var_names <- complete_coef_monitoring(var_names, info_list, mess = mess)
     var_names <- complete_ranef_monitoring(var_names, info_list, mess = mess)
   }
 

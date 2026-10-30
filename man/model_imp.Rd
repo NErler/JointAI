@@ -653,6 +653,11 @@ message):
 \item if a regression coefficient of a main model is monitored (e.g.,
 \code{other = "beta[2]"}), all regression coefficients of the main
 model(s) (\code{betas = TRUE});
+\item if a regression coefficient of a covariate model (e.g.,
+\code{other = "alpha[1]"}), the thresholds of an ordinal model
+(\code{gamma_main}, \code{gamma_other}) or the baseline hazard of a
+proportional hazards model (\code{basehaz}) are monitored, all
+regression coefficients of that model;
 \item if random effects are monitored, the regression coefficients of the
 corresponding model, and, if only some random effects of a group are
 selected, the other random effects of that group: e.g.,
