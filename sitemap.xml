@@ -72,6 +72,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/get_nranef.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_ranef_blocks.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_resp_mat.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/get_uncentred_columns.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/group_covariate_values.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/hc_rdslope_info.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/hc_rdslope_interact.html</loc></url>
@@ -106,6 +107,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/rd_terms_by_grouping.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/rd_vcov.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/reformat_difftime.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/remove_centring.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/remove_formula_grouping.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/remove_grouping.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/remove_labelled_class.html</loc></url>

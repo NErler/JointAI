@@ -248,7 +248,13 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
       specified, only those of these that are named in it are scaled
       (for columns created by functions or interactions, the column name
       in the model matrix, e.g., `"C1:C2"`). `TRUE` is the same as the
-      default; if set to `FALSE` no scaling will be done.
+      default; if set to `FALSE` no scaling will be done. Variables are
+      only scaled, not centred, where centring would change the model
+      because no intercept takes up the shift: in models without
+      intercept, random-slope variables of a grouping level without
+      random intercept, and variables in an interaction with a
+      random-slope variable when the main effect of the other variable
+      is not in the model.
 
   `custom`
 

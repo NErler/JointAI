@@ -31,5 +31,6 @@ Square matrix, one row and column per random effect.
 
 ## Details
 
-Without random intercept the centring has nowhere to go; it changes the
-model (#66), and only the scaling is undone here.
+Without random intercept, the random-slope variables are not centred
+([`get_uncentred_columns()`](https://nerler.github.io/JointAI/reference/get_uncentred_columns.md)),
+so that only the scaling is undone here.

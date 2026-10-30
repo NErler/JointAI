@@ -24,6 +24,15 @@
 
 ### Bug fixes
 
+- With scaled covariates (the default), centring the covariates changed
+  some models, because no intercept could take up the shift: models
+  without intercept (e.g., `lm_imp(y ~ 0 + x1 + x2)`, which then had an
+  intercept `-sum(beta * mean(x))`), random slopes without random
+  intercept (e.g., `(0 + time | id)`), and interactions with a
+  random-slope variable whose other variable had no main effect (e.g.,
+  `y ~ x + x:time + (time | id)`). These variables are now scaled
+  without being centred. Results of such models fitted with earlier
+  versions differ ([\#66](https://github.com/nerler/JointAI/issues/66)).
 - With scaled covariates (the default), the thresholds of ordinal models
   ([`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
   [`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
