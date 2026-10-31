@@ -209,7 +209,7 @@ remove_centring <- function(scale_pars, columns, Mlist) {
 #'   of groups per level).
 #'
 #' @return Matrix with the same columns as `MCMC`, on the original scale.
-#' @noRd
+#' @keywords internal
 rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
   # NA: column not scaled; centre 0 and scale 1 leave it unchanged
   scale_pars$center[is.na(scale_pars$center)] <- 0
@@ -259,12 +259,22 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
 #' by their name in `MCMC` (`coefs$coef`), scaling parameters by the name of
 #' the design-matrix column (`coefs$varname`).
 #'
-#' @inheritParams rescale
-#' @param scale_pars as in `rescale()`, but without missing values.
+#' @param MCMC MCMC sample of one chain (`mcmc` object or matrix), on the
+#'   scale used in JAGS.
+#' @param coefs `data.frame` with one row per regression coefficient
+#'   (`do.call(rbind, get_coef_names(info_list))`).
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column), as in
+#'   `rescale()`, but without missing values (centre 0 and scale 1 for
+#'   columns that are not scaled).
+#' @param info_list list with the model info of each sub-model.
+#' @param data_list data list passed to JAGS (for the names of design-matrix
+#'   columns).
 #'
-#' @return Matrix with the same columns as `MCMC`; all other parameters are
-#'   unchanged.
-#' @noRd
+#' @return Matrix with the same columns as `MCMC`; the regression
+#'   coefficients, thresholds and coefficients of the baseline hazard are
+#'   transformed back, all other parameters are unchanged.
+#' @keywords internal
 rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
   rescaled <- matrix(
     MCMC,
@@ -402,11 +412,14 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
 #' so that the JAGS model contains `beta * w * z` with `w` and `z` scaled
 #' separately (not the scaled column `w:z`).
 #'
-#' @inheritParams rescale
+#' @param info_list list with the model info of each sub-model (uses the
+#'   random-effects information in `hc_list`).
+#' @param data_list data list passed to JAGS (for the names of design-matrix
+#'   columns).
 #' @return `data.frame` with one row per such term: `outcome` (name of the
 #'   outcome as in `coefs`), `term` (column name of the interaction), `w` and
 #'   `z` (column names of the two variables); no rows if there are none.
-#' @noRd
+#' @keywords internal
 get_slope_interactions <- function(info_list, data_list) {
   out <- data.frame(
     outcome = character(0L),
@@ -450,7 +463,8 @@ get_slope_interactions <- function(info_list, data_list) {
 #'
 #' @param name character string; name of the parameter vector
 #' @param n integer; length of the parameter vector
-#' @noRd
+#' @return Character vector of length `n` with the names of the elements.
+#' @keywords internal
 par_names <- function(name, n) {
   if (n == 1L) {
     return(name)
