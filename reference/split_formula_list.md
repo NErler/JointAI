@@ -1,4 +1,4 @@
-# Split a list of formulas into fixed and random effects parts.
+# Split a list of formulas into fixed and random effects parts
 
 Calls
 [`extract_fixef_formula()`](https://nerler.github.io/JointAI/reference/extract_fixef_formula.md)

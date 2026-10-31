@@ -8,6 +8,11 @@ This function returns a list of default values for the hyper-parameters.
 default_hyperpars()
 ```
 
+## Value
+
+A named list with one named vector of hyper-parameters per type of model
+(the elements described above).
+
 ## Details
 
 **norm:** hyper-parameters for normal and log-normal models

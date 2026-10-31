@@ -50,3 +50,11 @@ rd_vcov(object, outcome = NULL, start = NULL, end = NULL, thin = NULL,
 - warn:
 
   logical; should warnings be given? Default is `TRUE`.
+
+## Value
+
+A list with one element per selected outcome (sub-model), each a list
+with one matrix per grouping level: the posterior mean of the
+variance-covariance matrix of the random effects, with rows and columns
+named by the random effects. When only one outcome is selected, the list
+for this outcome is returned directly.

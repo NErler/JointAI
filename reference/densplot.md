@@ -95,6 +95,12 @@ densplot(object, start = NULL, end = NULL, thin = NULL,
 
   logical; should messages be given? Default is `TRUE`.
 
+## Value
+
+With `use_ggplot = TRUE` (only for objects of class 'JointAI') a
+`ggplot` object. Otherwise, the plots are drawn with base graphics and
+`NULL` is returned invisibly.
+
 ## See also
 
 The vignette [Parameter

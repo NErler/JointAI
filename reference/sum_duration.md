@@ -25,3 +25,12 @@ sum_duration(object, by = c("all", "phase", "run", "chain", "phase and run",
   `"run and phase"`) to get the sum over all chains, separately per
   phase and run. `NULL` (the default in earlier versions) is the same as
   `"all"`.
+
+## Value
+
+The duration(s), as `difftime`: for `by = "all"` a single value; for
+`"phase"` a list with elements `adapt` and `sample`; for `"run"` a named
+vector with one value per run; for `"chain"` a named vector with one
+value per chain (a single value `total` when the chains were not run in
+parallel); for `"phase and run"` a list with elements `adapt` and
+`sample`, each a named vector with one value per run.

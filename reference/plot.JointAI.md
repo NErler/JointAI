@@ -19,6 +19,11 @@ plot(x, ...)
 
   currently not used
 
+## Value
+
+Called for its side effect: a plot of the residuals against the fitted
+values is drawn and `NULL` is returned invisibly.
+
 ## Note
 
 Currently, [`plot()`](https://rdrr.io/r/graphics/plot.default.html) can

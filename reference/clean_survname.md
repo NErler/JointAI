@@ -15,3 +15,9 @@ clean_survname(x)
 - x:
 
   a character string or vector of character strings
+
+## Value
+
+A character vector of the same length as `x`, in which survival outcomes
+(`"Surv(...)"`) are replaced by valid variable names; other values are
+returned unchanged.

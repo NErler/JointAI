@@ -28,6 +28,11 @@ residuals(object, type = c("working", "pearson",
 
   currently not used
 
+## Value
+
+A numeric vector of residuals, or, for models with more than one model
+formula, a list with one such vector per outcome.
+
 ## Note
 
 - For mixed models residuals are currently calculated using the fixed

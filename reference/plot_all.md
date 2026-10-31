@@ -56,6 +56,11 @@ plot_all(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
   [`barplot`](https://rdrr.io/r/graphics/barplot.html) and
   [`hist`](https://rdrr.io/r/graphics/hist.html)
 
+## Value
+
+Called for its side effect: the plots are drawn with base graphics and
+`NULL` is returned invisibly.
+
 ## See also
 
 Vignette: [Visualizing Incomplete

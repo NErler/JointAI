@@ -178,6 +178,21 @@ method for other types of objects)</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p><code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns an object of class
+<code>summary.JointAI</code>, a list with elements <code>call</code>,
+<code>start</code>, <code>end</code> and <code>thin</code> (the iterations used),
+<code>nchain</code> (the number of chains used), <code>res</code> (a list with
+the posterior summaries per sub-model), <code>outcome</code>,
+<code>missinfo</code> (the result of <code><a href="get_missinfo.html">get_missinfo()</a></code>, if
+<code>missinfo = TRUE</code>), <code>analysis_type</code> and <code>size</code>
+(the number of observations per level).</p>
+<p><code><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef()</a></code> returns a list with one named vector of posterior means per
+sub-model, <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> a list with one matrix of posterior quantiles
+per sub-model. The <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods are called for their side effect
+and return <code>x</code> invisibly (<code>print.Dmat</code>: <code>NULL</code>).</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>The model fitting functions <code><a href="model_imp.html">lm_imp</a></code>,
 <code><a href="model_imp.html">glm_imp</a></code>, <code><a href="model_imp.html">clm_imp</a></code>, <code><a href="model_imp.html">lme_imp</a></code>,

@@ -88,6 +88,18 @@ vectors/matrices be shown separately?</p></dd>
 <dd><p>currently not used</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>data.frame</code> with one row per monitored node and columns
+<code>outcome</code> (the outcome of the sub-model the parameter belongs
+to), <code>outcat</code> (the outcome category, for multinomial models
+and non-proportional effects in ordinal models; otherwise
+<code>NA</code>), <code>varname</code> (for regression coefficients: the name
+of the corresponding covariate or design matrix column) and
+<code>coef</code> (the name of the node in the JAGS model). For nodes that
+do not belong to a sub-model, e.g., imputed values, <code>outcome</code>,
+<code>outcat</code> and <code>varname</code> are <code>NA</code>.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

@@ -78,6 +78,17 @@ chains, separately per phase and run. <code>NULL</code> (the default in
 earlier versions) is the same as <code>"all"</code>.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>The duration(s), as <code>difftime</code>: for <code>by = "all"</code> a single
+value; for <code>"phase"</code> a list with elements <code>adapt</code> and
+<code>sample</code>; for <code>"run"</code> a named vector with one value per
+run; for <code>"chain"</code> a named vector with one value per chain
+(a single value <code>total</code> when the chains were not run in
+parallel); for <code>"phase and run"</code> a list with elements
+<code>adapt</code> and <code>sample</code>, each a named vector with one value
+per run.</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

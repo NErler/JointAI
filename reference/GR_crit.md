@@ -82,6 +82,16 @@ GR_crit(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
 
   currently not used
 
+## Value
+
+An object of class `gelman.diag` (see
+[`gelman.diag`](https://rdrr.io/pkg/coda/man/gelman.diag.html)): a list
+with elements `psrf`, a matrix with the point estimate and upper
+confidence limit of the potential scale reduction factor for each
+selected parameter, and `mpsrf`, the multivariate potential scale
+reduction factor (`NULL` unless `multivariate = TRUE` and more than one
+parameter is selected).
+
 ## References
 
 Gelman, A and Rubin, DB (1992) Inference from iterative simulation using

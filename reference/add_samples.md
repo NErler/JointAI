@@ -52,6 +52,12 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
 
   logical; should messages be given? Default is `TRUE`.
 
+## Value
+
+An object of class 'JointAI': `object` with the MCMC sample extended by
+the new iterations (`add = TRUE`) or replaced by them (`add = FALSE`),
+and with updated MCMC settings and computational time.
+
 ## See also
 
 [`*_imp`](https://nerler.github.io/JointAI/reference/model_imp.md)

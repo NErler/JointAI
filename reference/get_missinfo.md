@@ -1,9 +1,8 @@
 # Obtain a summary of the missing values involved in an object of class JointAI
 
-This function returns a `data.frame` or a `list` of `data.frame`s per
-grouping level. Each of the `data.frames` has columns `variable`, `#NA`
-(number of missing values) and `%NA` (proportion of missing values in
-percent).
+This function returns the number and proportion of complete cases, and
+of missing values per variable, in the data used in the model,
+separately per level of the data.
 
 ## Usage
 
@@ -16,6 +15,24 @@ get_missinfo(object)
 - object:
 
   object inheriting from class JointAI
+
+## Value
+
+A list with two elements:
+
+- `complete_cases`:
+
+  a `data.frame` with one row per level and columns `#` (number of
+  complete cases) and `%` (proportion of complete cases in percent);
+
+- `miss_list`:
+
+  a list with one `data.frame` per level, with one row per variable and
+  columns `# NA` (number of missing values) and `% NA` (proportion of
+  missing values in percent).
+
+In multi-level settings, the `data.frame`s have an additional column
+`level`.
 
 ## Examples
 

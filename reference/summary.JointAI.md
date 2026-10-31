@@ -114,6 +114,24 @@ print(x, digits = max(4, getOption("digits") - 4), ...)
 
   confidence level (default is 0.95)
 
+## Value
+
+[`summary()`](https://rdrr.io/r/base/summary.html) returns an object of
+class `summary.JointAI`, a list with elements `call`, `start`, `end` and
+`thin` (the iterations used), `nchain` (the number of chains used),
+`res` (a list with the posterior summaries per sub-model), `outcome`,
+`missinfo` (the result of
+[`get_missinfo()`](https://nerler.github.io/JointAI/reference/get_missinfo.md),
+if `missinfo = TRUE`), `analysis_type` and `size` (the number of
+observations per level).
+
+[`coef()`](https://rdrr.io/r/stats/coef.html) returns a list with one
+named vector of posterior means per sub-model,
+[`confint()`](https://rdrr.io/r/stats/confint.html) a list with one
+matrix of posterior quantiles per sub-model. The
+[`print()`](https://rdrr.io/r/base/print.html) methods are called for
+their side effect and return `x` invisibly (`print.Dmat`: `NULL`).
+
 ## See also
 
 The model fitting functions

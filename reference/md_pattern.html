@@ -116,6 +116,17 @@ values? (default is <code>TRUE</code>)</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>With <code>plot = TRUE</code> and <code>pattern = FALSE</code> (default) a
+<code>ggplot</code> object. With <code>pattern = TRUE</code> and
+<code>plot = FALSE</code> a matrix with one row per missing data pattern
+(<code>1</code>: observed, <code>0</code>: missing), the column <code>Npat</code>
+(number of observations with this pattern), and the last row
+<code>Nmis</code> (number of missing values per variable, and in total).
+With both set to <code>TRUE</code> a list with elements <code>plot</code> and
+<code>pattern</code>; with both <code>FALSE</code>, <code>NULL</code>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>This function requires the
 <a href="https://CRAN.R-project.org/package=ggplot2" class="external-link"><strong>ggplot2</strong></a> package

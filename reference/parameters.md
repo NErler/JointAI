@@ -32,6 +32,17 @@ parameters(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE, ...)
 
   currently not used
 
+## Value
+
+A `data.frame` with one row per monitored node and columns `outcome`
+(the outcome of the sub-model the parameter belongs to), `outcat` (the
+outcome category, for multinomial models and non-proportional effects in
+ordinal models; otherwise `NA`), `varname` (for regression coefficients:
+the name of the corresponding covariate or design matrix column) and
+`coef` (the name of the node in the JAGS model). For nodes that do not
+belong to a sub-model, e.g., imputed values, `outcome`, `outcat` and
+`varname` are `NA`.
+
 ## Examples
 
 ``` r

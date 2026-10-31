@@ -46,6 +46,14 @@ plot_imp_distr(data, imp = "Imputation_", id = ".id", rownr = ".rownr",
   [`ggplot2::facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html)
   to change the facet labels
 
+## Value
+
+A `ggplot` object combining the plots of all variables with imputed
+values (created with
+[`ggpubr::ggarrange()`](https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html)),
+or `NULL` (with a message) when the packages **ggplot2** or **ggpubr**
+are not installed.
+
 ## Examples
 
 ``` r

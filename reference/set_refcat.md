@@ -32,6 +32,12 @@ set_refcat(data, formula, covars, auxvars = NULL)
   that should be considered additionally to the columns occurring in the
   `formula`
 
+## Value
+
+Invisibly, the value to be passed to the argument `refcats`: either one
+of `"first"`, `"last"` or `"largest"`, or a named numeric vector with
+the index of the reference category of each categorical variable.
+
 ## Details
 
 The arguments `formula`, `covars` and `auxvars` can be used to specify a

@@ -61,6 +61,16 @@ md_pattern(data, color = c(grDevices::grey(0.1), grDevices::grey(0.7)),
 
   optional additional parameters, currently not used
 
+## Value
+
+With `plot = TRUE` and `pattern = FALSE` (default) a `ggplot` object.
+With `pattern = TRUE` and `plot = FALSE` a matrix with one row per
+missing data pattern (`1`: observed, `0`: missing), the column `Npat`
+(number of observations with this pattern), and the last row `Nmis`
+(number of missing values per variable, and in total). With both set to
+`TRUE` a list with elements `plot` and `pattern`; with both `FALSE`,
+`NULL`.
+
 ## Note
 
 This function requires the

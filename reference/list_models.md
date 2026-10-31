@@ -42,6 +42,11 @@ list_models(object, predvars = TRUE, regcoef = TRUE, otherpars = TRUE,
   logical; should information on the reference category be printed?
   (default is `TRUE`)
 
+## Value
+
+Called for its side effect: the information is printed and `NULL` is
+returned invisibly.
+
 ## Note
 
 The models listed by this function are not the actual imputation models,
