@@ -13,7 +13,21 @@ extract_state <- function(
   object,
   pattern = paste0("^", c("RinvD", "invD", "tau", "b"), "_")
 ) {
-  jags_model_type <- if (inherits(object$model, "list")) {
+  if (!inherits(object, "JointAI")) {
+    errormsg("Use only with 'JointAI' objects.")
+  }
+
+  # [[ ]] instead of $, which would partially match the element "models"
+  model <- object[["model"]]
+  if (is.null(model)) {
+    errormsg(
+      "The object does not contain the JAGS model (it is only kept when the
+      model is fitted with %s).",
+      dQuote("n.adapt > 0")
+    )
+  }
+
+  jags_model_type <- if (inherits(model, "list")) {
     "list"
   } else {
     "jags"
@@ -25,8 +39,8 @@ extract_state <- function(
       grep,
       x = switch(
         jags_model_type,
-        "list" = names(object$model[[1]]$state()[[1]]),
-        "jags" = names(object$model$state()[[1]])
+        "list" = names(model[[1]]$state()[[1]]),
+        "jags" = names(model$state()[[1]])
       ),
       value = TRUE
     )
@@ -34,10 +48,10 @@ extract_state <- function(
 
   switch(
     jags_model_type,
-    "list" = lapply(object$model, function(mod) {
+    "list" = lapply(model, function(mod) {
       mod$state()[[1]][nodes]
     }),
-    "jags" = lapply(object$model$state(), function(chain) {
+    "jags" = lapply(model$state(), function(chain) {
       chain[nodes]
     })
   )

@@ -43,6 +43,10 @@
   without random intercept, `(0 + time | id)`) had the same value in all
   iterations of a chain (that of the first iteration), so that `GR_crit()`
   was `Inf` (#67).
+* `extract_state()` failed with an unclear error ("$ operator is invalid for
+  atomic vectors") for models that do not contain the JAGS model (fitted
+  with `n.adapt = 0`). It now gives an informative error, as it does for
+  objects that are not of class `JointAI`.
 * With scaled covariates (the default), the coefficients of mixed models with
   an interaction between a covariate of a higher level (e.g., a baseline
   variable) and a variable with a random slope, e.g.,
