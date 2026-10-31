@@ -9,11 +9,10 @@
 #'         the user has specified.
 #' @export
 #'
-extract_state <- function(object,
-                          pattern = paste0("^",
-                                           c("RinvD", "invD", "tau", "b"),
-                                           "_")) {
-
+extract_state <- function(
+  object,
+  pattern = paste0("^", c("RinvD", "invD", "tau", "b"), "_")
+) {
   jags_model_type <- if (inherits(object$model, "list")) {
     "list"
   } else {
@@ -21,21 +20,25 @@ extract_state <- function(object,
   }
 
   nodes <- unlist(
-    lapply(pattern,
-           grep,
-           x = switch(jags_model_type,
-                      "list" = names(object$model[[1]]$state()[[1]]),
-                      "jags" = names(object$model$state()[[1]])
-           ),
-           value = TRUE)
+    lapply(
+      pattern,
+      grep,
+      x = switch(
+        jags_model_type,
+        "list" = names(object$model[[1]]$state()[[1]]),
+        "jags" = names(object$model$state()[[1]])
+      ),
+      value = TRUE
+    )
   )
 
-  switch(jags_model_type,
-         "list" = lapply(object$model, function(mod) {
-           mod$state()[[1]][nodes]
-         }),
-         "jags" = lapply(object$model$state(), function(chain) {
-           chain[nodes]
-         })
+  switch(
+    jags_model_type,
+    "list" = lapply(object$model, function(mod) {
+      mod$state()[[1]][nodes]
+    }),
+    "jags" = lapply(object$model$state(), function(chain) {
+      chain[nodes]
+    })
   )
 }
