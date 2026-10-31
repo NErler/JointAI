@@ -94,6 +94,10 @@ divide_matrices <- function(
   # reference categories -----------------------------------------------------
   refs <- get_refs(c(fixed, auxvars), data, refcats, warn = warn)
 
+  # the design-matrix columns are identified by name: dummy variables must not
+  # have the name of another variable or dummy variable (#75)
+  check_dummy_names(refs, varnames = all_vars(fixed, random, auxvars, timevar))
+
   # for (i in names(refs)) {
   #   data[, i] <- relevel(factor(data[, i], ordered = FALSE),
   #                        as.character(refs[[i]]))
