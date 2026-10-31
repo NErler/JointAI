@@ -1,6 +1,5 @@
 aminotransferase
 arXiv
-arxiv
 ascites
 auxvars
 Biostatistics
@@ -8,7 +7,6 @@ BMI
 cdc
 coxph
 creatinine
-Dimitris
 doi
 doParallel
 dL
@@ -26,8 +24,6 @@ Jaddoe
 knitr
 ldots
 Lesaffre
-linebreak
-linetype
 lme
 lvlone
 mcerror
@@ -48,7 +44,6 @@ reproducibility
 Rizopoulos
 rjags
 rmarkdown
-rowname
 Rosmalen
 sav
 sd
@@ -70,8 +65,4 @@ VignetteEngine
 VignetteIndexEntry
 www
 Xc
-Xcat
-Xic
-Xil
 Xl
-Xtrafo

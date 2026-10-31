@@ -1,18 +1,13 @@
-^CRAN-RELEASE$
+^CRAN-SUBMISSION$
 ^Meta$
 ^doc$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-.Rproj.user
-^\.travis\.yml$
 ^README\.Rmd$
-^README-.*\.png$
 
 ^inst/WORDLIST$
-^inst/Ideas\.*$
 
-revdep
-bash.exe.stackdump
+^revdep$
 
 ^cran-comments\.md$
 ^docs$
@@ -40,12 +35,10 @@ bash.exe.stackdump
 
 
 ## Exclude folder with test outputs which is super large
-tests/testthat/Rplots.pdf
+^tests/testthat/Rplots\.pdf$
 
-R/samplers.R
-R/plots_ppc.R
-R/simulate_data.R
-sim_mldata.R
+^R/plots_ppc\.R$
+^R/simulate_data\.R$
 
 ^\.lintr$
 ^\.covrignore$
@@ -53,8 +46,6 @@ sim_mldata.R
 ^codecov\.yml$
 ^JointAI\.Rproj$
 
-revdep/
-^CRAN-SUBMISSION$
 ^\.vscode$
 ^[.]?air[.]toml$
 ^\.positai$
