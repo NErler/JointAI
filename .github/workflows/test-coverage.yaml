@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # covr does not set NOT_CRAN; without it, the tests with skip_on_cran()
+      # are skipped. JOINTAI_SLOW_TESTS: also the slow tests (helper-slow.R)
+      NOT_CRAN: true
+      JOINTAI_SLOW_TESTS: true
 
     steps:
       - uses: actions/checkout@v7
