@@ -157,6 +157,9 @@
   `B1`), or two factors with dummy variables of the same name, were merged
   into one variable, without error or warning. Model fitting now stops with
   an informative error (#75).
+* `parameters()` listed the regression coefficients of all models when all
+  monitored parameters were regression coefficients (e.g., only `beta`
+  monitored), also those of models that were not monitored.
 
 # JointAI 1.1.0
 
