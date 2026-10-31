@@ -83,3 +83,20 @@ test_that("reformat_difftime() chooses the unit of the shortest duration", {
   expect_identical(units(reformat_difftime(secs(2e5))), "days")
   expect_equal(as.numeric(reformat_difftime(secs(c(90, 120)))), c(1.5, 2))
 })
+
+test_that("sum_duration() keeps the runs in their numeric order", {
+  # 11 runs: sorted as text, "run 10" and "run 11" would come before "run 2"
+  obj <- duration_object(
+    adapt = data.frame(total = secs(1:11)),
+    sample = data.frame(total = secs(10 * (1:11))),
+    parallel = FALSE
+  )
+  runs <- paste("run", 1:11)
+  expect_named(sum_duration(obj, by = "run"), runs)
+  expect_equal(as.numeric(sum_duration(obj, by = "run")), 11 * (1:11))
+  expect_named(sum_duration(obj, by = "phase and run")$sample, runs)
+  expect_equal(
+    as.numeric(sum_duration(obj, by = "phase and run")$sample),
+    10 * (1:11)
+  )
+})
