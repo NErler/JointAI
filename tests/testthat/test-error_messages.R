@@ -23,3 +23,12 @@ test_that("residuals() for coxph models: no typo in the error message", {
 test_that("plot_imp_distr() for a JointAI object points to get_MIdat()", {
   expect_error(plot_imp_distr(fixture_load("lm")), "get_MIdat")
 })
+
+test_that("extract_state() without JAGS model gives an informative error", {
+  # the fixtures do not contain the JAGS model; object$model must not match
+  # object$models partially
+  object <- fixture_load("lm")
+  expect_null(object[["model"]])
+  expect_error(extract_state(object), "does not contain the JAGS model")
+  expect_error(extract_state(list()), "Use only with 'JointAI' objects")
+})
