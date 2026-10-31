@@ -1,6 +1,6 @@
 #' Extract residuals from an object of class JointAI
 #'
-#' @inheritParams sharedParams
+#' @inheritParams summary.JointAI
 #' @param type type of residuals: \code{"deviance"}, \code{"response"},
 #'             \code{"working"}
 #' @param ... currently not used

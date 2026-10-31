@@ -9,7 +9,7 @@
 #' \href{https://CRAN.R-project.org/package=foreign}{\strong{foreign}} package
 #'  needs to be installed.
 #'
-#' @inheritParams sharedParams
+#' @inheritParams summary.JointAI
 #' @param m number of imputed datasets
 #' @param include should the original, incomplete data be included? Default is
 #'                \code{TRUE}.

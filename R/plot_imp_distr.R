@@ -12,7 +12,7 @@
 #' @param labeller optional labeller to be passed to
 #'                 \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
 #'                 to change the facet labels
-#' @inheritParams sharedParams
+#' @inheritParams traceplot
 #' @export
 #'
 #' @examples

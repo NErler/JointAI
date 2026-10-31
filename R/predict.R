@@ -5,7 +5,7 @@
 #' variables).
 #'
 #' @inheritParams model_imp
-#' @inheritParams sharedParams
+#' @inheritParams summary.JointAI
 #' @param vars name of variable that should be varying
 #' @param length number of values used in the sequence when \code{vars} is
 #'   continuous

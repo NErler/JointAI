@@ -2,7 +2,6 @@
 #'
 #' Calculates the Gelman-Rubin criterion for convergence
 #' (uses \code{\link[coda]{gelman.diag}} from package \strong{coda}).
-#' @inheritParams sharedParams
 #' @inheritParams coda::gelman.diag
 #' @inheritParams summary.JointAI
 #' @references
@@ -91,7 +90,7 @@ GR_crit <- function(
 #' 'JointAI' model, combining the samples from all MCMC chains.
 #' @param x object inheriting from class 'JointAI'
 #' @param digits number of digits for the printed output
-#' @inheritParams sharedParams
+#' @inheritParams summary.JointAI
 #' @inheritDotParams mcmcse::mcse.mat -x
 #'
 #' @return An object of class \code{MCElist} with elements

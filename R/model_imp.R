@@ -30,7 +30,40 @@
 #'              created by \strong{JointAI}, initial values are then generated
 #'              by JAGS.
 #'              It is an error to supply an initial value for an observed node.
-#' @inheritParams sharedParams
+#' @param n.adapt number of iterations for adaptation of the MCMC samplers
+#'                (see \code{\link[rjags]{adapt}})
+#' @param n.iter number of iterations of the MCMC chain (after adaptation;
+#'               see \code{\link[rjags]{coda.samples}})
+#' @param n.chains number of MCMC chains
+#' @param thin thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+#'             For example, \code{thin = 1} (default) will keep the MCMC samples
+#'             from all iterations; \code{thin = 5} would only keep every 5th
+#'             iteration.
+#' @param no_model optional; vector of names of variables for which no model
+#'                 should be specified.
+#'                 Note that this is only possible for completely observed
+#'                 variables and implies the assumptions of independence between
+#'                 the excluded variable and the incomplete variables.
+#' @param timevar name of the variable indicating the time of the measurement of
+#'                a time-varying covariate in a proportional hazards survival
+#'                model (also in a joint model).
+#'                The variable specified in
+#'                "timevar" will automatically be added to "no_model".
+#' @param assoc_type named vector specifying the type of the association used
+#'                   for a time-varying covariate in the linear predictor of the
+#'                   survival model when using a "JM" model.
+#'                   Implemented options are "underl.value"
+#'                   (linear predictor; default for covariates modelled using a
+#'                   Gaussian, Gamma, beta or log-normal distribution)
+#'                   covariates) and "obs.value" (the observed/imputed value;
+#'                   default for covariates modelled using other distributions).
+#' @param ppc logical: should monitors for posterior predictive checks be
+#'                     set? (not yet used)
+#' @param seed optional; seed value (for reproducibility)
+#' @param warn logical; should warnings be given? Default is
+#'             \code{TRUE}.
+#' @param mess logical; should messages be given? Default is
+#'             \code{TRUE}.
 #' @param auxvars optional; one-sided formula of variables that should be used
 #'                as predictors in the imputation procedure (and will be imputed
 #'                if necessary) but are not part of the analysis model(s).
