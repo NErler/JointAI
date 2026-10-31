@@ -259,6 +259,12 @@ test_that("summary output remained the same", {
 
 test_that("prediction works", {
   skip_on_cran()
+  # With time-varying covariates, type = "survival" and "expected" take about
+  # 4 s per model on all rows; use all rows of three subjects instead
+  # (predictions on all rows: test-fixtures_predict.R)
+  three_subjects <- function(object) {
+    object$data[object$data$id %in% unique(object$data$id)[1:3], ]
+  }
   expect_s3_class(
     predict(models$m3a, type = "lp", warn = FALSE)$fitted,
     "data.frame"
@@ -289,15 +295,30 @@ test_that("prediction works", {
     "data.frame"
   )
   expect_s3_class(
-    predict(models$m4a, type = "survival", warn = FALSE)$fitted,
+    predict(
+      models$m4a,
+      type = "survival",
+      newdata = three_subjects(models$m4a),
+      warn = FALSE
+    )$fitted,
     "data.frame"
   )
   expect_s3_class(
-    predict(models$m4b, type = "survival", warn = FALSE)$fitted,
+    predict(
+      models$m4b,
+      type = "survival",
+      newdata = three_subjects(models$m4b),
+      warn = FALSE
+    )$fitted,
     "data.frame"
   )
   expect_s3_class(
-    predict(models$m4c, type = "survival", warn = FALSE)$fitted,
+    predict(
+      models$m4c,
+      type = "survival",
+      newdata = three_subjects(models$m4c),
+      warn = FALSE
+    )$fitted,
     "data.frame"
   )
 
@@ -331,15 +352,30 @@ test_that("prediction works", {
     "data.frame"
   )
   expect_s3_class(
-    predict(models$m4a, type = "expected", warn = FALSE)$fitted,
+    predict(
+      models$m4a,
+      type = "expected",
+      newdata = three_subjects(models$m4a),
+      warn = FALSE
+    )$fitted,
     "data.frame"
   )
   expect_s3_class(
-    predict(models$m4b, type = "expected", warn = FALSE)$fitted,
+    predict(
+      models$m4b,
+      type = "expected",
+      newdata = three_subjects(models$m4b),
+      warn = FALSE
+    )$fitted,
     "data.frame"
   )
   expect_s3_class(
-    predict(models$m4c, type = "expected", warn = FALSE)$fitted,
+    predict(
+      models$m4c,
+      type = "expected",
+      newdata = three_subjects(models$m4c),
+      warn = FALSE
+    )$fitted,
     "data.frame"
   )
 })
