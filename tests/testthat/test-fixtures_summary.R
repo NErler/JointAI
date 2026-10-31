@@ -88,3 +88,24 @@ test_that("print(summary()) gives the number of iterations per chain", {
     )
   }
 })
+
+test_that("print(summary()) gives the first and last iteration used", {
+  object <- fixture_load("lm")
+  # keep every second iteration: 101, 103, ..., 149
+  object$MCMC <- window(object$MCMC, thin = 2)
+  for (args in list(
+    list(),
+    list(start = 102),
+    list(start = 102, end = 120),
+    list(start = 104, thin = 4)
+  )) {
+    smry <- suppressWarnings(do.call(summary, c(list(object), args)))
+    printed <- capture.output(print(smry))
+    # the iterations coda uses for the same arguments
+    used <- do.call(window, c(list(object$MCMC[[1L]]), args))
+    expect_true(
+      paste0("Iterations = ", start(used), ":", end(used)) %in% printed,
+      label = paste(names(args), args, collapse = ", ")
+    )
+  }
+})
