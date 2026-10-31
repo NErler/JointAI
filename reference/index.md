@@ -79,8 +79,6 @@
 - [`set_refcat()`](https://nerler.github.io/JointAI/reference/set_refcat.md)
   : Specify reference categories for all categorical covariates in the
   model
-- [`sharedParams`](https://nerler.github.io/JointAI/reference/sharedParams.md)
-  : Parameters used by several functions in JointAI
 - [`simLong`](https://nerler.github.io/JointAI/reference/simLong.md)
   [`simWide`](https://nerler.github.io/JointAI/reference/simLong.md) :
   Simulated Longitudinal Data in Long and Wide Format
