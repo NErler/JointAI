@@ -340,13 +340,18 @@ summary.JointAI <- function(
 
   out <- list()
   out$call <- object$call
-  out$start <- ifelse(
-    is.null(start),
-    start(object$MCMC),
-    max(start, start(object$MCMC))
-  )
-  out$end <- ifelse(is.null(end), end(object$MCMC), min(end, end(object$MCMC)))
-  out$thin <- ifelse(is.null(thin), coda::thin(object$MCMC), thin)
+  # the iterations that are actually used: coda's window() moves start and
+  # end to stored iterations (relevant for thinned samples); its warnings are
+  # already given where the posterior summaries are calculated
+  used <- suppressWarnings(window(
+    object$MCMC[[1L]],
+    start = if (is.null(start)) start(object$MCMC) else start,
+    end = if (is.null(end)) end(object$MCMC) else end,
+    thin = if (is.null(thin)) coda::thin(object$MCMC) else thin
+  ))
+  out$start <- start(used)
+  out$end <- end(used)
+  out$thin <- coda::thin(used)
   out$nchain <- coda::nchain(object$MCMC) -
     sum(
       exclude_chains %in%
@@ -536,7 +541,8 @@ print.summary.JointAI <- function(
 
   cat("MCMC settings:\n")
   cat("Iterations = ", x$start, ":", x$end, "\n", sep = "")
-  cat("Sample size per chain =", floor((x$end - x$start + 1) / x$thin), "\n")
+  # iterations start, start + thin, ..., up to end
+  cat("Sample size per chain =", floor((x$end - x$start) / x$thin) + 1, "\n")
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
   cat("\n")
