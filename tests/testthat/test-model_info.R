@@ -644,3 +644,60 @@ test_that("covariate models have an intercept also if the analysis model has non
   expect_identical(fit$info_list$O2$modeltype, "clm")
   expect_identical(fit$info_list$M2$modeltype, "mlogit")
 })
+
+# models without intercept and without random effects (the design matrix then
+# gets its intercept column only for the covariate models)
+no_intercept_cases <- list(
+  lm_no_intercept = quote(lm_imp(
+    y ~ 0 + C1 + C2 + B2 + O2 + M2,
+    data = wideDF
+  )),
+  glm_no_intercept = quote(glm_imp(
+    B1 ~ -1 + C1 + C2 + O2,
+    family = binomial(),
+    data = wideDF
+  )),
+  survreg_no_intercept = quote(survreg_imp(
+    Surv(futime, status != "censored") ~ 0 + age + copper,
+    data = PBC2_small
+  )),
+  mlogit_no_intercept = quote(mlogit_imp(M1 ~ 0 + C1 + C2 + B2, data = wideDF))
+)
+
+# has a sub-model an intercept (for multinomial models: one per category)?
+has_intercept <- function(coefs) {
+  if (NROW(coefs) == 0L) {
+    return(FALSE)
+  }
+  is_intercept <- coefs$varname == "(Intercept)"
+  if (all(is.na(coefs$outcat))) {
+    any(is_intercept)
+  } else {
+    all(tapply(is_intercept, coefs$outcat, any))
+  }
+}
+
+test_that("each covariate model has an intercept, unless its type has none", {
+  # ordinal and survival models have thresholds or a baseline hazard instead
+  types_with_intercept <- c("glm", "glmm", "mlogit", "mlogitmm")
+
+  for (case in c(golden_cases(), extra_cases, no_intercept_cases)) {
+    fit <- setup_case(case)
+    lab <- deparse1(case)
+    for (k in setdiff(names(fit$info_list), names(fit$fixed))) {
+      expect_identical(
+        has_intercept(fit$coef_list[[k]]),
+        fit$info_list[[k]]$modeltype %in% types_with_intercept,
+        label = paste(k, "in", lab)
+      )
+    }
+  }
+
+  # the analysis models of no_intercept_cases have no intercept
+  for (case in no_intercept_cases) {
+    fit <- setup_case(case)
+    for (k in names(fit$fixed)) {
+      expect_false(has_intercept(fit$coef_list[[k]]), label = deparse1(case))
+    }
+  }
+})
