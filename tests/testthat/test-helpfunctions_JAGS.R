@@ -61,6 +61,21 @@ test_that("sum_duration() of parallel chains uses the longest chain", {
   expect_equal(as.numeric(sum_duration(obj, by = "chain")), c(33, 42))
 })
 
+test_that("sum_duration(by = \"run\") of parallel chains adds up the phases", {
+  obj <- duration_object(
+    adapt = data.frame(chain1 = secs(c(1, 2)), chain2 = secs(c(3, 4))),
+    sample = data.frame(chain1 = secs(c(10, 20)), chain2 = secs(c(30, 5))),
+    parallel = TRUE
+  )
+  # per run, the longest chain of each phase: adapt 3, 4; sample 30, 20
+  expect_equal(as.numeric(sum_duration(obj, by = "run")), c(33, 24))
+  # the runs add up to the total
+  expect_equal(
+    sum(as.numeric(sum_duration(obj, by = "run"))),
+    as.numeric(sum_duration(obj))
+  )
+})
+
 test_that("reformat_difftime() chooses the unit of the shortest duration", {
   expect_identical(units(reformat_difftime(secs(c(0.5, 30)))), "secs")
   expect_identical(units(reformat_difftime(secs(c(90, 4000)))), "mins")
