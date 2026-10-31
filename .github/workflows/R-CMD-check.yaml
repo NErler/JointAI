@@ -20,12 +20,14 @@ jobs:
           - {os: macOS-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,  r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,  r: 'release'}
+          # runs the slow tests too (JOINTAI_SLOW_TESTS, tests/testthat/helper-slow.R)
+          - {os: ubuntu-latest,  r: 'release', slow-tests: 'true'}
           - {os: ubuntu-latest,  r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      JOINTAI_SLOW_TESTS: ${{ matrix.config.slow-tests || 'false' }}
 
 
     steps:
