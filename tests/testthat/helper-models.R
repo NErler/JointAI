@@ -1,3 +1,8 @@
+# Helpers for the model test files (test-glm.R, test-clm.R, ...): check the
+# JAGS model and predicted probabilities, and prepare fitted models for
+# snapshots. Moved here from R/helpfunctions_tests.R (they are only used by
+# the tests).
+
 find_dupl_parms <- function(mod) {
   betas <- unlist(regmatches(
     mod$jagsmodel,
@@ -52,39 +57,6 @@ check_predprob <- function(mod) {
   sum(round(f - g, 10), na.rm = TRUE)
 }
 
-
-print_output <- function(
-  x,
-  dir = 'testout',
-  context = NULL,
-  extra = NULL,
-  type = "output"
-) {
-  call <- as.list(match.call())$x
-  input <- make.names(
-    paste0(deparse(call, width.cutoff = 500), collapse = "")
-  )
-  abbr <- abbreviate(
-    gsub("\\.+", ".", input),
-    minlength = 30,
-    method = "both.sides",
-    use.classes = FALSE
-  )
-
-  if (!is.null(extra)) {
-    extra <- paste0("_", extra)
-  }
-
-  testthat::local_edition(2)
-  if (type == "value") {
-    nam <- paste0(context, "_", abbr, extra, ".rds")
-    testthat::expect_known_value(x, file = file.path(dir, nam))
-  } else {
-    nam <- paste0(context, "_", abbr, extra, ".txt")
-    testthat::expect_known_output(x, print = TRUE, file = file.path(dir, nam))
-  }
-  testthat::local_edition(3)
-}
 
 set0 <- function(object) {
   object$MCMC <- coda::as.mcmc.list(lapply(object$MCMC, function(x) {
