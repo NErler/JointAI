@@ -141,12 +141,15 @@ get_Dmat <- function(
     lvls <- object$Mlist$idvar
   }
 
+  # all monitored nodes: the default subset contains only the parameters of
+  # the analysis model(s), not the random-effects covariance matrices of
+  # covariate models
   MCMC <- prep_MCMC(
     object,
     start = start,
     end = end,
     thin = thin,
-    subset = NULL,
+    subset = FALSE,
     exclude_chains = exclude_chains,
     warn = warn,
     mess = mess
