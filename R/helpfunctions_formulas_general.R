@@ -352,7 +352,7 @@ extract_ranef_formula <- function(formula) {
 }
 
 
-#' Split a list of formulas into fixed and random effects parts.
+#' Split a list of formulas into fixed and random effects parts
 #'
 #' Calls `extract_fixef_formula()` and `extract_ranef_formula()` on each
 #' formula in a list to create one list of the
