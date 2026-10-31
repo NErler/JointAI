@@ -118,3 +118,38 @@ test_that("sum_duration() checks the argument by", {
   expect_error(sum_duration(obj, by = "runs"), "must be one of")
   expect_error(sum_duration(obj, by = c("run", "phase")), "must be one of")
 })
+
+test_that("run_jags(add_samples = TRUE) closes its sink when recompile() fails", {
+  # stand-in for a JAGS model whose recompile() fails, e.g. because a parent
+  # value is invalid
+  adapt <- list(recompile = function() stop("invalid parent values"))
+  n_sinks <- sink.number()
+  # close sinks left open, so that a failure does not swallow later output
+  on.exit(
+    while (sink.number() > n_sinks) {
+      sink()
+    },
+    add = TRUE
+  )
+
+  expect_error(
+    run_jags(
+      inits = NULL,
+      data_list = NULL,
+      modelfile = NULL,
+      n_chains = 1L,
+      n_adapt = 0L,
+      n_iter = 0L,
+      var_names = NULL,
+      thin = 1L,
+      quiet = TRUE,
+      warn = FALSE,
+      mess = FALSE,
+      progress_bar = "none",
+      add_samples = TRUE,
+      adapt = adapt
+    ),
+    "invalid parent values"
+  )
+  expect_equal(sink.number(), n_sinks)
+})
