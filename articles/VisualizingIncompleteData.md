@@ -117,8 +117,9 @@ In the resulting plot, variables are given in the columns and each row
 corresponds to one pattern of missingness across the variables. The
 numbers on the right margin give the number of cases per pattern.
 Underneath the plot, the number of missing values per variable is given.
-Columns are automatically sorted by number of missing values, rows by
-number of cases per pattern.
+Columns are automatically sorted by number of missing values (this can
+be switched off with `sort_columns = FALSE`), rows by number of cases
+per pattern.
 
 The plot is generated with the help of
 [`ggplot()`](https://ggplot2.tidyverse.org/), and, hence, the package

@@ -78,7 +78,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Model Specification</h1>
             
-            <h4 data-toc-skip class="date">February 22, 2026</h4>
+            <h4 data-toc-skip class="date">October 31, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/ModelSpecification.Rmd" class="external-link"><code>vignettes/ModelSpecification.Rmd</code></a></small>
       <div class="d-none name"><code>ModelSpecification.Rmd</code></div>
@@ -145,9 +145,9 @@ models</li>
 data</li>
 </ul>
 <p>Specification of these functions is similar to the specification of
-the complete data versions <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code>,
-<code>lme()</code> (from package <a href="https://CRAN.R-project.org/package=nlme" class="external-link"><strong>nlme</strong></a>)
-or <a href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html" class="external-link"><code>lmer()</code></a>
+the complete data versions <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code>, <a href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html" class="external-link"><code>lme()</code></a>
+(from package <a href="https://CRAN.R-project.org/package=nlme" class="external-link"><strong>nlme</strong></a>)
+or <a href="https://search.r-project.org/CRAN/refmans/lme4/html/lmer.html" class="external-link"><code>lmer()</code></a>
 (from package <a href="https://CRAN.R-project.org/package=lme4" class="external-link"><strong>lme4</strong></a>)
 and <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html" class="external-link"><code>survreg()</code></a>
 and <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html" class="external-link"><code>coxph()</code></a>
@@ -636,9 +636,11 @@ available as the distribution function of the logistic distribution
 <span><span class="va">ilogit</span> <span class="op">&lt;-</span> <span class="va">plogis</span></span>
 <span></span>
 <span><span class="co"># Use ilogit in the model formula</span></span>
-<span><span class="va">mod5a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `ilogit()`:</span></span>
-<span><span class="co">#&gt; ! could not find function "ilogit"</span></span></code></pre></div>
+<span><span class="va">mod5a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Note:</strong><br> Such functions need to be defined in the
+global environment (e.g., in the console or at the top level of a
+script). When they are defined inside another function, from which the
+model is then fitted, <strong>JointAI</strong> cannot find them.</p>
 </div>
 <div class="section level4">
 <h4 id="nested-functions">Nested functions<a class="anchor" aria-label="anchor" href="#nested-functions"></a>
@@ -664,9 +666,7 @@ R, we first need to define it:</p>
 <span><span class="va">ilogit</span> <span class="op">&lt;-</span> <span class="va">plogis</span></span>
 <span></span>
 <span><span class="co"># nest ilogit inside cloglog</span></span>
-<span><span class="va">mod6a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">cloglog</span><span class="op">(</span><span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `cloglog()`:</span></span>
-<span><span class="co">#&gt; ! could not find function "cloglog"</span></span></code></pre></div>
+<span><span class="va">mod6a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">cloglog</span><span class="op">(</span><span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -719,7 +719,7 @@ only for completely observed variables), e.g.:</p>
 <code class="sourceCode R"><span><span class="va">mod7a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
 <span>                 random <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">ID</span>, data <span class="op">=</span> <span class="va">simLong</span><span class="op">)</span></span></code></pre></div>
 <p>Since <strong>JointAI</strong> version 1.0.0 it is possible to model
-multi-level data with multiple levels of grouping In that setting, the
+multi-level data with multiple levels of grouping. In that setting, the
 <code>formula</code> specification needs to be used:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="sc">&lt;</span>fixed effects<span class="sc">&gt;</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> center)</span></code></pre></div>
 <p>It is possible to model both crossed and nested random effects,
@@ -802,6 +802,11 @@ covariates). The type of model is selected automatically based on the
 <p>The automatically selected types for baseline (highest level)
 covariates are:</p>
 <table class="table">
+<colgroup>
+<col width="17%">
+<col width="34%">
+<col width="47%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
 <th align="left">model</th>
@@ -814,7 +819,7 @@ covariates are:</p>
 <td align="left">continuous variables</td>
 </tr>
 <tr class="even">
-<td align="left"><code>logit</code></td>
+<td align="left"><code>glm_logit</code></td>
 <td align="left">logistic regression</td>
 <td align="left">factors with two levels</td>
 </tr>
@@ -989,6 +994,12 @@ be overwritten when the imputation method for that variable is specified
 directly by the user.</p>
 <p>Variables of type <code>logical</code> are automatically converted to
 binary factors.</p>
+<p>The <code>data</code> can also be provided as a <code>tibble</code>;
+it is converted to a <code>data.frame</code>. Labelled variables (e.g.,
+from data imported from SPSS with the package <a href="https://CRAN.R-project.org/package=haven" class="external-link"><strong>haven</strong></a>)
+can be used as well: variables with value labels are converted to
+unordered factors (with a message), other labelled variables keep their
+values.</p>
 </div>
 <div class="section level3">
 <h3 id="order-of-the-sequence-of-imputation-models">Order of the sequence of imputation models<a class="anchor" aria-label="anchor" href="#order-of-the-sequence-of-imputation-models"></a>
@@ -1174,18 +1185,20 @@ checked and set in the global options:</p>
 <p>Since the imputation of incomplete factors is done in the original
 variable, the re-coding from the original categorical variable into
 dummy variables or other contrasts needs to be done within the JAGS
-model. Currently, only dummy coding and reference coding
-(<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.sum()</a></code>) are possible for factors with missing values.
-This means that, if the default <code>contr.poly</code> is set for
-ordinal factors, a warning message is printed and dummy coding is used
-for these variables instead.</p>
+model. Currently, only dummy coding (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.treatment()</a></code>) and
+effect coding (sum-to-zero coding, <code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.sum()</a></code>) are
+possible for factors with missing values. This means that, if the
+default <code>contr.poly</code> is set for ordinal factors, a warning
+message is printed and dummy coding is used for these variables
+instead.</p>
 </div>
 <div class="section level3">
 <h3 id="reference-categories">Reference categories<a class="anchor" aria-label="anchor" href="#reference-categories"></a>
 </h3>
 <p>In <strong>JointAI</strong>, the first category of a categorical
-variable is set to be the reference category when using for dummy or
-reference coding. However, this may not always allow the desired
+variable is, by default, the reference category (for dummy coding; for
+effect coding, it is the category that is coded as -1 in all contrast
+variables). However, this may not always allow the desired
 interpretation of the regression coefficients. Moreover, when categories
 are unbalanced, setting the largest group as reference may result in
 better mixing of the MCMC chains.</p>
@@ -1245,15 +1258,6 @@ provided, and asks a number of questions which the user needs to reply
 to by input of a number.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">refs_mod10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_refcat.html">set_refcat</a></span><span class="op">(</span><span class="va">NHANES</span>, formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">mod10b</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in JointAI:::extract_outcome(formula): 'JointAI:::extract_outcome' is deprecated.</span></span>
-<span><span class="co">#&gt; Use 'extract_outcomes_list ' instead.</span></span>
-<span><span class="co">#&gt; See help("Deprecated") and help("JointAI-deprecated").</span></span>
-<span><span class="co">#&gt; Warning in extract_lhs(x): 'extract_lhs' is deprecated.</span></span>
-<span><span class="co">#&gt; Use 'extract_lhs_string ' instead.</span></span>
-<span><span class="co">#&gt; See help("Deprecated") and help("JointAI-deprecated").</span></span>
-<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): 'FUN' is deprecated.</span></span>
-<span><span class="co">#&gt; Use 'extract_lhs_string ' instead.</span></span>
-<span><span class="co">#&gt; See help("Deprecated") and help("JointAI-deprecated").</span></span>
 <span><span class="co">#&gt; The categorical variables are:</span></span>
 <span><span class="co">#&gt; - "gender"</span></span>
 <span><span class="co">#&gt; - "race"</span></span>
@@ -1360,43 +1364,83 @@ and passed to the argument <code>hyperpars</code> in the main functions
 and precision in the distribution for regression coefficients.</li>
 <li>
 <code>shape_tau_*</code> and <code>rate_tau_*</code> are the shape
-and rate parameters of a Gamma distribution that is used has prior for
+and rate parameters of a Gamma distribution that is used as prior for
 precision parameters.</li>
 <li>
 <code>KinvD</code> refers to the degrees of freedom in the Wishart
-prior used for the inverse of the random effects design matrix
-<code>D</code>. <code>KinvD_exp</code> should be a string that can be
+prior used for the inverse of the random effects covariance matrix
+<code>D</code>. <code>KinvD_expr</code> should be a string that can be
 evaluated to calculate the number of degrees of freedom depending on the
 number of random effects <code>nranef</code> (dimension of
 <code>D</code>). By default, <code>KinvD</code> will be set to the
 number of random effects plus one.</li>
 <li>
 <code>shape_diag_RinvD</code> and <code>rate_diag_RinvD</code> are
-the scale and rate parameters of the Gamma prior of the diagonal
-elements of <code>RinvD</code>.</li>
+the shape and rate parameters of the Gamma prior of the diagonal
+elements of <code>RinvD</code> (the scale matrix of the Wishart
+prior).</li>
 </ul>
 <p>In random effects models with only one random effect, instead of the
 Wishart distribution a Gamma prior is used for the inverse of
-<code>D</code>.</p>
+<code>D</code> (i.e., for the precision of the random effect), with
+shape <code>shape_diag_RinvD</code> and rate
+<code>rate_diag_RinvD</code>. This Gamma distribution is truncated to
+the interval <span class="math inline">[10^{-16}, 10^{16}]</span> to
+prevent numerical problems in JAGS.</p>
 </div>
 <div class="section level2">
 <h2 id="scaling">Scaling<a class="anchor" aria-label="anchor" href="#scaling"></a>
 </h2>
 <p>When variables are measured on very different scales this can result
 in slow convergence and bad mixing. Therefore, <strong>JointAI</strong>
-includes scaling of continuous covariates in the JAGS model (i.e.,
-instead of writing <code>... + covar + ...</code> in the linear
-predictor, <code>... + (covar - mean)/sd) + ...</code> is written). The
-scaling parameters (mean and standard deviation) are calculated based on
-the design matrices containing the original data. Results are
-transformed back to the original scale.</p>
+scales continuous covariates in the JAGS model, i.e., instead of writing
+<code>... + covar + ...</code> in the linear predictor,
+<code>... + (covar - mean) / sd + ...</code> is written. The scaling
+parameters (mean and standard deviation) are calculated from the design
+matrices containing the original data (using one row per group for
+variables of a higher level, e.g., baseline covariates).</p>
+<p>By default, the following columns of the design matrices are
+scaled:</p>
+<ul>
+<li>numeric variables (including integer variables, e.g., counts),</li>
+<li>columns created by functions of numeric variables (e.g.,
+<code><a href="../reference/ns.html">ns()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>, <code>I(x^2)</code>), and</li>
+<li>interaction terms that involve a numeric variable.</li>
+</ul>
+<p>Factors are not scaled, and neither are numeric variables with only
+two distinct values (these are converted to factors).</p>
+<p>In some models, centring a covariate would change the model, because
+there is no intercept that can take up the shift. In these cases, the
+covariate is only scaled (divided by its root mean square), not
+centred:</p>
+<ul>
+<li>in models without intercept (e.g.,
+<code>y ~ 0 + x1 + x2</code>),</li>
+<li>for variables with a random slope on a grouping level that has no
+random intercept (e.g., <code>(0 + time | id)</code>), and</li>
+<li>for variables in an interaction with a random-slope variable when
+the main effect of the other variable is not part of the model.</li>
+</ul>
+<p>After the sampling, all parameters are transformed back to the scale
+of the original data: the regression coefficients, and the parameters
+that absorb the centring of the covariates, i.e., the intercept, the
+thresholds of cumulative logit models, the coefficients of the baseline
+hazard of proportional hazards and joint models, and the intercept of
+parametric survival models. In mixed models, also the random effects and
+their covariance matrices are transformed back. Some of these
+transformations require that parameters are monitored together; these
+parameters are then added to the monitored parameters automatically (see
+the vignette <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html#scaled-covariates-and-automatically-added-parameters"><em>Parameter
+Selection</em></a>).</p>
 <p>By setting the argument <code>scale_vars = FALSE</code> the scaling
 can be prevented. If <code>scale_vars</code> is a vector of variable
-names, scaling will only be done for those variables.</p>
-<p>By default, only the MCMC samples that is scaled back to the scale of
-the data is stored in a <code>JointAI</code> object. When the argument
-<code>keep_scaled_mcmc = TRUE</code> also the scaled sample is kept.
-This is mainly for de-bugging purposes.</p>
+names, only these variables are scaled (for columns created by functions
+or interactions, the column name in the design matrix, e.g.,
+<code>"C1:C2"</code>, needs to be given).</p>
+<p>By default, only the MCMC sample that is transformed back to the
+scale of the data is stored in a <code>JointAI</code> object. When the
+argument <code>keep_scaled_mcmc = TRUE</code> is set, the scaled sample
+is kept as well. This is mainly for debugging purposes.</p>
 </div>
 <div class="section level2">
 <h2 id="shrinkage">Shrinkage<a class="anchor" aria-label="anchor" href="#shrinkage"></a>
@@ -1412,7 +1456,7 @@ provided that contains the names of the response variables of the models
 in which shrinkage should be applied, and the type of shrinkage for each
 of them.</p>
 <p>For example, in <code>mod11a</code> ridge regression is used for all
-models, and in <code>modd11b</code> only in the models for
+models, and in <code>mod11b</code> only in the models for
 <code>SBP</code> and <code>educ</code>:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod11a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>

@@ -61,9 +61,10 @@ computational time when compiling this vignette.
 
 Specification of these functions is similar to the specification of the
 complete data versions [`lm()`](https://rdrr.io/r/stats/lm.html),
-[`glm()`](https://rdrr.io/r/stats/glm.html), `lme()` (from package
-[**nlme**](https://CRAN.R-project.org/package=nlme)) or
-[`lmer()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
+[`glm()`](https://rdrr.io/r/stats/glm.html),
+[`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
+(from package [**nlme**](https://CRAN.R-project.org/package=nlme)) or
+[`lmer()`](https://search.r-project.org/CRAN/refmans/lme4/html/lmer.html)
 (from package [**lme4**](https://CRAN.R-project.org/package=lme4)) and
 [`survreg()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html)
 and
@@ -596,9 +597,13 @@ ilogit <- plogis
 
 # Use ilogit in the model formula
 mod5a <- lm_imp(SBP ~ age + gender + ilogit(creat), data = NHANES)
-#> Error in `ilogit()`:
-#> ! could not find function "ilogit"
 ```
+
+**Note:**  
+Such functions need to be defined in the global environment (e.g., in
+the console or at the top level of a script). When they are defined
+inside another function, from which the model is then fitted,
+**JointAI** cannot find them.
 
 #### Nested functions
 
@@ -626,8 +631,6 @@ ilogit <- plogis
 
 # nest ilogit inside cloglog
 mod6a <- lm_imp(SBP ~ age + gender + cloglog(ilogit(creat)), data = NHANES)
-#> Error in `cloglog()`:
-#> ! could not find function "cloglog"
 ```
 
 ## Multi-level structure & longitudinal covariates
@@ -674,7 +677,7 @@ mod7a <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 2),
 ```
 
 Since **JointAI** version 1.0.0 it is possible to model multi-level data
-with multiple levels of grouping In that setting, the `formula`
+with multiple levels of grouping. In that setting, the `formula`
 specification needs to be used:
 
 ``` r
@@ -763,12 +766,12 @@ number of levels.
 The automatically selected types for baseline (highest level) covariates
 are:
 
-| name     | model                   | variable type                     |
-|:---------|:------------------------|:----------------------------------|
-| `lm`     | linear regression       | continuous variables              |
-| `logit`  | logistic regression     | factors with two levels           |
-| `mlogit` | multinomial logit model | unordered factors with \>2 levels |
-| `clm`    | cumulative logit model  | ordered factors with \>2 levels   |
+| name        | model                   | variable type                     |
+|:------------|:------------------------|:----------------------------------|
+| `lm`        | linear regression       | continuous variables              |
+| `glm_logit` | logistic regression     | factors with two levels           |
+| `mlogit`    | multinomial logit model | unordered factors with \>2 levels |
+| `clm`       | cumulative logit model  | ordered factors with \>2 levels   |
 
 The default methods for lower level covariates are:
 
@@ -866,6 +869,13 @@ imputation method for that variable is specified directly by the user.
 
 Variables of type `logical` are automatically converted to binary
 factors.
+
+The `data` can also be provided as a `tibble`; it is converted to a
+`data.frame`. Labelled variables (e.g., from data imported from SPSS
+with the package [**haven**](https://CRAN.R-project.org/package=haven))
+can be used as well: variables with value labels are converted to
+unordered factors (with a message), other labelled variables keep their
+values.
 
 ### Order of the sequence of imputation models
 
@@ -1069,20 +1079,23 @@ options('contrasts')
 Since the imputation of incomplete factors is done in the original
 variable, the re-coding from the original categorical variable into
 dummy variables or other contrasts needs to be done within the JAGS
-model. Currently, only dummy coding and reference coding
-([`contr.sum()`](https://rdrr.io/r/stats/contrast.html)) are possible
-for factors with missing values. This means that, if the default
+model. Currently, only dummy coding
+([`contr.treatment()`](https://rdrr.io/r/stats/contrast.html)) and
+effect coding (sum-to-zero coding,
+[`contr.sum()`](https://rdrr.io/r/stats/contrast.html)) are possible for
+factors with missing values. This means that, if the default
 `contr.poly` is set for ordinal factors, a warning message is printed
 and dummy coding is used for these variables instead.
 
 ### Reference categories
 
-In **JointAI**, the first category of a categorical variable is set to
-be the reference category when using for dummy or reference coding.
-However, this may not always allow the desired interpretation of the
-regression coefficients. Moreover, when categories are unbalanced,
-setting the largest group as reference may result in better mixing of
-the MCMC chains.
+In **JointAI**, the first category of a categorical variable is, by
+default, the reference category (for dummy coding; for effect coding, it
+is the category that is coded as -1 in all contrast variables). However,
+this may not always allow the desired interpretation of the regression
+coefficients. Moreover, when categories are unbalanced, setting the
+largest group as reference may result in better mixing of the MCMC
+chains.
 
 For unordered factors, it is possible to change the reference category
 directly in the data, for example using the base R function
@@ -1150,15 +1163,6 @@ a number.
 ``` r
 
 refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
-#> Warning in JointAI:::extract_outcome(formula): 'JointAI:::extract_outcome' is deprecated.
-#> Use 'extract_outcomes_list ' instead.
-#> See help("Deprecated") and help("JointAI-deprecated").
-#> Warning in extract_lhs(x): 'extract_lhs' is deprecated.
-#> Use 'extract_lhs_string ' instead.
-#> See help("Deprecated") and help("JointAI-deprecated").
-#> Warning in FUN(X[[i]], ...): 'FUN' is deprecated.
-#> Use 'extract_lhs_string ' instead.
-#> See help("Deprecated") and help("JointAI-deprecated").
 #> The categorical variables are:
 #> - "gender"
 #> - "race"
@@ -1282,38 +1286,77 @@ functions `*_imp()`.
 - `mu_reg_*` and `tau_reg_*` refer to the mean and precision in the
   distribution for regression coefficients.
 - `shape_tau_*` and `rate_tau_*` are the shape and rate parameters of a
-  Gamma distribution that is used has prior for precision parameters.
+  Gamma distribution that is used as prior for precision parameters.
 - `KinvD` refers to the degrees of freedom in the Wishart prior used for
-  the inverse of the random effects design matrix `D`. `KinvD_exp`
+  the inverse of the random effects covariance matrix `D`. `KinvD_expr`
   should be a string that can be evaluated to calculate the number of
   degrees of freedom depending on the number of random effects `nranef`
   (dimension of `D`). By default, `KinvD` will be set to the number of
   random effects plus one.
-- `shape_diag_RinvD` and `rate_diag_RinvD` are the scale and rate
-  parameters of the Gamma prior of the diagonal elements of `RinvD`.
+- `shape_diag_RinvD` and `rate_diag_RinvD` are the shape and rate
+  parameters of the Gamma prior of the diagonal elements of `RinvD` (the
+  scale matrix of the Wishart prior).
 
 In random effects models with only one random effect, instead of the
-Wishart distribution a Gamma prior is used for the inverse of `D`.
+Wishart distribution a Gamma prior is used for the inverse of `D` (i.e.,
+for the precision of the random effect), with shape `shape_diag_RinvD`
+and rate `rate_diag_RinvD`. This Gamma distribution is truncated to the
+interval \[10^{-16}, 10^{16}\] to prevent numerical problems in JAGS.
 
 ## Scaling
 
 When variables are measured on very different scales this can result in
-slow convergence and bad mixing. Therefore, **JointAI** includes scaling
-of continuous covariates in the JAGS model (i.e., instead of writing
+slow convergence and bad mixing. Therefore, **JointAI** scales
+continuous covariates in the JAGS model, i.e., instead of writing
 `... + covar + ...` in the linear predictor,
-`... + (covar - mean)/sd) + ...` is written). The scaling parameters
-(mean and standard deviation) are calculated based on the design
-matrices containing the original data. Results are transformed back to
-the original scale.
+`... + (covar - mean) / sd + ...` is written. The scaling parameters
+(mean and standard deviation) are calculated from the design matrices
+containing the original data (using one row per group for variables of a
+higher level, e.g., baseline covariates).
+
+By default, the following columns of the design matrices are scaled:
+
+- numeric variables (including integer variables, e.g., counts),
+- columns created by functions of numeric variables (e.g.,
+  [`ns()`](https://nerler.github.io/JointAI/reference/ns.md),
+  [`log()`](https://rdrr.io/r/base/Log.html), `I(x^2)`), and
+- interaction terms that involve a numeric variable.
+
+Factors are not scaled, and neither are numeric variables with only two
+distinct values (these are converted to factors).
+
+In some models, centring a covariate would change the model, because
+there is no intercept that can take up the shift. In these cases, the
+covariate is only scaled (divided by its root mean square), not centred:
+
+- in models without intercept (e.g., `y ~ 0 + x1 + x2`),
+- for variables with a random slope on a grouping level that has no
+  random intercept (e.g., `(0 + time | id)`), and
+- for variables in an interaction with a random-slope variable when the
+  main effect of the other variable is not part of the model.
+
+After the sampling, all parameters are transformed back to the scale of
+the original data: the regression coefficients, and the parameters that
+absorb the centring of the covariates, i.e., the intercept, the
+thresholds of cumulative logit models, the coefficients of the baseline
+hazard of proportional hazards and joint models, and the intercept of
+parametric survival models. In mixed models, also the random effects and
+their covariance matrices are transformed back. Some of these
+transformations require that parameters are monitored together; these
+parameters are then added to the monitored parameters automatically (see
+the vignette [*Parameter
+Selection*](https://nerler.github.io/JointAI/articles/SelectingParameters.html#scaled-covariates-and-automatically-added-parameters)).
 
 By setting the argument `scale_vars = FALSE` the scaling can be
-prevented. If `scale_vars` is a vector of variable names, scaling will
-only be done for those variables.
+prevented. If `scale_vars` is a vector of variable names, only these
+variables are scaled (for columns created by functions or interactions,
+the column name in the design matrix, e.g., `"C1:C2"`, needs to be
+given).
 
-By default, only the MCMC samples that is scaled back to the scale of
-the data is stored in a `JointAI` object. When the argument
-`keep_scaled_mcmc = TRUE` also the scaled sample is kept. This is mainly
-for de-bugging purposes.
+By default, only the MCMC sample that is transformed back to the scale
+of the data is stored in a `JointAI` object. When the argument
+`keep_scaled_mcmc = TRUE` is set, the scaled sample is kept as well.
+This is mainly for debugging purposes.
 
 ## Shrinkage
 
@@ -1328,7 +1371,7 @@ contains the names of the response variables of the models in which
 shrinkage should be applied, and the type of shrinkage for each of them.
 
 For example, in `mod11a` ridge regression is used for all models, and in
-`modd11b` only in the models for `SBP` and `educ`:
+`mod11b` only in the models for `SBP` and `educ`:
 
 ``` r
 

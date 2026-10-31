@@ -115,26 +115,39 @@ is not implemented as a link in
 Cumulative logit mixed models are of the form
 
 \\\begin{align\*} y\_{ij} &\sim \text{Mult}(\pi\_{ij,1}, \ldots,
-\pi\_{ij,K}),\\\[2ex\] \pi\_{ij,1} &= P(y\_{ij} \leq 1),\\ \pi\_{ij,k}
-&= P(y\_{ij} \leq k) - P(y\_{ij} \leq k-1), \quad k \in 2, \ldots,
-K-1,\\ \pi\_{ij,K} &= 1 - \sum\_{k = 1}^{K-1}\pi\_{ij,k},\\\[2ex\]
-\text{logit}(P(y\_{ij} \leq k)) &= \gamma_k + \eta\_{ij}, \quad k \in
-1,\ldots,K,\\ \eta\_{ij} &= \mathbf x\_{ij}^\top\boldsymbol\beta +
-\mathbf z\_{ij}^\top\mathbf b_i,\\\[2ex\]
-\gamma_1,\delta_1,\ldots,\delta\_{K-1} &\overset{iid}{\sim}
-N(\mu\_\gamma, \sigma\_\gamma^2),\\ \gamma_k &\sim \gamma\_{k-1} +
-\exp(\delta\_{k-1}),\quad k = 2,\ldots,K, \end{align\*}\\
+\pi\_{ij,K}),\\\[2ex\] \pi\_{ij,1} &= 1 - P(y\_{ij} \> 1),\\ \pi\_{ij,k}
+&= P(y\_{ij} \> k-1) - P(y\_{ij} \> k), \quad k = 2, \ldots, K-1,\\
+\pi\_{ij,K} &= P(y\_{ij} \> K-1),\\\[2ex\] \text{logit}(P(y\_{ij} \> k))
+&= \gamma_k + \eta\_{ij}, \quad k = 1,\ldots,K-1,\\ \eta\_{ij} &=
+\mathbf x\_{ij}^\top\boldsymbol\beta + \mathbf z\_{ij}^\top\mathbf
+b_i,\\\[2ex\] \gamma_1,\delta_1,\ldots,\delta\_{K-2}
+&\overset{iid}{\sim} N(\mu\_\gamma, \sigma\_\gamma^2),\\ \gamma_k &=
+\gamma\_{k-1} - \exp(\delta\_{k-1}),\quad k = 2,\ldots,K-1,
+\end{align\*}\\
 
 where \\\pi\_{ij,k} = P(y\_{ij} = k)\\ and \\\text{logit}(x) =
-\log\left(\frac{x}{1-x}\right)\\. A cumulative logit regression model
-for a univariate outcome \\y_i\\ can be obtained by dropping the index
-\\j\\ and omitting \\\mathbf z\_{ij}^\top\mathbf b_i\\. In cumulative
-logit (mixed) models, the design matrix \\\mathbf X\\ does not contain
-an intercept, since outcome category specific intercepts
-\\\gamma_1,\ldots, \gamma_K\\ are specified. Here, the parameter vector
-\\\boldsymbol \theta\_{y\mid x}\\ includes the regression coefficients
-\\\boldsymbol\beta\\, the first intercept \\\gamma_1\\ and increments
-\\\delta_1, \ldots, \delta\_{K-1}\\.
+\log\left(\frac{x}{1-x}\right)\\. The thresholds \\\gamma_k\\ are, thus,
+decreasing, which ensures that \\P(y\_{ij} \> k)\\ decreases with \\k\\.
+
+When the response variable is named in the argument `rev`, the odds are
+reversed, i.e., \\\text{logit}(P(y\_{ij} \leq k)) = \gamma_k +
+\eta\_{ij}\\, and the thresholds are increasing, \\\gamma_k =
+\gamma\_{k-1} + \exp(\delta\_{k-1})\\.
+
+The mean and precision of the normal prior for \\\gamma_1\\ and the
+increments \\\delta_k\\ are set by the hyper-parameters
+`mu_delta_ordinal` and `tau_delta_ordinal` (see
+[`default_hyperpars()`](https://nerler.github.io/JointAI/reference/default_hyperpars.md)).
+
+A cumulative logit regression model for a univariate outcome \\y_i\\ can
+be obtained by dropping the index \\j\\ and omitting \\\mathbf
+z\_{ij}^\top\mathbf b_i\\. In cumulative logit (mixed) models, the
+design matrix \\\mathbf X\\ does not contain an intercept, since outcome
+category specific intercepts (thresholds) \\\gamma_1,\ldots,
+\gamma\_{K-1}\\ are specified. Here, the parameter vector \\\boldsymbol
+\theta\_{y\mid x}\\ includes the regression coefficients
+\\\boldsymbol\beta\\, the first intercept \\\gamma_1\\ and the
+increments \\\delta_1, \ldots, \delta\_{K-2}\\.
 
 ### Survival models
 
@@ -147,16 +160,19 @@ unobserved) survival times \\T^\*\\, and a semi-parametric Cox
 proportional hazards model.
 
 The parametric survival model is implemented as \\\begin{align\*} T_i^\*
-&\sim \text{Weibull}(1, r_i, s),\\ D_i &\sim \text{𝟙}(T_i^\* \geq
-C_i),\\ \log(r_j) &= - \mathbf x_i^\top\boldsymbol\beta,\\ s &\sim
-\text{Exp}(0.01), \end{align\*}\\ where 𝟙 is the indicator function
-which is one if \\T_i^\*\geq C_i\\, and zero otherwise.
+&\sim \text{Weibull}(1, r_i, s),\\ D_i &= \text{𝟙}(T_i^\* \leq C_i),\\
+\log(r_i) &= - \mathbf x_i^\top\boldsymbol\beta,\\ s &\sim
+\text{Exp}(0.01), \end{align\*}\\ where \\C_i\\ is the censoring time
+and 𝟙 is the indicator function which is one if \\T_i^\*\leq C_i\\, and
+zero otherwise.
 
 The Cox proportional hazards model can be written as \\h_i(t) =
 h_0(t)\exp(\mathbf X_i \boldsymbol\beta),\\ where \\h_0(t)\\ is the
-baseline hazard function, which, in **JointAI**, is model using a
-B-spline approach, i.e., \\h_0(t) = \sum\_{q = 1}^{d} \gamma\_{Bq}
-B_q(t),\\ where \\B_q\\ denotes the \\q\\-th basis function.
+baseline hazard function. In **JointAI**, the logarithm of the baseline
+hazard is modelled using a B-spline approach, i.e., \\\log h_0(t) =
+\sum\_{q = 1}^{d} \gamma\_{Bq} B_q(t),\\ where \\B_q\\ denotes the
+\\q\\-th basis function (the number of basis functions, \\d\\, can be
+set with the argument `df_basehaz`).
 
 The survival function of the Cox model is \\S(t\mid \boldsymbol\theta) =
 \exp\left\\-\int_0^th_0(s)\exp\left(\mathbf
@@ -174,14 +190,16 @@ Gauss-Kronrod quadrature with 15 evaluation points.
 A convenient way to specify the joint distribution of the incomplete
 covariates \\\mathbf X\_{mis} = (\mathbf x\_{mis_1}, \ldots, \mathbf
 x\_{mis_q})\\ is to use a sequence of conditional univariate
-distributions (Ibrahim et al. 2002; Erler et al. 2016) \\\begin{align}
-p(\mathbf x\_{mis_1}, \ldots, \mathbf x\_{mis_q} \mid \mathbf X\_{obs},
-\boldsymbol\theta\_{x}) & = p(\mathbf x\_{mis_1} \mid \mathbf X\_{obs},
-\boldsymbol\theta\_{x_1})\nonumber\\ & \phantom{=} \prod\_{\ell=2}^q
-p(\mathbf x\_{mis\_{\ell}} \mid \mathbf X\_{obs}, \mathbf x\_{mis_1},
-\ldots, \mathbf x\_{mis\_{\ell-1}},
-\boldsymbol\theta\_{x\_\ell}),\tag{1} \end{align}\\ with
-\\\boldsymbol\theta\_{x} = (\boldsymbol\theta\_{x_1}^\top, \ldots,
+distributions (Ibrahim et al. 2002; Erler et al. 2016)
+
+\\\begin{align} p(\mathbf x\_{mis_1}, \ldots, \mathbf x\_{mis_q} \mid
+\mathbf X\_{obs}, \boldsymbol\theta\_{x}) & = p(\mathbf x\_{mis_1} \mid
+\mathbf X\_{obs}, \boldsymbol\theta\_{x_1})\nonumber\\ & \phantom{=}
+\prod\_{\ell=2}^q p(\mathbf x\_{mis\_{\ell}} \mid \mathbf X\_{obs},
+\mathbf x\_{mis_1}, \ldots, \mathbf x\_{mis\_{\ell-1}},
+\boldsymbol\theta\_{x\_\ell}),\tag{1} \end{align}\\
+
+with \\\boldsymbol\theta\_{x} = (\boldsymbol\theta\_{x_1}^\top, \ldots,
 \boldsymbol\theta\_{x_q}^\top)^\top\\.
 
 Each of the conditional distributions is a member of the exponential
@@ -219,7 +237,7 @@ x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{y\mid x}
 & \left\\ \prod\_{k=\ell+1}^q p(x\_{i,mis_k}\mid \mathbf x\_{i, obs},
 \mathbf x\_{i, mis\_{\<k}}, \boldsymbol\theta\_{x_k}) \right\\\\ &
 p(\boldsymbol\theta\_{y\mid x}) p(\boldsymbol\theta\_{x\_\ell})
-\prod\_{k=\ell+1}^p p(\boldsymbol\theta\_{x_k}), \tag{2} \end{align}\\
+\prod\_{k=\ell+1}^q p(\boldsymbol\theta\_{x_k}), \tag{2} \end{align}\\
 where \\\boldsymbol\theta\_{x\_{\ell}}\\ is the vector of parameters
 describing the model for the \\\ell\\-th covariate, and contains the
 vector of regression coefficients \\\boldsymbol\alpha\_\ell\\ and
@@ -277,20 +295,21 @@ factorized joint distribution from above with completely and
 incompletely observed longitudinal (level-1) covariates \\\mathbf
 s\_{obs}\\ and \\\mathbf s\_{mis}\\:
 
-\\ p \left(y\_{ij} \mid \mathbf s\_{ij, obs}, \mathbf s\_{ij, mis},
-\mathbf x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{y\mid x}
-\right)\\\\ p(\mathbf s\_{ij, mis}\mid \mathbf s\_{ij, obs}, \mathbf
-x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{s\_{mis}})\\
-p(\mathbf s\_{ij, obs}\mid \mathbf x\_{i, obs}, \mathbf x\_{i, mis},
-\boldsymbol\theta\_{s\_{obs}})\\ p(\mathbf x\_{i, mis}\mid \mathbf
-x\_{i, obs}, \boldsymbol\theta\_{x\_{mis}})\\ p(\mathbf x\_{i, obs} \mid
+\\ \begin{aligned} & p \left(y\_{ij} \mid \mathbf s\_{ij, obs}, \mathbf
+s\_{ij, mis}, \mathbf x\_{i, obs}, \mathbf x\_{i, mis},
+\boldsymbol\theta\_{y\mid x} \right)\\ & p(\mathbf s\_{ij, mis}\mid
+\mathbf s\_{ij, obs}, \mathbf x\_{i, obs}, \mathbf x\_{i, mis},
+\boldsymbol\theta\_{s\_{mis}})\\ p(\mathbf s\_{ij, obs}\mid \mathbf
+x\_{i, obs}, \mathbf x\_{i, mis}, \boldsymbol\theta\_{s\_{obs}})\\ &
+p(\mathbf x\_{i, mis}\mid \mathbf x\_{i, obs},
+\boldsymbol\theta\_{x\_{mis}})\\ p(\mathbf x\_{i, obs} \mid
 \boldsymbol\theta\_{x\_{obs}})\\ p(\boldsymbol\theta\_{y\mid x})\\
 p(\boldsymbol\theta\_{s\_{mis}}) \\ p(\boldsymbol\theta\_{s\_{obs}})\\
-p(\boldsymbol\theta\_{x\_{mis}}) \\ p(\boldsymbol\theta\_{x\_{obs}}) \\
-Given that the parameter vectors \\\theta\_{x\_{obs}}\\,
-\\\theta\_{x\_{mis}}\\, \\\theta\_{s\_{obs}}\\ and
-\\\theta\_{s\_{mis}}\\ are a priori independent, and \\p(\mathbf x\_{i,
-obs} \mid \boldsymbol\theta\_{x\_{obs}})\\ is independent of both
+p(\boldsymbol\theta\_{x\_{mis}}) \\ p(\boldsymbol\theta\_{x\_{obs}})
+\end{aligned} \\ Given that the parameter vectors
+\\\theta\_{x\_{obs}}\\, \\\theta\_{x\_{mis}}\\, \\\theta\_{s\_{obs}}\\
+and \\\theta\_{s\_{mis}}\\ are a priori independent, and \\p(\mathbf
+x\_{i, obs} \mid \boldsymbol\theta\_{x\_{obs}})\\ is independent of both
 \\x\_{mis}\\ and \\s\_{mis}\\, it can be omitted.
 
 Since \\p(\mathbf s\_{ij, obs}\mid \mathbf x\_{i, obs}, \mathbf x\_{i,
@@ -332,15 +351,14 @@ as, by default vague, inverse-gamma distributions.
 
 The covariance matrix of the random effects in a mixed model, \\\mathbf
 D\\, is assumed to follow an inverse Wishart distribution where the
-degrees of freedom are usually chosen to be equal to the dimension of
-the random effects, and the scale matrix is diagonal. Since the
-magnitude of the diagonal elements relates to the variance of the random
-effects, the choice of suitable values depends on the scale of the
-variable the random effect is associated with. Therefore, **JointAI**
-uses independent gamma hyper-priors for each of the diagonal elements.
-More details about the default hyper-parameters and how to change them
-are given in the section on [hyper-parameters in the vignette about
-Model
+degrees of freedom are, by default, equal to the dimension of the random
+effects plus one, and the scale matrix is diagonal. Since the magnitude
+of the diagonal elements relates to the variance of the random effects,
+the choice of suitable values depends on the scale of the variable the
+random effect is associated with. Therefore, **JointAI** uses
+independent gamma hyper-priors for each of the diagonal elements. More
+details about the default hyper-parameters and how to change them are
+given in the section on [hyper-parameters in the vignette about Model
 Specification](https://nerler.github.io/JointAI/articles/ModelSpecification.html#hyperparameters).
 
 ## References

@@ -144,14 +144,17 @@ should be excluded</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with entries <code>dat</code>, <code>fit</code> and <code>quantiles</code>,
-where <code>fit</code> contains the predicted values (mean over the values
-calculated from the iterations of the MCMC sample), <code>quantiles</code>
-contain the specified quantiles (by default 2.5% and 97.5%), and <code>dat</code>
-is <code>newdata</code>, extended with <code>fit</code> and <code>quantiles</code> (unless
-prediction for an ordinal outcome is done with <code>type = "prob"</code>, in
-which case the quantiles are an array with three dimensions and are
-therefore not included in <code>dat</code>).</p>
+    <p>A list with entries <code>newdata</code>, <code>fitted</code> and, if
+<code>return_sample = TRUE</code>, <code>sample</code>:
+<code>fitted</code> contains the predicted values (column <code>fit</code>; the mean
+over the values calculated from the iterations of the MCMC sample) and the
+specified quantiles (by default 2.5% and 97.5%), <code>newdata</code> is
+<code>newdata</code>, extended with these columns, and <code>sample</code> contains
+the predicted values for each iteration of the MCMC sample (in long
+format). For ordinal and multinomial models with <code>type = "prob"</code>,
+<code>fitted</code> is a three-dimensional array (observations, mean and
+quantiles, categories). When the prediction is done for several outcomes,
+<code>fitted</code> and <code>sample</code> are lists with one element per outcome.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

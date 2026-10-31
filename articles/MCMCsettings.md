@@ -541,9 +541,9 @@ The corresponding part of the JAGS model is:
     #> [...]
 
 `RinvD_bmi_ID` refers to the scale matrix in the Wishart prior for the
-inverse of the random effects design matrix `D_bmi_ID`. To distinguish
-random effects of different models and grouping levels, the names always
-end with `..._<response>_<level>`.
+inverse of the random effects covariance matrix `D_bmi_ID`. To
+distinguish random effects of different models and grouping levels, the
+names always end with `..._<response>_<level>`.
 
 In the data that is passed to JAGS this matrix is specified as diagonal
 matrix, with unknown diagonal elements:
@@ -613,7 +613,7 @@ To re-set to sequential evaluation,
 
 ``` r
 
-future::plan(future::sequential())
+future::plan(future::sequential)
 ```
 
 can be used.
@@ -635,9 +635,11 @@ the **rjags** functions `jags.model()` or `coda.samples()`:
 - `progress.bar`: allows to select the type of progress bar. Possible
   values are `"text"`, `"gui"` and `"none"`.
 
-[^1]: Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive
-    assessment of model fitness via realized discrepancies. Statistica
-    Sinica, 733-760.
+[^1]: Gelman, A., & Rubin, D. B. (1992). Inference from iterative
+    simulation using multiple sequences. Statistical Science, 7(4),
+    457-472; Brooks, S. P., & Gelman, A. (1998). General methods for
+    monitoring convergence of iterative simulations. Journal of
+    Computational and Graphical Statistics, 7(4), 434-455.
 
 [^2]: See p. 195 of Lesaffre, E., & Lawson, A. B. (2012). Bayesian
     Biostatistics. John Wiley & Sons.

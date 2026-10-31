@@ -76,7 +76,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Theoretical Background</h1>
             
-            <h4 data-toc-skip class="date">2026-02-22</h4>
+            <h4 data-toc-skip class="date">2026-10-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/TheoreticalBackground.Rmd" class="external-link"><code>vignettes/TheoreticalBackground.Rmd</code></a></small>
       <div class="d-none name"><code>TheoreticalBackground.Rmd</code></div>
@@ -194,22 +194,31 @@ implemented as a link in
 <p>Cumulative logit mixed models are of the form</p>
 <p><span class="math display">\[\begin{align*}
 y_{ij} &amp;\sim \text{Mult}(\pi_{ij,1}, \ldots, \pi_{ij,K}),\\[2ex]
-\pi_{ij,1} &amp;= P(y_{ij} \leq 1),\\
-\pi_{ij,k} &amp;= P(y_{ij} \leq k) - P(y_{ij} \leq k-1), \quad k \in 2, \ldots, K-1,\\
-\pi_{ij,K} &amp;= 1 - \sum_{k = 1}^{K-1}\pi_{ij,k},\\[2ex]
-\text{logit}(P(y_{ij} \leq k)) &amp;= \gamma_k + \eta_{ij}, \quad k \in 1,\ldots,K,\\
+\pi_{ij,1} &amp;= 1 - P(y_{ij} &gt; 1),\\
+\pi_{ij,k} &amp;= P(y_{ij} &gt; k-1) - P(y_{ij} &gt; k), \quad k = 2, \ldots, K-1,\\
+\pi_{ij,K} &amp;= P(y_{ij} &gt; K-1),\\[2ex]
+\text{logit}(P(y_{ij} &gt; k)) &amp;= \gamma_k + \eta_{ij}, \quad k = 1,\ldots,K-1,\\
 \eta_{ij} &amp;= \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,\\[2ex]
-\gamma_1,\delta_1,\ldots,\delta_{K-1} &amp;\overset{iid}{\sim} N(\mu_\gamma, \sigma_\gamma^2),\\
-\gamma_k &amp;\sim \gamma_{k-1} + \exp(\delta_{k-1}),\quad k = 2,\ldots,K,
+\gamma_1,\delta_1,\ldots,\delta_{K-2} &amp;\overset{iid}{\sim} N(\mu_\gamma, \sigma_\gamma^2),\\
+\gamma_k &amp;= \gamma_{k-1} - \exp(\delta_{k-1}),\quad k = 2,\ldots,K-1,
 \end{align*}\]</span></p>
 <p>where <span class="math inline">\(\pi_{ij,k} = P(y_{ij} = k)\)</span> and <span class="math inline">\(\text{logit}(x) = \log\left(\frac{x}{1-x}\right)\)</span>.
-A cumulative logit regression model for a univariate outcome <span class="math inline">\(y_i\)</span> can be
+The thresholds <span class="math inline">\(\gamma_k\)</span> are, thus, decreasing, which ensures that
+<span class="math inline">\(P(y_{ij} &gt; k)\)</span> decreases with <span class="math inline">\(k\)</span>.</p>
+<p>When the response variable is named in the argument <code>rev</code>, the odds are
+reversed, i.e., <span class="math inline">\(\text{logit}(P(y_{ij} \leq k)) = \gamma_k + \eta_{ij}\)</span>, and
+the thresholds are increasing, <span class="math inline">\(\gamma_k = \gamma_{k-1} + \exp(\delta_{k-1})\)</span>.</p>
+<p>The mean and precision of the normal prior for <span class="math inline">\(\gamma_1\)</span> and the increments
+<span class="math inline">\(\delta_k\)</span> are set by the hyper-parameters <code>mu_delta_ordinal</code> and
+<code>tau_delta_ordinal</code> (see <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code>).</p>
+<p>A cumulative logit regression model for a univariate outcome <span class="math inline">\(y_i\)</span> can be
 obtained by dropping the index <span class="math inline">\(j\)</span> and omitting <span class="math inline">\(\mathbf z_{ij}^\top\mathbf b_i\)</span>.
-In cumulative logit (mixed) models, the design matrix <span class="math inline">\(\mathbf X\)</span> does not contain
-an intercept, since outcome category specific intercepts <span class="math inline">\(\gamma_1,\ldots, \gamma_K\)</span>
-are specified. Here, the parameter vector <span class="math inline">\(\boldsymbol \theta_{y\mid x}\)</span> includes
-the regression coefficients <span class="math inline">\(\boldsymbol\beta\)</span>, the first intercept <span class="math inline">\(\gamma_1\)</span>
-and increments <span class="math inline">\(\delta_1, \ldots, \delta_{K-1}\)</span>.</p>
+In cumulative logit (mixed) models, the design matrix <span class="math inline">\(\mathbf X\)</span> does not
+contain an intercept, since outcome category specific intercepts (thresholds)
+<span class="math inline">\(\gamma_1,\ldots, \gamma_{K-1}\)</span> are specified. Here, the parameter vector
+<span class="math inline">\(\boldsymbol \theta_{y\mid x}\)</span> includes the regression coefficients
+<span class="math inline">\(\boldsymbol\beta\)</span>, the first intercept <span class="math inline">\(\gamma_1\)</span> and the increments
+<span class="math inline">\(\delta_1, \ldots, \delta_{K-2}\)</span>.</p>
 </div>
 <div class="section level3">
 <h3 id="survival-models">Survival models<a class="anchor" aria-label="anchor" href="#survival-models"></a>
@@ -224,18 +233,19 @@ Cox proportional hazards model.</p>
 <p>The parametric survival model is implemented as
 <span class="math display">\[\begin{align*}
 T_i^* &amp;\sim \text{Weibull}(1, r_i, s),\\
-D_i &amp;\sim \text{𝟙}(T_i^* \geq C_i),\\
-\log(r_j) &amp;= - \mathbf x_i^\top\boldsymbol\beta,\\
+D_i &amp;= \text{𝟙}(T_i^* \leq C_i),\\
+\log(r_i) &amp;= - \mathbf x_i^\top\boldsymbol\beta,\\
 s &amp;\sim \text{Exp}(0.01),
 \end{align*}\]</span>
-where 𝟙 is the indicator function which is one if <span class="math inline">\(T_i^*\geq C_i\)</span>,
-and zero otherwise.</p>
+where <span class="math inline">\(C_i\)</span> is the censoring time and 𝟙 is the indicator function which is
+one if <span class="math inline">\(T_i^*\leq C_i\)</span>, and zero otherwise.</p>
 <p>The Cox proportional hazards model can be written as
 <span class="math display">\[h_i(t) = h_0(t)\exp(\mathbf X_i \boldsymbol\beta),\]</span>
-where <span class="math inline">\(h_0(t)\)</span> is the baseline hazard function, which, in <strong>JointAI</strong>,
-is model using a B-spline approach, i.e.,
-<span class="math inline">\(h_0(t) = \sum_{q = 1}^{d} \gamma_{Bq} B_q(t),\)</span> where <span class="math inline">\(B_q\)</span> denotes the <span class="math inline">\(q\)</span>-th
-basis function.</p>
+where <span class="math inline">\(h_0(t)\)</span> is the baseline hazard function. In <strong>JointAI</strong>, the
+logarithm of the baseline hazard is modelled using a B-spline approach, i.e.,
+<span class="math inline">\(\log h_0(t) = \sum_{q = 1}^{d} \gamma_{Bq} B_q(t),\)</span> where <span class="math inline">\(B_q\)</span> denotes the
+<span class="math inline">\(q\)</span>-th basis function (the number of basis functions, <span class="math inline">\(d\)</span>, can be set with the
+argument <code>df_basehaz</code>).</p>
 <p>The survival function of the Cox model is
 <span class="math display">\[S(t\mid \boldsymbol\theta) = \exp\left\{-\int_0^th_0(s)\exp\left(\mathbf X_i\boldsymbol\beta\right)ds\right\} = \exp\left\{-\exp\left(\mathbf X_i\boldsymbol\beta\right)\int_0^th_0(s)ds\right\},\]</span>
 where <span class="math inline">\(\boldsymbol\theta\)</span> includes the regression coefficients <span class="math inline">\(\boldsymbol\beta\)</span>
@@ -252,14 +262,14 @@ evaluation points.</p>
 <p>A convenient way to specify the joint distribution of the incomplete covariates
 <span class="math inline">\(\mathbf X_{mis} = (\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q})\)</span> is to use
 a sequence of conditional univariate distributions <span class="citation">(Ibrahim et al. 2002; Erler et al. 2016)</span>
-<!--  -->
-<span class="math display" id="eq:factorization">\[\begin{align}
+<!--  --></p>
+<p><span class="math display" id="eq:factorization">\[\begin{align}
 p(\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q} \mid \mathbf X_{obs}, \boldsymbol\theta_{x})
 &amp; =  p(\mathbf x_{mis_1} \mid \mathbf X_{obs}, \boldsymbol\theta_{x_1})\nonumber\\
 &amp; \phantom{=}    \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
 \ldots, \mathbf x_{mis_{\ell-1}}, \boldsymbol\theta_{x_\ell}),\tag{1}
-\end{align}\]</span>
-with <span class="math inline">\(\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots,
+\end{align}\]</span></p>
+<p>with <span class="math inline">\(\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots,
 \boldsymbol\theta_{x_q}^\top)^\top\)</span>.</p>
 <p>Each of the conditional distributions is a member of the exponential family,
 extended with distributions for ordinal categorical variables,
@@ -302,7 +312,7 @@ p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{x})\\\nonumber
 \boldsymbol\theta_{x_k})
 \right\}\\
         &amp; p(\boldsymbol\theta_{y\mid x}) p(\boldsymbol\theta_{x_\ell})
-\prod_{k=\ell+1}^p p(\boldsymbol\theta_{x_k}), \tag{2}
+\prod_{k=\ell+1}^q p(\boldsymbol\theta_{x_k}), \tag{2}
 \end{align}\]</span>
 where <span class="math inline">\(\boldsymbol\theta_{x_{\ell}}\)</span> is the vector of parameters describing the model
 for the <span class="math inline">\(\ell\)</span>-th covariate, and contains the vector of regression coefficients
@@ -357,17 +367,19 @@ This becomes clear when we extend the factorized joint distribution from above
 with completely and incompletely observed longitudinal (level-1)
 covariates <span class="math inline">\(\mathbf s_{obs}\)</span> and <span class="math inline">\(\mathbf s_{mis}\)</span>:</p>
 <p><span class="math display">\[
-p \left(y_{ij} \mid \mathbf s_{ij, obs}, \mathbf s_{ij, mis},
-\mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right)\\\\
-p(\mathbf s_{ij, mis}\mid \mathbf s_{ij, obs}, \mathbf x_{i, obs},
+\begin{aligned}
+&amp; p \left(y_{ij} \mid \mathbf s_{ij, obs}, \mathbf s_{ij, mis},
+\mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right)\\
+&amp; p(\mathbf s_{ij, mis}\mid \mathbf s_{ij, obs}, \mathbf x_{i, obs},
 \mathbf x_{i, mis}, \boldsymbol\theta_{s_{mis}})\,
 p(\mathbf s_{ij, obs}\mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
 \boldsymbol\theta_{s_{obs}})\\
-p(\mathbf x_{i, mis}\mid \mathbf x_{i, obs}, \boldsymbol\theta_{x_{mis}})\,
+&amp; p(\mathbf x_{i, mis}\mid \mathbf x_{i, obs}, \boldsymbol\theta_{x_{mis}})\,
 p(\mathbf x_{i, obs} \mid \boldsymbol\theta_{x_{obs}})\,
 p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{s_{mis}}) \,
 p(\boldsymbol\theta_{s_{obs}})\, p(\boldsymbol\theta_{x_{mis}}) \,
 p(\boldsymbol\theta_{x_{obs}})
+\end{aligned}
 \]</span>
 Given that the parameter vectors <span class="math inline">\(\theta_{x_{obs}}\)</span>, <span class="math inline">\(\theta_{x_{mis}}\)</span>, <span class="math inline">\(\theta_{s_{obs}}\)</span>
 and <span class="math inline">\(\theta_{s_{mis}}\)</span> are a priori independent, and
@@ -413,7 +425,7 @@ In <strong>JointAI</strong> variance parameters in models for normally distribut
 specified as, by default vague, inverse-gamma distributions.</p>
 <p>The covariance matrix of the random effects in a mixed model, <span class="math inline">\(\mathbf D\)</span>,
 is assumed to follow an inverse Wishart distribution where the degrees of freedom
-are usually chosen to be equal to the dimension of the random effects, and the
+are, by default, equal to the dimension of the random effects plus one, and the
 scale matrix is diagonal. Since the magnitude of the diagonal elements relates
 to the variance of the random effects, the choice of suitable values depends on the
 scale of the variable the random effect is associated with. Therefore, <strong>JointAI</strong>

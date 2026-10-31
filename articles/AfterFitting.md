@@ -79,6 +79,13 @@ The posterior distributions can also be visualized using the function
 which plots the empirical density per node per chain, or combining
 chains (when `joined = TRUE`).
 
+``` r
+
+densplot(mod13a, joined = TRUE, ncol = 3)
+```
+
+![](figures_AfterFitting/dens13a-1.svg)
+
 The argument `vlines` takes a list of lists, containing specifications
 passed to `abline`, and allows us to add (vertical) lines to the plot,
 e.g., marking zero:
@@ -403,13 +410,15 @@ By default, the functions
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
 [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md),
 [`summary()`](https://rdrr.io/r/base/summary.html),
-[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md),
-`MC_Error()` and [`predict()`](https://rdrr.io/r/stats/predict.html) use
-all iterations of the MCMC sample and consider only the parameters of
-the analysis model (if they were monitored). In this section, we
+[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md) and
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
+use all iterations of the MCMC sample and consider only the parameters
+of the analysis model (if they were monitored). In this section, we
 describe how the set of iterations and parameters to display can be
 changed using the arguments `subset`, `start`, `end`, `thin` and
-`exclude_chains`.
+`exclude_chains` ([`predict()`](https://rdrr.io/r/stats/predict.html)
+also has the arguments `start`, `end`, `thin` and `exclude_chains`, but
+not `subset`).
 
 ### Subset of parameters
 
@@ -545,9 +554,9 @@ mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 ``` r
 
 # extract random intercepts
-ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
+ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = TRUE)
 
-# to plot the chains of 12 randomly selected random intercepts and slopes:
+# to plot the chains of 12 randomly selected random intercepts:
 traceplot(mod13e, subset = list(analysis_main = FALSE,
                                 other = sample(ri, size = 12)), ncol = 4)
 ```
@@ -563,9 +572,9 @@ which iterations from the MCMC sample are included in the summary.
 discarding a “burn-in”, i.e., the iterations before the MCMC chain had
 converged.
 
-If a particular chain does not have converged it can be excluded from
-the summary or plot using the argument `exclude_chains`. This argument
-takes a numeric vector identifying chains to be excluded, for example:
+If a particular chain has not converged it can be excluded from the
+summary or plot using the argument `exclude_chains`. This argument takes
+a numeric vector identifying chains to be excluded, for example:
 
 ``` r
 
@@ -618,13 +627,13 @@ intervals from `JointAI` objects. Note that for mixed models, currently,
 only marginal prediction but not prediction conditional on the random
 effects is implemented.
 
-A dataset containing data which the prediction should be performed is
-specified via the argument `newdata`. If no `newdata` is given, the
-original data from the JointAI object are used. The argument `quantiles`
-allows the specification of the quantiles of the posterior sample that
-are used to obtain the credible interval (by default the 2.5% and 97.5%
-quantile). Arguments `start`, `end`, `thin` and `exclude_chains` control
-the subset of MCMC samples that is used.
+A dataset containing the data for which the prediction should be
+performed is specified via the argument `newdata`. If no `newdata` is
+given, the original data from the JointAI object are used. The argument
+`quantiles` allows the specification of the quantiles of the posterior
+sample that are used to obtain the credible interval (by default the
+2.5% and 97.5% quantile). Arguments `start`, `end`, `thin` and
+`exclude_chains` control the subset of MCMC samples that is used.
 
 ``` r
 
@@ -641,9 +650,12 @@ predict(mod13a, newdata = NHANES[27, ])
 ```
 
 [`predict()`](https://rdrr.io/r/stats/predict.html) returns a list with
-elements `dat`, `fit` and `quantiles`, containing `newdata` with the
-predicted values and quantiles appended, the predicted values and
-quantiles that form the credible interval.
+elements `newdata` and `fitted`: `newdata` with the predicted values
+(column `fit`) and the quantiles that form the credible interval
+appended, and a `data.frame` containing only the predicted values and
+quantiles. With `return_sample = TRUE`, the list also contains the
+element `sample`, the predicted values for each iteration of the MCMC
+sample.
 
 ### Prediction to visualize non-linear effects
 
@@ -659,7 +671,7 @@ continuous and categorical variables.
 ``` r
 
 # create dataset for prediction
-newDF <- predDF(mod13b, var = ~ age)
+newDF <- predDF(mod13b, vars = ~ age)
 
 # obtain predicted values
 pred <- predict(mod13b, newdata = newDF)
@@ -682,7 +694,7 @@ these variables:
 ``` r
 
 # create dataset for prediction
-newDF <- predDF(mod13b, var = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
+newDF <- predDF(mod13b, vars = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
 
 # obtain predicted values
 pred <- predict(mod13b, newdata = newDF)
@@ -690,8 +702,6 @@ pred <- predict(mod13b, newdata = newDF)
 #> Prediction in multi-level settings currently only takes into
 #> account the fixed effects, i.e., assumes that the random
 #> effect realizations are equal to zero.
-#> Error in `MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)], drop = FALSE]`:
-#> ! subscript out of bounds
 
 
 # plot predicted values and credible interval
@@ -699,7 +709,7 @@ library(ggplot2)
 ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
                          fill = factor(HEIGHT_M))) +
   geom_ribbon(aes(ymin = `2.5%`, ymax = `97.5%`), alpha = 0.3) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   facet_wrap('ETHN') +
   theme(legend.position = 'top',
         panel.grid = element_blank()) +

@@ -86,13 +86,16 @@ predict(object, outcome = 1L, newdata,
 
 ## Value
 
-A list with entries `dat`, `fit` and `quantiles`, where `fit` contains
-the predicted values (mean over the values calculated from the
-iterations of the MCMC sample), `quantiles` contain the specified
-quantiles (by default 2.5% and 97.5%), and `dat` is `newdata`, extended
-with `fit` and `quantiles` (unless prediction for an ordinal outcome is
-done with `type = "prob"`, in which case the quantiles are an array with
-three dimensions and are therefore not included in `dat`).
+A list with entries `newdata`, `fitted` and, if `return_sample = TRUE`,
+`sample`: `fitted` contains the predicted values (column `fit`; the mean
+over the values calculated from the iterations of the MCMC sample) and
+the specified quantiles (by default 2.5% and 97.5%), `newdata` is
+`newdata`, extended with these columns, and `sample` contains the
+predicted values for each iteration of the MCMC sample (in long format).
+For ordinal and multinomial models with `type = "prob"`, `fitted` is a
+three-dimensional array (observations, mean and quantiles, categories).
+When the prediction is done for several outcomes, `fitted` and `sample`
+are lists with one element per outcome.
 
 ## Details
 

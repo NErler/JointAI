@@ -90,22 +90,22 @@ summary(lm1)
 #> 
 #> Posterior summary:
 #>                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)            60.879 22.8704  19.1247 106.227     0.0040    1.00 0.0271
-#> genderfemale           -3.177  2.2549  -7.6423   1.099     0.1640    1.00 0.0258
-#> age                     0.364  0.0708   0.2196   0.505     0.0000    1.01 0.0258
-#> raceOther Hispanic      0.518  5.0580  -9.2403  10.675     0.9373    1.00 0.0258
-#> raceNon-Hispanic White -1.451  3.0937  -7.2049   4.686     0.6227    1.00 0.0276
-#> raceNon-Hispanic Black  9.047  3.6389   2.0441  16.042     0.0147    1.00 0.0267
-#> raceother               3.686  3.4550  -3.0852  10.725     0.2653    1.00 0.0268
-#> WC                      0.236  0.0822   0.0754   0.392     0.0040    1.00 0.0258
-#> alc>=1                  7.272  2.3870   2.5418  11.763     0.0040    1.03 0.0284
-#> educhigh               -3.397  2.1457  -7.3896   0.869     0.1120    1.00 0.0258
-#> albu                    5.320  4.0590  -2.7810  12.922     0.1987    1.00 0.0291
-#> bili                   -5.516  4.9060 -15.2486   4.592     0.2413    1.01 0.0274
+#> (Intercept)            60.824 22.9084  17.0465 106.164    0.01333    1.00 0.0263
+#> genderfemale           -3.030  2.1389  -7.0914   1.098    0.18000    1.00 0.0258
+#> age                     0.362  0.0720   0.2196   0.501    0.00000    1.00 0.0258
+#> raceOther Hispanic      0.752  4.8950  -8.6198  10.401    0.88400    1.00 0.0258
+#> raceNon-Hispanic White -1.469  3.1282  -7.4494   4.963    0.61067    1.00 0.0258
+#> raceNon-Hispanic Black  8.909  3.6076   2.2916  16.179    0.01200    1.01 0.0258
+#> raceother               3.821  3.4316  -3.2592  10.469    0.26933    1.01 0.0258
+#> WC                      0.242  0.0833   0.0791   0.409    0.00133    1.00 0.0258
+#> alc>=1                  7.289  2.3288   2.7112  11.532    0.00133    1.01 0.0313
+#> educhigh               -3.481  2.1836  -7.6444   0.823    0.11067    1.01 0.0258
+#> albu                    5.174  4.0721  -3.0014  12.767    0.20133    1.01 0.0270
+#> bili                   -5.204  5.0343 -14.5277   5.620    0.29333    1.00 0.0270
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 13.2 0.738 11.9  14.7    1.02 0.0282
+#> sigma_SBP 13.2 0.731 11.9  14.7       1 0.0265
 #> 
 #> 
 #> MCMC settings:
@@ -159,8 +159,8 @@ estimate is based on a finite sample. It can also be obtained using the
 function
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
 Ideally, the Monte Carlo error should be small compared to the standard
-error of the posterior sample. The values shown in the model summary are
-the Monte Carlo error divided by the posterior standard deviation.
+deviation of the posterior sample. The values shown in the model summary
+are the Monte Carlo error divided by the posterior standard deviation.
 
 #### Additional information
 
