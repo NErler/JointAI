@@ -193,7 +193,7 @@ samples instead of 500, that is, the samples from iteration 110, 120,
     #> [...]
     #> MCMC settings:
     #> Iterations = 110:600
-    #> Sample size per chain = 49 
+    #> Sample size per chain = 50 
     #> Thinning interval = 10 
     #> Number of chains = 3
 

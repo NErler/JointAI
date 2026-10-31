@@ -88,6 +88,10 @@
 <code><a href="../reference/rd_vcov.html">rd_vcov()</a></code> failed with “subscript out of bounds” when the random-effects covariance matrices of covariate models were monitored (e.g., with <code>monitor_params = c(other_models = TRUE)</code>). It now returns them, together with those of the analysis model.</li>
 <li>
 <code><a href="../reference/MC_error.html">MC_error()</a></code>: the Monte Carlo error on the sampling scale (models fitted with <code>keep_scaled_mcmc = TRUE</code>) is now calculated for the selected nodes (<code>subset</code>) instead of all monitored nodes, with the same names as on the data scale; <code>plot(MC_error(...), data_scale = FALSE)</code> labelled the nodes wrongly or failed. Without the scaled sample, it now gives an informative error.</li>
+<li>
+<code>print(summary())</code>: the “Sample size per chain” was one too small when the difference between the last and the first iteration was a multiple of the thinning interval (e.g., 49 instead of 50 for iterations 110:600 with thinning interval 10).</li>
+<li>
+<code>print(summary())</code>: for thinned samples, the printed first and last iteration were the values of <code>start</code> and <code>end</code> as given, also when these were not stored iterations. They are now the first and last iteration used.</li>
 <li>A variable whose name was equal to the name of a dummy variable of a factor in the model (e.g., a variable <code>B11</code> and the dummy of level <code>1</code> of a factor <code>B1</code>), or two factors with dummy variables of the same name, were merged into one variable, without error or warning. Model fitting now stops with an informative error (<a href="https://github.com/nerler/JointAI/issues/75" class="external-link">#75</a>).</li>
 <li>
 <code><a href="../reference/parameters.html">parameters()</a></code> listed the regression coefficients of all models when all monitored parameters were regression coefficients (e.g., only <code>beta</code> monitored), also those of models that were not monitored.</li>
