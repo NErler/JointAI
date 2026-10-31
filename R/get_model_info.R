@@ -159,6 +159,22 @@ get_model1_info <- function(
   )
 
   # JM settings ----------------------------------------------------------------
+  # * time variable ------------------------------------------------------------
+  # the baseline hazard is a (spline) function of time, so that the effect of
+  # the time variable as a main effect cannot be separated from it
+  if (
+    modeltype %in% "JM" && any(Mlist$timevar %in% unlist(lapply(lp, names)))
+  ) {
+    errormsg(
+      "The time variable %s is part of the linear predictor of the survival
+      model. In a joint model, the effect of time is described by the
+      baseline hazard. Please remove %s from the model formula of the
+      survival model.",
+      dQuote(Mlist$timevar),
+      dQuote(Mlist$timevar)
+    )
+  }
+
   # * covariate names ----------------------------------------------------------
   covnames <- if (modeltype %in% "JM") {
     unique(unlist(
