@@ -24,6 +24,12 @@
 
 ### Bug fixes
 
+- When the analysis model had no intercept (e.g.,
+  `lm_imp(y ~ 0 + x1 + x2)`) and no random effects, the models for the
+  incomplete covariates (the imputation models) had no intercept either,
+  e.g., `x2 ~ 0 + x1`. They now have an intercept (or, for ordinal
+  covariates, thresholds), as when the analysis model has an intercept.
+  Results of such models fitted with earlier versions differ.
 - With scaled covariates (the default), centring the covariates changed
   some models, because no intercept could take up the shift: models
   without intercept (e.g., `lm_imp(y ~ 0 + x1 + x2)`, which then had an
