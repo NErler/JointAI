@@ -146,6 +146,12 @@
   `lm_imp(list(y ~ ..., O2 ~ ...))`), had an intercept in addition to the
   thresholds, so that the model was not identified (#71). This was
   introduced in version 1.1.0.
+* `MC_error()`: the Monte Carlo error on the sampling scale (models fitted
+  with `keep_scaled_mcmc = TRUE`) is now calculated for the selected nodes
+  (`subset`) instead of all monitored nodes, with the same names as on the
+  data scale; `plot(MC_error(...), data_scale = FALSE)` labelled the nodes
+  wrongly or failed. Without the scaled sample, it now gives an informative
+  error.
 
 # JointAI 1.1.0
 

@@ -170,6 +170,27 @@ test_that("MC_error() and GR_crit() use the selected chains and iterations", {
   expect_equal(gr, coda::gelman.diag(mcmc, autoburnin = FALSE))
 })
 
+test_that("MC_error() uses the same nodes on both scales", {
+  object <- fixture_load("lm")
+  # stand-in for the sample kept with keep_scaled_mcmc = TRUE: when it is the
+  # same as the MCMC sample, both scales must give the same result
+  object$sample <- object$MCMC
+
+  mce <- MC_error(object, warn = FALSE, mess = FALSE)
+  expect_equal(mce$sampling_scale, mce$data_scale)
+
+  mce <- MC_error(
+    object,
+    exclude_chains = 2,
+    start = 121,
+    end = 140,
+    thin = 2,
+    warn = FALSE,
+    mess = FALSE
+  )
+  expect_equal(mce$sampling_scale, mce$data_scale)
+})
+
 test_that("GR_crit() and MC_error() give errors for unsuitable objects", {
   expect_error(GR_crit(list(a = 1)), "JointAI")
   expect_error(MC_error(list(a = 1)), "JointAI")

@@ -75,11 +75,16 @@ model)}
 \item{minlength}{number of characters the variable names are abbreviated to}
 }
 \value{
-An object of class \code{MCElist} with elements \code{unscaled},
-\code{scaled} and \code{digits}. The first two are matrices with
-columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
+An object of class \code{MCElist} with elements
+\code{data_scale}, \code{sampling_scale} and \code{digits}. The
+first two are matrices with one row per selected node and columns
+\code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
 \code{SD} (posterior standard deviation) and \code{MCSE/SD}
-(Monte Carlo error divided by post. standard deviation.)
+(Monte Carlo error divided by post. standard deviation), for the
+MCMC sample transformed back to the scale of the data and for the
+sample on the scale used in JAGS. \code{sampling_scale} is
+\code{NULL} unless the model was fitted with
+\code{keep_scaled_mcmc = TRUE}.
 }
 \description{
 Calculate, print and plot the Monte Carlo error of the samples from a
