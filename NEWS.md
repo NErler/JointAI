@@ -146,6 +146,10 @@
   `lm_imp(list(y ~ ..., O2 ~ ...))`), had an intercept in addition to the
   thresholds, so that the model was not identified (#71). This was
   introduced in version 1.1.0.
+* `rd_vcov()` failed with "subscript out of bounds" when the random-effects
+  covariance matrices of covariate models were monitored (e.g., with
+  `monitor_params = c(other_models = TRUE)`). It now returns them, together
+  with those of the analysis model.
 * `MC_error()`: the Monte Carlo error on the sampling scale (models fitted
   with `keep_scaled_mcmc = TRUE`) is now calculated for the selected nodes
   (`subset`) instead of all monitored nodes, with the same names as on the

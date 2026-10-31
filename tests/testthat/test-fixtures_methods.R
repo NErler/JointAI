@@ -60,3 +60,21 @@ test_that("sum_duration() of a fitted model", {
     )
   }
 })
+
+test_that("rd_vcov() includes monitored covariate models with random effects", {
+  # fixture lme monitors the random-effects covariance matrices of the
+  # analysis model (y) and of the covariate models (b2, c2)
+  object <- fixture_load("lme")
+  vcov <- rd_vcov(object, mess = FALSE, warn = FALSE)
+  expect_named(vcov, c("y", "b2", "c2"))
+
+  MCMC <- do.call(rbind, object$MCMC)
+  for (k in names(vcov)) {
+    D <- vcov[[k]]$id
+    expect_s3_class(D, "Dmat")
+    expect_equal(D[1L, 1L], mean(MCMC[, paste0("D_", k, "_id[1,1]")]))
+  }
+  expect_equal(dim(vcov$y$id), c(2L, 2L))
+  expect_equal(vcov$y$id[1L, 2L], vcov$y$id[2L, 1L])
+  expect_equal(vcov$y$id[1L, 2L], mean(MCMC[, "D_y_id[1,2]"]))
+})
