@@ -536,7 +536,8 @@ print.summary.JointAI <- function(
 
   cat("MCMC settings:\n")
   cat("Iterations = ", x$start, ":", x$end, "\n", sep = "")
-  cat("Sample size per chain =", floor((x$end - x$start + 1) / x$thin), "\n")
+  # iterations start, start + thin, ..., up to end
+  cat("Sample size per chain =", floor((x$end - x$start) / x$thin) + 1, "\n")
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
   cat("\n")

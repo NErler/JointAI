@@ -152,6 +152,10 @@
   data scale; `plot(MC_error(...), data_scale = FALSE)` labelled the nodes
   wrongly or failed. Without the scaled sample, it now gives an informative
   error.
+* `print(summary())`: the "Sample size per chain" was one too small when
+  the difference between the last and the first iteration was a multiple of
+  the thinning interval (e.g., 49 instead of 50 for iterations 110:600 with
+  thinning interval 10).
 * A variable whose name was equal to the name of a dummy variable of a factor
   in the model (e.g., a variable `B11` and the dummy of level `1` of a factor
   `B1`), or two factors with dummy variables of the same name, were merged
