@@ -301,7 +301,11 @@ duration_obj <- function(dur) {
 sum_duration <- function(object, by = NULL) {
   obj <- object$comp_info$duration
 
-  if (is.null(by) || by %in% c("phase", "phase and run", "run and phase")) {
+  if (
+    is.null(by) || by %in% c("phase", "phase and run", "run and phase", "run")
+  ) {
+    # per phase: the duration of each run (sum over the chains, or for
+    # parallel chains the longest chain)
     s <- lapply(obj, function(p) {
       r <- Map(
         function(vec, parallel) {
@@ -324,23 +328,10 @@ sum_duration <- function(object, by = NULL) {
       s
     } else if (by == "phase") {
       lapply(s, sum)
+    } else if (by == "run") {
+      # per run: the sum over the phases
+      Reduce(`+`, s)
     }
-  } else if (by == "run") {
-    r <- do.call(cbind, obj)
-
-    s <- Map(
-      function(vec, parallel) {
-        if (parallel) {
-          max(do.call(c, vec))
-        } else {
-          sum(do.call(c, vec))
-        }
-      },
-      vec = split(r, rownames(r)),
-      parallel = object$comp_info$parallel
-    )
-
-    do.call(c, s)
   } else if (by == "chain") {
     do.call(c, lapply(c(do.call(rbind, obj)), sum))
   }

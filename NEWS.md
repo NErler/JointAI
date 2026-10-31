@@ -157,6 +157,10 @@
   `B1`), or two factors with dummy variables of the same name, were merged
   into one variable, without error or warning. Model fitting now stops with
   an informative error (#75).
+* `sum_duration(by = "run")`: for models run in parallel, the duration per
+  run was the longest chain over the adaptive and sampling phase together,
+  instead of the sum of the longest chain per phase, so that the runs did
+  not add up to the total duration.
 
 # JointAI 1.1.0
 
