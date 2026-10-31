@@ -298,6 +298,15 @@ duration_obj <- function(dur) {
 #'           chains, separately per phase and run. `NULL` (the default in
 #'           earlier versions) is the same as `"all"`.
 #'
+#' @return The duration(s), as \code{difftime}: for \code{by = "all"} a single
+#'         value; for \code{"phase"} a list with elements \code{adapt} and
+#'         \code{sample}; for \code{"run"} a named vector with one value per
+#'         run; for \code{"chain"} a named vector with one value per chain
+#'         (a single value \code{total} when the chains were not run in
+#'         parallel); for \code{"phase and run"} a list with elements
+#'         \code{adapt} and \code{sample}, each a named vector with one value
+#'         per run.
+#'
 #' @export
 #'
 sum_duration <- function(

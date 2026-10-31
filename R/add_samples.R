@@ -26,6 +26,11 @@
 #'
 #'
 #'
+#' @return An object of class 'JointAI': \code{object} with the MCMC sample
+#'         extended by the new iterations (\code{add = TRUE}) or replaced by
+#'         them (\code{add = FALSE}), and with updated MCMC settings and
+#'         computational time.
+#'
 #' @seealso
 #' \code{\link[JointAI:model_imp]{*_imp}}
 #'

@@ -28,6 +28,12 @@ automatically chosen if unspecified}
 \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
 to change the facet labels}
 }
+\value{
+A \code{ggplot} object combining the plots of all variables with
+imputed values (created with \code{ggpubr::ggarrange()}), or
+\code{NULL} (with a message) when the packages \strong{ggplot2} or
+\strong{ggpubr} are not installed.
+}
 \description{
 Plots densities and bar plots of the observed and imputed values in a
 long-format dataset (multiple imputed datasets stacked onto each other).

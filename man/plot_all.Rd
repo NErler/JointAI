@@ -33,6 +33,10 @@ structure}
 \item{...}{additional parameters passed to \code{\link[graphics]{barplot}}
 and \code{\link[graphics]{hist}}}
 }
+\value{
+Called for its side effect: the plots are drawn with base graphics
+and \code{NULL} is returned invisibly.
+}
 \description{
 This function plots a grid of histograms (for continuous variables) and
 bar plots (for categorical variables) and labels it with the proportion of

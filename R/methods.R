@@ -3,6 +3,9 @@
 #' @param x object inheriting from class 'JointAI'
 #' @param ... currently not used
 #'
+#' @return Called for its side effect: a plot of the residuals against the
+#'         fitted values is drawn and \code{NULL} is returned invisibly.
+#'
 #' @note
 #' Currently, \code{plot()} can only be used with (generalized) linear (mixed)
 #' models.
@@ -13,39 +16,53 @@
 #'
 #' @export
 plot.JointAI <- function(x, ...) {
-  if (!inherits(x, "JointAI"))
+  if (!inherits(x, "JointAI")) {
     errormsg("Use only with objects of class JointAI.")
+  }
 
-  if (!x$analysis_type %in% c('lm', 'lme', 'glm', 'glme'))
-    errormsg('At the moment there is not plotting method implemented for a %s
-             model of type %s.', dQuote("JointAI"), dQuote(x$analysis_type))
+  if (!x$analysis_type %in% c('lm', 'lme', 'glm', 'glme')) {
+    errormsg(
+      'At the moment there is not plotting method implemented for a %s
+             model of type %s.',
+      dQuote("JointAI"),
+      dQuote(x$analysis_type)
+    )
+  }
 
-  if (length(x$fixed) > 1)
-    errormsg("At the moment there is no plotting method implemented for models
-             with multiple model formulas.")
+  if (length(x$fixed) > 1) {
+    errormsg(
+      "At the moment there is no plotting method implemented for models
+             with multiple model formulas."
+    )
+  }
 
-  l.fit <- if (x$analysis_type %in% c('glm', 'glme'))  {
+  l.fit <- if (x$analysis_type %in% c('glm', 'glme')) {
     "Predicted values"
-  } else {"Fitted values"}
+  } else {
+    "Fitted values"
+  }
 
   fit <- x$fitted.values
   r <- x$residuals
 
-  plot(fit, r, xlab = l.fit,
-       ylab = "Residuals", main = 'Residuals vs Fitted'
-       # ylim = ylim, type = "n"
+  plot(
+    fit,
+    r,
+    xlab = l.fit,
+    ylab = "Residuals",
+    main = 'Residuals vs Fitted'
+    # ylim = ylim, type = "n"
   )
-  panel.smooth(fit, r,
-               iter = ifelse(x$analysis_type %in% c('glm', 'glmer'), 0, 3))
+  panel.smooth(
+    fit,
+    r,
+    iter = ifelse(x$analysis_type %in% c('glm', 'glmer'), 0, 3)
+  )
   abline(h = 0, lty = 3, col = "gray")
 }
-
 
 
 #' @export
 family.JointAI <- function(object, ...) {
   attr(object$analysis_type, "family")
 }
-
-
-

@@ -6,6 +6,10 @@
 \usage{
 default_hyperpars()
 }
+\value{
+A named list with one named vector of hyper-parameters per type of
+model (the elements described above).
+}
 \description{
 This function returns a list of default values for the hyper-parameters.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpfunctions_formulas_general.R
 \name{split_formula_list}
 \alias{split_formula_list}
-\title{Split a list of formulas into fixed and random effects parts.}
+\title{Split a list of formulas into fixed and random effects parts}
 \usage{
 split_formula_list(formula)
 }

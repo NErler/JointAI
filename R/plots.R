@@ -19,6 +19,10 @@
 #'                string)
 #' @name traceplot
 #'
+#' @return With \code{use_ggplot = TRUE} (only for objects of class
+#'         'JointAI') a \code{ggplot} object. Otherwise, the plots are drawn
+#'         with base graphics and \code{NULL} is returned invisibly.
+#'
 #' @seealso \code{\link{summary.JointAI}},
 #'          \code{\link[JointAI:model_imp]{*_imp}},
 #'          \code{\link{densplot}}\cr
@@ -170,6 +174,10 @@ traceplot.JointAI <- function(
 #'               same length as the number of plots (see examples).
 #' @param joined logical; should the chains be combined before plotting?
 #' @param ... additional parameters passed to \code{plot()}
+#' @return With \code{use_ggplot = TRUE} (only for objects of class
+#'         'JointAI') a \code{ggplot} object. Otherwise, the plots are drawn
+#'         with base graphics and \code{NULL} is returned invisibly.
+#'
 #' @examples
 #'
 #' \dontrun{
@@ -530,6 +538,9 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
 #' @inheritParams traceplot
 #' @param ... additional parameters passed to \code{\link[graphics]{barplot}}
 #'            and \code{\link[graphics]{hist}}
+#'
+#' @return Called for its side effect: the plots are drawn with base graphics
+#'         and \code{NULL} is returned invisibly.
 #'
 #' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #'

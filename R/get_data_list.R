@@ -2,11 +2,14 @@
 # get list of data to be passed to JAGS #
 # # # # # # # # # # # # # # # # # # # # #
 
-get_data_list <- function(Mlist, info_list, hyperpars,
-                          append_data_list = NULL) {
+get_data_list <- function(
+  Mlist,
+  info_list,
+  hyperpars,
+  append_data_list = NULL
+) {
   modeltypes <- cvapply(info_list, "[[", "modeltype")
   families <- unlist(nlapply(info_list, "[[", "family"))
-
 
   # data matrices --------------------------------------------------------------
   l <- Mlist$M[nvapply(Mlist$M, ncol) > 0]
@@ -14,8 +17,10 @@ get_data_list <- function(Mlist, info_list, hyperpars,
   # scaling parameters ---------------------------------------------------------
   incl_sp <- lvapply(Mlist$scale_pars, function(x) {
     # identify all variables on the RHS of any formula
-    predvars <- unique(c(unlist(lapply(Mlist$lp_cols, nlapply, names)),
-                         all_vars(remove_grouping(Mlist$random))))
+    predvars <- unique(c(
+      unlist(lapply(Mlist$lp_cols, nlapply, names)),
+      all_vars(remove_grouping(Mlist$random))
+    ))
 
     # check if there are scaling parameters available for these predictor
     # variables
@@ -30,7 +35,6 @@ get_data_list <- function(Mlist, info_list, hyperpars,
     l <- c(l, sp)
   }
 
-
   # hyperpars ------------------------------------------------------------------
 
   hyp <- if (is.null(hyperpars)) {
@@ -39,38 +43,42 @@ get_data_list <- function(Mlist, info_list, hyperpars,
     hyperpars
   }
 
-
-
-  l <- c(l, unlist(unname(hyp[
-    c(
-      if (any(families %in% c("gaussian", "lognorm"))) "norm",
-      if (any(families %in% "Gamma")) "gamma",
-      if (any(families %in% "beta")) "beta",
-      if (any(families %in% "binomial")) "binom",
-      if (any(families %in% "poisson")) "poisson",
-      if (any(modeltypes %in% c("mlogit", "mlogitmm"))) "multinomial",
-      if (any(modeltypes %in% c("clm", "clmm"))) "ordinal",
-      if (any(modeltypes %in% c("survreg", "coxph", "JM"))) "surv"
-    )
-  ])))
-
+  l <- c(
+    l,
+    unlist(unname(hyp[
+      c(
+        if (any(families %in% c("gaussian", "lognorm"))) "norm",
+        if (any(families %in% "Gamma")) "gamma",
+        if (any(families %in% "beta")) "beta",
+        if (any(families %in% "binomial")) "binom",
+        if (any(families %in% "poisson")) "poisson",
+        if (any(modeltypes %in% c("mlogit", "mlogitmm"))) "multinomial",
+        if (any(modeltypes %in% c("clm", "clmm"))) "ordinal",
+        if (any(modeltypes %in% c("survreg", "coxph", "JM"))) "surv"
+      )
+    ]))
+  )
 
   # if there are no regression coefficients in the ordinal models, remove the
   # hyperpars for regression coefficients in ordinal models to prevent warning
   # message from JAGS
-  clm_parelmts <- nlapply(info_list[modeltypes %in% c("clm", "clmm")],
-                          "[[", "parelmts")
+  clm_parelmts <- nlapply(
+    info_list[modeltypes %in% c("clm", "clmm")],
+    "[[",
+    "parelmts"
+  )
 
-  if (length(
-    unlist(c(clm_parelmts, lapply(clm_parelmts, lapply, "attr", "nonprop")))
-  ) == 0L) {
+  if (
+    length(
+      unlist(c(clm_parelmts, lapply(clm_parelmts, lapply, "attr", "nonprop")))
+    ) ==
+      0L
+  ) {
     l[c("mu_reg_ordinal", "tau_reg_ordinal")] <- NULL
   }
 
-
   # random effects groupings ---------------------------------------------------
   if (sum(unlist(lapply(info_list, "[[", "nranef"))) > 0L) {
-
     # Obtain groups from Mlist, except for the group "lvlone" (never used).
     # The groups are vectors of length nrow(data) that indicate which rows
     # belong together on a given grouping level.
@@ -79,22 +87,25 @@ get_data_list <- function(Mlist, info_list, hyperpars,
     # get the position (row) of a given observation
     # - to identify the correct rows between different sub-levels
     # - pos is only needed when there are multiple grouping levels
-    pos <- nlapply(groups[!names(groups) %in%
-                            names(which(Mlist$group_lvls ==
-                                          max(Mlist$group_lvls)))],
-                   function(x) {
-                     match(unique(x), x)
-                   })
+    pos <- nlapply(
+      groups[
+        !names(groups) %in%
+          names(which(Mlist$group_lvls == max(Mlist$group_lvls)))
+      ],
+      function(x) {
+        match(unique(x), x)
+      }
+    )
 
     names(groups) <- paste0("group_", names(groups))
     names(pos) <- if (length(pos) > 0L) paste0("pos_", names(pos))
 
-    l <- c(l,
-           groups,
-           if (length(pos)) pos,
-           hyp$ranef[c("shape_diag_RinvD", "rate_diag_RinvD")]
+    l <- c(
+      l,
+      groups,
+      if (length(pos)) pos,
+      hyp$ranef[c("shape_diag_RinvD", "rate_diag_RinvD")]
     )
-
 
     # Include RinvD and KinvD for all grouping levels.
     # This is done for all models that could contain time-varying covariates /
@@ -105,20 +116,24 @@ get_data_list <- function(Mlist, info_list, hyperpars,
       function(info) {
         rd_hyp <- lapply(names(info$hc_list$hcvars), function(lvl) {
           if (isTRUE(info$rd_vcov[[lvl]] == "blockdiag")) {
-            get_RinvD(info$nranef[lvl],
-                      hyp$ranef["KinvD_expr"],
-                      names = paste(c("RinvD", "KinvD"),
-                                    info$varname, lvl, sep = "_")
+            get_RinvD(
+              info$nranef[lvl],
+              hyp$ranef["KinvD_expr"],
+              names = paste(c("RinvD", "KinvD"), info$varname, lvl, sep = "_")
             )
-          } else if (isTRUE(info$rd_vcov[[lvl]] == "indep") &
-                     info$nranef[lvl] > 1) {
-            get_invD_indep(nranef = info$nranef[lvl],
-                           name = paste("invD", info$varname, lvl,
-                                                         sep = "_"))
+          } else if (
+            isTRUE(info$rd_vcov[[lvl]] == "indep") &
+              info$nranef[lvl] > 1
+          ) {
+            get_invD_indep(
+              nranef = info$nranef[lvl],
+              name = paste("invD", info$varname, lvl, sep = "_")
+            )
           }
         })
         unlist(rd_hyp, recursive = FALSE)
-      })
+      }
+    )
     l <- c(l, unlist(unname(rd_hyp_pars), recursive = FALSE))
 
     rd_hyp_full <- lapply(names(Mlist$rd_vcov), function(lvl) {
@@ -128,36 +143,38 @@ get_data_list <- function(Mlist, info_list, hyperpars,
         rd_hyp_full_lvl <- lapply(
           which(names(Mlist$rd_vcov[[lvl]]) == "full"),
           function(k) {
-
-            nranef <- sapply(attr(Mlist$rd_vcov[[lvl]][[k]], "ranef_index"),
-                             function(nr) eval(parse(text = nr)))
+            nranef <- sapply(
+              attr(Mlist$rd_vcov[[lvl]][[k]], "ranef_index"),
+              function(nr) eval(parse(text = nr))
+            )
             nam <- attr(Mlist$rd_vcov[[lvl]][[k]], "name")
 
-            get_RinvD(max(unlist(nranef)),
-                      hyp$ranef["KinvD_expr"],
-                      paste0(c("RinvD", "KinvD"), nam, "_", lvl))
-          })
+            get_RinvD(
+              max(unlist(nranef)),
+              hyp$ranef["KinvD_expr"],
+              paste0(c("RinvD", "KinvD"), nam, "_", lvl)
+            )
+          }
+        )
         unlist(rd_hyp_full_lvl, recursive = FALSE)
       }
     })
 
     l <- c(l, unlist(rd_hyp_full, recursive = FALSE))
-
   }
-
 
   # survreg models -------------------------------------------------------------
   if (any(modeltypes %in% "survreg")) {
     for (x in info_list[modeltypes %in% "survreg"]) {
-
       l[[paste0("cens_", x$varname)]] <-
         1L - Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
 
       if (any(!Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]] %in% c(0L, 1L))) {
-        errormsg("The event indicator should only contain 2 distinct values
+        errormsg(
+          "The event indicator should only contain 2 distinct values
                  but I found %s. Note that it is currently not possible to fit
                  survival models with competing risks.",
-                 length(unique(Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]))
+          length(unique(Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]))
         )
       }
 
@@ -169,13 +186,13 @@ get_data_list <- function(Mlist, info_list, hyperpars,
           } else {
             NA
           }
-        })
+        }
+      )
     }
   }
 
   # coxph & JM -----------------------------------------------------------------
   if (any(modeltypes %in% c("coxph", "JM"))) {
-
     # Gauss-Kronrod quadrature points
     gkw <- gauss_kronrod()$gkw
     gkx <- gauss_kronrod()$gkx
@@ -185,7 +202,6 @@ get_data_list <- function(Mlist, info_list, hyperpars,
 
     l$gkw <- gkw[ordgkx]
 
-
     # extract the relevant information on survival models
     # (to simplify the following syntax)
     survinfo <- get_survinfo(info_list, Mlist)
@@ -194,74 +210,92 @@ get_data_list <- function(Mlist, info_list, hyperpars,
       # if there are time-varying covariates, identify the rows of the
       # longitudinal variable that correspond to the event times
       if (x$haslong) {
-        srow <- which(Mlist$M$M_lvlone[, Mlist$timevar] ==
-                        x$survtime[Mlist$groups[[x$surv_lvl]]])
+        srow <- which(
+          Mlist$M$M_lvlone[, Mlist$timevar] ==
+            x$survtime[Mlist$groups[[x$surv_lvl]]]
+        )
 
-        if (length(srow) != length(unique(Mlist$groups[[x$surv_lvl]])))
-          errormsg("The number of observations for survival differs from the
-                   number of subjects.")
+        if (length(srow) != length(unique(Mlist$groups[[x$surv_lvl]]))) {
+          errormsg(
+            "The number of observations for survival differs from the
+                   number of subjects."
+          )
+        }
 
         l[[paste0("srow_", x$varname)]] <- srow
       }
 
-
       # B-spline specification for the baseline hazard
-      h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4L, Time = x$survtime,
-                              event = x$survevent, gkx = gkx)
-
+      h0knots <- get_knots_h0(
+        nkn = Mlist$df_basehaz - 4L,
+        Time = x$survtime,
+        event = x$survevent,
+        gkx = gkx
+      )
 
       l[[paste0("Bh0_", x$varname)]] <-
         splines::splineDesign(h0knots, x$survtime, ord = 4L)
 
-      Bsh0 <- splines::splineDesign(h0knots, c(t(outer(x$survtime / 2L, gkx + 1L))),
-                                    ord = 4L)
+      Bsh0 <- splines::splineDesign(
+        h0knots,
+        c(t(outer(x$survtime / 2L, gkx + 1L))),
+        ord = 4L
+      )
       l[[paste0("Bsh0_", x$varname)]] <- array(
-        dim = c(15, nrow(Bsh0)/15, ncol(Bsh0)),
-        data = Bsh0)
-
+        dim = c(15, nrow(Bsh0) / 15, ncol(Bsh0)),
+        data = Bsh0
+      )
 
       # vector of zeros for the "zeros trick" in JAGS
       l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
     }
 
-
     if (any(lvapply(survinfo, "[[", "haslong"))) {
-
       # what is the level of the survival outcome?
       surv_lvl <- unique(cvapply(survinfo, "[[", "surv_lvl"))
 
-      if (length(surv_lvl) > 1L)
-        errormsg("It is not possible to fit survival models on different
-                 levels of the data.")
+      if (length(surv_lvl) > 1L) {
+        errormsg(
+          "It is not possible to fit survival models on different
+                 levels of the data."
+        )
+      }
 
-      if (length(unique(cvapply(survinfo, "[[", "time_name"))) > 1L)
-        errormsg("It is currently not possible to fit multiple survival
-                  models with different event time variables.")
+      if (length(unique(cvapply(survinfo, "[[", "time_name"))) > 1L) {
+        errormsg(
+          "It is currently not possible to fit multiple survival
+                  models with different event time variables."
+        )
+      }
 
-      if (length(unique(cvapply(survinfo, "[[", "modeltype"))) > 1L)
-        errormsg("It is not possible to simultaneously fit coxph and JM
-                 models.")
-
+      if (length(unique(cvapply(survinfo, "[[", "modeltype"))) > 1L) {
+        errormsg(
+          "It is not possible to simultaneously fit coxph and JM
+                 models."
+        )
+      }
 
       # create the design matrix of time-varying data using the Gauss-Kronrod
       # quadrature points for time
-      mat_gk <- get_matgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
-                          td_cox = unique(cvapply(survinfo, "[[",
-                                                  "modeltype")) == "coxph")
+      mat_gk <- get_matgk(
+        Mlist,
+        gkx,
+        surv_lvl,
+        survinfo,
+        data = Mlist$data,
+        td_cox = unique(cvapply(survinfo, "[[", "modeltype")) == "coxph"
+      )
 
       # for survival models, there can only be one level below the level of the
       # survival outcome (i.e., time-varying variables have level 1, survival
       # outcome has level 2)
-      l$M_lvlonegk <- array(data = unlist(mat_gk),
-                            dim = c(nrow(mat_gk[[1L]]), ncol(mat_gk[[1L]]),
-                                    length(gkx)),
-                            dimnames = list(NULL, dimnames(mat_gk)[[2L]], NULL)
+      l$M_lvlonegk <- array(
+        data = unlist(mat_gk),
+        dim = c(nrow(mat_gk[[1L]]), ncol(mat_gk[[1L]]), length(gkx)),
+        dimnames = list(NULL, dimnames(mat_gk)[[2L]], NULL)
       )
     }
-
-  }  # end of if (any(modeltypes %in% c("coxph", "JM")))
-
-
+  } # end of if (any(modeltypes %in% c("coxph", "JM")))
 
   # splines --------------------------------------------------------------------
 
@@ -292,11 +326,12 @@ get_data_list <- function(Mlist, info_list, hyperpars,
   #   }
   # }
 
-
   if (!is.null(append_data_list)) {
     if (is.null(names(append_data_list))) {
-      warnmsg("%s should be a named list but it seems it doesn't have names.",
-                        dQuote("append_data_list"))
+      warnmsg(
+        "%s should be a named list but it seems it doesn't have names.",
+        dQuote("append_data_list")
+      )
       l <- c(l, append_data_list)
     } else {
       l[names(append_data_list)] <- append_data_list
@@ -305,8 +340,6 @@ get_data_list <- function(Mlist, info_list, hyperpars,
 
   l[!lvapply(l, is.null)]
 }
-
-
 
 
 #' Get the default values for hyper-parameters
@@ -400,6 +433,9 @@ get_data_list <- function(Mlist, info_list, hyperpars,
 #' \code{tau_reg_surv} \tab precision in the priors for regression coefficients
 #' }
 #'
+#' @return A named list with one named vector of hyper-parameters per type of
+#'         model (the elements described above).
+#'
 #' @note
 #' \strong{From the
 #' \href{https://sourceforge.net/projects/mcmc-jags/files/Manuals/}{JAGS user
@@ -423,7 +459,6 @@ get_data_list <- function(Mlist, info_list, hyperpars,
 #'
 #'
 #' @export
-
 
 default_hyperpars <- function() {
   list(
@@ -453,12 +488,10 @@ default_hyperpars <- function() {
       tau_reg_binom = 0.0001
     ),
 
-
     poisson = c(
       mu_reg_poisson = 0.0,
       tau_reg_poisson = 0.0001
     ),
-
 
     multinomial = c(
       mu_reg_multinomial = 0.0,
@@ -472,15 +505,13 @@ default_hyperpars <- function() {
       tau_delta_ordinal = 0.0001
     ),
 
-
-
-    ranef = c(shape_diag_RinvD = 0.01,
-              rate_diag_RinvD = 0.001,
-              KinvD_expr = "nranef + 1.0"
+    ranef = c(
+      shape_diag_RinvD = 0.01,
+      rate_diag_RinvD = 0.001,
+      KinvD_expr = "nranef + 1.0"
     ),
 
-    surv = c(mu_reg_surv = 0.0,
-             tau_reg_surv = 0.001)
+    surv = c(mu_reg_surv = 0.0, tau_reg_surv = 0.001)
   )
 }
 
@@ -497,10 +528,11 @@ get_RinvD <- function(nranef, KinvD_expr = "nranef + 1.0", names) {
     list(
       RinvD = RinvD,
       KinvD = KinvD
-    ), names)
+    ),
+    names
+  )
 }
 
 get_invD_indep <- function(nranef, name) {
-  setNames(list(diag(as.numeric(rep(NA, nranef)))),
-           name)
+  setNames(list(diag(as.numeric(rep(NA, nranef)))), name)
 }

@@ -81,6 +81,21 @@ method for other types of objects)}
 
 \item{level}{confidence level (default is 0.95)}
 }
+\value{
+\code{summary()} returns an object of class
+\code{summary.JointAI}, a list with elements \code{call},
+\code{start}, \code{end} and \code{thin} (the iterations used),
+\code{nchain} (the number of chains used), \code{res} (a list with
+the posterior summaries per sub-model), \code{outcome},
+\code{missinfo} (the result of \code{\link{get_missinfo}()}, if
+\code{missinfo = TRUE}), \code{analysis_type} and \code{size}
+(the number of observations per level).
+
+\code{coef()} returns a list with one named vector of posterior means per
+sub-model, \code{confint()} a list with one matrix of posterior quantiles
+per sub-model. The \code{print()} methods are called for their side effect
+and return \code{x} invisibly (\code{print.Dmat}: \code{NULL}).
+}
 \description{
 Obtain and print the \code{summary}, (fixed effects) coefficients
 (\code{coef}) and credible interval (\code{confint}) for an object of

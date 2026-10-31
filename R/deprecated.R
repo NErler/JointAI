@@ -362,6 +362,10 @@ melt_data.frame <- function(
 #'
 #' @param x a character string or vector of character strings
 #'
+#' @return A character vector of the same length as \code{x}, in which
+#'         survival outcomes (\code{"Surv(...)"}) are replaced by valid
+#'         variable names; other values are returned unchanged.
+#'
 #' @export
 clean_survname <- function(x) {
   warning(

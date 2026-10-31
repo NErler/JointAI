@@ -4,6 +4,14 @@
 #' (uses \code{\link[coda]{gelman.diag}} from package \strong{coda}).
 #' @inheritParams coda::gelman.diag
 #' @inheritParams summary.JointAI
+#' @return An object of class \code{gelman.diag} (see
+#'         \code{\link[coda]{gelman.diag}}): a list with elements \code{psrf},
+#'         a matrix with the point estimate and upper confidence limit of the
+#'         potential scale reduction factor for each selected parameter, and
+#'         \code{mpsrf}, the multivariate potential scale reduction factor
+#'         (\code{NULL} unless \code{multivariate = TRUE} and more than one
+#'         parameter is selected).
+#'
 #' @references
 #' Gelman, A and Rubin, DB (1992) Inference from iterative simulation using
 #' multiple sequences, \emph{Statistical Science}, \strong{7}, 457-511.
