@@ -237,6 +237,11 @@
   [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)),
   “run 10” came before “run 2”. The runs are now kept in their numeric
   order.
+- When
+  [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
+  failed while re-creating the JAGS model (e.g., because of invalid
+  parameter values), the console output stayed redirected to a temporary
+  file, so that the error message and all later output were not shown.
 
 ## JointAI 1.1.0
 

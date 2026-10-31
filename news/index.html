@@ -101,6 +101,7 @@
 <code>sum_duration(by = "run")</code>: for models run in parallel, the duration per run was the longest chain over the adaptive and sampling phase together, instead of the sum of the longest chain per phase, so that the runs did not add up to the total duration.</li>
 <li>
 <code><a href="../reference/sum_duration.html">sum_duration()</a></code> sorted the runs as text, so that with ten or more runs (e.g., after repeated <code><a href="../reference/add_samples.html">add_samples()</a></code>), “run 10” came before “run 2”. The runs are now kept in their numeric order.</li>
+<li>When <code><a href="../reference/add_samples.html">add_samples()</a></code> failed while re-creating the JAGS model (e.g., because of invalid parameter values), the console output stayed redirected to a temporary file, so that the error message and all later output were not shown.</li>
 </ul></div>
 </div>
     <div class="section level2">
