@@ -2,7 +2,7 @@ library("JointAI")
 
 cat("ON CRAN:", testthat:::on_cran(), "\n")
 
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+if (run_slow_tests()) {
   set_seed(1234)
   wideDF <- JointAI::wideDF
 
@@ -596,26 +596,26 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 }
 
 test_that("models run", {
-  skip_on_cran()
+  skip_if_not_slow()
   for (k in seq_along(models)) {
     expect_s3_class(models[[k]], "JointAI")
   }
 })
 
 test_that("there are no duplicate betas/alphas in the jagsmodel", {
-  skip_on_cran()
+  skip_if_not_slow()
   expect_null(unlist(lapply(models, find_dupl_parms)))
 })
 
 test_that("MCMC is mcmc.list", {
-  skip_on_cran()
+  skip_if_not_slow()
   for (i in seq_along(models)) {
     expect_s3_class(models[[i]]$MCMC, "mcmc.list")
   }
 })
 
 test_that("MCMC samples can be plottet", {
-  skip_on_cran()
+  skip_if_not_slow()
   for (k in seq_along(models)) {
     expect_silent(traceplot(models[[k]]))
     expect_silent(densplot(models[[k]]))
@@ -624,23 +624,23 @@ test_that("MCMC samples can be plottet", {
 })
 
 test_that("data_list remains the same", {
-  skip_on_cran()
+  skip_if_not_slow()
   expect_snapshot(lapply(models, "[[", "data_list"))
 })
 
 test_that("jagsmodel remains the same", {
-  skip_on_cran()
+  skip_if_not_slow()
   expect_snapshot(lapply(models, "[[", "jagsmodel"))
 })
 
 test_that("GRcrit and MCerror give same result", {
-  skip_on_cran()
+  skip_if_not_slow()
   expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
   expect_snapshot(lapply(models0, MC_error))
 })
 
 test_that("summary output remained the same", {
-  skip_on_cran()
+  skip_if_not_slow()
   expect_snapshot(lapply(models0, print))
   expect_snapshot(lapply(models0, coef))
   expect_snapshot(lapply(models0, confint))
@@ -649,7 +649,7 @@ test_that("summary output remained the same", {
 })
 
 test_that("prediction works", {
-  skip_on_cran()
+  skip_if_not_slow()
   for (k in seq_along(models)) {
     expect_s3_class(
       predict(models[[k]], type = "link", warn = FALSE)$fitted,
@@ -674,7 +674,7 @@ test_that("prediction works", {
 })
 
 test_that("residuals", {
-  skip_on_cran()
+  skip_if_not_slow()
   for (k in seq_along(models)[9:20]) {
     expect_type(residuals(models[[k]], type = "response"), "double")
 
@@ -690,7 +690,7 @@ test_that("residuals", {
 })
 
 test_that("model can be plottet", {
-  skip_on_cran()
+  skip_if_not_slow()
   for (i in seq_along(models)) {
     if (models[[i]]$analysis_type %in% c("lognorm", "beta")) {
       expect_error(plot(models[[i]]))
@@ -701,7 +701,7 @@ test_that("model can be plottet", {
 })
 
 test_that("wrong models give errors", {
-  skip_on_cran()
+  skip_if_not_slow()
   # cauchit link is not implemented
   expect_error(glm_imp(
     B1 ~ 1,
