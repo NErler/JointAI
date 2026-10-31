@@ -33,14 +33,19 @@
 #' md_pattern(wideDF)
 #' par(op)
 #'
-md_pattern <- function(data, color = c(grDevices::grey(0.1),
-                                       grDevices::grey(0.7)),
-                       border = grDevices::grey(0.5),
-                       plot = TRUE, pattern = FALSE, print_xaxis = TRUE,
-                       ylab = 'Number of observations per pattern',
-                       print_yaxis = TRUE, legend.position = 'bottom',
-                       sort_columns = TRUE, ...) {
-
+md_pattern <- function(
+  data,
+  color = c(grDevices::grey(0.1), grDevices::grey(0.7)),
+  border = grDevices::grey(0.5),
+  plot = TRUE,
+  pattern = FALSE,
+  print_xaxis = TRUE,
+  ylab = 'Number of observations per pattern',
+  print_yaxis = TRUE,
+  legend.position = 'bottom',
+  sort_columns = TRUE,
+  ...
+) {
   naX <- ifelse(is.na(data), 0, 1)
   unaX <- unique(naX)
 
@@ -66,43 +71,63 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   }
   colnames(unaX) <- seq_len(ncol(unaX))
 
-
   if (plot) {
-    if (!requireNamespace('ggplot2', quietly = TRUE))
+    if (!requireNamespace('ggplot2', quietly = TRUE)) {
       errormsg("This function requires the 'ggplot2' package to be installed.")
+    }
 
     if (print_yaxis == FALSE) {
       ylab <- ''
     }
 
-    p <- ggplot2::ggplot(melt_matrix(unaX),
-                         ggplot2::aes(as.numeric(.data$V2),
-                                      as.numeric(.data$V1),
-                                      fill = as.character(.data$value))) +
+    p <- ggplot2::ggplot(
+      melt_matrix(unaX),
+      ggplot2::aes(
+        as.numeric(.data$V2),
+        as.numeric(.data$V1),
+        fill = as.character(.data$value)
+      )
+    ) +
       ggplot2::geom_tile(color = border) +
-      ggplot2::scale_y_continuous(position = 'right',
-                         breaks = rev(seq_len(length(Npat))),
-                         labels = if (print_yaxis)
-                           Npat else rep('', length(Npat)),
-                         expand = c(0,0)) +
-      ggplot2::scale_x_continuous(position = 'top',
-                         breaks = seq_len(ncol(unaX)),
-                         labels = vars,
-                         sec.axis = if (print_xaxis)
-                           ggplot2::sec_axis(~.,
-                                    name = 'Number of missing values',
-                                    breaks = seq_len(ncol(unaX)),
-                                    labels = Nmis) else ggplot2::waiver(),
-                         expand = c(0, 0)) +
-      ggplot2::scale_fill_manual(name = '',
-                        limits = c("1", "0"),
-                        values = color,
-                        labels = c('observed', 'missing')) +
-      ggplot2::theme(legend.position = legend.position,
-            panel.background = ggplot2::element_blank(),
-            panel.grid = ggplot2::element_blank(),
-            axis.ticks = ggplot2::element_blank(),
-            axis.text.x.top = ggplot2::element_text(angle = -90, hjust = 1)) +
+      ggplot2::scale_y_continuous(
+        position = 'right',
+        breaks = rev(seq_len(length(Npat))),
+        labels = if (print_yaxis) {
+          Npat
+        } else {
+          rep('', length(Npat))
+        },
+        expand = c(0, 0)
+      ) +
+      ggplot2::scale_x_continuous(
+        position = 'top',
+        breaks = seq_len(ncol(unaX)),
+        labels = vars,
+        sec.axis = if (print_xaxis) {
+          ggplot2::sec_axis(
+            ~.,
+            name = 'Number of missing values',
+            breaks = seq_len(ncol(unaX)),
+            labels = Nmis
+          )
+        } else {
+          ggplot2::waiver()
+        },
+        expand = c(0, 0)
+      ) +
+      ggplot2::scale_fill_manual(
+        name = '',
+        limits = c("1", "0"),
+        values = color,
+        labels = c('observed', 'missing')
+      ) +
+      ggplot2::theme(
+        legend.position = legend.position,
+        panel.background = ggplot2::element_blank(),
+        panel.grid = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank(),
+        axis.text.x.top = ggplot2::element_text(angle = -90, hjust = 1)
+      ) +
       ggplot2::ylab(ylab) +
       ggplot2::xlab('')
     # print(p)
@@ -111,8 +136,7 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   if (pattern) {
     rownames(unaX) <- seq_len(nrow(unaX))
     colnames(unaX) <- vars
-    md_pat <- rbind(cbind(unaX, Npat = Npat),
-                    Nmis = c(Nmis, sum(Nmis)))
+    md_pat <- rbind(cbind(unaX, Npat = Npat), Nmis = c(Nmis, sum(Nmis)))
   }
 
   if (plot & pattern) {
