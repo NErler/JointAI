@@ -11,20 +11,9 @@ fixture_names <- names(fixture_cases())
 
 # parameters() -----------------------------------------------------------------
 
-# glm_binomial, mlogit: only regression coefficients are monitored, and
-# parameters() then also lists the coefficients of the covariate models, which
-# are not monitored (recorded in dev/STATUS.md as a possible bug).
-for (k in setdiff(fixture_names, c("glm_binomial", "mlogit"))) {
+# glm_binomial, mlogit: only regression coefficients are monitored
+for (k in fixture_names) {
   test_that(paste("parameters() lists exactly the monitored nodes:", k), {
-    object <- fixture_load(k)
-    params <- parameters(object, mess = FALSE)
-    expect_false(anyDuplicated(params$coef) > 0)
-    expect_setequal(params$coef, colnames(object$MCMC[[1L]]))
-  })
-}
-
-for (k in c("glm_binomial", "mlogit")) {
-  test_that(paste("parameters() lists only monitored coefficients:", k), {
     object <- fixture_load(k)
     params <- parameters(object, mess = FALSE)
     expect_false(anyDuplicated(params$coef) > 0)
