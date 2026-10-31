@@ -112,8 +112,11 @@ range from as few as 100 to several million.
 Convergence can, for instance, be evaluated visually using a
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
 or using the Gelman-Rubin diagnostic criterion^[
-Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive assessment
-of model fitness via realized discrepancies. Statistica Sinica, 733-760.]
+Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation using
+multiple sequences. Statistical Science, 7(4), 457-472;
+Brooks, S. P., & Gelman, A. (1998). General methods for monitoring convergence
+of iterative simulations. Journal of Computational and Graphical Statistics,
+7(4), 434-455.]
 (implemented in [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html),
 but also returned with the model summary).
 The latter compares within and between chain variability and requires the
@@ -403,7 +406,7 @@ cat(paste0(
 
 
 `RinvD_bmi_ID` refers to the scale matrix in the Wishart prior for the
-inverse of the random effects design matrix `D_bmi_ID`.
+inverse of the random effects covariance matrix `D_bmi_ID`.
 To distinguish random effects of different models and grouping levels, the
 names always end with `..._<response>_<level>`.
 
@@ -453,7 +456,7 @@ called and remains in place until it is overwritten.
 
 To re-set to sequential evaluation,
 ```{r, eval = FALSE}
-future::plan(future::sequential())
+future::plan(future::sequential)
 ```
 
 can be used.

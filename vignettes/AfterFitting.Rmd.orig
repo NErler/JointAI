@@ -94,7 +94,7 @@ The posterior distributions can also be visualized using the function
 [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.html),
 which plots the empirical density per node per chain, or combining chains
 (when `joined = TRUE`).
-```{r dens13a, echo = F, eval = F, fig.width = 7, fig.height = 3.5, out.width = '100%'}
+```{r dens13a, fig.width = 7, fig.height = 3.5, out.width = '100%'}
 densplot(mod13a, joined = TRUE, ncol = 3)
 ```
 
@@ -312,12 +312,14 @@ plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 
 ## Subset of output {#sec:subset}
 By default, the functions `traceplot()`, `densplot()`, `summary()`,
-`GR_crit()`, `MC_Error()` and `predict()`
+`GR_crit()` and `MC_error()`
 use all iterations of the MCMC sample and consider
 only the parameters of the analysis model (if they were monitored).
 In this section, we describe how the
 set of iterations and parameters to display can be changed using the
-arguments `subset`, `start`, `end`, `thin` and `exclude_chains`.
+arguments `subset`, `start`, `end`, `thin` and `exclude_chains`
+(`predict()` also has the arguments `start`, `end`, `thin` and
+`exclude_chains`, but not `subset`).
 
 ### Subset of parameters
 As long as the main parameters have been monitored in a `JointAI` object, only
@@ -371,9 +373,9 @@ mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 ```
 ```{r ri, fig.height = 5.5}
 # extract random intercepts
-ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
+ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = TRUE)
 
-# to plot the chains of 12 randomly selected random intercepts and slopes:
+# to plot the chains of 12 randomly selected random intercepts:
 traceplot(mod13e, subset = list(analysis_main = FALSE,
                                 other = sample(ri, size = 12)), ncol = 4)
 ```
@@ -386,7 +388,7 @@ select which iterations from the MCMC sample are included in the summary.
 `thin` the thinning interval. Specification of `start`, thus, allows discarding
 a "burn-in", i.e., the iterations before the MCMC chain had converged.
 
-If a particular chain does not have converged it can be excluded from the
+If a particular chain has not converged it can be excluded from the
 summary or plot using the argument `exclude_chains`. This argument takes a
 numeric vector identifying chains to be excluded, for example:
 
@@ -416,7 +418,7 @@ credible intervals from `JointAI` objects. Note that for mixed
 models, currently, only marginal prediction but not prediction conditional on
 the random effects is implemented.
 
-A dataset containing data which the prediction should be performed is specified
+A dataset containing the data for which the prediction should be performed is specified
 via the argument `newdata`. If no `newdata` is given, the original data from the
 JointAI object are used.
 The argument `quantiles` allows the specification of the
@@ -432,9 +434,12 @@ options(width = 70)
 predict(mod13a, newdata = NHANES[27, ])
 ```
 
-`predict()` returns a list with elements `dat`, `fit` and `quantiles`,
-containing `newdata` with the predicted values and quantiles appended,
-the predicted values and quantiles that form the credible interval.
+`predict()` returns a list with elements `newdata` and `fitted`:
+`newdata` with the predicted values (column `fit`) and the quantiles that form
+the credible interval appended, and a `data.frame` containing only the
+predicted values and quantiles.
+With `return_sample = TRUE`, the list also contains the element `sample`, the
+predicted values for each iteration of the MCMC sample.
 
 ### Prediction to visualize non-linear effects
 Another reason to obtain predicted values is the visualization of non-linear
@@ -449,7 +454,7 @@ all other continuous and categorical variables.
 
 ```{r predplot, fig.width = 7, fig.height = 4.5, out.width = '90%'}
 # create dataset for prediction
-newDF <- predDF(mod13b, var = ~ age)
+newDF <- predDF(mod13b, vars = ~ age)
 
 # obtain predicted values
 pred <- predict(mod13b, newdata = newDF)
@@ -466,7 +471,7 @@ variables:
 
 ```{r predplotgg, fig.width = 7, fig.height = 4.5, out.width = '90%'}
 # create dataset for prediction
-newDF <- predDF(mod13b, var = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
+newDF <- predDF(mod13b, vars = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
 
 # obtain predicted values
 pred <- predict(mod13b, newdata = newDF)
@@ -477,7 +482,7 @@ library(ggplot2)
 ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
                          fill = factor(HEIGHT_M))) +
   geom_ribbon(aes(ymin = `2.5%`, ymax = `97.5%`), alpha = 0.3) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   facet_wrap('ETHN') +
   theme(legend.position = 'top',
         panel.grid = element_blank()) +
@@ -526,7 +531,7 @@ impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 
 The function `plot_imp_distr()` allows us to visually compare the distribution
 of the observed and imputed values.
-```{r plotimpdistr, fig.width = 7, fig.height = 2.5, out.width = '100%', error = TRUE}
+```{r plotimpdistr, fig.width = 7, fig.height = 2.5, out.width = '100%'}
 plot_imp_distr(impDF, nrow = 1)
 ```
 
