@@ -702,8 +702,9 @@ check_data <- function(data, fixed, random, auxvars, timevar, mess, warn) {
     warn = warn
   )
 
-  # convert variable with 2 different values (continuous, character or logical)
-  # to factors
+  # convert variables with 2 different values (continuous or logical) to
+  # factors (character variables, apart from grouping variables, were already
+  # rejected by check_classes())
   data <- convert_variables(
     data = data,
     allvars = all_vars(fixed, random, auxvars),
