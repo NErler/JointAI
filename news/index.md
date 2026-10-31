@@ -67,6 +67,11 @@
   iterations of a chain (that of the first iteration), so that
   [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
   was `Inf` ([\#67](https://github.com/nerler/JointAI/issues/67)).
+- [`extract_state()`](https://nerler.github.io/JointAI/reference/extract_state.md)
+  failed with an unclear error (“\$ operator is invalid for atomic
+  vectors”) for models that do not contain the JAGS model (fitted with
+  `n.adapt = 0`). It now gives an informative error, as it does for
+  objects that are not of class `JointAI`.
 - With scaled covariates (the default), the coefficients of mixed models
   with an interaction between a covariate of a higher level (e.g., a
   baseline variable) and a variable with a random slope, e.g.,
