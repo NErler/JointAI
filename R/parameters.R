@@ -132,7 +132,7 @@ parameters <- function(
 
     rbind(coefs[rows, , drop = FALSE], add_df)
   } else {
-    coefs
+    coefs[rows, , drop = FALSE]
   }
 
   rownames(params) <- NULL

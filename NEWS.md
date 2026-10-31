@@ -152,6 +152,9 @@
   data scale; `plot(MC_error(...), data_scale = FALSE)` labelled the nodes
   wrongly or failed. Without the scaled sample, it now gives an informative
   error.
+* `parameters()` listed the regression coefficients of all models when all
+  monitored parameters were regression coefficients (e.g., only `beta`
+  monitored), also those of models that were not monitored.
 
 # JointAI 1.1.0
 
