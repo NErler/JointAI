@@ -84,6 +84,7 @@
 <li>Ordinal outcomes that were modelled with their own formula, but not as the first formula in the list (e.g., <code>stage ~ age + (1 | id)</code> in <code><a href="../reference/model_imp.html">JM_imp()</a></code>, or <code>lm_imp(list(y ~ ..., O2 ~ ...))</code>), had an intercept in addition to the thresholds, so that the model was not identified (<a href="https://github.com/nerler/JointAI/issues/71" class="external-link">#71</a>). This was introduced in version 1.1.0.</li>
 <li>
 <code><a href="../reference/MC_error.html">MC_error()</a></code>: the Monte Carlo error on the sampling scale (models fitted with <code>keep_scaled_mcmc = TRUE</code>) is now calculated for the selected nodes (<code>subset</code>) instead of all monitored nodes, with the same names as on the data scale; <code>plot(MC_error(...), data_scale = FALSE)</code> labelled the nodes wrongly or failed. Without the scaled sample, it now gives an informative error.</li>
+<li>A variable whose name was equal to the name of a dummy variable of a factor in the model (e.g., a variable <code>B11</code> and the dummy of level <code>1</code> of a factor <code>B1</code>), or two factors with dummy variables of the same name, were merged into one variable, without error or warning. Model fitting now stops with an informative error (<a href="https://github.com/nerler/JointAI/issues/75" class="external-link">#75</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
