@@ -19,6 +19,15 @@
 #'                    values? (default is `TRUE`)
 #' @param ... optional additional parameters, currently not used
 #'
+#' @return With \code{plot = TRUE} and \code{pattern = FALSE} (default) a
+#'         \code{ggplot} object. With \code{pattern = TRUE} and
+#'         \code{plot = FALSE} a matrix with one row per missing data pattern
+#'         (\code{1}: observed, \code{0}: missing), the column \code{Npat}
+#'         (number of observations with this pattern), and the last row
+#'         \code{Nmis} (number of missing values per variable, and in total).
+#'         With both set to \code{TRUE} a list with elements \code{plot} and
+#'         \code{pattern}; with both \code{FALSE}, \code{NULL}.
+#'
 #' @seealso See the vignette
 #' \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' for more examples.

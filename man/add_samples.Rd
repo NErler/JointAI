@@ -35,6 +35,12 @@ display a progress bar.}
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}.}
 }
+\value{
+An object of class 'JointAI': \code{object} with the MCMC sample
+extended by the new iterations (\code{add = TRUE}) or replaced by
+them (\code{add = FALSE}), and with updated MCMC settings and
+computational time.
+}
 \description{
 This function continues the sampling from the MCMC chains of an existing
 object of class 'JointAI'.\cr

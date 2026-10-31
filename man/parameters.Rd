@@ -20,6 +20,17 @@ vectors/matrices be shown separately?}
 
 \item{...}{currently not used}
 }
+\value{
+A \code{data.frame} with one row per monitored node and columns
+\code{outcome} (the outcome of the sub-model the parameter belongs
+to), \code{outcat} (the outcome category, for multinomial models
+and non-proportional effects in ordinal models; otherwise
+\code{NA}), \code{varname} (for regression coefficients: the name
+of the corresponding covariate or design matrix column) and
+\code{coef} (the name of the node in the JAGS model). For nodes that
+do not belong to a sub-model, e.g., imputed values, \code{outcome},
+\code{outcat} and \code{varname} are \code{NA}.
+}
 \description{
 Returns the names of the parameters/nodes of an object of class 'JointAI' for
 which a monitor is set.

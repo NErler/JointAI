@@ -13,6 +13,11 @@
 #'                 \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
 #'                 to change the facet labels
 #' @inheritParams traceplot
+#' @return A \code{ggplot} object combining the plots of all variables with
+#'         imputed values (created with \code{ggpubr::ggarrange()}), or
+#'         \code{NULL} (with a message) when the packages \strong{ggplot2} or
+#'         \strong{ggpubr} are not installed.
+#'
 #' @export
 #'
 #' @examples

@@ -19,6 +19,12 @@ set_refcat(data, formula, covars, auxvars = NULL)
 \code{data} that should be considered additionally to the
 columns occurring in the \code{formula}}
 }
+\value{
+Invisibly, the value to be passed to the argument \code{refcats}:
+either one of \code{"first"}, \code{"last"} or \code{"largest"},
+or a named numeric vector with the index of the reference category
+of each categorical variable.
+}
 \description{
 The function is a helper function that asks questions and, depending on the
 answers given by the user,

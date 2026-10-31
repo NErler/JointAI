@@ -3,6 +3,9 @@
 #' @param x object inheriting from class 'JointAI'
 #' @param ... currently not used
 #'
+#' @return Called for its side effect: a plot of the residuals against the
+#'         fitted values is drawn and \code{NULL} is returned invisibly.
+#'
 #' @note
 #' Currently, \code{plot()} can only be used with (generalized) linear (mixed)
 #' models.

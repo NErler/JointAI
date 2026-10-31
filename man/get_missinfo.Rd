@@ -9,11 +9,24 @@ get_missinfo(object)
 \arguments{
 \item{object}{object inheriting from class JointAI}
 }
+\value{
+A list with two elements:
+\describe{
+\item{\code{complete_cases}}{a \code{data.frame} with one row per level
+and columns \code{#} (number of complete cases) and \code{\%}
+(proportion of complete cases in percent);}
+\item{\code{miss_list}}{a list with one \code{data.frame} per level,
+with one row per variable and columns \code{# NA} (number of
+missing values) and \code{\% NA} (proportion of missing values in
+percent).}
+}
+In multi-level settings, the \code{data.frame}s have an additional
+column \code{level}.
+}
 \description{
-This function returns a \code{data.frame} or a \code{list} of
-\code{data.frame}s per grouping level. Each of the \code{data.frames}
-has columns \code{variable}, \code{#NA} (number of missing values) and
-\code{\%NA} (proportion of missing values in percent).
+This function returns the number and proportion of complete cases, and of
+missing values per variable, in the data used in the model, separately
+per level of the data.
 }
 \examples{
 mod <-  lm_imp(y ~ C1 + B2 + C2, data = wideDF, n.iter = 100)

@@ -11,6 +11,10 @@
 
 \item{...}{currently not used}
 }
+\value{
+Called for its side effect: a plot of the residuals against the
+fitted values is drawn and \code{NULL} is returned invisibly.
+}
 \description{
 Plot an object object inheriting from class 'JointAI'
 }

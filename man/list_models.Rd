@@ -25,6 +25,10 @@ be printed? (default is \code{TRUE})}
 \item{refcat}{logical; should information on the reference category be
 printed? (default is \code{TRUE})}
 }
+\value{
+Called for its side effect: the information is printed and
+\code{NULL} is returned invisibly.
+}
 \description{
 This function prints information on all models, those explicitly specified
 by the user and those specified automatically by JointAI for (incomplete)

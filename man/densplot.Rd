@@ -66,6 +66,11 @@ graphics?}
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}.}
 }
+\value{
+With \code{use_ggplot = TRUE} (only for objects of class
+'JointAI') a \code{ggplot} object. Otherwise, the plots are drawn
+with base graphics and \code{NULL} is returned invisibly.
+}
 \description{
 The function plots a set of densities (per chain and coefficient) from
 the MCMC sample of an object of class "JointAI".

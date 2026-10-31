@@ -81,6 +81,12 @@ get_D_names <- function(params, varname, lvls) {
 #' @param outcome optional; vector of integers giving the indices of the
 #'                outcomes for which the random effects variance-covariance
 #'                matrix/matrices should be returned.
+#' @return A list with one element per selected outcome (sub-model), each a
+#'         list with one matrix per grouping level: the posterior mean of the
+#'         variance-covariance matrix of the random effects, with rows and
+#'         columns named by the random effects. When only one outcome is
+#'         selected, the list for this outcome is returned directly.
+#'
 #' @export
 rd_vcov <- function(
   object,

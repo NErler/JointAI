@@ -433,6 +433,9 @@ get_data_list <- function(
 #' \code{tau_reg_surv} \tab precision in the priors for regression coefficients
 #' }
 #'
+#' @return A named list with one named vector of hyper-parameters per type of
+#'         model (the elements described above).
+#'
 #' @note
 #' \strong{From the
 #' \href{https://sourceforge.net/projects/mcmc-jags/files/Manuals/}{JAGS user

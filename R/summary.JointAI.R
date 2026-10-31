@@ -34,6 +34,20 @@
 #'                 missing values be included in the summary?
 #' @param \dots currently not used
 #'
+#' @return \code{summary()} returns an object of class
+#'         \code{summary.JointAI}, a list with elements \code{call},
+#'         \code{start}, \code{end} and \code{thin} (the iterations used),
+#'         \code{nchain} (the number of chains used), \code{res} (a list with
+#'         the posterior summaries per sub-model), \code{outcome},
+#'         \code{missinfo} (the result of \code{\link{get_missinfo}()}, if
+#'         \code{missinfo = TRUE}), \code{analysis_type} and \code{size}
+#'         (the number of observations per level).
+#'
+#' \code{coef()} returns a list with one named vector of posterior means per
+#' sub-model, \code{confint()} a list with one matrix of posterior quantiles
+#' per sub-model. The \code{print()} methods are called for their side effect
+#' and return \code{x} invisibly (\code{print.Dmat}: \code{NULL}).
+#'
 #' @examples
 #'
 #' \dontrun{
@@ -943,12 +957,24 @@ print.modelstring <- function(x, ...) {
 
 #' Obtain a summary of the missing values involved in an object of class JointAI
 #'
-#' This function returns a \code{data.frame} or a \code{list} of
-#' \code{data.frame}s per grouping level. Each of the \code{data.frames}
-#' has columns \code{variable}, \code{#NA} (number of missing values) and
-#' \code{%NA} (proportion of missing values in percent).
+#' This function returns the number and proportion of complete cases, and of
+#' missing values per variable, in the data used in the model, separately
+#' per level of the data.
 #'
 #' @param object object inheriting from class JointAI
+#'
+#' @return A list with two elements:
+#' \describe{
+#'   \item{\code{complete_cases}}{a \code{data.frame} with one row per level
+#'         and columns \code{#} (number of complete cases) and \code{\%}
+#'         (proportion of complete cases in percent);}
+#'   \item{\code{miss_list}}{a list with one \code{data.frame} per level,
+#'         with one row per variable and columns \code{# NA} (number of
+#'         missing values) and \code{\% NA} (proportion of missing values in
+#'         percent).}
+#' }
+#' In multi-level settings, the \code{data.frame}s have an additional
+#' column \code{level}.
 #'
 #' @export
 #'

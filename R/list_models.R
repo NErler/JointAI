@@ -17,6 +17,9 @@
 #' @param refcat logical; should information on the reference category be
 #'               printed? (default is \code{TRUE})
 #'
+#' @return Called for its side effect: the information is printed and
+#'         \code{NULL} is returned invisibly.
+#'
 #' @section Note:
 #' The models listed by this function are not the actual imputation models,
 #' but the conditional models that are part of the specification of the joint

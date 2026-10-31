@@ -56,6 +56,15 @@ iteration.}
 
 \item{...}{currently not used}
 }
+\value{
+An object of class \code{gelman.diag} (see
+\code{\link[coda]{gelman.diag}}): a list with elements \code{psrf},
+a matrix with the point estimate and upper confidence limit of the
+potential scale reduction factor for each selected parameter, and
+\code{mpsrf}, the multivariate potential scale reduction factor
+(\code{NULL} unless \code{multivariate = TRUE} and more than one
+parameter is selected).
+}
 \description{
 Calculates the Gelman-Rubin criterion for convergence
 (uses \code{\link[coda]{gelman.diag}} from package \strong{coda}).

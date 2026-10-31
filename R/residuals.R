@@ -5,6 +5,9 @@
 #'             \code{"working"}
 #' @param ... currently not used
 #'
+#' @return A numeric vector of residuals, or, for models with more than one
+#'         model formula, a list with one such vector per outcome.
+#'
 #' @section Note:
 #' \itemize{
 #' \item For mixed models residuals are currently calculated using the fixed

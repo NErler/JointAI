@@ -133,6 +133,11 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
 #'                \code{data} that should be considered additionally to the
 #'                columns occurring in the \code{formula}
 #'
+#' @return Invisibly, the value to be passed to the argument \code{refcats}:
+#'         either one of \code{"first"}, \code{"last"} or \code{"largest"},
+#'         or a named numeric vector with the index of the reference category
+#'         of each categorical variable.
+#'
 #' @examples
 #' \dontrun{
 #' # Example 1: set reference categories for the whole dataset and choose

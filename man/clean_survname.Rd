@@ -9,6 +9,11 @@ clean_survname(x)
 \arguments{
 \item{x}{a character string or vector of character strings}
 }
+\value{
+A character vector of the same length as \code{x}, in which
+survival outcomes (\code{"Surv(...)"}) are replaced by valid
+variable names; other values are returned unchanged.
+}
 \description{
 A helper function that converts the "name of a survival model"
 (the \code{"Surv(time, status)"} specification) into a valid variable name
