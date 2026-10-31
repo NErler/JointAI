@@ -85,6 +85,8 @@
 <li>
 <code><a href="../reference/MC_error.html">MC_error()</a></code>: the Monte Carlo error on the sampling scale (models fitted with <code>keep_scaled_mcmc = TRUE</code>) is now calculated for the selected nodes (<code>subset</code>) instead of all monitored nodes, with the same names as on the data scale; <code>plot(MC_error(...), data_scale = FALSE)</code> labelled the nodes wrongly or failed. Without the scaled sample, it now gives an informative error.</li>
 <li>A variable whose name was equal to the name of a dummy variable of a factor in the model (e.g., a variable <code>B11</code> and the dummy of level <code>1</code> of a factor <code>B1</code>), or two factors with dummy variables of the same name, were merged into one variable, without error or warning. Model fitting now stops with an informative error (<a href="https://github.com/nerler/JointAI/issues/75" class="external-link">#75</a>).</li>
+<li>
+<code><a href="../reference/parameters.html">parameters()</a></code> listed the regression coefficients of all models when all monitored parameters were regression coefficients (e.g., only <code>beta</code> monitored), also those of models that were not monitored.</li>
 </ul></div>
 </div>
     <div class="section level2">

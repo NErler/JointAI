@@ -200,6 +200,10 @@
   name, were merged into one variable, without error or warning. Model
   fitting now stops with an informative error
   ([\#75](https://github.com/nerler/JointAI/issues/75)).
+- [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
+  listed the regression coefficients of all models when all monitored
+  parameters were regression coefficients (e.g., only `beta` monitored),
+  also those of models that were not monitored.
 
 ## JointAI 1.1.0
 
