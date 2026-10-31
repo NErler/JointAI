@@ -894,7 +894,8 @@ paste_linpred_jm <- function(
   assoc_type,
   covnames,
   isgk = FALSE,
-  trafo = NULL
+  trafo = NULL,
+  interactions = NULL
 ) {
   # - varname: name of the survival outcome
   # - parname: name of the parameter, e.g. "beta"
@@ -913,6 +914,53 @@ paste_linpred_jm <- function(
   # - covnames: names of the time-varying covariates
   # - isgk: logical; indicating if the output is used inside the GK-quadrature
   #         part
+  # - trafo: information on transformations (Mlist$fcts_all)
+  # - interactions: NULL or a list of the interaction terms among the columns
+  #                 (info$jm_interactions, only in joint models with such
+  #                 interactions); then each column is written by
+  #                 paste_jm_column() and an interaction column as the product
+  #                 of its elements
+
+  if (!is.null(interactions)) {
+    terms <- character(length(cols))
+    for (i in seq_along(cols)) {
+      colname <- names(cols)[i]
+      terms[i] <- if (colname %in% names(interactions)) {
+        paste_jm_interaction(
+          inter = interactions[[colname]],
+          varname = varname,
+          matnam = matnam,
+          index = index,
+          assoc_type = assoc_type,
+          trafo = trafo,
+          isgk = isgk
+        )
+      } else {
+        paste_jm_column(
+          colname = colname,
+          column = cols[[i]],
+          varname = varname,
+          matnam = matnam,
+          index = index,
+          assoc_type = assoc_type,
+          trafo = trafo,
+          isgk = isgk
+        )
+      }
+    }
+
+    return(paste(
+      paste_scaling(
+        x = terms,
+        rows = cols,
+        scale_pars = list(scale_pars)[rep(1, length(cols))],
+        scalemat = rep(paste0("sp", matnam), length(cols))
+      ),
+      paste_coef(parname, parelmts),
+      sep = " * ",
+      collapse = " + "
+    ))
+  }
 
   # get vector of association structure strings
   pastedat <- paste_association(
@@ -957,6 +1005,109 @@ paste_linpred_jm <- function(
     sep = " * ",
     collapse = " + "
   )
+}
+
+
+# used in paste_linpred_jm()
+paste_jm_column <- function(
+  colname,
+  column,
+  varname,
+  matnam,
+  index,
+  assoc_type,
+  trafo,
+  isgk
+) {
+  # write the value of one time-varying column of the linear predictor of the
+  # survival part of a joint model (not an interaction term)
+  # - colname: name of the column, e.g., "chol", "log(chol)" or "day"
+  # - column: column number in the design matrix
+  # - varname: name of the survival outcome
+  # - matnam: name of the design matrix, e.g., "M_lvlone"
+  # - index: index of the survival level, e.g., "ii"
+  # - assoc_type: named vector of association types, with the column names
+  #               of the modelled time-varying covariates as names
+  # - trafo: information on transformations (Mlist$fcts_all)
+  # - isgk: logical: is the output for within the quadrature part?
+  #
+  # A column without association type (e.g., the time variable) has no model;
+  # its observed value is used (in the quadrature part, the value at the
+  # quadrature points, which is data).
+
+  covname <- replace_trafo(colname, trafo)
+  type <- if (colname %in% names(assoc_type)) {
+    assoc_type[[colname]]
+  } else {
+    "obs.value"
+  }
+
+  strng <- paste_association(
+    varname = varname,
+    covnames = covname,
+    matname = matnam,
+    index = index,
+    columns = column,
+    assoc_type = type,
+    isgk = isgk
+  )
+
+  # wrap in the transformation (as in paste_linpred_jm())
+  if (colname %in% names(assoc_type) && colname %in% trafo$colname) {
+    fct <- trafo$fct[trafo$colname == colname]
+    if (trafo$type[trafo$colname == colname] == "I") {
+      fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
+    }
+    strng <- gsub(pattern = covname, replacement = strng, x = fct)
+  }
+
+  unname(strng)
+}
+
+
+# used in paste_linpred_jm()
+paste_jm_interaction <- function(
+  inter,
+  varname,
+  matnam,
+  index,
+  assoc_type,
+  trafo,
+  isgk
+) {
+  # write an interaction term in the linear predictor of the survival part of a
+  # joint model as the product of its elements
+  # - inter: one element of Mlist$interactions (elements, and their matrices
+  #          and columns)
+  # - other arguments: see paste_jm_column()
+  #
+  # Elements in the time-varying design matrix (matnam) are written as in
+  # paste_jm_column(); elements on the level of the survival outcome as the
+  # value of that subject (no time dependence; imputed in JAGS if missing).
+
+  elmts <- attr(inter, "elements")
+  elmt_mats <- names(inter$elmts)
+  elmt_cols <- unname(inter$elmts)
+
+  factors <- character(length(elmts))
+  for (j in seq_along(elmts)) {
+    factors[j] <- if (elmt_mats[j] == matnam) {
+      paste_jm_column(
+        colname = elmts[j],
+        column = elmt_cols[j],
+        varname = varname,
+        matnam = matnam,
+        index = index,
+        assoc_type = assoc_type,
+        trafo = trafo,
+        isgk = isgk
+      )
+    } else {
+      paste0(elmt_mats[j], "[", index, ", ", elmt_cols[j], "]")
+    }
+  }
+
+  paste(factors, collapse = " * ")
 }
 
 

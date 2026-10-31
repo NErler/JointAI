@@ -177,6 +177,15 @@
   `B1`), or two factors with dummy variables of the same name, were merged
   into one variable, without error or warning. Model fitting now stops with
   an informative error (#75).
+* Joint models (`JM_imp()`) with an interaction of a time-varying covariate
+  in the survival part (e.g., `age * chol`, `sex * chol` or `chol:day`, with
+  `chol` modelled over time) wrote invalid JAGS code (e.g., `mu_age:chol`),
+  so that the model could not be fitted. Such an interaction is now the
+  product of its elements: the time-varying covariate as specified by its
+  association type, a baseline covariate with its value for the subject, and
+  the time variable with its value at the event time (or the quadrature
+  points). A covariate that is only part of an interaction now also gets an
+  association type.
 * `parameters()` listed the regression coefficients of all models when all
   monitored parameters were regression coefficients (e.g., only `beta`
   monitored), also those of models that were not monitored.

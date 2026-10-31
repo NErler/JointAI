@@ -233,6 +233,18 @@ get_model1_info <- function(
     )
   }
 
+  # * interactions with time-varying covariates -------------------------------
+  # interaction terms among the time-varying columns of the linear predictor of
+  # the survival part; in the JAGS model, they are written as the product of
+  # their elements (see paste_linpred_jm())
+  jm_interactions <- if (modeltype %in% "JM") {
+    get_jm_interactions(
+      lp_cols = lp[["M_lvlone"]],
+      interactions = Mlist$interactions,
+      surv_mat = resp_mat[2L]
+    )
+  }
+
   # Hierarchical centering -----------------------------------------------------
   hc_list <- get_hc_info(
     varname = k,
@@ -281,8 +293,16 @@ get_model1_info <- function(
   }
 
   assoc_type <- if (modeltype %in% "JM") {
-    covrs <- unique(unlist(lapply(
+    # columns of the linear predictor; interaction terms are replaced by their
+    # elements, so that a covariate that is only part of an interaction also
+    # gets an association type
+    lp_columns <- unique(unlist(lapply(
       names(unlist(unname(lp))),
+      replace_interaction,
+      Mlist$interactions
+    )))
+    covrs <- unique(unlist(lapply(
+      lp_columns,
       replace_dummy,
       Mlist$refs
     )))
@@ -304,7 +324,7 @@ get_model1_info <- function(
   }
 
   # collect all info ---------------------------------------------------------
-  list(
+  info <- list(
     varname = if (modeltype %in% c("survreg", "coxph", "JM")) {
       internal_clean_survname(k)
     } else {
@@ -344,6 +364,14 @@ get_model1_info <- function(
     N = Mlist$N,
     df_basehaz = Mlist$df_basehaz
   )
+
+  # only added when there are such interactions, so that the model info of
+  # all other models stays as it was
+  if (length(jm_interactions) > 0L) {
+    info$jm_interactions <- jm_interactions
+  }
+
+  info
 }
 
 
@@ -503,6 +531,44 @@ get_link <- function(model) {
       errormsg("I do not know the model type %s.", dQuote(model))
     )
   }
+}
+
+
+#' Interactions in the time-varying part of the survival model of a joint model
+#'
+#' Selects the interaction terms among the time-varying columns of the linear
+#' predictor of the survival part of a joint model, and checks that all their
+#' elements are on the level of the time-varying covariates or on the level of
+#' the survival outcome.
+#'
+#' @param lp_cols named integer vector: the columns of `M_lvlone` in the linear
+#'   predictor of the survival model (names are the column names).
+#' @param interactions list of interaction terms, as in `Mlist$interactions`
+#'   (output of `match_interaction()`).
+#' @param surv_mat name of the design matrix of the level of the survival
+#'   outcome, e.g., `"M_id"`.
+#'
+#' @returns A (possibly empty) named list: the elements of `interactions` that
+#'   are columns in `lp_cols`.
+#' @keywords internal
+get_jm_interactions <- function(lp_cols, interactions, surv_mat) {
+  jm_interactions <- interactions[
+    intersect(names(lp_cols), names(interactions))
+  ]
+
+  for (inter in jm_interactions) {
+    elmt_mats <- names(inter$elmts)
+    if (!all(elmt_mats %in% c("M_lvlone", surv_mat))) {
+      errormsg(
+        "The interaction %s in the survival part of the joint model involves
+        a variable from a level above the level of the survival outcome. This
+        is not possible.",
+        dQuote(attr(inter, "interaction"))
+      )
+    }
+  }
+
+  jm_interactions
 }
 
 

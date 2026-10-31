@@ -568,7 +568,8 @@ jagsmodel_jm <- function(info) {
             info$fcts_all
           ),
           trafo = info$fcts_all,
-          isgk = FALSE
+          isgk = FALSE,
+          interactions = info$jm_interactions
         )
       }
     ),
@@ -596,7 +597,8 @@ jagsmodel_jm <- function(info) {
               info$fcts_all
             ),
             trafo = info$fcts_all,
-            isgk = TRUE
+            isgk = TRUE,
+            interactions = info$jm_interactions
           )
         }
       ),

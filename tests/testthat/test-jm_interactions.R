@@ -174,3 +174,23 @@ test_that("a covariate that is only part of an interaction has an association ty
   expect_identical(fit$info_list[[1L]]$assoc_type, c(chol = "underl.value"))
   expect_jags_compiles(fit)
 })
+
+test_that("get_jm_interactions() refuses elements above the survival level", {
+  inter <- list(
+    "chol:x" = structure(
+      list(
+        interterm = c(M_lvlone = 3L),
+        elmts = c(M_lvlone = 1L, M_center = 2L)
+      ),
+      interaction = "chol:x",
+      elements = c("chol", "x"),
+      has_NAs = FALSE
+    )
+  )
+  expect_error(
+    get_jm_interactions(c(chol = 1L, "chol:x" = 3L), inter, "M_id"),
+    "from a level above"
+  )
+  expect_length(get_jm_interactions(c(chol = 1L), inter, "M_id"), 0L)
+  expect_length(get_jm_interactions(c(chol = 1L), NULL, "M_id"), 0L)
+})
