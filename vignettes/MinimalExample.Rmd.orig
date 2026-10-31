@@ -171,7 +171,7 @@ can be assumed to have converged.
 The Monte Carlo error is a measure of the error that is made because the
 estimate is based on a finite sample. It can also be obtained using the function
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
-Ideally, the Monte Carlo error should be small compared to the standard error
+Ideally, the Monte Carlo error should be small compared to the standard deviation
 of the posterior sample. The values shown in the model summary are the Monte
 Carlo error divided by the posterior standard deviation.
 

@@ -58,14 +58,17 @@ should be excluded}
 \item{...}{currently not used}
 }
 \value{
-A list with entries \code{dat}, \code{fit} and \code{quantiles},
-where \code{fit} contains the predicted values (mean over the values
-calculated from the iterations of the MCMC sample), \code{quantiles}
-contain the specified quantiles (by default 2.5\% and 97.5\%), and \code{dat}
-is \code{newdata}, extended with \code{fit} and \code{quantiles} (unless
-prediction for an ordinal outcome is done with \code{type = "prob"}, in
-which case the quantiles are an array with three dimensions and are
-therefore not included in \code{dat}).
+A list with entries \code{newdata}, \code{fitted} and, if
+\code{return_sample = TRUE}, \code{sample}:
+\code{fitted} contains the predicted values (column \code{fit}; the mean
+over the values calculated from the iterations of the MCMC sample) and the
+specified quantiles (by default 2.5\% and 97.5\%), \code{newdata} is
+\code{newdata}, extended with these columns, and \code{sample} contains
+the predicted values for each iteration of the MCMC sample (in long
+format). For ordinal and multinomial models with \code{type = "prob"},
+\code{fitted} is a three-dimensional array (observations, mean and
+quantiles, categories). When the prediction is done for several outcomes,
+\code{fitted} and \code{sample} are lists with one element per outcome.
 }
 \description{
 Obtains predictions and corresponding credible intervals from an object of

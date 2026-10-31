@@ -152,6 +152,11 @@
   data scale; `plot(MC_error(...), data_scale = FALSE)` labelled the nodes
   wrongly or failed. Without the scaled sample, it now gives an informative
   error.
+* A variable whose name was equal to the name of a dummy variable of a factor
+  in the model (e.g., a variable `B11` and the dummy of level `1` of a factor
+  `B1`), or two factors with dummy variables of the same name, were merged
+  into one variable, without error or warning. Model fitting now stops with
+  an informative error (#75).
 * `parameters()` listed the regression coefficients of all models when all
   monitored parameters were regression coefficients (e.g., only `beta`
   monitored), also those of models that were not monitored.

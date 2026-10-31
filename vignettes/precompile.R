@@ -2,7 +2,10 @@ run_vignette <- function(vignette_name) {
   rmd_name <- file.path("vignettes", paste0(vignette_name, ".Rmd"))
   knitr::knit(
     file.path("vignettes", paste0(vignette_name, ".Rmd.orig")),
-    output = rmd_name
+    output = rmd_name,
+    # run the chunks in the global environment: JointAI only finds functions
+    # used in a model formula (e.g., `ilogit <- plogis`) there
+    envir = globalenv()
   )
 
   txt <- readLines(rmd_name)

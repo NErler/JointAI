@@ -249,6 +249,50 @@ check_vars_in_data <- function(
 }
 
 
+#' Check that the names of dummy variables are unique
+#'
+#' The columns of the design matrix are identified by their names. A variable
+#' whose name is equal to the name of a dummy variable of a factor (e.g., a
+#' variable `B11` and the dummy of level `1` of a factor `B1`), or two factors
+#' with dummy variables of the same name, would be merged into one column.
+#' This function stops with an informative error in that case (#75).
+#'
+#' used in divide_matrices (2026-10-31)
+#'
+#' @param refs a list with the reference categories of the factors, as
+#'             returned by `get_refs()`; the attribute `"dummies"` of each
+#'             element holds the names of the dummy variables
+#' @param varnames a character vector with the names of all variables used in
+#'                 the model
+#'
+#' @returns nothing, but throws an error if the name of a dummy variable is
+#'          equal to the name of a variable or of another dummy variable
+#' @keywords internal
+#'
+check_dummy_names <- function(refs, varnames) {
+  dummy_list <- lapply(refs, attr, "dummies")
+  dummies <- unlist(dummy_list, use.names = FALSE)
+  factors <- rep(names(dummy_list), lengths(dummy_list))
+
+  # a dummy name is a problem if a variable has the same name, or if another
+  # factor has a dummy with the same name
+  same_as_var <- dummies %in% varnames
+  same_as_dummy <- dummies %in% dummies[duplicated(dummies)]
+  clash <- same_as_var | same_as_dummy
+
+  if (any(clash)) {
+    errormsg(
+      "The name(s) %s of dummy variables of the factor(s) %s are also used
+      for another variable or dummy variable in the model. Variables are
+      identified by their names. Please rename the variable(s) or the
+      factor level(s).",
+      paste(dQuote(unique(dummies[clash])), collapse = ", "),
+      paste(dQuote(unique(factors[clash])), collapse = ", ")
+    )
+  }
+}
+
+
 #' Check classes of all variables used in the model
 #'
 #' Runs a check that all variables that are used in the model are of a known
