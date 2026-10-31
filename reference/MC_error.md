@@ -119,10 +119,14 @@ plot(x, data_scale = TRUE, plotpars = NULL,
 
 ## Value
 
-An object of class `MCElist` with elements `unscaled`, `scaled` and
-`digits`. The first two are matrices with columns `est` (posterior
-mean), `MCSE` (Monte Carlo error), `SD` (posterior standard deviation)
-and `MCSE/SD` (Monte Carlo error divided by post. standard deviation.)
+An object of class `MCElist` with elements `data_scale`,
+`sampling_scale` and `digits`. The first two are matrices with one row
+per selected node and columns `est` (posterior mean), `MCSE` (Monte
+Carlo error), `SD` (posterior standard deviation) and `MCSE/SD` (Monte
+Carlo error divided by post. standard deviation), for the MCMC sample
+transformed back to the scale of the data and for the sample on the
+scale used in JAGS. `sampling_scale` is `NULL` unless the model was
+fitted with `keep_scaled_mcmc = TRUE`.
 
 ## Functions
 
