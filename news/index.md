@@ -21,6 +21,11 @@
   [`residuals()`](https://rdrr.io/r/stats/residuals.html) for JM and
   mlogit models says that residuals (not prediction) are not yet
   implemented; typo in the message for coxph models fixed.
+- [`sum_duration()`](https://nerler.github.io/JointAI/reference/sum_duration.md):
+  the possible values of `by` are now listed in the function definition,
+  with the new default `"all"` (`NULL`, the earlier default, still
+  works); other values give an informative error instead of returning
+  `NULL`.
 
 ### Bug fixes
 
@@ -209,6 +214,16 @@
   listed the regression coefficients of all models when all monitored
   parameters were regression coefficients (e.g., only `beta` monitored),
   also those of models that were not monitored.
+- `sum_duration(by = "run")`: for models run in parallel, the duration
+  per run was the longest chain over the adaptive and sampling phase
+  together, instead of the sum of the longest chain per phase, so that
+  the runs did not add up to the total duration.
+- [`sum_duration()`](https://nerler.github.io/JointAI/reference/sum_duration.md)
+  sorted the runs as text, so that with ten or more runs (e.g., after
+  repeated
+  [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)),
+  “run 10” came before “run 2”. The runs are now kept in their numeric
+  order.
 
 ## JointAI 1.1.0
 

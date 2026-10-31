@@ -5,7 +5,8 @@ Calculate the sum of the computational duration of a JointAI object
 ## Usage
 
 ``` r
-sum_duration(object, by = NULL)
+sum_duration(object, by = c("all", "phase", "run", "chain", "phase and run",
+  "run and phase"))
 ```
 
 ## Arguments
@@ -16,9 +17,11 @@ sum_duration(object, by = NULL)
 
 - by:
 
-  optional grouping information; options are `NULL` (default) to
-  calculate the sum over all chains and runs and both the adaptive and
-  sampling phase, `"run"` to get the duration per run, `"phase"` to get
-  the sum over all chains and runs per phase, `"chain"` to get the sum
-  per chain over both phases and all runs, `"phase and run"` to get the
-  sum over all chains, separately per phase and run.
+  grouping; one of `"all"` (default) to calculate the sum over all
+  chains and runs and both the adaptive and sampling phase, `"phase"` to
+  get the sum over all chains and runs per phase, `"run"` to get the
+  duration per run (over both phases), `"chain"` to get the sum per
+  chain over both phases and all runs, `"phase and run"` (or
+  `"run and phase"`) to get the sum over all chains, separately per
+  phase and run. `NULL` (the default in earlier versions) is the same as
+  `"all"`.

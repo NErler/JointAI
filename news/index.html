@@ -54,6 +54,8 @@
 <h3 id="small-improvements-development-version">Small improvements<a class="anchor" aria-label="anchor" href="#small-improvements-development-version"></a></h3>
 <ul><li>Labelled variables (class <code>"haven_labelled"</code> from <strong>haven</strong>, or <code>"labelled"</code> from <strong>Hmisc</strong> and older versions of <strong>haven</strong>), e.g., from data imported from SPSS, can now be used (<a href="https://github.com/nerler/JointAI/issues/17" class="external-link">#17</a>). Variables with value labels are converted to unordered factors (with a message); other labelled variables keep their values. Variable labels are kept. SPSS user-defined missing values are not treated as missing. Labelled variables in <code>newdata</code> of <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> are converted in the same way, using the categories of the fitted model.</li>
 <li>Clearer error messages: <code><a href="../reference/plot_imp_distr.html">plot_imp_distr()</a></code> applied to a fitted model now points to <code><a href="../reference/get_MIdat.html">get_MIdat()</a></code>; <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> for JM and mlogit models says that residuals (not prediction) are not yet implemented; typo in the message for coxph models fixed.</li>
+<li>
+<code><a href="../reference/sum_duration.html">sum_duration()</a></code>: the possible values of <code>by</code> are now listed in the function definition, with the new default <code>"all"</code> (<code>NULL</code>, the earlier default, still works); other values give an informative error instead of returning <code>NULL</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
@@ -89,6 +91,10 @@
 <li>A variable whose name was equal to the name of a dummy variable of a factor in the model (e.g., a variable <code>B11</code> and the dummy of level <code>1</code> of a factor <code>B1</code>), or two factors with dummy variables of the same name, were merged into one variable, without error or warning. Model fitting now stops with an informative error (<a href="https://github.com/nerler/JointAI/issues/75" class="external-link">#75</a>).</li>
 <li>
 <code><a href="../reference/parameters.html">parameters()</a></code> listed the regression coefficients of all models when all monitored parameters were regression coefficients (e.g., only <code>beta</code> monitored), also those of models that were not monitored.</li>
+<li>
+<code>sum_duration(by = "run")</code>: for models run in parallel, the duration per run was the longest chain over the adaptive and sampling phase together, instead of the sum of the longest chain per phase, so that the runs did not add up to the total duration.</li>
+<li>
+<code><a href="../reference/sum_duration.html">sum_duration()</a></code> sorted the runs as text, so that with ten or more runs (e.g., after repeated <code><a href="../reference/add_samples.html">add_samples()</a></code>), “run 10” came before “run 2”. The runs are now kept in their numeric order.</li>
 </ul></div>
 </div>
     <div class="section level2">
