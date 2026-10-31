@@ -47,9 +47,10 @@ run_jags <- function(
 ) {
   t0 <- Sys.time()
   if (isTRUE(add_samples)) {
+    # hide the output of recompile(); close the sink also when it fails, so
+    # that the error and all later console output are shown
     sink(tempfile())
-    adapt$recompile()
-    sink()
+    tryCatch(adapt$recompile(), finally = sink())
   } else {
     adapt <- if (isFALSE(warn)) {
       suppressWarnings({
