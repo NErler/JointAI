@@ -77,7 +77,7 @@ get_D_names <- function(params, varname, lvls) {
 #' Returns the posterior mean of the variance-covariance matrix/matrices of
 #' the random effects in a fitted JointAI object.
 #'
-#' @inheritParams sharedParams
+#' @inheritParams summary.JointAI
 #' @param outcome optional; vector of integers giving the indices of the
 #'                outcomes for which the random effects variance-covariance
 #'                matrix/matrices should be returned.

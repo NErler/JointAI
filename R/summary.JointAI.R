@@ -7,7 +7,25 @@
 #' @param digits the minimum number of significant digits to be printed in
 #'               values.
 #' @param quantiles posterior quantiles
-#' @inheritParams sharedParams
+#' @param object object inheriting from class 'JointAI'
+#' @param start the first iteration of interest
+#'              (see \code{\link[coda]{window.mcmc}})
+#' @param end the last iteration of interest
+#'            (see \code{\link[coda]{window.mcmc}})
+#' @param thin thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+#'             For example, \code{thin = 1} (default) will keep the MCMC samples
+#'             from all iterations; \code{thin = 5} would only keep every 5th
+#'             iteration.
+#' @param subset subset of parameters/variables/nodes (columns in the MCMC
+#'               sample). Follows the same principle as the argument
+#'               \code{monitor_params} in
+#'               \code{\link[JointAI:model_imp]{*_imp}}.
+#' @param exclude_chains optional vector of the index numbers of chains that
+#'                       should be excluded
+#' @param warn logical; should warnings be given? Default is
+#'             \code{TRUE}.
+#' @param mess logical; should messages be given? Default is
+#'             \code{TRUE}.
 #' @param outcome optional; vector identifying for which outcomes the summary
 #'                should be given, either by specifying their indices, or their
 #'                names (LHS of the respective model formulas as character

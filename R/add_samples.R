@@ -3,7 +3,12 @@
 #' This function continues the sampling from the MCMC chains of an existing
 #' object of class 'JointAI'.\cr
 #'
-#' @inheritParams sharedParams
+#' @param progress.bar character string specifying the type of
+#'                 progress bar. Possible values are "text" (default), "gui",
+#'                 and "none" (see \code{\link[rjags]{update}}). Note: when
+#'                 sampling is performed in parallel it is not possible to
+#'                 display a progress bar.
+#' @inheritParams summary.JointAI
 #' @inheritParams model_imp
 #' @param n.iter the number of additional iterations of the MCMC chain
 #' @param add logical; should the new MCMC samples be added to the existing

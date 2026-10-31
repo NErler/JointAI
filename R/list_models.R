@@ -5,7 +5,7 @@
 #' covariates in a JointAI object.
 #'
 #' @md
-#' @inheritParams sharedParams
+#' @inheritParams summary.JointAI
 #' @param predvars logical; should information on the predictor variables be
 #'                 printed? (default is \code{TRUE})
 #' @param regcoef logical; should information on the regression coefficients

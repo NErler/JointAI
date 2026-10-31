@@ -3,7 +3,7 @@
 #' Returns the names of the parameters/nodes of an object of class 'JointAI' for
 #' which a monitor is set.
 #'
-#' @inheritParams sharedParams
+#' @inheritParams summary.JointAI
 #' @param expand_ranef logical; should all elements of the random effects
 #'                     vectors/matrices be shown separately?
 #' @param ... currently not used

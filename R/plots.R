@@ -3,7 +3,13 @@
 #' Creates a set of traceplots from the MCMC sample of an object of class
 #' 'JointAI'.
 #'
-#' @inheritParams sharedParams
+#' @param nrow optional; number of rows in the plot layout;
+#'                  automatically chosen if unspecified
+#' @param ncol optional; number of columns in the plot layout;
+#'                  automatically chosen if unspecified
+#' @param use_ggplot logical; Should ggplot be used instead of the base
+#'                   graphics?
+#' @inheritParams summary.JointAI
 #' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log -xlim -ylim
 #' @inheritParams base::plot
 #' @param outcome optional; vector identifying a subset of sub-models included
@@ -518,7 +524,10 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
 #' @param allNA logical; if \code{FALSE} (default) the proportion of missing
 #'              values is only given for variables that have missing values,
 #'              if \code{TRUE} it is given for all variables
-#' @inheritParams sharedParams
+#' @param idvars name of the column that specifies the multi-level grouping
+#'               structure
+#' @param xlab,ylab labels for the x- and y-axis
+#' @inheritParams traceplot
 #' @param ... additional parameters passed to \code{\link[graphics]{barplot}}
 #'            and \code{\link[graphics]{hist}}
 #'
