@@ -585,6 +585,22 @@ test_that("error for coxph with interaction of time-varying and incomplete basel
   )
 })
 
+test_that("error for the time variable as main effect in the survival part of a JM", {
+  # the effect of the time variable cannot be separated from the baseline
+  # hazard
+  expect_error(
+    setup_case(quote(JM_imp(
+      list(
+        Surv(futime, status != "censored") ~ age + chol + day,
+        chol ~ day + age + (day | id)
+      ),
+      timevar = "day",
+      data = PBC_small
+    ))),
+    "time variable\\s+.day.\\s+is\\s+part\\s+of\\s+the\\s+linear\\s+predictor"
+  )
+})
+
 test_that("covariate models have an intercept also if the analysis model has none", {
   # the covariate models are the same as with an analysis model with
   # intercept: an intercept for linear and binary models and for each
