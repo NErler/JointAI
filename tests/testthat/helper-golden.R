@@ -295,6 +295,13 @@ golden_cases <- function() {
       timevar = "day",
       assoc_type = c(chol = "obs.value"),
       data = PBC_small
+    )),
+    # added 2026-10-31: analysis model without intercept and without random
+    # effects, with incomplete continuous, binary, ordinal and multinomial
+    # covariates (their models have an intercept or thresholds)
+    lm_no_intercept = quote(lm_imp(
+      y ~ 0 + C1 + C2 + B2 + O2 + M2,
+      data = wideDF
     ))
   )
 }
