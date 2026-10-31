@@ -584,3 +584,120 @@ test_that("error for coxph with interaction of time-varying and incomplete basel
     "interaction between a time-varying\\s+covariate\\s+and a\\s+incomplete"
   )
 })
+
+test_that("covariate models have an intercept also if the analysis model has none", {
+  # the covariate models are the same as with an analysis model with
+  # intercept: an intercept for linear and binary models and for each
+  # category of a multinomial model, thresholds (no intercept) for an
+  # ordinal model; the analysis model keeps its specification
+  cases <- list(
+    lm = list(
+      fun = lm_imp,
+      with = y ~ C1 + C2 + B2 + O2 + M2,
+      without = y ~ 0 + C1 + C2 + B2 + O2 + M2,
+      data = wideDF
+    ),
+    glm_binomial = list(
+      fun = glm_imp,
+      with = B1 ~ C1 + C2 + O2,
+      without = B1 ~ -1 + C1 + C2 + O2,
+      data = wideDF,
+      family = binomial()
+    ),
+    survreg = list(
+      fun = survreg_imp,
+      with = Surv(futime, status != "censored") ~ age + copper,
+      without = Surv(futime, status != "censored") ~ 0 + age + copper,
+      data = PBC[!duplicated(PBC$id), ]
+    )
+  )
+
+  coef_terms <- function(coefs) {
+    paste(coefs$varname, coefs$outcat)
+  }
+
+  for (k in names(cases)) {
+    case <- cases[[k]]
+    args <- case[setdiff(names(case), c("fun", "with", "without"))]
+    fit_with <- do.call(setup_model, c(list(case$fun, case$with), args))
+    fit_without <- do.call(setup_model, c(list(case$fun, case$without), args))
+
+    analysis <- names(fit_without$fixed)
+    expect_false(
+      "(Intercept)" %in% fit_without$coef_list[[analysis]]$varname,
+      label = k
+    )
+
+    covariates <- setdiff(names(fit_with$coef_list), analysis)
+    expect_setequal(setdiff(names(fit_without$coef_list), analysis), covariates)
+    for (cov in covariates) {
+      expect_identical(
+        coef_terms(fit_without$coef_list[[cov]]),
+        coef_terms(fit_with$coef_list[[cov]]),
+        label = paste(cov, "in", k)
+      )
+    }
+  }
+
+  # the ordinal and the multinomial covariate model are included
+  fit <- setup_model(lm_imp, y ~ 0 + C1 + C2 + B2 + O2 + M2, data = wideDF)
+  expect_identical(fit$info_list$O2$modeltype, "clm")
+  expect_identical(fit$info_list$M2$modeltype, "mlogit")
+})
+
+# models without intercept and without random effects (the design matrix then
+# gets its intercept column only for the covariate models)
+no_intercept_cases <- list(
+  lm_no_intercept = quote(lm_imp(
+    y ~ 0 + C1 + C2 + B2 + O2 + M2,
+    data = wideDF
+  )),
+  glm_no_intercept = quote(glm_imp(
+    B1 ~ -1 + C1 + C2 + O2,
+    family = binomial(),
+    data = wideDF
+  )),
+  survreg_no_intercept = quote(survreg_imp(
+    Surv(futime, status != "censored") ~ 0 + age + copper,
+    data = PBC2_small
+  )),
+  mlogit_no_intercept = quote(mlogit_imp(M1 ~ 0 + C1 + C2 + B2, data = wideDF))
+)
+
+# has a sub-model an intercept (for multinomial models: one per category)?
+has_intercept <- function(coefs) {
+  if (NROW(coefs) == 0L) {
+    return(FALSE)
+  }
+  is_intercept <- coefs$varname == "(Intercept)"
+  if (all(is.na(coefs$outcat))) {
+    any(is_intercept)
+  } else {
+    all(tapply(is_intercept, coefs$outcat, any))
+  }
+}
+
+test_that("each covariate model has an intercept, unless its type has none", {
+  # ordinal and survival models have thresholds or a baseline hazard instead
+  types_with_intercept <- c("glm", "glmm", "mlogit", "mlogitmm")
+
+  for (case in c(golden_cases(), extra_cases, no_intercept_cases)) {
+    fit <- setup_case(case)
+    lab <- deparse1(case)
+    for (k in setdiff(names(fit$info_list), names(fit$fixed))) {
+      expect_identical(
+        has_intercept(fit$coef_list[[k]]),
+        fit$info_list[[k]]$modeltype %in% types_with_intercept,
+        label = paste(k, "in", lab)
+      )
+    }
+  }
+
+  # the analysis models of no_intercept_cases have no intercept
+  for (case in no_intercept_cases) {
+    fit <- setup_case(case)
+    for (k in names(fit$fixed)) {
+      expect_false(has_intercept(fit$coef_list[[k]]), label = deparse1(case))
+    }
+  }
+})

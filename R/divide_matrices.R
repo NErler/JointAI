@@ -148,6 +148,14 @@ divide_matrices <- function(
     terms_list = terms_list
   )
 
+  # The design matrix only has an intercept column if one of the formulas has
+  # an intercept. The covariate models need it also when the analysis model
+  # has none (each linear predictor selects its columns by name, so the
+  # analysis model is not affected).
+  if (!"(Intercept)" %in% colnames(X2)) {
+    X2 <- cbind("(Intercept)" = 1, X2)
+  }
+
   # combine covariate design matrix with outcome design matrix
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
   MX <- MX[, unique(colnames(MX))]
