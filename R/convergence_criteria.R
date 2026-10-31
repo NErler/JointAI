@@ -26,26 +26,40 @@
 #'
 #'
 #' @export
-GR_crit <- function(object, confidence = 0.95, transform = FALSE,
-                    autoburnin = TRUE, multivariate = TRUE, subset = NULL,
-                    exclude_chains = NULL, start = NULL, end = NULL,
-                    thin = NULL, warn = TRUE, mess = TRUE, ...) {
-
-  if (!inherits(object, "JointAI"))
+GR_crit <- function(
+  object,
+  confidence = 0.95,
+  transform = FALSE,
+  autoburnin = TRUE,
+  multivariate = TRUE,
+  subset = NULL,
+  exclude_chains = NULL,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (!inherits(object, "JointAI")) {
     errormsg('Object must be of class "JointAI".')
+  }
 
-  if (is.null(object$MCMC))
+  if (is.null(object$MCMC)) {
     errormsg("No MCMC sample.")
+  }
 
-
-  if (is.null(start))
+  if (is.null(start)) {
     start <- start(object$MCMC)
+  }
 
-  if (is.null(end))
+  if (is.null(end)) {
     end <- end(object$MCMC)
+  }
 
-  if (is.null(thin))
+  if (is.null(thin)) {
     thin <- coda::thin(object$MCMC)
+  }
 
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
@@ -57,14 +71,18 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE,
   MCMC <- window(MCMC[chains], start = start, end = end, thin = thin)
   plotnams <- get_plotmain(object, colnames(MCMC[[1]]), ylab = TRUE)
 
-  for (i in seq_len(length(MCMC)))
+  for (i in seq_len(length(MCMC))) {
     colnames(MCMC[[i]]) <- plotnams
+  }
 
-
-  coda::gelman.diag(x = MCMC, confidence = confidence, transform = transform,
-                    autoburnin = autoburnin, multivariate = multivariate)
+  coda::gelman.diag(
+    x = MCMC,
+    confidence = confidence,
+    transform = transform,
+    autoburnin = autoburnin,
+    multivariate = multivariate
+  )
 }
-
 
 
 #' Calculate and plot the Monte Carlo error
@@ -115,27 +133,45 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE,
 #' }
 #'
 #' @export
-MC_error <- function(x, subset = NULL, exclude_chains = NULL,
-                     start = NULL, end = NULL, thin = NULL,
-                     digits = 2, warn = TRUE, mess = TRUE, ...) {
-
-  if (!inherits(x, "JointAI"))
+MC_error <- function(
+  x,
+  subset = NULL,
+  exclude_chains = NULL,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  digits = 2,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+) {
+  if (!inherits(x, "JointAI")) {
     errormsg("%s must be of class %s.", dQuote("x"), sQuote("JointAI"))
+  }
 
-  if (is.null(x$MCMC)) errormsg("No MCMC sample.")
+  if (is.null(x$MCMC)) {
+    errormsg("No MCMC sample.")
+  }
 
-  if (!"mcmcse" %in% installed.packages()[, "Package"])
-    errormsg("The package 'mcmcse' needs to be installed to use the function
-             %s.", dQuote("MC_error()"))
+  if (!"mcmcse" %in% installed.packages()[, "Package"]) {
+    errormsg(
+      "The package 'mcmcse' needs to be installed to use the function
+             %s.",
+      dQuote("MC_error()")
+    )
+  }
 
-  if (is.null(start))
+  if (is.null(start)) {
     start <- start(x$MCMC)
+  }
 
-  if (is.null(end))
+  if (is.null(end)) {
     end <- end(x$MCMC)
+  }
 
-  if (is.null(thin))
+  if (is.null(thin)) {
     thin <- coda::thin(x$MCMC)
+  }
 
   # MC error for MCMC sample scaled back to data scale
   MCMC <- get_subset(object = x, subset = subset, warn = warn, mess = mess)
@@ -145,8 +181,10 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
     chains <- chains[-exclude_chains]
   }
 
-  MCMC <- do.call(rbind, window(MCMC[chains],
-                                start = start, end = end, thin = thin))
+  MCMC <- do.call(
+    rbind,
+    window(MCMC[chains], start = start, end = end, thin = thin)
+  )
   plotnams <- get_plotmain(x, colnames(MCMC), ylab = TRUE)
   colnames(MCMC) <- plotnams
 
@@ -161,17 +199,18 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
 
   colnames(MCE1) <- c("est", "MCSE")
 
-  MCE1 <- cbind(MCE1,
-                SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(MCE1))]
+  MCE1 <- cbind(
+    MCE1,
+    SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(MCE1))]
   )
-  MCE1 <- cbind(MCE1,
-                "MCSE/SD" = MCE1[, "MCSE"] / MCE1[, "SD"])
-
+  MCE1 <- cbind(MCE1, "MCSE/SD" = MCE1[, "MCSE"] / MCE1[, "SD"])
 
   # MC error for scaled MCMC sample
   if (!is.null(x$sample)) {
-    mcmc <- do.call(rbind, window(x$sample[chains],
-                                  start = start, end = end, thin = thin))
+    mcmc <- do.call(
+      rbind,
+      window(x$sample[chains], start = start, end = end, thin = thin)
+    )
 
     MCE2 <- t(apply(mcmc, 2, function(k) {
       mce <- try(mcmcse::mcse(k, ...), silent = TRUE)
@@ -182,7 +221,6 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
       }
     }))
     colnames(MCE2) <- c("est", "MCSE")
-
 
     MCE2 <- cbind(MCE2, SD = apply(mcmc, 2, sd))
     MCE2 <- cbind(MCE2, "MCSE/SD" = MCE2[, "MCSE"] / MCE2[, "SD"])
@@ -216,9 +254,14 @@ print.MCElist <- function(x, ...) {
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 
-plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
-                         ablinepars = list(v = 0.05), minlength = 20, ...) {
-
+plot.MCElist <- function(
+  x,
+  data_scale = TRUE,
+  plotpars = NULL,
+  ablinepars = list(v = 0.05),
+  minlength = 20,
+  ...
+) {
   mce <- if (data_scale == TRUE) {
     x$data_scale
   } else {
@@ -232,21 +275,32 @@ plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
   plotpars$x <- mce[, 4]
   plotpars$y <- rev(seq_len(nrow(mce)))
 
-  if (is.null(plotpars$xlim))
-    plotpars$xlim <- range(0, plotpars$x[!is.infinite(plotpars$x)],
-                           na.rm = TRUE)
-  if (is.null(plotpars$xlab))
+  if (is.null(plotpars$xlim)) {
+    plotpars$xlim <- range(
+      0,
+      plotpars$x[!is.infinite(plotpars$x)],
+      na.rm = TRUE
+    )
+  }
+  if (is.null(plotpars$xlab)) {
     plotpars$xlab <- "MCE/SD"
-  if (is.null(plotpars$ylab))
+  }
+  if (is.null(plotpars$ylab)) {
     plotpars$ylab <- ""
+  }
   if (is.null(plotpars$yaxt)) {
     plotpars$yaxt <- "n"
-    theaxis <- expression(axis(side = 2, at = rev(seq_len(nrow(mce))),
-                               labels = names,
-                               las = 2, cex.axis = 0.8))
+    theaxis <- expression(axis(
+      side = 2,
+      at = rev(seq_len(nrow(mce))),
+      labels = names,
+      las = 2,
+      cex.axis = 0.8
+    ))
   }
-  if (is.null(ablinepars$v))
+  if (is.null(ablinepars$v)) {
     ablinepars$v <- 0.05
+  }
 
   do.call(plot, plotpars)
   eval(theaxis)
