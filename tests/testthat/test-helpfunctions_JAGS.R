@@ -61,10 +61,60 @@ test_that("sum_duration() of parallel chains uses the longest chain", {
   expect_equal(as.numeric(sum_duration(obj, by = "chain")), c(33, 42))
 })
 
+test_that("sum_duration(by = \"run\") of parallel chains adds up the phases", {
+  obj <- duration_object(
+    adapt = data.frame(chain1 = secs(c(1, 2)), chain2 = secs(c(3, 4))),
+    sample = data.frame(chain1 = secs(c(10, 20)), chain2 = secs(c(30, 5))),
+    parallel = TRUE
+  )
+  # per run, the longest chain of each phase: adapt 3, 4; sample 30, 20
+  expect_equal(as.numeric(sum_duration(obj, by = "run")), c(33, 24))
+  # the runs add up to the total
+  expect_equal(
+    sum(as.numeric(sum_duration(obj, by = "run"))),
+    as.numeric(sum_duration(obj))
+  )
+})
+
 test_that("reformat_difftime() chooses the unit of the shortest duration", {
   expect_identical(units(reformat_difftime(secs(c(0.5, 30)))), "secs")
   expect_identical(units(reformat_difftime(secs(c(90, 4000)))), "mins")
   expect_identical(units(reformat_difftime(secs(c(4000, 9000)))), "hours")
   expect_identical(units(reformat_difftime(secs(2e5))), "days")
   expect_equal(as.numeric(reformat_difftime(secs(c(90, 120)))), c(1.5, 2))
+})
+
+test_that("sum_duration() keeps the runs in their numeric order", {
+  # 11 runs: sorted as text, "run 10" and "run 11" would come before "run 2"
+  obj <- duration_object(
+    adapt = data.frame(total = secs(1:11)),
+    sample = data.frame(total = secs(10 * (1:11))),
+    parallel = FALSE
+  )
+  runs <- paste("run", 1:11)
+  expect_named(sum_duration(obj, by = "run"), runs)
+  expect_equal(as.numeric(sum_duration(obj, by = "run")), 11 * (1:11))
+  expect_named(sum_duration(obj, by = "phase and run")$sample, runs)
+  expect_equal(
+    as.numeric(sum_duration(obj, by = "phase and run")$sample),
+    10 * (1:11)
+  )
+})
+
+test_that("sum_duration() checks the argument by", {
+  obj <- duration_object(
+    adapt = data.frame(total = secs(c(1, 2))),
+    sample = data.frame(total = secs(c(10, 20))),
+    parallel = FALSE
+  )
+  # "all" is the default; NULL (the default in earlier versions) is the same
+  expect_equal(sum_duration(obj, by = "all"), sum_duration(obj))
+  expect_equal(sum_duration(obj, by = NULL), sum_duration(obj))
+  expect_equal(
+    sum_duration(obj, by = "run and phase"),
+    sum_duration(obj, by = "phase and run")
+  )
+
+  expect_error(sum_duration(obj, by = "runs"), "must be one of")
+  expect_error(sum_duration(obj, by = c("run", "phase")), "must be one of")
 })

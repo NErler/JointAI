@@ -4,18 +4,20 @@
 \alias{sum_duration}
 \title{Calculate the sum of the computational duration of a JointAI object}
 \usage{
-sum_duration(object, by = NULL)
+sum_duration(object, by = c("all", "phase", "run", "chain", "phase and run",
+  "run and phase"))
 }
 \arguments{
 \item{object}{object of class \code{JointAI}}
 
-\item{by}{optional grouping information; options are \code{NULL} (default) to
-calculate the sum over all chains and runs and both the adaptive
-and sampling phase, \code{"run"} to get the duration per run,
+\item{by}{grouping; one of \code{"all"} (default) to calculate the sum over
+all chains and runs and both the adaptive and sampling phase,
 \code{"phase"} to get the sum over all chains and runs per phase,
+\code{"run"} to get the duration per run (over both phases),
 \code{"chain"} to get the sum per chain over both phases and all runs,
-\code{"phase and run"} to get the sum over all chains, separately per
-phase and run.}
+\code{"phase and run"} (or \code{"run and phase"}) to get the sum over all
+chains, separately per phase and run. \code{NULL} (the default in
+earlier versions) is the same as \code{"all"}.}
 }
 \description{
 Calculate the sum of the computational duration of a JointAI object

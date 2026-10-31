@@ -288,21 +288,45 @@ duration_obj <- function(dur) {
 #' Calculate the sum of the computational duration of a JointAI object
 #'
 #' @param object object of class `JointAI`
-#' @param by optional grouping information; options are `NULL` (default) to
-#'           calculate the sum over all chains and runs and both the adaptive
-#'           and sampling phase, `"run"` to get the duration per run,
+#' @param by grouping; one of `"all"` (default) to calculate the sum over
+#'           all chains and runs and both the adaptive and sampling phase,
 #'           `"phase"` to get the sum over all chains and runs per phase,
+#'           `"run"` to get the duration per run (over both phases),
 #'           `"chain"` to get the sum per chain over both phases and all runs,
-#'           `"phase and run"` to get the sum over all chains, separately per
-#'           phase and run.
+#'           `"phase and run"` (or `"run and phase"`) to get the sum over all
+#'           chains, separately per phase and run. `NULL` (the default in
+#'           earlier versions) is the same as `"all"`.
 #'
 #' @export
 #'
-sum_duration <- function(object, by = NULL) {
+sum_duration <- function(
+  object,
+  by = c("all", "phase", "run", "chain", "phase and run", "run and phase")
+) {
+  by_options <- eval(formals(sum_duration)$by)
+
+  # by = NULL was the default in earlier versions
+  if (missing(by) || is.null(by)) {
+    by <- "all"
+  }
+
+  if (length(by) != 1L || !by %in% by_options) {
+    errormsg(
+      "The argument %s must be one of %s.",
+      dQuote("by"),
+      paste(dQuote(by_options), collapse = ", ")
+    )
+  }
+
   obj <- object$comp_info$duration
 
-  if (is.null(by) || by %in% c("phase", "phase and run", "run and phase")) {
+  if (by != "chain") {
+    # per phase: the duration of each run (sum over the chains, or for
+    # parallel chains the longest chain)
     s <- lapply(obj, function(p) {
+      # split by run, keeping the runs in their order (split() would sort
+      # the run names as text: "run 10" before "run 2")
+      runs <- factor(rownames(p), levels = rownames(p))
       r <- Map(
         function(vec, parallel) {
           if (parallel) {
@@ -311,36 +335,23 @@ sum_duration <- function(object, by = NULL) {
             sum(do.call(c, vec))
           }
         },
-        vec = split(p, rownames(p)),
+        vec = split(p, runs),
         parallel = object$comp_info$parallel
       )
 
       do.call(c, r)
     })
 
-    if (is.null(by)) {
+    if (by == "all") {
       sum(do.call(c, s))
     } else if (by %in% c("phase and run", "run and phase")) {
       s
     } else if (by == "phase") {
       lapply(s, sum)
+    } else if (by == "run") {
+      # per run: the sum over the phases
+      Reduce(`+`, s)
     }
-  } else if (by == "run") {
-    r <- do.call(cbind, obj)
-
-    s <- Map(
-      function(vec, parallel) {
-        if (parallel) {
-          max(do.call(c, vec))
-        } else {
-          sum(do.call(c, vec))
-        }
-      },
-      vec = split(r, rownames(r)),
-      parallel = object$comp_info$parallel
-    )
-
-    do.call(c, s)
   } else if (by == "chain") {
     do.call(c, lapply(c(do.call(rbind, obj)), sum))
   }
