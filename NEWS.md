@@ -161,6 +161,9 @@
   run was the longest chain over the adaptive and sampling phase together,
   instead of the sum of the longest chain per phase, so that the runs did
   not add up to the total duration.
+* `sum_duration()` sorted the runs as text, so that with ten or more runs
+  (e.g., after repeated `add_samples()`), "run 10" came before "run 2". The
+  runs are now kept in their numeric order.
 
 # JointAI 1.1.0
 

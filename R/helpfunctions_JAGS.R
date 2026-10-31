@@ -307,6 +307,9 @@ sum_duration <- function(object, by = NULL) {
     # per phase: the duration of each run (sum over the chains, or for
     # parallel chains the longest chain)
     s <- lapply(obj, function(p) {
+      # split by run, keeping the runs in their order (split() would sort
+      # the run names as text: "run 10" before "run 2")
+      runs <- factor(rownames(p), levels = rownames(p))
       r <- Map(
         function(vec, parallel) {
           if (parallel) {
@@ -315,7 +318,7 @@ sum_duration <- function(object, by = NULL) {
             sum(do.call(c, vec))
           }
         },
-        vec = split(p, rownames(p)),
+        vec = split(p, runs),
         parallel = object$comp_info$parallel
       )
 
