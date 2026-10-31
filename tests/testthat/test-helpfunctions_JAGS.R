@@ -100,3 +100,21 @@ test_that("sum_duration() keeps the runs in their numeric order", {
     10 * (1:11)
   )
 })
+
+test_that("sum_duration() checks the argument by", {
+  obj <- duration_object(
+    adapt = data.frame(total = secs(c(1, 2))),
+    sample = data.frame(total = secs(c(10, 20))),
+    parallel = FALSE
+  )
+  # "all" is the default; NULL (the default in earlier versions) is the same
+  expect_equal(sum_duration(obj, by = "all"), sum_duration(obj))
+  expect_equal(sum_duration(obj, by = NULL), sum_duration(obj))
+  expect_equal(
+    sum_duration(obj, by = "run and phase"),
+    sum_duration(obj, by = "phase and run")
+  )
+
+  expect_error(sum_duration(obj, by = "runs"), "must be one of")
+  expect_error(sum_duration(obj, by = c("run", "phase")), "must be one of")
+})

@@ -288,22 +288,39 @@ duration_obj <- function(dur) {
 #' Calculate the sum of the computational duration of a JointAI object
 #'
 #' @param object object of class `JointAI`
-#' @param by optional grouping information; options are `NULL` (default) to
-#'           calculate the sum over all chains and runs and both the adaptive
-#'           and sampling phase, `"run"` to get the duration per run,
+#' @param by grouping; one of `"all"` (default) to calculate the sum over
+#'           all chains and runs and both the adaptive and sampling phase,
 #'           `"phase"` to get the sum over all chains and runs per phase,
+#'           `"run"` to get the duration per run (over both phases),
 #'           `"chain"` to get the sum per chain over both phases and all runs,
-#'           `"phase and run"` to get the sum over all chains, separately per
-#'           phase and run.
+#'           `"phase and run"` (or `"run and phase"`) to get the sum over all
+#'           chains, separately per phase and run. `NULL` (the default in
+#'           earlier versions) is the same as `"all"`.
 #'
 #' @export
 #'
-sum_duration <- function(object, by = NULL) {
+sum_duration <- function(
+  object,
+  by = c("all", "phase", "run", "chain", "phase and run", "run and phase")
+) {
+  by_options <- eval(formals(sum_duration)$by)
+
+  # by = NULL was the default in earlier versions
+  if (missing(by) || is.null(by)) {
+    by <- "all"
+  }
+
+  if (length(by) != 1L || !by %in% by_options) {
+    errormsg(
+      "The argument %s must be one of %s.",
+      dQuote("by"),
+      paste(dQuote(by_options), collapse = ", ")
+    )
+  }
+
   obj <- object$comp_info$duration
 
-  if (
-    is.null(by) || by %in% c("phase", "phase and run", "run and phase", "run")
-  ) {
+  if (by != "chain") {
     # per phase: the duration of each run (sum over the chains, or for
     # parallel chains the longest chain)
     s <- lapply(obj, function(p) {
@@ -325,7 +342,7 @@ sum_duration <- function(object, by = NULL) {
       do.call(c, r)
     })
 
-    if (is.null(by)) {
+    if (by == "all") {
       sum(do.call(c, s))
     } else if (by %in% c("phase and run", "run and phase")) {
       s

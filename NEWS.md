@@ -12,6 +12,10 @@
   points to `get_MIdat()`; `residuals()` for JM and mlogit models says that
   residuals (not prediction) are not yet implemented; typo in the message for
   coxph models fixed.
+* `sum_duration()`: the possible values of `by` are now listed in the
+  function definition, with the new default `"all"` (`NULL`, the earlier
+  default, still works); other values give an informative error instead of
+  returning `NULL`.
 
 ## Bug fixes
 * When the analysis model had no intercept (e.g., `lm_imp(y ~ 0 + x1 + x2)`)
