@@ -1,14 +1,16 @@
 # Complete the monitored parameters for transforming coefficients back
 
 With scaled covariates, the coefficients are transformed back after
-sampling (`rescale_coefs()`). The intercept, the thresholds (ordinal
-models) and the coefficients of the baseline hazard (proportional
-hazards models) of a sub-model take the centring of all its covariates,
-and the coefficients of the variables in cross-level interactions are
-corrected with the coefficients of the interactions. Therefore, if a
-coefficient, a threshold or a coefficient of the baseline hazard of a
-sub-model is monitored, all regression coefficients of that sub-model
-are monitored (not those of other sub-models).
+sampling
+([`rescale_coefs()`](https://nerler.github.io/JointAI/reference/rescale_coefs.md)).
+The intercept, the thresholds (ordinal models) and the coefficients of
+the baseline hazard (proportional hazards models) of a sub-model take
+the centring of all its covariates, and the coefficients of the
+variables in cross-level interactions are corrected with the
+coefficients of the interactions. Therefore, if a coefficient, a
+threshold or a coefficient of the baseline hazard of a sub-model is
+monitored, all regression coefficients of that sub-model are monitored
+(not those of other sub-models).
 
 ## Usage
 

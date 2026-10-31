@@ -41,7 +41,8 @@ ranef_covariate_shift(part, A_part, MCMC, rescaled, coefs, scale_pars,
 - rescaled:
 
   MCMC sample (matrix) in which the coefficients are already transformed
-  back (`rescale_coefs()`).
+  back
+  ([`rescale_coefs()`](https://nerler.github.io/JointAI/reference/rescale_coefs.md)).
 
 - coefs:
 

@@ -13,9 +13,10 @@ intercept. Where there is no such parameter, centring changes the model
   intercept;
 
 - in a cross-level interaction `w:z` in the mean of a random slope
-  (`get_slope_interactions()`): `z` if the main effect of `w` is not in
-  the model, and `w` if the main effect of `z` is not in the model (the
-  product of the centred variables contains `c_z * w` and `c_w * z`).
+  ([`get_slope_interactions()`](https://nerler.github.io/JointAI/reference/get_slope_interactions.md)):
+  `z` if the main effect of `w` is not in the model, and `w` if the main
+  effect of `z` is not in the model (the product of the centred
+  variables contains `c_z * w` and `c_w * z`).
 
 ## Usage
 

@@ -76,7 +76,7 @@ effects on the original scale:</p>
 
 <dl><dt id="arg-rescaled">rescaled<a class="anchor" aria-label="anchor" href="#arg-rescaled"></a></dt>
 <dd><p>MCMC sample (matrix) in which the coefficients are already
-transformed back (<code>rescale_coefs()</code>).</p></dd>
+transformed back (<code><a href="rescale_coefs.html">rescale_coefs()</a></code>).</p></dd>
 
 
 <dt id="arg-mcmc">MCMC<a class="anchor" aria-label="anchor" href="#arg-mcmc"></a></dt>
@@ -123,7 +123,7 @@ within a group and moves to the random intercept
 (<code><a href="ranef_transformation.html">ranef_transformation()</a></code>).</p></li>
 <li><p><code>delta</code>: with hierarchical centring, the means of the random effects
 contain fixed effects. These are transformed back separately
-(<code>rescale_coefs()</code>, e.g. the intercept takes the centring of all
+(<code><a href="rescale_coefs.html">rescale_coefs()</a></code>, e.g. the intercept takes the centring of all
 covariates); <code>delta</code> keeps <code>b</code> consistent with them (<code><a href="ranef_shift.html">ranef_shift()</a></code>).</p></li>
 </ul><p><code>A</code> does not need the data, so the random effects are transformed back
 also when a random-slope variable has missing values. <code>delta</code> usually does

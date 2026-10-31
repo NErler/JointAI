@@ -17,7 +17,8 @@ rescale_ranefs(rescaled, MCMC, coefs, scale_pars, info_list, data_list, groups)
 - rescaled:
 
   MCMC sample (matrix) in which the coefficients are already transformed
-  back (`rescale_coefs()`).
+  back
+  ([`rescale_coefs()`](https://nerler.github.io/JointAI/reference/rescale_coefs.md)).
 
 - MCMC:
 
@@ -65,8 +66,9 @@ transformed back.
 
 - `delta`: with hierarchical centring, the means of the random effects
   contain fixed effects. These are transformed back separately
-  (`rescale_coefs()`, e.g. the intercept takes the centring of all
-  covariates); `delta` keeps `b` consistent with them
+  ([`rescale_coefs()`](https://nerler.github.io/JointAI/reference/rescale_coefs.md),
+  e.g. the intercept takes the centring of all covariates); `delta`
+  keeps `b` consistent with them
   ([`ranef_shift()`](https://nerler.github.io/JointAI/reference/ranef_shift.md)).
 
 `A` does not need the data, so the random effects are transformed back

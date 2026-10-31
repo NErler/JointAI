@@ -72,6 +72,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/get_nranef.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_ranef_blocks.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_resp_mat.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/get_slope_interactions.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_uncentred_columns.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/group_covariate_values.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/hc_rdslope_info.html</loc></url>
@@ -87,6 +88,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/model_imp.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/normalize_formula_args.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ns.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/par_names.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/parameters.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/paste_analysis_type.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/paste_coef.html</loc></url>
@@ -113,6 +115,8 @@
 <url><loc>https://nerler.github.io/JointAI/reference/remove_labelled_class.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/remove_lhs.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/replace_nan_with_na.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/rescale.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/rescale_coefs.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/rescale_ranefs.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/rescale_vcov.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/residuals.JointAI.html</loc></url>
