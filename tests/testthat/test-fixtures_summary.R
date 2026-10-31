@@ -63,3 +63,28 @@ test_that("functions not implemented for some model types give an error", {
   # (m = 2: the fixtures have too few iterations for the default m = 10)
   expect_error(get_MIdat(fixture_load("glm_binomial"), m = 2), "monitor")
 })
+
+test_that("print(summary()) gives the number of iterations per chain", {
+  object <- fixture_load("lm")
+  # the fixture has iterations 101:150; e.g. end = 141, thin = 10 keeps the
+  # iterations 101, 111, ..., 141, i.e. 5 per chain
+  for (args in list(
+    list(),
+    list(thin = 2),
+    list(end = 141, thin = 10),
+    list(start = 111, end = 131, thin = 5)
+  )) {
+    smry <- suppressWarnings(do.call(summary, c(list(object), args)))
+    printed <- capture.output(print(smry))
+    n_iter <- nrow(window(
+      object$MCMC[[1L]],
+      start = smry$start,
+      end = smry$end,
+      thin = smry$thin
+    ))
+    expect_true(
+      paste("Sample size per chain =", n_iter) %in% trimws(printed),
+      label = paste(names(args), args, collapse = ", ")
+    )
+  }
+})
