@@ -130,6 +130,20 @@ test_that("plot() of the Monte Carlo error", {
   ))
 })
 
+test_that("plot() of the Monte Carlo error on the sampling scale", {
+  object <- fixture_load("lm")
+  # stand-in for the sample kept with keep_scaled_mcmc = TRUE (it has the
+  # same columns as the MCMC sample)
+  object$sample <- object$MCMC
+  mce <- MC_error(object, warn = FALSE, mess = FALSE)
+  expect_no_error(plot(mce, data_scale = FALSE))
+
+  # without the scaled sample
+  object$sample <- NULL
+  mce <- MC_error(object, warn = FALSE, mess = FALSE)
+  expect_error(plot(mce, data_scale = FALSE), "keep_scaled_mcmc")
+})
+
 test_that("plot() of a fitted model: residuals vs fitted values", {
   expect_no_error(plot(fixture_load("lm")))
   expect_no_error(plot(fixture_load("glm_binomial")))
