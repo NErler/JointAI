@@ -23,6 +23,15 @@ for (k in setdiff(fixture_names, c("glm_binomial", "mlogit"))) {
   })
 }
 
+for (k in c("glm_binomial", "mlogit")) {
+  test_that(paste("parameters() lists only monitored coefficients:", k), {
+    object <- fixture_load(k)
+    params <- parameters(object, mess = FALSE)
+    expect_false(anyDuplicated(params$coef) > 0)
+    expect_setequal(params$coef, colnames(object$MCMC[[1L]]))
+  })
+}
+
 for (k in fixture_names) {
   test_that(paste("parameters() rows match the coefficient list:", k), {
     object <- fixture_load(k)
