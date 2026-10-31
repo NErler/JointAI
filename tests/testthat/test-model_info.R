@@ -584,3 +584,63 @@ test_that("error for coxph with interaction of time-varying and incomplete basel
     "interaction between a time-varying\\s+covariate\\s+and a\\s+incomplete"
   )
 })
+
+test_that("covariate models have an intercept also if the analysis model has none", {
+  # the covariate models are the same as with an analysis model with
+  # intercept: an intercept for linear and binary models and for each
+  # category of a multinomial model, thresholds (no intercept) for an
+  # ordinal model; the analysis model keeps its specification
+  cases <- list(
+    lm = list(
+      fun = lm_imp,
+      with = y ~ C1 + C2 + B2 + O2 + M2,
+      without = y ~ 0 + C1 + C2 + B2 + O2 + M2,
+      data = wideDF
+    ),
+    glm_binomial = list(
+      fun = glm_imp,
+      with = B1 ~ C1 + C2 + O2,
+      without = B1 ~ -1 + C1 + C2 + O2,
+      data = wideDF,
+      family = binomial()
+    ),
+    survreg = list(
+      fun = survreg_imp,
+      with = Surv(futime, status != "censored") ~ age + copper,
+      without = Surv(futime, status != "censored") ~ 0 + age + copper,
+      data = PBC[!duplicated(PBC$id), ]
+    )
+  )
+
+  coef_terms <- function(coefs) {
+    paste(coefs$varname, coefs$outcat)
+  }
+
+  for (k in names(cases)) {
+    case <- cases[[k]]
+    args <- case[setdiff(names(case), c("fun", "with", "without"))]
+    fit_with <- do.call(setup_model, c(list(case$fun, case$with), args))
+    fit_without <- do.call(setup_model, c(list(case$fun, case$without), args))
+
+    analysis <- names(fit_without$fixed)
+    expect_false(
+      "(Intercept)" %in% fit_without$coef_list[[analysis]]$varname,
+      label = k
+    )
+
+    covariates <- setdiff(names(fit_with$coef_list), analysis)
+    expect_setequal(setdiff(names(fit_without$coef_list), analysis), covariates)
+    for (cov in covariates) {
+      expect_identical(
+        coef_terms(fit_without$coef_list[[cov]]),
+        coef_terms(fit_with$coef_list[[cov]]),
+        label = paste(cov, "in", k)
+      )
+    }
+  }
+
+  # the ordinal and the multinomial covariate model are included
+  fit <- setup_model(lm_imp, y ~ 0 + C1 + C2 + B2 + O2 + M2, data = wideDF)
+  expect_identical(fit$info_list$O2$modeltype, "clm")
+  expect_identical(fit$info_list$M2$modeltype, "mlogit")
+})
