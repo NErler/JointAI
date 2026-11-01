@@ -47,7 +47,7 @@ get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
   sub <- unique(unlist(
     c(
       sapply(
-        paste0("^", s, "\\["),
+        paste0("^", escape_regex(s), "\\["),
         grep,
         colnames(object$MCMC[[1]]),
         value = TRUE

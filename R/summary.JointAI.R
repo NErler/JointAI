@@ -140,12 +140,20 @@ summary.JointAI <- function(
           c(
             object$coef_list[[varname]]$coef,
             grep(
-              paste0("_", object$info_list[[varname]]$varname, "\\b"),
+              paste0(
+                "_",
+                escape_regex(object$info_list[[varname]]$varname),
+                "(\\[|$)"
+              ),
               colnames(MCMC),
               value = TRUE
             ),
             grep(
-              paste0("_", object$info_list[[varname]]$varname, "_"),
+              paste0(
+                "_",
+                escape_regex(object$info_list[[varname]]$varname),
+                "_"
+              ),
               colnames(MCMC),
               value = TRUE
             ),
@@ -703,7 +711,7 @@ coef.JointAI <- function(
     )]
 
     if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
-      interc <- grep(paste0("gamma_", k, "\\["), names(cfs))
+      interc <- grep(paste0("^gamma_", escape_regex(k), "\\["), names(cfs))
 
       lvl <- levels(object$Mlist$refs[[k]])
       if (isTRUE(rev)) {
@@ -823,7 +831,10 @@ confint.JointAI <- function(
 
     if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
       lvl <- levels(object$Mlist$refs[[k]])
-      interc <- grep(paste0("gamma_", k, "\\["), rownames(quants))
+      interc <- grep(
+        paste0("^gamma_", escape_regex(k), "\\["),
+        rownames(quants)
+      )
 
       if (isTRUE(rev)) {
         rownames(quants)[interc] <- paste(k, "\u2264", lvl[-length(lvl)])
@@ -871,7 +882,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
           c("clm", "clmm")
       ) {
         stats <- t(t(colMeans(MCMC[, grep(
-          paste0("gamma_", varname),
+          paste0("^gamma_", escape_regex(varname), "\\["),
           colnames(MCMC)
         )])))
         get_intercepts(

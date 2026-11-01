@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* With several ordinal outcomes whose names start in the same way (e.g., `O1` and
+  `O11`), `summary()` and `print()` stopped with an error, and `coef()`, `confint()`
+  and `parameters()` were wrong without any message: the thresholds of `O11` were
+  missing or had wrong names. Specifying, e.g., `subset = list(other = "gamma_O1[1]")`
+  also selected parameters of the other outcome. With outcomes such as `y` and `y.1`,
+  `summary()` listed `sigma_y.1` for `y` as well.
 * `predict()` with `type = "response"` rounded the predicted values of Poisson
   models (`glm_imp()`, `glmm_imp()`) to integers, also in the returned sample.
   It now gives the expected counts. The rounded values were also used for the
