@@ -2,7 +2,10 @@
 #'
 #' @inheritParams summary.JointAI
 #' @param type type of residuals: \code{"working"} (default), \code{"pearson"}
-#'             or \code{"response"}
+#'             or \code{"response"}. In models with more than one model
+#'             formula, one value applies to all outcomes, and a named vector
+#'             sets the type per outcome (outcomes that are not named get
+#'             \code{"working"}).
 #' @param ... currently not used
 #'
 #' @return A numeric vector of residuals, or, for models with more than one
@@ -37,21 +40,29 @@ residuals.JointAI <- function(
   }
 
   # set type of residuals
-  # - if type is one character string, apply it to all models
-  # - if type is a vector it must have names matching the names of (some of)
-  #   the outcomes
-  if (length(type) == 1) {
-    types <- setNames(rep(type, length(object$fixed)), names(object$fixed))
+  # - by default, working residuals for all models (the default value of the
+  #   argument only lists the options)
+  # - if type has no names, apply it to all models
+  # - if type has names, they must match the names of (some of) the outcomes;
+  #   the other outcomes get the default type
+  if (missing(type)) {
+    type <- "working"
+  }
+
+  outcomes <- names(object$fixed)
+
+  if (is.null(names(type))) {
+    types <- setNames(rep_len(type, length(outcomes)), outcomes)
   } else {
-    if (any(!names(type) %in% names(object$fixed))) {
+    if (any(!names(type) %in% outcomes)) {
       errormsg(
         'When %s is a named vector, the names must match outcome
                variables, i.e., %s.',
         dQuote('type'),
-        dQuote(names(object$fixed))
+        paste_and(dQuote(outcomes))
       )
     }
-    types <- setNames(rep(type, length(object$fixed)), names(object$fixed))
+    types <- setNames(rep("working", length(outcomes)), outcomes)
     types[names(type)] <- type
   }
 
