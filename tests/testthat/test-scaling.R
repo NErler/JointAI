@@ -1260,3 +1260,297 @@ test_that("cross-level interactions without a main effect (#66)", {
     expect_subject_lp_invariant(fit, "y")
   }
 })
+
+
+# Joint models with interactions in the survival part (#108) -------------------
+# The survival part of a joint model contains the time-varying covariates and
+# their interactions as written in the JAGS model (the value of the
+# longitudinal sub-model at the event time and at the quadrature points), not
+# as columns of a design matrix. The two terms of the likelihood are therefore
+# calculated from the text of the JAGS models: for any values of the parameters
+# and of the unobserved quantities, the model with scaling and the parameters
+# on the scaled scale must give the same result as the model without scaling and
+# the re-scaled parameters. No MCMC sample and no convergence are needed.
+
+jm_scale_case <- function(
+  survfml,
+  ...,
+  longfml = chol ~ day + age + (day | id)
+) {
+  list(
+    formula = c(
+      list(survfml),
+      if (is.list(longfml)) longfml else list(longfml)
+    ),
+    args = list(...)
+  )
+}
+
+jm_scale_fit <- function(case, scale_vars = NULL) {
+  call <- as.call(c(
+    quote(JM_imp),
+    list(formula = case$formula, timevar = "day", data = quote(PBC_small)),
+    list(scale_vars = scale_vars),
+    case$args
+  ))
+  golden_fit(call, golden_data())
+}
+
+# the statements of the JAGS model that define the two terms of the likelihood
+# of the survival part, from the baseline hazard to log.surv_<outcome>, as
+# R expressions (the syntax of these statements is the same in R)
+jm_likelihood_code <- function(fit) {
+  lines <- strsplit(fit$jagsmodel, "\n", fixed = TRUE)[[1L]]
+  first <- grep("^ *logh0_", lines)
+  last <- grep("^ *log\\.surv_", lines)
+  parse(text = lines[first:last], keep.source = FALSE)
+}
+
+# parameters (from the columns of a matrix of draws) as vectors, as in JAGS
+add_draw <- function(env, draw) {
+  par <- sub("\\[.*$", "", names(draw))
+  for (nam in unique(par)) {
+    env[[nam]] <- unname(draw[par == nam])
+  }
+}
+
+# Values of everything in the likelihood that JAGS would sample: missing values
+# in the data, and the values of the longitudinal sub-models. Their size is
+# that of the observed values, because they are used in transformations and
+# in the exponent. These values are shared by the two versions of the model.
+jm_unobserved <- function(fit, code) {
+  n_row <- nrow(fit$data_list$M_lvlone)
+  n_subj <- nrow(fit$data_list$M_id)
+
+  out <- list()
+  for (nam in grep("^mu(gk)?_", all.vars(code), value = TRUE)) {
+    covariate <- sub("^mu(gk)?_", "", nam)
+    size <- mean(fit$data_list$M_lvlone[, covariate], na.rm = TRUE)
+    out[[nam]] <- if (startsWith(nam, "mugk_")) {
+      matrix(size * runif(n_subj * 15L, 0.5, 1.5), nrow = n_subj)
+    } else {
+      size * runif(n_row, 0.5, 1.5)
+    }
+  }
+  for (nam in c("M_id", "M_lvlone", "M_lvlonegk")) {
+    x <- fit$data_list[[nam]]
+    x[is.na(x)] <- runif(sum(is.na(x)), 0.5, 1.5)
+    out[[nam]] <- x
+  }
+  out
+}
+
+# log-hazard at the event time and log-survival for all subjects, for one draw
+jm_likelihood_terms <- function(fit, code, unobserved, draw) {
+  outcome <- fit$info_list[[1L]]$varname
+  n_subj <- nrow(fit$data_list$M_id)
+
+  env <- list2env(fit$data_list, parent = baseenv())
+  env$inprod <- function(a, b) sum(a * b)
+  list2env(unobserved, envir = env)
+  add_draw(env, draw)
+
+  # the statements assign to elements of these objects
+  for (nam in c("logh0_", "eta_", "logh_", "log.surv_")) {
+    env[[paste0(nam, outcome)]] <- numeric(n_subj)
+  }
+  for (nam in c("logh0s_", "Surv_")) {
+    env[[paste0(nam, outcome)]] <- matrix(0, n_subj, 15L)
+  }
+
+  for (ii in seq_len(n_subj)) {
+    env$ii <- ii
+    for (statement in code) {
+      eval(statement, envir = env)
+    }
+  }
+  list(
+    logh = env[[paste0("logh_", outcome)]],
+    logsurv = env[[paste0("log.surv_", outcome)]]
+  )
+}
+
+# draw_size: size of the parameters on the scale used in JAGS; must be smaller
+# if columns are not scaled, otherwise the exponent overflows
+expect_jm_likelihood_invariant <- function(
+  case,
+  scale_vars = NULL,
+  draw_size = 0.5
+) {
+  fit <- jm_scale_fit(case, scale_vars = scale_vars)
+  fit_unscaled <- jm_scale_fit(case, scale_vars = FALSE)
+  label <- deparse1(case$formula[[1L]])
+
+  # both versions use the same data
+  expect_identical(
+    fit$data_list[c("M_id", "M_lvlone")],
+    fit_unscaled$data_list[c("M_id", "M_lvlone")]
+  )
+
+  outcome <- fit$info_list[[1L]]$varname
+  bh0 <- sprintf(
+    "beta_Bh0_%s[%d]",
+    outcome,
+    seq_len(fit$info_list[[1L]]$df_basehaz)
+  )
+  # (after the set-up of the models, which sets the seed)
+  set.seed(2020)
+  draws <- scaled_draws(fit, extra = bh0) * draw_size
+  rescaled <- rescale_draws(fit, draws)
+
+  code <- jm_likelihood_code(fit)
+  code_unscaled <- jm_likelihood_code(fit_unscaled)
+  unobserved <- jm_unobserved(fit, code)
+
+  for (d in seq_len(nrow(draws))) {
+    terms_scaled <- jm_likelihood_terms(fit, code, unobserved, draws[d, ])
+    terms_unscaled <- jm_likelihood_terms(
+      fit_unscaled,
+      code_unscaled,
+      unobserved,
+      rescaled[d, ]
+    )
+    # (missing or infinite values would make the comparison meaningless)
+    expect_true(all(is.finite(unlist(terms_scaled))), label = label)
+    expect_equal(terms_unscaled, terms_scaled, label = label)
+  }
+}
+
+test_that("likelihood of a joint model with interactions is invariant to scaling (#108)", {
+  surv <- Surv(futime, status != "censored") ~ 1
+  two_covariates <- list(
+    chol ~ day + age + (day | id),
+    albumin ~ day + (day | id)
+  )
+  cases <- list(
+    # time-varying covariate and baseline covariate or factor
+    jm_scale_case(update(surv, . ~ age * chol)),
+    jm_scale_case(update(surv, . ~ sex * chol)),
+    jm_scale_case(update(surv, . ~ age * sex * chol)),
+    # time-varying covariate and the time variable or a function of time
+    jm_scale_case(update(surv, . ~ chol + chol:day)),
+    jm_scale_case(
+      update(surv, . ~ chol + chol:ns(day, df = 2)),
+      auxvars = ~ ns(day, df = 2)
+    ),
+    # baseline covariate and a function of time
+    jm_scale_case(
+      update(surv, . ~ chol + age + age:ns(day, df = 2)),
+      auxvars = ~ ns(day, df = 2)
+    ),
+    # association type and transformation
+    jm_scale_case(
+      update(surv, . ~ age * chol),
+      assoc_type = c(chol = "obs.value")
+    ),
+    jm_scale_case(update(surv, . ~ age * log(chol))),
+    # two time-varying covariates
+    jm_scale_case(update(surv, . ~ chol * albumin), longfml = two_covariates),
+    # cross-level interaction in the longitudinal sub-model as well
+    jm_scale_case(
+      update(surv, . ~ age * chol),
+      longfml = chol ~ age * day + (day | id)
+    ),
+    # time-varying binary and ordinal covariate
+    jm_scale_case(
+      update(surv, . ~ age * hepato),
+      longfml = hepato ~ day + (1 | id)
+    ),
+    jm_scale_case(
+      update(surv, . ~ age * stage),
+      longfml = stage ~ age + (1 | id)
+    )
+  )
+  for (case in cases) {
+    expect_jm_likelihood_invariant(case)
+  }
+})
+
+test_that("likelihood of a joint model if only some columns are scaled (#108)", {
+  case <- jm_scale_case(Surv(futime, status != "censored") ~ age * chol)
+  expect_jm_likelihood_invariant(case, scale_vars = "age", draw_size = 1e-4)
+  expect_jm_likelihood_invariant(
+    case,
+    scale_vars = "age:chol",
+    draw_size = 1e-4
+  )
+  expect_jm_likelihood_invariant(case, scale_vars = "chol", draw_size = 1e-4)
+})
+
+test_that("an interaction in the survival part is a scaled column (#108)", {
+  case <- jm_scale_case(
+    Surv(futime, status != "censored") ~ age * chol + chol:day
+  )
+  fit <- jm_scale_fit(case)
+  expect_true(all(
+    c("age", "chol", "age:chol", "chol:day") %in% scaled_columns(fit)
+  ))
+  expect_length(scaled_columns(jm_scale_fit(case, scale_vars = FALSE)), 0L)
+
+  # the interaction is the product of its elements in the JAGS model, centred
+  # and scaled with the parameters of its own column, also in the quadrature
+  sp <- fit$data_list$spM_lvlone
+  col <- match("age:chol", rownames(sp))
+  scaling <- sprintf(" - spM_lvlone[%d, 1])/spM_lvlone[%d, 2]", col, col)
+  expect_identical(
+    lengths(regmatches(
+      fit$jagsmodel,
+      gregexpr(scaling, fit$jagsmodel, fixed = TRUE)
+    )),
+    2L
+  )
+})
+
+test_that("a joint model with an interaction is transformed back (short MCMC run)", {
+  # the sample is far from convergence; only the transformation of the sampled
+  # values is checked
+  dat <- golden_data()
+  fit <- suppressMessages(suppressWarnings(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ age * chol + chol:day,
+      chol ~ day + age + (day | id)
+    ),
+    timevar = "day",
+    data = dat$PBC_small,
+    n.adapt = 10,
+    n.iter = 5,
+    seed = 2020,
+    keep_scaled_mcmc = TRUE,
+    mess = FALSE
+  )))
+  scaled <- fit$sample[[1L]]
+  expect_equal(
+    unname(as.matrix(fit$MCMC[[1L]])),
+    unname(as.matrix(rescale_draws(fit, scaled)))
+  )
+
+  coefs <- fit$coef_list[[1L]]
+  sp <- do.call(rbind, unname(fit$Mlist$scale_pars))
+  for (k in seq_len(nrow(coefs))) {
+    expect_equal(
+      as.vector(fit$MCMC[[1L]][, coefs$coef[k]]),
+      as.vector(scaled[, coefs$coef[k]]) / sp[coefs$varname[k], "scale"],
+      info = coefs$varname[k]
+    )
+  }
+})
+
+test_that("monitoring is completed for a joint model with an interaction (F11)", {
+  fit <- suppressMessages(setup_coef_monitor(
+    JM_imp,
+    list(
+      Surv(futime, status != "censored") ~ age * chol,
+      chol ~ day + age + (day | id)
+    ),
+    timevar = "day",
+    data = golden_data()$PBC_small,
+    monitor_params = c(
+      analysis_main = FALSE,
+      other = "beta_Bh0_Srv_ftm_stts_cn[1]"
+    )
+  ))
+  # the shift of the baseline hazard needs all coefficients of the survival part
+  expect_true(all(
+    fit$coef_list[[1L]]$coef %in% fit$mcmc_settings$variable.names
+  ))
+})
