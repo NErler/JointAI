@@ -176,9 +176,14 @@ divide_matrices <- function(
 
   # if one element in an interaction is time-varying the interaction is
   # time-varying
+  # The level of the interaction column itself (from the data) is included,
+  # because an element may not be a column of the design matrix (e.g., in
+  # `age:ns(day, df = 3)` without the main effect of `ns(day, df = 3)`); its
+  # level is then unknown.
   if (length(inter) > 0) {
-    minlvl <- sapply(strsplit(inter, ":"), function(k) {
-      names(which.min(group_lvls[gsub("M_", "", Mlvls[k])]))
+    minlvl <- sapply(inter, function(k) {
+      lvls <- Mlvls[c(k, strsplit(k, ":")[[1L]])]
+      names(which.min(group_lvls[gsub("M_", "", lvls)]))
     })
     Mlvls[inter] <- paste0("M_", minlvl)
   }

@@ -187,6 +187,13 @@
 * `sum_duration()` sorted the runs as text, so that with ten or more runs
   (e.g., after repeated `add_samples()`), "run 10" came before "run 2". The
   runs are now kept in their numeric order.
+* An interaction with an element that is not a column of the data used in the
+  model, because its main effect is not in the model (e.g.,
+  `age:ns(day, df = 3)` without `ns(day, df = 3)`), was placed on the level of
+  the other element(s) (e.g., the level of `age`), also when it varies within
+  that level. Its value was then that of the first observation of each group,
+  without error or warning. Such an interaction is now placed on the level on
+  which it varies.
 * When `add_samples()` failed while re-creating the JAGS model (e.g., because
   of invalid parameter values), the console output stayed redirected to a
   temporary file, so that the error message and all later output were not
