@@ -71,6 +71,15 @@ add_samples <- function(
     errormsg("Use only with 'JointAI' objects.")
   }
 
+  # [[ ]] instead of $, which would partially match the element "models"
+  if (is.null(object[["model"]])) {
+    errormsg(
+      "The object does not contain the JAGS model (it is only kept when the
+      model is fitted with %s), so that no samples can be added.",
+      dQuote("n.adapt > 0")
+    )
+  }
+
   # check/set settings -----------------------------------------------------
   thin <- check_add_thinning(
     object = object,
@@ -129,6 +138,12 @@ add_samples <- function(
     }
   }
 
+  # The sample on the scale used in JAGS is kept if this was requested when the
+  # model was fitted (that setting is not stored in objects fitted with earlier
+  # versions, but these have such a sample if they have any sample).
+  keep_scaled_mcmc <- isTRUE(object$mcmc_settings$keep_scaled_mcmc) ||
+    !is.null(object$sample)
+
   # combine with/replace original samples --------------------------------------
   # (a model without sample has nothing to add to: the new samples are used)
   if (isTRUE(add) && !is.null(object$MCMC)) {
@@ -139,7 +154,9 @@ add_samples <- function(
             rbind(object$sample[[x]], mcmc[[x]]),
             start = start(object$sample),
             end = end(object$sample) +
-              coda::niter(mcmc[[x]])
+              coda::niter(mcmc[[x]]) *
+                coda::thin(mcmc[[x]]),
+            thin = coda::thin(mcmc[[x]])
           )
         })
       )
@@ -158,7 +175,7 @@ add_samples <- function(
       })
     )
   } else {
-    newmcmc <- if (!is.null(object$sample)) mcmc
+    newmcmc <- if (keep_scaled_mcmc) mcmc
     newMCMC <- MCMC
   }
 
