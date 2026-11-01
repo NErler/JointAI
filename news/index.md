@@ -263,6 +263,13 @@
     and an interaction coded without the reference category (only
     `sexfemale:day`) is currently not possible.
 - [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
+  did not recognise regression coefficients that are monitored as single
+  elements or ranges of a node (e.g., `other = "beta[2]"`, or the
+  coefficients that are added with scaled covariates when, e.g., a
+  random effect is monitored): `outcome` and `varname` were `NA` and a
+  range had one row. If no regression coefficients were monitored, the
+  columns were in a different order.
+- [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
   listed the regression coefficients of all models when all monitored
   parameters were regression coefficients (e.g., only `beta` monitored),
   also those of models that were not monitored.
