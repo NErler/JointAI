@@ -522,29 +522,33 @@ orga_hc_parelmts <- function(
     names(all_lvls)[all_lvls <= min(all_lvls[lvls])],
     function(lvl) {
       other <- get_othervars_mat(lvl, parelmts, lp)
-      nonprop <- get_othervars_mat(
-        lvl,
-        lapply(parelmts, 'attr', 'nonprop'),
-        attr(lp, 'nonprop')
-      )
 
       if (!inherits(other, 'list')) {
         other <- other[!other$parelmts %in% unlist(used), ]
       }
 
-      list(
-        other = if (all(dim(other) > 0)) {
-          other
-        },
-        nonprop = nonprop
-      )
+      if (all(dim(other) > 0)) {
+        other
+      }
     }
   )
 
+  # Non-proportional effects are not in the means of the random effects, so they
+  # are needed from any level, also above the lowest level with random effects.
+  nonprop <- nlapply(names(all_lvls), function(lvl) {
+    get_othervars_mat(
+      lvl,
+      lapply(parelmts, 'attr', 'nonprop'),
+      attr(lp, 'nonprop')
+    )
+  })
+  is_lower_lvl <- all_lvls <= min(all_lvls[lvls])
+  has_nonprop <- !lvapply(nonprop, is.null)
+
   list(
     hcvars = hc_vars,
-    othervars = lapply(othervars, "[[", "other"),
-    nonprop = lapply(othervars, "[[", "nonprop")
+    othervars = othervars,
+    nonprop = nonprop[is_lower_lvl | has_nonprop]
   )
 }
 

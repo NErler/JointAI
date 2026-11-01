@@ -368,6 +368,8 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       )
 
       # write the syntax for other longitudinal variables
+      # In the quadrature part only the lowest level has a matrix of data at the
+      # quadrature points (M_lvlonegk); the other levels do not change with time.
       other <- if (!is.null(info$hc_list$othervars[[lvl]])) {
         paste_other(
           othervars = info$hc_list$othervars[[lvl]],
@@ -375,7 +377,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
           index = index,
           scale_pars = info$scale_pars[[paste0("M_", lvl)]],
           scale_mat = paste0("spM_", lvl),
-          isgk = isgk
+          isgk = isgk && lvl == "lvlone"
         )
       }
 
