@@ -354,6 +354,11 @@ melt_data.frame <- function(
 }
 
 
+# Internal, but still exported: remiod calls clean_survname() without a namespace
+# prefix, via import(JointAI), so it would break without the export. JointAI
+# itself uses internal_clean_survname(). Remove this function once remiod no
+# longer calls it.
+
 #' Convert a survival outcome to a model name
 #'
 #' A helper function that converts the "name of a survival model"
@@ -366,6 +371,7 @@ melt_data.frame <- function(
 #'         survival outcomes (\code{"Surv(...)"}) are replaced by valid
 #'         variable names; other values are returned unchanged.
 #'
+#' @keywords internal
 #' @export
 clean_survname <- function(x) {
   warning(

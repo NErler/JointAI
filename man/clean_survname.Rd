@@ -19,3 +19,4 @@ A helper function that converts the "name of a survival model"
 (the \code{"Surv(time, status)"} specification) into a valid variable name
 so that it can be used in the JAGS model syntax.
 }
+\keyword{internal}
