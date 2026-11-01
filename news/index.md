@@ -34,6 +34,15 @@
 
 ### Bug fixes
 
+- [`predict()`](https://rdrr.io/r/stats/predict.html) with
+  `type = "response"` rounded the predicted values of Poisson models
+  ([`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  `glmm_imp()`) to integers, also in the returned sample. It now gives
+  the expected counts. The rounded values were also used for the fitted
+  values, so that
+  [`residuals()`](https://rdrr.io/r/stats/residuals.html) were wrong as
+  well (`NaN` or very large values where the fitted value was rounded to
+  0). Results of such models fitted with earlier versions differ.
 - When the analysis model had no intercept (e.g.,
   `lm_imp(y ~ 0 + x1 + x2)`) and no random effects, the models for the
   incomplete covariates (the imputation models) had no intercept either,
@@ -291,6 +300,17 @@
   [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)),
   “run 10” came before “run 2”. The runs are now kept in their numeric
   order.
+- [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
+  failed with “attempt to set an attribute on NULL” for a model without
+  MCMC sample (`n.iter = 0`) and the default `add = TRUE`. The new
+  samples are now the samples of the object.
+- [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
+  did not respect `keep_scaled_mcmc = TRUE` for a model without MCMC
+  sample, and failed with “Start, end and thin incompatible with data”
+  when adding to a scaled sample with thinning (`thin` \> 1).
+- [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
+  for a model without JAGS model (`n.adapt = 0`) now gives an
+  informative error.
 - An interaction with an element that is not a column of the data used
   in the model, because its main effect is not in the model (e.g.,
   `age:ns(day, df = 3)` without `ns(day, df = 3)`), was placed on the

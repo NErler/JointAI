@@ -139,6 +139,11 @@ An object returned by one of the main functions
 
   :   a list containing the initial values that were passed to **rjags**
 
+  `keep_scaled_mcmc`:
+
+  :   `TRUE` if the MCMC sample on the scale used in JAGS is kept (only
+      present in that case)
+
 - `monitor_params`:
 
   the named list of parameter groups to be monitored

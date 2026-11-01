@@ -288,7 +288,9 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
 
   :   should the "original" MCMC sample (i.e., the scaled version
       returned by `coda.samples()`) be kept? (The MCMC sample that is
-      re-scaled to the scale of the data is always kept.)
+      re-scaled to the scale of the data is always kept.) Also applies
+      to samples created with
+      [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md).
 
   `modelname`
 

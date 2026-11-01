@@ -24,7 +24,8 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
 
   logical; should the new MCMC samples be added to the existing samples
   (`TRUE`; default) or replace them? If samples are added the arguments
-  `monitor_params` and `thin` are ignored.
+  `monitor_params` and `thin` are ignored. If the object has no samples
+  yet, the new samples are its samples.
 
 - thin:
 
