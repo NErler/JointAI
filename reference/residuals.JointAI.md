@@ -18,7 +18,10 @@ residuals(object, type = c("working", "pearson",
 
 - type:
 
-  type of residuals: `"working"` (default), `"pearson"` or `"response"`
+  type of residuals: `"working"` (default), `"pearson"` or `"response"`.
+  In models with more than one model formula, one value applies to all
+  outcomes, and a named vector sets the type per outcome (outcomes that
+  are not named get `"working"`).
 
 - warn:
 

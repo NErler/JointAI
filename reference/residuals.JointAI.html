@@ -70,7 +70,10 @@
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>type of residuals: <code>"working"</code> (default), <code>"pearson"</code>
-or <code>"response"</code></p></dd>
+or <code>"response"</code>. In models with more than one model
+formula, one value applies to all outcomes, and a named vector
+sets the type per outcome (outcomes that are not named get
+<code>"working"</code>).</p></dd>
 
 
 <dt id="arg-warn">warn<a class="anchor" aria-label="anchor" href="#arg-warn"></a></dt>

@@ -173,9 +173,10 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
 - models:
 
   optional; named vector specifying the types of models for (incomplete)
-  covariates. This arguments replaces the argument `meth` used in
-  earlier versions. If `NULL` (default) models will be determined
-  automatically based on the class of the respective columns of `data`.
+  covariates and for outcomes. This arguments replaces the argument
+  `meth` used in earlier versions. If `NULL` (default) models will be
+  determined automatically based on the class of the respective columns
+  of `data`.
 
 - no_model:
 
@@ -323,7 +324,9 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   distribution and link function to be used in the model. This can be a
   character string naming a family function, a family function or the
   result of a call to a family function. (For more details see below and
-  [`family`](https://rdrr.io/r/stats/family.html).)
+  [`family`](https://rdrr.io/r/stats/family.html).) When `formula` is a
+  list of formulas, `family` only applies to the first outcome; see the
+  section on multiple models below.
 
 - nonprop:
 
@@ -427,6 +430,17 @@ longitudinal and survival data.
 
 Note that it is not possible to specify multiple models for the same
 outcome variable.
+
+The argument `family` only applies to the first outcome. The other
+outcomes get the default model for their variable type (see the section
+on model types below), e.g., a linear model for a numeric variable, also
+when `family` is [`poisson()`](https://rdrr.io/r/stats/family.html). To
+use another model for these outcomes, specify it in the argument
+`models`, which also takes precedence over `family` for the first
+outcome, for example:
+
+    glm_imp(list(B1 ~ C1, B2 ~ C1), family = binomial("probit"), data = wideDF,
+            models = c(B2 = "glm_binomial_probit"))
 
 #### Random effects variance-covariance structure
 
