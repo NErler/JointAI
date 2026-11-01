@@ -10,8 +10,8 @@
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{type}{type of residuals: \code{"deviance"}, \code{"response"},
-\code{"working"}}
+\item{type}{type of residuals: \code{"working"} (default), \code{"pearson"}
+or \code{"response"}}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}.}

@@ -1,8 +1,8 @@
 #' Extract residuals from an object of class JointAI
 #'
 #' @inheritParams summary.JointAI
-#' @param type type of residuals: \code{"deviance"}, \code{"response"},
-#'             \code{"working"}
+#' @param type type of residuals: \code{"working"} (default), \code{"pearson"}
+#'             or \code{"response"}
 #' @param ... currently not used
 #'
 #' @return A numeric vector of residuals, or, for models with more than one
