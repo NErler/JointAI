@@ -56,7 +56,7 @@ intercept by \code{+beta_s * c_w * c_z / (s_w * s_z)}.
 A linear predictor is identified by the outcome and, for models with
 category-specific coefficients (e.g. multinomial models), the category
 (\code{coefs$outcat}; \code{NA} otherwise). All matching is done by name: parameters
-by their name in \code{MCMC} (\code{coefs$coef}), scaling parameters by the name of
-the design-matrix column (\code{coefs$varname}).
+by their name in \code{MCMC} (\code{coefs$coef}), scaling parameters by the exact name
+of the design-matrix column (\code{coefs$varname}; \code{scale_pars_rows()}).
 }
 \keyword{internal}

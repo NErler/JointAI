@@ -256,8 +256,8 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
 #' A linear predictor is identified by the outcome and, for models with
 #' category-specific coefficients (e.g. multinomial models), the category
 #' (`coefs$outcat`; `NA` otherwise). All matching is done by name: parameters
-#' by their name in `MCMC` (`coefs$coef`), scaling parameters by the name of
-#' the design-matrix column (`coefs$varname`).
+#' by their name in `MCMC` (`coefs$coef`), scaling parameters by the exact name
+#' of the design-matrix column (`coefs$varname`; `scale_pars_rows()`).
 #'
 #' @param MCMC MCMC sample of one chain (`mcmc` object or matrix), on the
 #'   scale used in JAGS.
@@ -309,11 +309,12 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
   #   i.e., x = w * z, center = -c_w * c_z and divisor = s_w * s_z. The terms
   #   -c_z * w and -c_w * z belong to the coefficients of w and z; they are
   #   added further below.
-  coefs$center <- scale_pars[coefs$varname, "center"]
-  coefs$divisor <- scale_pars[coefs$varname, "scale"]
+  sp_coefs <- scale_pars_rows(scale_pars, coefs$varname)
+  coefs$center <- sp_coefs$center
+  coefs$divisor <- sp_coefs$scale
 
-  sp_w <- scale_pars[coefs$w[is_product], ]
-  sp_z <- scale_pars[coefs$z[is_product], ]
+  sp_w <- scale_pars_rows(scale_pars, coefs$w[is_product])
+  sp_z <- scale_pars_rows(scale_pars, coefs$z[is_product])
   coefs$center[is_product] <- -sp_w$center * sp_z$center
   coefs$divisor[is_product] <- sp_w$scale * sp_z$scale
 
@@ -386,9 +387,11 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
     beta_s <- MCMC[, coefs$coef[k]]
 
     # the variable whose coefficient changes, and the centre of the other one
+    center_w <- scale_pars_rows(scale_pars, coefs$w[k])$center
+    center_z <- scale_pars_rows(scale_pars, coefs$z[k])$center
     changes <- list(
-      list(var = coefs$w[k], other_center = scale_pars[coefs$z[k], "center"]),
-      list(var = coefs$z[k], other_center = scale_pars[coefs$w[k], "center"])
+      list(var = coefs$w[k], other_center = center_z),
+      list(var = coefs$z[k], other_center = center_w)
     )
     for (change in changes) {
       target <- coefs$coef[same_lp & coefs$varname == change$var]
@@ -402,6 +405,23 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
   }
 
   rescaled
+}
+
+
+#' Scaling parameters of design-matrix columns
+#'
+#' Finds the rows by the exact column name. (Indexing the rows of a `data.frame`
+#' with names, `scale_pars[columns, ]`, also accepts a partial match: `"age"`
+#' would find the row `"age_sq"` if there is no row `"age"`.)
+#'
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column).
+#' @param columns character vector of column names.
+#' @return `data.frame` with one row per element of `columns`, in that order;
+#'   the values are `NA` for a name that has no row in `scale_pars`.
+#' @keywords internal
+scale_pars_rows <- function(scale_pars, columns) {
+  scale_pars[match(columns, rownames(scale_pars)), , drop = FALSE]
 }
 
 
@@ -470,6 +490,38 @@ par_names <- function(name, n) {
     return(name)
   }
   paste0(name, "[", seq_len(n), "]")
+}
+
+
+#' Parts of the names of parameters in the MCMC sample
+#'
+#' A parameter is the whole node (`"alpha"`), or one or more of its elements:
+#' `"alpha[3]"`, `"alpha[2:4]"`, `"b_y_id[5,1:2]"`.
+#' * `par_node()`: the name of the node (`"alpha"`, `"b_y_id"`).
+#' * `par_index_text()`: the text between the brackets, without interpreting it
+#'   (`"3"`, `"2:4"`, `"5,1:2"`).
+#' * `is_node_element()`: is it an element of the given node? This does not
+#'   include the whole node itself, or nodes with a longer name (`"alpha2[3]"`).
+#'
+#' @param x character vector of parameter names.
+#' @param node character string; name of the node.
+#' @return `par_node()`: character vector, `x` up to the first `"["`.
+#'   `par_index_text()`: character vector, the text between the first `"["` and
+#'   the last `"]"`; a name without index is returned unchanged.
+#'   `is_node_element()`: logical vector.
+#' @keywords internal
+par_node <- function(x) {
+  sub("\\[.*$", "", x)
+}
+
+#' @rdname par_node
+par_index_text <- function(x) {
+  sub("^[^[]*\\[(.*)\\]$", "\\1", x)
+}
+
+#' @rdname par_node
+is_node_element <- function(x, node) {
+  startsWith(x, paste0(node, "["))
 }
 
 
@@ -727,7 +779,7 @@ complete_ranef_monitoring <- function(var_names, info_list, mess = TRUE) {
 
     # covariance matrix: if some of its elements are monitored, monitor all
     # elements of the upper triangle (as when D is monitored by default)
-    if (any(startsWith(var_names, paste0(D_node, "[")))) {
+    if (any(is_node_element(var_names, D_node))) {
       ij <- which(upper.tri(diag(nz), diag = TRUE), arr.ind = TRUE)
       D_all <- sprintf("%s[%d,%d]", D_node, ij[, 1L], ij[, 2L])
       new <- setdiff(D_all, var_names)
@@ -737,10 +789,9 @@ complete_ranef_monitoring <- function(var_names, info_list, mess = TRUE) {
 
     # random effects: if single elements are monitored, e.g. "b_y_id[5,2]",
     # monitor the whole row of these groups instead, e.g. "b_y_id[5,1:2]"
-    is_b_element <- startsWith(var_names, paste0(b_node, "["))
+    is_b_element <- is_node_element(var_names, b_node)
     for (k in which(is_b_element)) {
-      inside <- sub("^[^[]*\\[(.*)\\]$", "\\1", var_names[k])
-      group_index <- sub(",.*$", "", inside)
+      group_index <- sub(",.*$", "", par_index_text(var_names[k]))
       row <- sprintf("%s[%s,1:%d]", b_node, group_index, nz)
       if (row != var_names[k]) {
         var_names[k] <- row
@@ -823,9 +874,7 @@ complete_coef_monitoring <- function(var_names, info_list, mess = TRUE) {
     other_nodes <- paste0(c("gamma_", "beta_Bh0_"), info$varname)
     uses_coefs <- any(is_monitored)
     for (node in other_nodes) {
-      if (
-        node %in% var_names || any(startsWith(var_names, paste0(node, "[")))
-      ) {
+      if (node %in% var_names || any(is_node_element(var_names, node))) {
         uses_coefs <- TRUE
       }
     }
@@ -859,7 +908,7 @@ complete_coef_monitoring <- function(var_names, info_list, mess = TRUE) {
 #'   (`"alpha[2:4]"`).
 #' @keywords internal
 coef_is_monitored <- function(coef, var_names) {
-  node <- sub("\\[.*$", "", coef)
+  node <- par_node(coef)
   if (coef %in% var_names || node %in% var_names) {
     return(TRUE)
   }
@@ -869,9 +918,8 @@ coef_is_monitored <- function(coef, var_names) {
   }
 
   # ranges of elements of the same node
-  index <- as.integer(sub("^.*\\[([0-9]+)\\]$", "\\1", coef))
-  ranges <- var_names[startsWith(var_names, paste0(node, "["))]
-  ranges <- sub("^[^[]*\\[(.*)\\]$", "\\1", ranges)
+  index <- as.integer(par_index_text(coef))
+  ranges <- par_index_text(var_names[is_node_element(var_names, node)])
   ranges <- ranges[grepl("^[0-9]+:[0-9]+$", ranges)]
   for (r in ranges) {
     if (index %in% index_range(r)) {
@@ -914,7 +962,7 @@ index_range <- function(x) {
 #' @keywords internal
 ranef_transformation <- function(lvl_info, scale_pars) {
   z_names <- attr(lvl_info, "z_names")
-  sp <- scale_pars[match(z_names, rownames(scale_pars)), ]
+  sp <- scale_pars_rows(scale_pars, z_names)
   # the random intercept is not scaled
   sp$center[z_names == "(Intercept)"] <- 0
   sp$scale[z_names == "(Intercept)"] <- 1
@@ -1072,7 +1120,7 @@ ranef_shift <- function(
       mu[, j] <- mu[, j] + rescaled[, coef]
     } else {
       # covariate at 0: (0 - c_w) / s_w on the scaled scale, 0 on the original
-      sp_w <- scale_pars[match(terms$w[k], rownames(scale_pars)), ]
+      sp_w <- scale_pars_rows(scale_pars, terms$w[k])
       mu_s[, j] <- mu_s[, j] + MCMC[, coef] * (-sp_w$center / sp_w$scale)
     }
   }
@@ -1134,7 +1182,7 @@ ranef_covariate_shift <- function(
   out <- list()
   for (w in unique(terms$w)) {
     w_terms <- terms[terms$w == w, ]
-    sp_w <- scale_pars[match(w, rownames(scale_pars)), ]
+    sp_w <- scale_pars_rows(scale_pars, w)
 
     # coefficient of w in mu(x) - A mu_s(x): the coefficient on the original
     # scale in the mean of random effect j, minus column j of A times the
