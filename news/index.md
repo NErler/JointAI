@@ -34,6 +34,19 @@
 
 ### Bug fixes
 
+- Factors with `contr.sum` or `contr.helmert` (set via
+  `options("contrasts")`):
+  - Incomplete factors with `contr.sum` stopped with an error. They now
+    work, using the category number (not the label) in the JAGS model.
+  - Complete factors with `contr.sum` did not get the documented coding
+    (for more than two categories, only the first contrast variable was
+    correct). They do now; the reference category is coded as -1 in all
+    contrast variables, and the coefficients are named after the
+    category they belong to (e.g., `fb`, `fc` instead of `f1`, `f2`).
+    Results of such models fitted with earlier versions differ.
+  - In the development version, any factor with these contrasts stopped
+    with an error about the names of dummy variables. Complete factors
+    with `contr.helmert` work again, with coefficients `f1`, `f2`.
 - In models with three or more levels, an incomplete interaction of
   covariates from different levels above the lowest (e.g., a
   subject-level and a center-level covariate) was calculated with the
