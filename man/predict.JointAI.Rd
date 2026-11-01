@@ -30,7 +30,9 @@ the highest posterior probability, or \code{"lp"}. For parametric survival
 models \code{type} can be \code{"lp" } or "response", and for proportional
 hazards survival models the options are \code{"lp"}, \code{"risk"} (=
 \code{exp(lp)}), \code{"survival"} or \code{"expected"} (=
-\code{-log(survival)}).}
+\code{-log(survival)}). When the prediction is done for several outcomes,
+one value applies to all outcomes, and a named vector sets the type per
+outcome (outcomes that are not named get \code{"lp"}).}
 
 \item{start}{the first iteration of interest
 (see \code{\link[coda]{window.mcmc}})}
