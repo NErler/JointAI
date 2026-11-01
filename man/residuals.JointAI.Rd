@@ -39,8 +39,8 @@ effects only.
 \examples{
 mod <- glm_imp(B1 ~ C1 + C2 + O1, data = wideDF, n.iter = 100,
                family = binomial(), mess = FALSE)
-summary(residuals(mod, type = 'response')[[1]])
-summary(residuals(mod, type = 'working')[[1]])
+summary(residuals(mod, type = 'response'))
+summary(residuals(mod, type = 'working'))
 
 
 }
