@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `survreg_imp()`, `coxph_imp()` and `JM_imp()` now give an informative error for
+  survival outcomes that are not right-censored. Left-censored outcomes
+  (`Surv(time, event, type = "left")`) were accepted and fitted as if they were
+  right-censored, without any message. Start-stop and interval-censored outcomes
+  (e.g., `Surv(start, stop, event)`) failed with an error about competing risks.
 * Factors with `contr.sum` or `contr.helmert` (set via `options("contrasts")`):
   * Incomplete factors with `contr.sum` stopped with an error. They now work,
     using the category number (not the label) in the JAGS model.

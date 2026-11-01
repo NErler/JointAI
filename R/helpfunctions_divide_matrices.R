@@ -205,6 +205,9 @@ extract_outcome_data <- function(
   outcomes <- outnams <- extract_outcomes_list(fixed)
 
   for (i in seq_along(fixed)) {
+    # before the outcome is evaluated: `Surv()` may give an unrelated error
+    check_surv_type(names(outnams[i]), data)
+
     if (
       survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))
     ) {
@@ -418,6 +421,59 @@ varname_to_modelframe <- function(varname, data) {
     names(mf) <- varname
   }
   return(mf)
+}
+
+#' Check that a survival outcome is right-censored
+#'
+#' Gives an error for any other type of `Surv()` outcome, because the models in
+#' JointAI assume right-censoring and use the first column of the survival
+#' object as the time and the second as the event indicator.
+#'
+#' The type is derived from the call and not from `attr(Surv(...), "type")`:
+#' `convert_variables()` turns a binary event indicator into a factor, and with
+#' a factor `Surv()` ignores `type` and returns "mright" or "mcounting".
+#'
+#' @param lhs character string; the left hand side of a model formula. Anything
+#'   that is not a call to `Surv()` is ignored.
+#' @param data a `data.frame`; used to evaluate the argument `type`, in case it
+#'   is not given as a character string.
+#' @returns `NULL`, invisibly; called for the error.
+#' @note Used in `extract_outcome_data()`.
+#' @keywords internal
+check_surv_type <- function(lhs, data) {
+  if (!grepl("^Surv\\(", lhs)) {
+    return(invisible(NULL))
+  }
+
+  surv_call <- match.call(survival::Surv, str2lang(lhs))
+
+  # abbreviated types are allowed, as in `Surv()`
+  type <- eval(surv_call$type, envir = data)
+  if (!is.null(type)) {
+    all_types <- eval(formals(survival::Surv)$type)
+    matched_type <- all_types[pmatch(type, all_types)]
+    type <- if (is.na(matched_type)) type else matched_type
+  }
+
+  # Without `type`, `Surv()` chooses it by the number of time and event
+  # arguments. The deprecated type "mstate" also depends on them: it is
+  # right-censored without a start time.
+  if (is.null(type) || identical(type, "mstate")) {
+    has_start_time <- !is.null(surv_call$time2) && !is.null(surv_call$event)
+    type <- if (has_start_time) "counting" else "right"
+  }
+
+  if (type != "right") {
+    errormsg(
+      "Only right-censored survival outcomes can be modelled, i.e., %s, but the
+      outcome %s is of type %s.",
+      dQuote("Surv(time, event)"),
+      dQuote(lhs),
+      dQuote(type)
+    )
+  }
+
+  invisible(NULL)
 }
 
 # used in divide_matrices (2020-06-09)
