@@ -111,7 +111,11 @@ run_seq <- function(
 
 
 identify_level_relations <- function(grouping) {
-  .Deprecated("get_grouping_levels ", package = "JointAI")
+  .Deprecated(
+    "get_grouping_levels",
+    package = "JointAI",
+    old = "identify_level_relations"
+  )
 
   # if grouping is not yet a list, make it a list
   if (!is.list(grouping)) {
@@ -137,7 +141,7 @@ check_cluster <- function(x, grouping) {
   # check if a variable varies within one cluster
   # - x: a vector
   # - grouping: a list of grouping information (obtained from get_groups())
-  .Deprecated("get_groups ", package = "JointAI")
+  .Deprecated("get_groups", package = "JointAI", old = "check_cluster")
 
   attributes(x) <- NULL
 
@@ -154,7 +158,7 @@ check_cluster <- function(x, grouping) {
 
 
 extract_id <- function(random, warn = TRUE) {
-  .Deprecated("extract_grouping ", package = "JointAI")
+  .Deprecated("extract_grouping", package = "JointAI", old = "extract_id")
 
   random <- check_formula_list(random)
 
@@ -221,7 +225,7 @@ extract_id <- function(random, warn = TRUE) {
 
 
 check_varlevel <- function(x, groups, group_lvls = NULL) {
-  .Deprecated("get_datlvls ", package = "JointAI")
+  .Deprecated("get_datlvls", package = "JointAI", old = "check_varlevel")
   # identify the level of a variable
   # - x: a vector
   # - groups: a list of grouping information (obtained from get_groups())
@@ -260,7 +264,7 @@ check_varlevel <- function(x, groups, group_lvls = NULL) {
 
 
 extract_lhs <- function(formula) {
-  .Deprecated("extract_lhs_string ", package = "JointAI")
+  .Deprecated("extract_lhs_string", package = "JointAI", old = "extract_lhs")
 
   if (is.null(formula)) {
     return(NULL)
@@ -293,7 +297,11 @@ extract_lhs <- function(formula) {
 
 # used in divide_matrices, get_models, and helpfunctions (2020-06-09)
 extract_outcome <- function(fixed) {
-  .Deprecated("extract_outcomes_list ", package = "JointAI")
+  .Deprecated(
+    "extract_outcomes_list",
+    package = "JointAI",
+    old = "extract_outcome"
+  )
 
   # Extract the names(s) of the outcome variable(s) from (a list of) fixed
   # effects formula(s)
@@ -327,7 +335,7 @@ melt_data.frame <- function(
   varnames = NULL,
   valname = 'value'
 ) {
-  .Deprecated("melt_data_frame ", package = "JointAI")
+  .Deprecated("melt_data_frame", package = "JointAI", old = "melt_data.frame")
 
   if (!inherits(data, 'data.frame')) {
     errormsg("This function may not work for objects that are not data.frames.")
