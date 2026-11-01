@@ -117,3 +117,22 @@ test_that(
     expect_silent(check_na_groupings(groups))
   }
 )
+
+
+# level of interaction terms ---------------------------------------------------
+test_that("an interaction with an element that is not a column is time-varying", {
+  # the main effect of ns(day) is not in the model, so the level of the
+  # interaction cannot be derived from its elements
+  fit <- lme_imp(
+    chol ~ age + age:ns(day, df = 2) + (1 | id),
+    data = PBC[PBC$id %in% unique(PBC$id)[1:30], ],
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE
+  )
+  expect_true(all(
+    c("age:ns(day, df = 2)1", "age:ns(day, df = 2)2") %in%
+      colnames(fit$data_list$M_lvlone)
+  ))
+  expect_false(any(grepl("ns(day", colnames(fit$data_list$M_id), fixed = TRUE)))
+})
