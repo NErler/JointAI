@@ -585,6 +585,67 @@ test_that("error for coxph with interaction of time-varying and incomplete basel
   )
 })
 
+test_that("error for terms of only the time variable in the survival part of a JM", {
+  # the effect of these terms cannot (or hardly) be separated from the baseline
+  # hazard
+  survival_formulas <- list(
+    main_effect = quote(Surv(futime, status != "censored") ~ age + chol + day),
+    spline = quote(
+      Surv(futime, status != "censored") ~ age + chol + ns(day, df = 3)
+    ),
+    log = quote(Surv(futime, status != "censored") ~ age + chol + log(day + 1)),
+    polynomial = quote(
+      Surv(futime, status != "censored") ~ age + chol + I(day^2)
+    ),
+    with_interaction = quote(
+      Surv(futime, status != "censored") ~ age + chol * day
+    )
+  )
+
+  for (case in names(survival_formulas)) {
+    call <- bquote(JM_imp(
+      list(.(survival_formulas[[case]]), chol ~ day + age + (day | id)),
+      timevar = "day",
+      data = PBC_small
+    ))
+    expect_error(
+      setup_case(call),
+      "time variable\\s+.day.\\s+is\\s+part\\s+of\\s+the\\s+linear\\s+predictor",
+      info = case
+    )
+  }
+})
+
+test_that("check_jm_time_terms() names the terms of only the time variable", {
+  expect_error(
+    check_jm_time_terms(Surv(t, e) ~ chol + ns(day, df = 3), "day"),
+    "in\\s+.ns\\(day, df = 3\\)."
+  )
+})
+
+test_that("check_jm_time_terms() passes terms that involve other variables", {
+  # effects of the other variable that change over time; whether these can be
+  # fitted is not decided by this check
+  survival_formulas <- list(
+    no_time = Surv(t, e) ~ age + chol,
+    function_of_other_variable = Surv(t, e) ~ age + log(chol),
+    no_covariates = Surv(t, e) ~ 1,
+    interaction = Surv(t, e) ~ chol + chol:day,
+    interaction_function = Surv(t, e) ~ chol + chol:ns(day, df = 3),
+    interaction_baseline = Surv(t, e) ~ age + age:ns(day, df = 3),
+    interaction_factor = Surv(t, e) ~ sex + sex:day,
+    several_variables = Surv(t, e) ~ age + I(day * age),
+    similar_name = Surv(t, e) ~ day2 + log(day_max)
+  )
+
+  for (case in names(survival_formulas)) {
+    expect_no_error(
+      check_jm_time_terms(survival_formulas[[case]], "day"),
+      message = case
+    )
+  }
+})
+
 test_that("covariate models have an intercept also if the analysis model has none", {
   # the covariate models are the same as with an analysis model with
   # intercept: an intercept for linear and binary models and for each

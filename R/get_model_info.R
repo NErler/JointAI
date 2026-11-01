@@ -159,6 +159,12 @@ get_model1_info <- function(
   )
 
   # JM settings ----------------------------------------------------------------
+  # * time variable ------------------------------------------------------------
+  # terms that only involve the time variable overlap with the baseline hazard
+  if (modeltype %in% "JM") {
+    check_jm_time_terms(fixed = Mlist$fixed[[k]], timevar = Mlist$timevar)
+  }
+
   # * covariate names ----------------------------------------------------------
   covnames <- if (modeltype %in% "JM") {
     unique(unlist(
@@ -763,6 +769,60 @@ get_assoc_type <- function(covnames, models, assoc_type, refs) {
       assoc_type[k]
     }
   }))
+}
+
+
+#' Terms of only the time variable in the survival part of a joint model
+#'
+#' The baseline hazard of a joint model is a (spline) function of time, so that
+#' the effect of a term that involves nothing but the time variable (e.g., `day`,
+#' `ns(day, df = 3)`, `log(day + 1)` or `I(day^2)`) cannot (or hardly) be
+#' distinguished from it. Interactions of the time variable with another
+#' variable (e.g., `chol:day`) describe an effect of that other variable that
+#' changes over time, and are not concerned.
+#'
+#' Stops with an informative error if there is such a term.
+#'
+#' @param fixed the formula of the survival model.
+#' @param timevar name of the time variable.
+#'
+#' @returns `NULL`, invisibly; called for the error.
+#' @keywords internal
+check_jm_time_terms <- function(fixed, timevar) {
+  # matrix with variables in the rows and terms in the columns, e.g., the
+  # variable "ns(day, df = 3)" and the terms "ns(day, df = 3)" and
+  # "chol:ns(day, df = 3)"
+  term_factors <- attr(terms(fixed), "factors")
+
+  time_terms <- character(0L)
+  for (term in colnames(term_factors)) {
+    term_vars <- rownames(term_factors)[term_factors[, term] > 0L]
+
+    # the data variables used in each of the variables of this term
+    only_time <- vapply(
+      term_vars,
+      function(var) identical(all.vars(str2lang(var)), timevar),
+      FUN.VALUE = logical(1L)
+    )
+
+    if (all(only_time)) {
+      time_terms <- c(time_terms, term)
+    }
+  }
+
+  if (length(time_terms) > 0L) {
+    errormsg(
+      "The time variable %s is part of the linear predictor of the survival
+      model, in %s. In a joint model, the effect of time is described by the
+      baseline hazard. Please remove %s from the model formula of the survival
+      model.",
+      dQuote(timevar),
+      paste_and(dQuote(time_terms)),
+      paste_and(dQuote(time_terms))
+    )
+  }
+
+  invisible(NULL)
 }
 
 
