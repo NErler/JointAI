@@ -31,6 +31,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/check_formula_list.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_full_blockdiag.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_groups_vary_within_lvl.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/check_jm_unknown_interactions.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_na_groupings.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_rd_vcov.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_rd_vcov_list.html</loc></url>
@@ -67,6 +68,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/get_family.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_grouping_levels.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_groups.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/get_jm_interactions.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_listelement.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_missinfo.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_modeltype.html</loc></url>
