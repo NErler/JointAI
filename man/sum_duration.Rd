@@ -32,3 +32,12 @@ per run.
 \description{
 Calculate the sum of the computational duration of a JointAI object
 }
+\examples{
+\donttest{
+mod <- lm_imp(y ~ C1 + C2, data = wideDF, n.iter = 100, mess = FALSE)
+
+sum_duration(mod)
+sum_duration(mod, by = "phase")
+}
+
+}

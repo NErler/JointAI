@@ -307,6 +307,14 @@ duration_obj <- function(dur) {
 #'         \code{adapt} and \code{sample}, each a named vector with one value
 #'         per run.
 #'
+#' @examples
+#' \donttest{
+#' mod <- lm_imp(y ~ C1 + C2, data = wideDF, n.iter = 100, mess = FALSE)
+#'
+#' sum_duration(mod)
+#' sum_duration(mod, by = "phase")
+#' }
+#'
 #' @export
 #'
 sum_duration <- function(

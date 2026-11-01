@@ -7,6 +7,20 @@
 #'         Returns the current state of the MCMC sampler (values of the last
 #'         iteration) for the subset of nodes identified based on the pattern
 #'         the user has specified.
+#'
+#' @examples
+#' \donttest{
+#' mod <- lme_imp(y ~ C1 + time + (time | id), data = longDF, n.iter = 100,
+#'                mess = FALSE)
+#'
+#' # by default: the random effects and the (inverse) variance parameters
+#' state <- extract_state(mod)
+#' names(state[[1]])
+#'
+#' # only the nodes whose name matches a pattern
+#' extract_state(mod, pattern = "^tau_")
+#' }
+#'
 #' @export
 #'
 extract_state <- function(
