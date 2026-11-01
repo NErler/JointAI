@@ -158,7 +158,9 @@ predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
 #'   models \code{type} can be \code{"lp" } or "response", and for proportional
 #'   hazards survival models the options are \code{"lp"}, \code{"risk"} (=
 #'   \code{exp(lp)}), \code{"survival"} or \code{"expected"} (=
-#'   \code{-log(survival)}).
+#'   \code{-log(survival)}). When the prediction is done for several outcomes,
+#'   one value applies to all outcomes, and a named vector sets the type per
+#'   outcome (outcomes that are not named get \code{"lp"}).
 #' @param outcome vector of variable names or integers identifying for which
 #'   outcome(s) the prediction should be performed.
 #' @param return_sample logical; should the full sample on which the summary
@@ -275,18 +277,24 @@ predict.JointAI <- function(
     ...
   )
 
-  if (length(type) == 1L & length(outcome == 1L)) {
-    types <- setNames(rep(type, length(object$fixed)), names(object$fixed))
+  # set the type of prediction per outcome
+  # - if type has no names, apply it to all outcomes
+  # - if type has names, they must match the names of (some of) the outcomes;
+  #   the other outcomes get the default type
+  outcomes <- names(object$fixed)
+
+  if (is.null(names(type))) {
+    types <- setNames(rep_len(type, length(outcomes)), outcomes)
   } else {
-    if (any(!names(type) %in% names(object$fixed))) {
+    if (any(!names(type) %in% outcomes)) {
       errormsg(
         "When %s is a named vector, the names must match outcome
                variables, i.e., %s.",
         dQuote("type"),
-        dQuote(names(object$fixed))
+        paste_and(dQuote(outcomes))
       )
     }
-    types <- setNames(rep(type, length(object$fixed)), names(object$fixed))
+    types <- setNames(rep("lp", length(outcomes)), outcomes)
     types[names(type)] <- type
   }
 
@@ -709,6 +717,12 @@ predict_coxph <- function(
     gkx = gkx
   )
 
+  # the coefficients of the baseline hazard of this outcome
+  mcmc_cols <- grep(
+    paste0("\\bbeta_Bh0_", internal_clean_survname(varname), "\\b"),
+    colnames(MCMC)
+  )
+
   if (type %in% c("expected", "survival")) {
     Bsh0 <-
       splines::splineDesign(
@@ -717,11 +731,6 @@ predict_coxph <- function(
         ord = 4L,
         outer.ok = TRUE
       )
-
-    mcmc_cols <- grep(
-      paste0("\\bbeta_Bh0_", internal_clean_survname(varname), "\\b"),
-      colnames(MCMC)
-    )
 
     logh0s <- lapply(seq_len(nrow(MCMC)), function(m) {
       matrix(
@@ -792,7 +801,7 @@ predict_coxph <- function(
     logh0 <- vapply(
       seq_len(nrow(Bh0)),
       function(i) {
-        MCMC[, grep("beta_Bh0", colnames(MCMC))] %*% Bh0[i, ]
+        MCMC[, mcmc_cols, drop = FALSE] %*% Bh0[i, ]
       },
       FUN.VALUE = numeric(nrow(MCMC))
     )
@@ -926,8 +935,16 @@ predict_clm <- function(
     })
   }
 
+  # the thresholds of this outcome (not of an outcome with a name that starts
+  # with the name of this one), one column for a single threshold
+  gamma_node <- paste0("gamma_", varname)
+  gamma_cols <- colnames(MCMC)[
+    colnames(MCMC) == gamma_node |
+      startsWith(colnames(MCMC), paste0(gamma_node, "["))
+  ]
+
   gammas <- lapply(
-    grep(paste0("gamma_", varname), colnames(MCMC), value = TRUE),
+    gamma_cols,
     function(k) {
       matrix(
         nrow = nrow(eta),
