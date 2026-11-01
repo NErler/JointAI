@@ -26,6 +26,11 @@
   with the new default `"all"` (`NULL`, the earlier default, still
   works); other values give an informative error instead of returning
   `NULL`.
+- The deprecation warning of internal deprecated functions now names the
+  function also when it is called via
+  [`lapply()`](https://rdrr.io/r/base/lapply.html) (it said “‘FUN’ is
+  deprecated”), and the name of the replacement no longer has a trailing
+  space.
 
 ### Bug fixes
 

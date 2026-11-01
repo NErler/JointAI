@@ -56,6 +56,7 @@
 <li>Clearer error messages: <code><a href="../reference/plot_imp_distr.html">plot_imp_distr()</a></code> applied to a fitted model now points to <code><a href="../reference/get_MIdat.html">get_MIdat()</a></code>; <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> for JM and mlogit models says that residuals (not prediction) are not yet implemented; typo in the message for coxph models fixed.</li>
 <li>
 <code><a href="../reference/sum_duration.html">sum_duration()</a></code>: the possible values of <code>by</code> are now listed in the function definition, with the new default <code>"all"</code> (<code>NULL</code>, the earlier default, still works); other values give an informative error instead of returning <code>NULL</code>.</li>
+<li>The deprecation warning of internal deprecated functions now names the function also when it is called via <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> (it said “‘FUN’ is deprecated”), and the name of the replacement no longer has a trailing space.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
