@@ -35,10 +35,10 @@ jagsmodel_clmm <- function(info) {
     collapse = "\n"
   )
 
-  linpred_nonprop <- if (
-    !is.null(attr(info$parelmts[[info$resp_mat]], 'nonprop'))
-  ) {
-    nonprop <- lapply(write_nonprop(info), add_linebreaks, indent = indent + 2)
+  nonprop <- write_nonprop(info)
+
+  linpred_nonprop <- if (!is.null(nonprop)) {
+    nonprop <- lapply(nonprop, add_linebreaks, indent = indent + 2)
 
     paste0(
       "\n\n",
@@ -257,6 +257,29 @@ clmm_in_jm <- function(info) {
   # main model parts -----------------------------------------------------------
   Z_predictor <- paste_lp_ranef_part(info, isgk = TRUE)
 
+  # linear predictors of the non-proportional effects, one per threshold
+  nonprop <- write_nonprop(info, isgk = TRUE)
+
+  linpred_nonprop <- if (!is.null(nonprop)) {
+    indent_nonprop <- 10 + nchar(info$varname) + 16
+
+    paste0(
+      "\n",
+      paste0(
+        tab(6),
+        "etagk_",
+        info$varname,
+        "_",
+        seq_along(nonprop),
+        "[",
+        index,
+        ", k] <- ",
+        lapply(nonprop, add_linebreaks, indent = indent_nonprop),
+        collapse = "\n"
+      )
+    )
+  }
+
   # syntax to set values of dummy variables,
   # e.g. "M_lvlone[i, 8] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)"
   dummies <- if (!is.null(info$dummy_cols)) {
@@ -301,10 +324,17 @@ clmm_in_jm <- function(info) {
     index,
     ", k] <- ",
     add_linebreaks(Z_predictor, indent = 10 + nchar(info$varname) + 14),
+    linpred_nonprop,
     "\n\n",
     write_probs(info, index, isgk = TRUE, indent = 6L),
     "\n\n",
-    write_logits(info, index, isgk = TRUE, indent = 6L),
+    write_logits(
+      info,
+      index,
+      nonprop = !is.null(linpred_nonprop),
+      isgk = TRUE,
+      indent = 6L
+    ),
     "\n\n",
     tab(4),
     "}\n",

@@ -21,6 +21,15 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Non-proportional effects (`nonprop`) of ordinal outcomes in mixed models and
+  joint models. Results of such models fitted with earlier versions differ.
+  * If all non-proportional effects were on a higher level than the outcome
+    (e.g., a baseline covariate with a longitudinal outcome), they were silently
+    left out of the model. Their coefficients were only sampled from the prior.
+  * If all were on the level of the outcome, `clmm_imp()` stopped with an error.
+  * For an ordinal time-varying covariate in a joint model (`JM_imp()`), they
+    were left out of the part of the model that calculates the covariate at the
+    quadrature points.
 * With several ordinal outcomes whose names start in the same way (e.g., `O1` and
   `O11`), `summary()` and `print()` stopped with an error, and `coef()`, `confint()`
   and `parameters()` were wrong without any message: the thresholds of `O11` were
