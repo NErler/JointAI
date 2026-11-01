@@ -1231,3 +1231,37 @@ fitted_values <- function(object, ...) {
     lapply(fit, "[[", "fit")
   }
 }
+
+
+#' Set the fitted values and residuals of a JointAI object
+#'
+#' Calculates the fitted values and (working) residuals from the current MCMC
+#' sample of the object. If they cannot be calculated (e.g., because there is no
+#' sample or the regression coefficients are not monitored), they are removed
+#' from the object, so that no values from an earlier sample remain.
+#'
+#' @param object object of class `JointAI` (or the object that is being created
+#'   in `model_imp()` and `add_samples()`).
+#' @return `object` with the updated elements `fitted.values` and `residuals`.
+#' @keywords internal
+update_fitted_residuals <- function(object) {
+  object$fitted.values <- try(
+    fitted_values(object, mess = FALSE, warn = FALSE),
+    silent = TRUE
+  )
+
+  # residuals() uses the fitted values in the object
+  object$residuals <- try(
+    residuals(object, type = "working", warn = FALSE),
+    silent = TRUE
+  )
+
+  if (inherits(object$fitted.values, "try-error")) {
+    object$fitted.values <- NULL
+  }
+  if (inherits(object$residuals, "try-error")) {
+    object$residuals <- NULL
+  }
+
+  object
+}
