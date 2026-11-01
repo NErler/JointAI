@@ -974,11 +974,12 @@ paste_linpred_jm <- function(
   )
 
   # wrap in trafo if there is a trafo of the time-dep variable in the lin.pred
-  # of the survival model
+  # of the survival model; only for the underlying value: the observed value is
+  # the column of the design matrix that already holds the transformed value
   if (!is.null(unlist(covnames))) {
     pastedat <- Map(
-      function(covname, colname, strng) {
-        if (colname %in% trafo$colname) {
+      function(covname, colname, type, strng) {
+        if (type == "underl.value" && colname %in% trafo$colname) {
           fct <- trafo$fct[trafo$colname == colname]
           if (trafo$type[trafo$colname == colname] == "I") {
             fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
@@ -990,6 +991,7 @@ paste_linpred_jm <- function(
       },
       covname = covnames,
       colname = names(covnames),
+      type = assoc_type,
       strng = pastedat
     )
   }
@@ -1052,8 +1054,10 @@ paste_jm_column <- function(
     isgk = isgk
   )
 
-  # wrap in the transformation (as in paste_linpred_jm())
-  if (colname %in% names(assoc_type) && colname %in% trafo$colname) {
+  # wrap in the transformation (as in paste_linpred_jm()); only for the
+  # underlying value: the observed value is the column of the design matrix that
+  # already holds the transformed value
+  if (type == "underl.value" && colname %in% trafo$colname) {
     fct <- trafo$fct[trafo$colname == colname]
     if (trafo$type[trafo$colname == colname] == "I") {
       fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))

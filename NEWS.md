@@ -230,6 +230,14 @@
   of invalid parameter values), the console output stayed redirected to a
   temporary file, so that the error message and all later output were not
   shown.
+* A joint model (`JM_imp()`) with a transformed time-varying covariate in the
+  survival part (e.g., `log(chol)`) and the association type `"obs.value"`
+  (specified via `assoc_type = c("log(chol)" = "obs.value")`, or the default,
+  e.g., for a covariate with a Poisson model) applied the transformation twice,
+  i.e., it used `log(log(chol))`, also in interactions. This could lead to an
+  error in JAGS ("Invalid parent values") or, without any error or warning
+  (e.g., for `I(chol^2)`), to a wrong model. Results of such models fitted with
+  earlier versions differ.
 
 # JointAI 1.1.0
 
