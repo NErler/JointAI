@@ -72,7 +72,7 @@ parameters <- function(
   gammas <- grep("^gamma_", vnam, value = TRUE)
   for (k in gammas) {
     vnam <- expand_params(
-      pattern = k,
+      pattern = paste0("^", escape_regex(k), "$"),
       vnam = vnam,
       n = object$info_list[[gsub("gamma_", "", k)]]$ncat - 1
     )
