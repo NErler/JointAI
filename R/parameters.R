@@ -83,10 +83,20 @@ parameters <- function(
 
   # figure out which part of vnam is already included in "coefs" and which part
   # needs to be added
-  rows <- unlist(lapply(paste0('\\b', vnam, '\\b'), grep, x = coefs$coef))
-  add <- sapply(vnam, function(x) {
-    !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
-  })
+  rows <- integer(0L)
+  add <- rep(TRUE, length(vnam))
+  for (k in seq_along(vnam)) {
+    monitored <- which(vapply(
+      coefs$coef,
+      coef_is_monitored,
+      FUN.VALUE = logical(1L),
+      var_names = vnam[k],
+      USE.NAMES = FALSE
+    ))
+    rows <- c(rows, monitored)
+    add[k] <- length(monitored) == 0L
+  }
+  rows <- unique(rows)
 
   df_names <- if (is.null(coefs)) {
     c("outcome", "outcat", "varname", "coef")
@@ -147,7 +157,8 @@ parameters <- function(
 
   rownames(params) <- NULL
 
-  params <- params[, setdiff(names(params), 'varnam_print')]
+  # the same columns in the same order, also if there are no coefficients
+  params <- params[, setdiff(df_names, 'varnam_print')]
 
   # has to be sorted so that the additional parameters are together with the
   # regression coefficients
