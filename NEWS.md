@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `survreg_imp()`, `coxph_imp()` and `JM_imp()` now give an informative error for
+  survival outcomes that are not right-censored. Left-censored outcomes
+  (`Surv(time, event, type = "left")`) were accepted and fitted as if they were
+  right-censored, without any message. Start-stop and interval-censored outcomes
+  (e.g., `Surv(start, stop, event)`) failed with an error about competing risks.
 * In models with three or more levels, an incomplete interaction of covariates
   from different levels above the lowest (e.g., a subject-level and a
   center-level covariate) was calculated with the value of the wrong unit: the
