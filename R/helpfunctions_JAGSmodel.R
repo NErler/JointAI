@@ -1246,7 +1246,7 @@ paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
         ", ",
         resp_col,
         "] == ",
-        refs,
+        categories[as.integer(refs)],
         ", -1, 0))"
       )
     } else {
