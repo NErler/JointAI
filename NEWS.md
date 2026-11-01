@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `residuals()` of models with more than one model formula used the wrong type
+  of residuals: by default only the first outcome got working residuals, the
+  second got Pearson and the third response residuals. Now all get working
+  residuals. In a named `type`, outcomes that are not named also get working
+  residuals, and a single named `type` only applies to the named outcome.
 * When the analysis model had no intercept (e.g., `lm_imp(y ~ 0 + x1 + x2)`)
   and no random effects, the models for the incomplete covariates (the
   imputation models) had no intercept either, e.g., `x2 ~ 0 + x1`. They now

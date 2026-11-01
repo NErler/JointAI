@@ -11,7 +11,10 @@
 \item{object}{object inheriting from class 'JointAI'}
 
 \item{type}{type of residuals: \code{"working"} (default), \code{"pearson"}
-or \code{"response"}}
+or \code{"response"}. In models with more than one model
+formula, one value applies to all outcomes, and a named vector
+sets the type per outcome (outcomes that are not named get
+\code{"working"}).}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}.}
