@@ -298,6 +298,13 @@
   varies within that level. Its value was then that of the first
   observation of each group, without error or warning. Such an
   interaction is now placed on the level on which it varies.
+- [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
+  kept the fitted values and residuals of the first run, also with
+  `add = FALSE`, so that
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) used these
+  old values and [`residuals()`](https://rdrr.io/r/stats/residuals.html)
+  used the old fitted values. They are now calculated from the sample of
+  the returned object (or removed if that is not possible).
 - When
   [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md)
   failed while re-creating the JAGS model (e.g., because of invalid
