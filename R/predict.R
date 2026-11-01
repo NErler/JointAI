@@ -445,11 +445,7 @@ predict_glm <- function(
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == "response") {
-    if (info_list[[varname]]$family == "poisson") {
-      round(colMeans(linkinv(pred)))
-    } else {
-      colMeans(linkinv(pred))
-    }
+    colMeans(linkinv(pred))
   } else {
     colMeans(pred)
   }
@@ -467,11 +463,7 @@ predict_glm <- function(
 
   sample <- if (return_sample) {
     s <- if (type == "response") {
-      if (info_list[[varname]]$family == "poisson") {
-        round(linkinv(pred))
-      } else {
-        linkinv(pred)
-      }
+      linkinv(pred)
     } else {
       pred
     }

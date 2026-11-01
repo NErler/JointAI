@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `predict()` with `type = "response"` rounded the predicted values of Poisson
+  models (`glm_imp()`, `glmm_imp()`) to integers, also in the returned sample.
+  It now gives the expected counts. The rounded values were also used for the
+  fitted values, so that `residuals()` were wrong as well (`NaN` or very large
+  values where the fitted value was rounded to 0). Results of such models
+  fitted with earlier versions differ.
 * When the analysis model had no intercept (e.g., `lm_imp(y ~ 0 + x1 + x2)`)
   and no random effects, the models for the incomplete covariates (the
   imputation models) had no intercept either, e.g., `x2 ~ 0 + x1`. They now
