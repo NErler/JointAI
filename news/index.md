@@ -34,6 +34,18 @@
 
 ### Bug fixes
 
+- With several ordinal outcomes whose names start in the same way (e.g.,
+  `O1` and `O11`), [`summary()`](https://rdrr.io/r/base/summary.html)
+  and [`print()`](https://rdrr.io/r/base/print.html) stopped with an
+  error, and [`coef()`](https://rdrr.io/r/stats/coef.html),
+  [`confint()`](https://rdrr.io/r/stats/confint.html) and
+  [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.md)
+  were wrong without any message: the thresholds of `O11` were missing
+  or had wrong names. Specifying, e.g.,
+  `subset = list(other = "gamma_O1[1]")` also selected parameters of the
+  other outcome. With outcomes such as `y` and `y.1`,
+  [`summary()`](https://rdrr.io/r/base/summary.html) listed `sigma_y.1`
+  for `y` as well.
 - [`predict()`](https://rdrr.io/r/stats/predict.html) with
   `type = "response"` rounded the predicted values of Poisson models
   ([`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
