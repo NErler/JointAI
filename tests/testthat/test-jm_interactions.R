@@ -194,3 +194,80 @@ test_that("get_jm_interactions() refuses elements above the survival level", {
   expect_length(get_jm_interactions(c(chol = 1L), inter, "M_id"), 0L)
   expect_length(get_jm_interactions(c(chol = 1L), NULL, "M_id"), 0L)
 })
+
+test_that("interaction of a time-varying covariate with a function of time", {
+  # without the main effect of ns(day), its columns are not in the data
+  expect_error(
+    jm_setup(Surv(futime, status != "censored") ~ chol + chol:ns(day, df = 2)),
+    "argument .*auxvars"
+  )
+
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ chol + chol:ns(day, df = 2),
+    auxvars = ~ ns(day, df = 2)
+  )
+  out <- jm_survival_lines(fit)
+  ns1 <- col_of(fit, "M_lvlone", "ns(day, df = 2)1")
+
+  expect_match(
+    out$logh,
+    paste0("mu_chol[", srow, "] * M_lvlone[", srow, ", ", ns1, "]"),
+    fixed = TRUE
+  )
+  expect_match(
+    out$surv,
+    paste0("mugk_chol[ii, 1:15] * M_lvlonegk[ii, ", ns1, ", 1:15]"),
+    fixed = TRUE
+  )
+  expect_jags_compiles(fit)
+})
+
+test_that("interaction of a baseline covariate with a function of time", {
+  # was placed on the level of the subjects (constant over time)
+  expect_error(
+    jm_setup(Surv(futime, status != "censored") ~ age + age:ns(day, df = 2)),
+    "argument .*auxvars"
+  )
+
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ chol + age + age:ns(day, df = 2),
+    auxvars = ~ ns(day, df = 2)
+  )
+  out <- jm_survival_lines(fit)
+  age <- col_of(fit, "M_id", "age")
+  ns1 <- col_of(fit, "M_lvlone", "ns(day, df = 2)1")
+
+  expect_match(
+    out$surv,
+    paste0("M_id[ii, ", age, "] * M_lvlonegk[ii, ", ns1, ", 1:15]"),
+    fixed = TRUE
+  )
+  expect_jags_compiles(fit)
+})
+
+test_that("interaction of a factor with time without the main effect of time", {
+  expect_error(
+    jm_setup(Surv(futime, status != "censored") ~ chol + sex + sex:day),
+    "category .*sexmale"
+  )
+  expect_error(
+    jm_setup(
+      Surv(futime, status != "censored") ~ chol + sex + sex:ns(day, df = 2)
+    ),
+    "category .*sexmale"
+  )
+})
+
+test_that("interaction of a factor with a covariate without its main effect", {
+  expect_error(
+    jm_setup(Surv(futime, status != "censored") ~ age + sex:chol),
+    "add the main\\s+effect of\\s+.*chol"
+  )
+})
+
+test_that("interaction with a function of a covariate without its main effect", {
+  expect_error(
+    jm_setup(Surv(futime, status != "censored") ~ chol + log(chol):day),
+    "add the main\\s+effect of\\s+.*log\\(chol\\)"
+  )
+})
