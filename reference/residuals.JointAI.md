@@ -38,13 +38,15 @@ formula, a list with one such vector per outcome.
 
 ## Note
 
-- For mixed models residuals are currently calculated using the fixed
-  effects only.
+- Residuals are currently only available for generalized linear (mixed)
+  models, including log-normal and beta models (for beta models only
+  `type = "response"`). For other model types (ordinal, multinomial,
+  survival and joint models),
+  [`residuals()`](https://rdrr.io/r/stats/residuals.html) gives an
+  error.
 
-- For ordinal (mixed) models and parametric survival models only
-  `type = "response"` is available.
-
-- For Cox proportional hazards models residuals are not yet implemented.
+- For mixed models residuals are calculated using the fixed effects
+  only.
 
 ## Examples
 
