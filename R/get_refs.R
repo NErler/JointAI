@@ -81,13 +81,23 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
         contr_matrix <- if (attr(res, "contrasts") == 'contr.treatment') {
           contr.treatment(levels(res), base = which(levels(res) == res))
         } else if (attr(res, 'contrasts') == 'contr.sum') {
-          contr_matrix <- contr.sum(levels(res))
-          contr_matrix[
-            match(levels(res), c(setdiff(levels(res), res), as.character(res))),
-            drop = FALSE
-          ]
+          # contr.sum() codes the last category as -1, so the reference category
+          # is put last; afterwards the rows are put back in the order of the
+          # levels. The columns are named after the category they represent.
+          other_levels <- setdiff(levels(res), as.character(res))
+          sum_matrix <- contr.sum(c(other_levels, as.character(res)))
+          sum_matrix <- sum_matrix[levels(res), , drop = FALSE]
+          colnames(sum_matrix) <- other_levels
+          sum_matrix
         } else {
           get(attr(res, "contrasts"))(levels(res))
+        }
+
+        # contrast matrices without column names (e.g., contr.helmert()) get
+        # the numbers that model.matrix() would use as names, so that the names
+        # of the contrast variables are known
+        if (is.null(colnames(contr_matrix))) {
+          colnames(contr_matrix) <- seq_len(ncol(contr_matrix))
         }
 
         attr(res, "contr_matrix") <- contr_matrix
