@@ -12,6 +12,11 @@ nonprop_data <- function() {
     labels = c("a", "b", "c"),
     ordered_result = TRUE
   )
+  # a level above the subjects, with a covariate
+  subjects <- unique(dat$id)
+  centers <- sample(rep(1:5, length.out = length(subjects)))
+  dat$center <- centers[match(dat$id, subjects)]
+  dat$z <- c(0.1, 1.8, 2.0, -4.6, 0.7)[dat$center]
   dat
 }
 
@@ -35,9 +40,9 @@ beta_numbers <- function(line) {
   )[[1L]])
 }
 
-fit_clmm <- function(nonprop) {
+fit_clmm <- function(nonprop, fixed = O ~ age + day + (1 | id)) {
   clmm_imp(
-    O ~ age + day + (1 | id),
+    fixed,
     data = nonprop_data(),
     nonprop = list(O = nonprop),
     n.adapt = 0,
@@ -49,12 +54,9 @@ fit_clmm <- function(nonprop) {
   )
 }
 
-fit_jm <- function(nonprop) {
+fit_jm <- function(nonprop, fixed = O ~ age + day + (1 | id)) {
   JM_imp(
-    list(
-      Surv(futime, status != "censored") ~ age + O,
-      O ~ age + day + (1 | id)
-    ),
+    list(Surv(futime, status != "censored") ~ age + O, fixed),
     data = nonprop_data(),
     timevar = "day",
     nonprop = list(O = nonprop),
@@ -173,4 +175,93 @@ test_that("JM without non-proportional effects has no such terms", {
   )
 
   expect_false(any(grepl("eta(gk)?_O_[0-9]", model_lines(fit))))
+})
+
+
+test_that("clmm: non-proportional effects from a level with random effects", {
+  skip_on_cran()
+
+  lines <- model_lines(fit_clmm(
+    ~ z + age + day,
+    fixed = O ~ z + age + day + (1 | id) + (1 | center)
+  ))
+
+  for (k in 1:2) {
+    expect_nonprop_terms(
+      get_definition(lines, sprintf("eta_O_%d[i]", k)),
+      c("M_center[group_center[i], ", "M_id[group_id[i], ", "M_lvlone[i, ")
+    )
+  }
+})
+
+
+test_that("JM: non-proportional effects from a level above the survival outcome", {
+  skip_on_cran()
+
+  fit <- fit_jm(
+    ~ z + age + day,
+    fixed = O ~ z + age + day + (1 | id) + (1 | center)
+  )
+  lines <- model_lines(fit)
+
+  for (k in 1:2) {
+    line <- get_definition(lines, sprintf("eta_O_%d[i]", k))
+    line_gk <- get_definition(lines, sprintf("etagk_O_%d[ii, k]", k))
+
+    expect_nonprop_terms(
+      line,
+      c("M_center[group_center[i], ", "M_id[group_id[i], ", "M_lvlone[i, ")
+    )
+    expect_nonprop_terms(
+      line_gk,
+      c(
+        "M_center[group_center[pos_id[ii]], ",
+        "M_id[ii, ",
+        "M_lvlonegk[ii, "
+      )
+    )
+    expect_identical(beta_numbers(line_gk), beta_numbers(line))
+  }
+})
+
+
+test_that("JM: baseline covariates in the quadrature part, no random intercept", {
+  skip_on_cran()
+
+  # the baseline covariates are not in the means of the random effects, so they
+  # are in the linear predictor; there is no M_idgk
+  cases <- list(
+    ordinal = list(
+      formula = O ~ age + day + (0 + day | id),
+      survival = Surv(futime, status != "censored") ~ O,
+      node = "etagk_O[ii, k]"
+    ),
+    gaussian = list(
+      formula = albumin ~ age + day + (0 + day | id),
+      survival = Surv(futime, status != "censored") ~ albumin,
+      node = "mugk_albumin[ii, k]"
+    )
+  )
+
+  for (case in cases) {
+    fit <- JM_imp(
+      list(case$survival, case$formula),
+      data = nonprop_data(),
+      timevar = "day",
+      n.adapt = 2,
+      n.iter = 2,
+      seed = 1,
+      overwrite = TRUE,
+      mess = FALSE,
+      warn = FALSE
+    )
+
+    expect_nonprop_terms(
+      get_definition(model_lines(fit), case$node),
+      "M_id[ii, ",
+      absent = "M_idgk"
+    )
+    # JAGS can compile the model
+    expect_false(is.null(fit$MCMC))
+  }
 })
