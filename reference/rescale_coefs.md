@@ -71,4 +71,5 @@ A linear predictor is identified by the outcome and, for models with
 category-specific coefficients (e.g. multinomial models), the category
 (`coefs$outcat`; `NA` otherwise). All matching is done by name:
 parameters by their name in `MCMC` (`coefs$coef`), scaling parameters by
-the name of the design-matrix column (`coefs$varname`).
+the exact name of the design-matrix column (`coefs$varname`;
+[`scale_pars_rows()`](https://nerler.github.io/JointAI/reference/scale_pars_rows.md)).

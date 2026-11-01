@@ -127,8 +127,8 @@ intercept by <code>+beta_s * c_w * c_z / (s_w * s_z)</code>.</p>
 <p>A linear predictor is identified by the outcome and, for models with
 category-specific coefficients (e.g. multinomial models), the category
 (<code>coefs$outcat</code>; <code>NA</code> otherwise). All matching is done by name: parameters
-by their name in <code>MCMC</code> (<code>coefs$coef</code>), scaling parameters by the name of
-the design-matrix column (<code>coefs$varname</code>).</p>
+by their name in <code>MCMC</code> (<code>coefs$coef</code>), scaling parameters by the exact name
+of the design-matrix column (<code>coefs$varname</code>; <code><a href="scale_pars_rows.html">scale_pars_rows()</a></code>).</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

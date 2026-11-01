@@ -94,6 +94,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/normalize_formula_args.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ns.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/par_names.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/par_node.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/parameters.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/paste_analysis_type.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/paste_coef.html</loc></url>
@@ -127,6 +128,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/residuals.JointAI.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/resolve_family_obj.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/restore_var_labels.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/scale_pars_rows.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/set_refcat.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/simLong.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/split_formula_list.html</loc></url>
