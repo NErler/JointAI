@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* In models with three or more levels, an incomplete interaction of covariates
+  from different levels above the lowest (e.g., a subject-level and a
+  center-level covariate) was calculated with the value of the wrong unit: the
+  center was looked up with the subject number instead of the row of that
+  subject in the data, so that subjects were combined with the value of another
+  center. Results of such models fitted with earlier versions differ.
 * Non-proportional effects (`nonprop`) of ordinal outcomes in mixed models and
   joint models. Results of such models fitted with earlier versions differ.
   * If all non-proportional effects were on a higher level than the outcome
