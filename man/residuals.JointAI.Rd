@@ -31,11 +31,11 @@ Extract residuals from an object of class JointAI
 \section{Note}{
 
 \itemize{
-\item For mixed models residuals are currently calculated using the fixed
-effects only.
-\item For ordinal (mixed) models and parametric survival models only
-\code{type = "response"} is available.
-\item For Cox proportional hazards models residuals are not yet implemented.
+\item Residuals are currently only available for generalized linear (mixed)
+models, including log-normal and beta models (for beta models only
+\code{type = "response"}). For other model types (ordinal, multinomial,
+survival and joint models), \code{residuals()} gives an error.
+\item For mixed models residuals are calculated using the fixed effects only.
 }
 }
 
