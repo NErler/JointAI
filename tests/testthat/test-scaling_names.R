@@ -76,6 +76,18 @@ test_that("scale_pars_rows() only finds exact names", {
 
 # Parsing of parameter names ---------------------------------------------------
 
+test_that("parameter names are split into node and index", {
+  x <- c("alpha", "alpha[3]", "alpha[2:4]", "b_y_id[5,1:2]")
+
+  expect_identical(par_node(x), c("alpha", "alpha", "alpha", "b_y_id"))
+  expect_identical(par_index_text(x), c("alpha", "3", "2:4", "5,1:2"))
+  expect_identical(
+    is_node_element(x, "alpha"),
+    c(FALSE, TRUE, TRUE, FALSE)
+  )
+  expect_false(is_node_element("alpha2[3]", "alpha"))
+})
+
 test_that("coef_is_monitored() recognises nodes, elements and ranges", {
   # the whole node
   expect_true(coef_is_monitored("alpha[3]", "alpha"))

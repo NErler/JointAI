@@ -493,6 +493,38 @@ par_names <- function(name, n) {
 }
 
 
+#' Parts of the names of parameters in the MCMC sample
+#'
+#' A parameter is the whole node (`"alpha"`), or one or more of its elements:
+#' `"alpha[3]"`, `"alpha[2:4]"`, `"b_y_id[5,1:2]"`.
+#' * `par_node()`: the name of the node (`"alpha"`, `"b_y_id"`).
+#' * `par_index_text()`: the text between the brackets, without interpreting it
+#'   (`"3"`, `"2:4"`, `"5,1:2"`).
+#' * `is_node_element()`: is it an element of the given node? This does not
+#'   include the whole node itself, or nodes with a longer name (`"alpha2[3]"`).
+#'
+#' @param x character vector of parameter names.
+#' @param node character string; name of the node.
+#' @return `par_node()`: character vector, `x` up to the first `"["`.
+#'   `par_index_text()`: character vector, the text between the first `"["` and
+#'   the last `"]"`; a name without index is returned unchanged.
+#'   `is_node_element()`: logical vector.
+#' @keywords internal
+par_node <- function(x) {
+  sub("\\[.*$", "", x)
+}
+
+#' @rdname par_node
+par_index_text <- function(x) {
+  sub("^[^[]*\\[(.*)\\]$", "\\1", x)
+}
+
+#' @rdname par_node
+is_node_element <- function(x, node) {
+  startsWith(x, paste0(node, "["))
+}
+
+
 #' Transform random effects and their covariance matrices back
 #'
 #' In JAGS, the random effects `b` of a grouping level enter the linear
@@ -747,7 +779,7 @@ complete_ranef_monitoring <- function(var_names, info_list, mess = TRUE) {
 
     # covariance matrix: if some of its elements are monitored, monitor all
     # elements of the upper triangle (as when D is monitored by default)
-    if (any(startsWith(var_names, paste0(D_node, "[")))) {
+    if (any(is_node_element(var_names, D_node))) {
       ij <- which(upper.tri(diag(nz), diag = TRUE), arr.ind = TRUE)
       D_all <- sprintf("%s[%d,%d]", D_node, ij[, 1L], ij[, 2L])
       new <- setdiff(D_all, var_names)
@@ -757,10 +789,9 @@ complete_ranef_monitoring <- function(var_names, info_list, mess = TRUE) {
 
     # random effects: if single elements are monitored, e.g. "b_y_id[5,2]",
     # monitor the whole row of these groups instead, e.g. "b_y_id[5,1:2]"
-    is_b_element <- startsWith(var_names, paste0(b_node, "["))
+    is_b_element <- is_node_element(var_names, b_node)
     for (k in which(is_b_element)) {
-      inside <- sub("^[^[]*\\[(.*)\\]$", "\\1", var_names[k])
-      group_index <- sub(",.*$", "", inside)
+      group_index <- sub(",.*$", "", par_index_text(var_names[k]))
       row <- sprintf("%s[%s,1:%d]", b_node, group_index, nz)
       if (row != var_names[k]) {
         var_names[k] <- row
@@ -843,9 +874,7 @@ complete_coef_monitoring <- function(var_names, info_list, mess = TRUE) {
     other_nodes <- paste0(c("gamma_", "beta_Bh0_"), info$varname)
     uses_coefs <- any(is_monitored)
     for (node in other_nodes) {
-      if (
-        node %in% var_names || any(startsWith(var_names, paste0(node, "[")))
-      ) {
+      if (node %in% var_names || any(is_node_element(var_names, node))) {
         uses_coefs <- TRUE
       }
     }
@@ -879,7 +908,7 @@ complete_coef_monitoring <- function(var_names, info_list, mess = TRUE) {
 #'   (`"alpha[2:4]"`).
 #' @keywords internal
 coef_is_monitored <- function(coef, var_names) {
-  node <- sub("\\[.*$", "", coef)
+  node <- par_node(coef)
   if (coef %in% var_names || node %in% var_names) {
     return(TRUE)
   }
@@ -889,9 +918,8 @@ coef_is_monitored <- function(coef, var_names) {
   }
 
   # ranges of elements of the same node
-  index <- as.integer(sub("^.*\\[([0-9]+)\\]$", "\\1", coef))
-  ranges <- var_names[startsWith(var_names, paste0(node, "["))]
-  ranges <- sub("^[^[]*\\[(.*)\\]$", "\\1", ranges)
+  index <- as.integer(par_index_text(coef))
+  ranges <- par_index_text(var_names[is_node_element(var_names, node)])
   ranges <- ranges[grepl("^[0-9]+:[0-9]+$", ranges)]
   for (r in ranges) {
     if (index %in% index_range(r)) {
