@@ -42,13 +42,13 @@ parallel); for `"phase and run"` a list with elements `adapt` and
 mod <- lm_imp(y ~ C1 + C2, data = wideDF, n.iter = 100, mess = FALSE)
 
 sum_duration(mod)
-#> Time difference of 0.02479625 secs
+#> Time difference of 0.02503109 secs
 sum_duration(mod, by = "phase")
 #> $adapt
-#> Time difference of 0.01325512 secs
+#> Time difference of 0.01319599 secs
 #> 
 #> $sample
-#> Time difference of 0.01154113 secs
+#> Time difference of 0.0118351 secs
 #> 
 # }
 ```

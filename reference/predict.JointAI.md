@@ -44,7 +44,10 @@ predict(object, outcome = 1L, newdata,
   the highest posterior probability, or `"lp"`. For parametric survival
   models `type` can be `"lp" ` or "response", and for proportional
   hazards survival models the options are `"lp"`, `"risk"` (=
-  `exp(lp)`), `"survival"` or `"expected"` (= `-log(survival)`).
+  `exp(lp)`), `"survival"` or `"expected"` (= `-log(survival)`). When
+  the prediction is done for several outcomes, one value applies to all
+  outcomes, and a named vector sets the type per outcome (outcomes that
+  are not named get `"lp"`).
 
 - start:
 

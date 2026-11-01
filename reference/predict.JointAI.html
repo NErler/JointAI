@@ -98,7 +98,9 @@ the highest posterior probability, or <code>"lp"</code>. For parametric survival
 models <code>type</code> can be <code>"lp" </code> or "response", and for proportional
 hazards survival models the options are <code>"lp"</code>, <code>"risk"</code> (=
 <code>exp(lp)</code>), <code>"survival"</code> or <code>"expected"</code> (=
-<code>-log(survival)</code>).</p></dd>
+<code>-log(survival)</code>). When the prediction is done for several outcomes,
+one value applies to all outcomes, and a named vector sets the type per
+outcome (outcomes that are not named get <code>"lp"</code>).</p></dd>
 
 
 <dt id="arg-start">start<a class="anchor" aria-label="anchor" href="#arg-start"></a></dt>

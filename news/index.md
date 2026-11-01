@@ -347,6 +347,22 @@
   to an error in JAGS (“Invalid parent values”) or, without any error or
   warning (e.g., for `I(chol^2)`), to a wrong model. Results of such
   models fitted with earlier versions differ.
+- [`predict()`](https://rdrr.io/r/stats/predict.html) for models with
+  more than one outcome:
+  - Ordinal models used the thresholds of another ordinal variable when
+    its name starts with the name of the outcome (e.g., `O1` and `O11`),
+    if these were monitored. The predicted probabilities were wrong,
+    without an error, or the prediction failed; there were also
+    additional categories named `NA`.
+  - Proportional hazards models with several survival outcomes failed
+    for `type = "lp"` and `"risk"` (“non-conformable arguments”), and
+    the object had no fitted values. The coefficients of the baseline
+    hazard of the other outcomes were used as well.
+  - A single named `type`, e.g., `type = c(b = "response")`, applied to
+    all outcomes and its name was not checked, and with a partly named
+    vector the other outcomes got a recycled value. Now the named
+    outcomes get the given type, the others `"lp"`, and names that are
+    not outcomes give an error.
 
 ## JointAI 1.1.0
 
