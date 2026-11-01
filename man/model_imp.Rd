@@ -256,7 +256,8 @@ for the adaptive phase will be suppressed,
 \item{\code{keep_scaled_mcmc}}{should the "original" MCMC sample (i.e.,
 the scaled version returned by \code{coda.samples()}) be
 kept? (The MCMC sample that is re-scaled to the scale of the
-data is always kept.)}
+data is always kept.) Also applies to samples created with
+\code{\link{add_samples}()}.}
 \item{\code{modelname}}{character string specifying the name of the
 model file (including the ending, either .R or .txt). If
 unspecified a random name will be generated.}

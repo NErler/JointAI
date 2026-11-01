@@ -15,7 +15,8 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
 \item{add}{logical; should the new MCMC samples be added to the existing
 samples (\code{TRUE}; default) or replace them?
 If samples are added the arguments \code{monitor_params} and
-\code{thin} are ignored.}
+\code{thin} are ignored. If the object has no samples yet, the
+new samples are its samples.}
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}});
 ignored when \code{add = TRUE}.}

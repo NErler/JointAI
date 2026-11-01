@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `predict()` with `type = "response"` rounded the predicted values of Poisson
+  models (`glm_imp()`, `glmm_imp()`) to integers, also in the returned sample.
+  It now gives the expected counts. The rounded values were also used for the
+  fitted values, so that `residuals()` were wrong as well (`NaN` or very large
+  values where the fitted value was rounded to 0). Results of such models
+  fitted with earlier versions differ.
 * `residuals()` of models with more than one model formula used the wrong type
   of residuals: by default only the first outcome got working residuals, the
   second got Pearson and the third response residuals. Now all get working
@@ -233,6 +239,14 @@
 * `sum_duration()` sorted the runs as text, so that with ten or more runs
   (e.g., after repeated `add_samples()`), "run 10" came before "run 2". The
   runs are now kept in their numeric order.
+* `add_samples()` failed with "attempt to set an attribute on NULL" for a model
+  without MCMC sample (`n.iter = 0`) and the default `add = TRUE`. The new samples
+  are now the samples of the object.
+* `add_samples()` did not respect `keep_scaled_mcmc = TRUE` for a model without
+  MCMC sample, and failed with "Start, end and thin incompatible with data" when
+  adding to a scaled sample with thinning (`thin` > 1).
+* `add_samples()` for a model without JAGS model (`n.adapt = 0`) now gives an
+  informative error.
 * An interaction with an element that is not a column of the data used in the
   model, because its main effect is not in the model (e.g.,
   `age:ns(day, df = 3)` without `ns(day, df = 3)`), was placed on the level of
@@ -240,6 +254,10 @@
   that level. Its value was then that of the first observation of each group,
   without error or warning. Such an interaction is now placed on the level on
   which it varies.
+* `add_samples()` kept the fitted values and residuals of the first run, also with
+  `add = FALSE`, so that `plot()` used these old values and `residuals()` used
+  the old fitted values. They are now calculated from the sample of the returned
+  object (or removed if that is not possible).
 * When `add_samples()` failed while re-creating the JAGS model (e.g., because
   of invalid parameter values), the console output stayed redirected to a
   temporary file, so that the error message and all later output were not

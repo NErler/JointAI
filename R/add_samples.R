@@ -14,7 +14,8 @@
 #' @param add logical; should the new MCMC samples be added to the existing
 #'            samples (\code{TRUE}; default) or replace them?
 #'            If samples are added the arguments \code{monitor_params} and
-#'            \code{thin} are ignored.
+#'            \code{thin} are ignored. If the object has no samples yet, the
+#'            new samples are its samples.
 #' @param monitor_params named list or vector specifying which parameters should
 #'                       be monitored. For details, see
 #'                       \code{\link[JointAI:model_imp]{*_imp}} and the vignette
@@ -68,6 +69,15 @@ add_samples <- function(
 ) {
   if (!inherits(object, "JointAI")) {
     errormsg("Use only with 'JointAI' objects.")
+  }
+
+  # [[ ]] instead of $, which would partially match the element "models"
+  if (is.null(object[["model"]])) {
+    errormsg(
+      "The object does not contain the JAGS model (it is only kept when the
+      model is fitted with %s), so that no samples can be added.",
+      dQuote("n.adapt > 0")
+    )
   }
 
   # check/set settings -----------------------------------------------------
@@ -128,8 +138,15 @@ add_samples <- function(
     }
   }
 
+  # The sample on the scale used in JAGS is kept if this was requested when the
+  # model was fitted (that setting is not stored in objects fitted with earlier
+  # versions, but these have such a sample if they have any sample).
+  keep_scaled_mcmc <- isTRUE(object$mcmc_settings$keep_scaled_mcmc) ||
+    !is.null(object$sample)
+
   # combine with/replace original samples --------------------------------------
-  if (isTRUE(add)) {
+  # (a model without sample has nothing to add to: the new samples are used)
+  if (isTRUE(add) && !is.null(object$MCMC)) {
     newmcmc <- if (!is.null(object$sample)) {
       coda::as.mcmc.list(
         lapply(seq_len(length(mcmc)), function(x) {
@@ -137,7 +154,9 @@ add_samples <- function(
             rbind(object$sample[[x]], mcmc[[x]]),
             start = start(object$sample),
             end = end(object$sample) +
-              coda::niter(mcmc[[x]])
+              coda::niter(mcmc[[x]]) *
+                coda::thin(mcmc[[x]]),
+            thin = coda::thin(mcmc[[x]])
           )
         })
       )
@@ -156,7 +175,7 @@ add_samples <- function(
       })
     )
   } else {
-    newmcmc <- if (!is.null(object$sample)) mcmc
+    newmcmc <- if (keep_scaled_mcmc) mcmc
     newMCMC <- MCMC
   }
 
@@ -189,6 +208,9 @@ add_samples <- function(
     object$comp_info$duration,
     list("adapt" = jags_res$time_adapt, "sample" = jags_res$time_sample)
   )
+
+  # the fitted values and residuals have to be those of the new sample
+  newobject <- update_fitted_residuals(newobject)
 
   return(newobject)
 }

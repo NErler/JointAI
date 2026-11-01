@@ -156,7 +156,8 @@
 #'            \item{`keep_scaled_mcmc`}{should the "original" MCMC sample (i.e.,
 #'                 the scaled version returned by \code{coda.samples()}) be
 #'                 kept? (The MCMC sample that is re-scaled to the scale of the
-#'                 data is always kept.)}
+#'                 data is always kept.) Also applies to samples created with
+#'                 \code{\link{add_samples}()}.}
 #'            \item{`modelname`}{character string specifying the name of the
 #'                  model file (including the ending, either .R or .txt). If
 #'                  unspecified a random name will be generated.}
@@ -1058,6 +1059,11 @@ model_imp <- function(
     inits = inits,
     seed = seed
   )
+  # only if requested, so that all other objects stay as they are; needed in
+  # add_samples() for models that have no sample yet
+  if (isTRUE(keep_scaled_mcmc)) {
+    mcmc_settings$keep_scaled_mcmc <- TRUE
+  }
 
   fmla <- if (is.null(formula) & !is.null(fixed)) {
     combine_formula_lists(fixed, random, warn = warn)
@@ -1119,22 +1125,7 @@ model_imp <- function(
     class = "JointAI"
   )
 
-  object$fitted.values <- try(
-    fitted_values(object, mess = FALSE, warn = FALSE),
-    silent = TRUE
-  )
-
-  object$residuals <- try(
-    residuals(object, type = "working", warn = FALSE),
-    silent = TRUE
-  )
-
-  if (inherits(object$fitted.values, "try-error")) {
-    object$fitted.values <- NULL
-  }
-  if (inherits(object$residuals, "try-error")) {
-    object$residuals <- NULL
-  }
+  object <- update_fitted_residuals(object)
 
   if (inherits(adapt, "try-error")) {
     class(object) <- "JointAI_errored"

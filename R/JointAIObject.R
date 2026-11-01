@@ -79,6 +79,9 @@
 #'      \item{\code{thin}: }{thinning interval of the MCMC sample}
 #'      \item{\code{inits}: }{a list containing the initial values that were
 #'                            passed to \strong{rjags}}
+#'      \item{\code{keep_scaled_mcmc}: }{\code{TRUE} if the MCMC sample on the
+#'                            scale used in JAGS is kept (only present in that
+#'                            case)}
 #'      }}
 #' \item{\code{monitor_params}}{the named list of parameter groups to be
 #'                              monitored}
