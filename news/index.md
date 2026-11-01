@@ -34,6 +34,16 @@
 
 ### Bug fixes
 
+- [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  and
+  [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  now give an informative error for survival outcomes that are not
+  right-censored. Left-censored outcomes
+  (`Surv(time, event, type = "left")`) were accepted and fitted as if
+  they were right-censored, without any message. Start-stop and
+  interval-censored outcomes (e.g., `Surv(start, stop, event)`) failed
+  with an error about competing risks.
 - Factors with `contr.sum` or `contr.helmert` (set via
   `options("contrasts")`):
   - Incomplete factors with `contr.sum` stopped with an error. They now

@@ -60,7 +60,9 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Factors with <code>contr.sum</code> or <code>contr.helmert</code> (set via <code>options("contrasts")</code>):
+<ul><li>
+<code><a href="../reference/model_imp.html">survreg_imp()</a></code>, <code><a href="../reference/model_imp.html">coxph_imp()</a></code> and <code><a href="../reference/model_imp.html">JM_imp()</a></code> now give an informative error for survival outcomes that are not right-censored. Left-censored outcomes (<code>Surv(time, event, type = "left")</code>) were accepted and fitted as if they were right-censored, without any message. Start-stop and interval-censored outcomes (e.g., <code>Surv(start, stop, event)</code>) failed with an error about competing risks.</li>
+<li>Factors with <code>contr.sum</code> or <code>contr.helmert</code> (set via <code>options("contrasts")</code>):
 <ul><li>Incomplete factors with <code>contr.sum</code> stopped with an error. They now work, using the category number (not the label) in the JAGS model.</li>
 <li>Complete factors with <code>contr.sum</code> did not get the documented coding (for more than two categories, only the first contrast variable was correct). They do now; the reference category is coded as -1 in all contrast variables, and the coefficients are named after the category they belong to (e.g., <code>fb</code>, <code>fc</code> instead of <code>f1</code>, <code>f2</code>). Results of such models fitted with earlier versions differ.</li>
 <li>In the development version, any factor with these contrasts stopped with an error about the names of dummy variables. Complete factors with <code>contr.helmert</code> work again, with coefficients <code>f1</code>, <code>f2</code>.</li>
