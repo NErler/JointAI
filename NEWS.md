@@ -228,6 +228,9 @@
 * `sum_duration()` sorted the runs as text, so that with ten or more runs
   (e.g., after repeated `add_samples()`), "run 10" came before "run 2". The
   runs are now kept in their numeric order.
+* `add_samples()` failed with "attempt to set an attribute on NULL" for a model
+  without MCMC sample (`n.iter = 0`) and the default `add = TRUE`. The new samples
+  are now the samples of the object.
 * An interaction with an element that is not a column of the data used in the
   model, because its main effect is not in the model (e.g.,
   `age:ns(day, df = 3)` without `ns(day, df = 3)`), was placed on the level of

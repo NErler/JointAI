@@ -14,7 +14,8 @@
 #' @param add logical; should the new MCMC samples be added to the existing
 #'            samples (\code{TRUE}; default) or replace them?
 #'            If samples are added the arguments \code{monitor_params} and
-#'            \code{thin} are ignored.
+#'            \code{thin} are ignored. If the object has no samples yet, the
+#'            new samples are its samples.
 #' @param monitor_params named list or vector specifying which parameters should
 #'                       be monitored. For details, see
 #'                       \code{\link[JointAI:model_imp]{*_imp}} and the vignette
@@ -129,7 +130,8 @@ add_samples <- function(
   }
 
   # combine with/replace original samples --------------------------------------
-  if (isTRUE(add)) {
+  # (a model without sample has nothing to add to: the new samples are used)
+  if (isTRUE(add) && !is.null(object$MCMC)) {
     newmcmc <- if (!is.null(object$sample)) {
       coda::as.mcmc.list(
         lapply(seq_len(length(mcmc)), function(x) {
