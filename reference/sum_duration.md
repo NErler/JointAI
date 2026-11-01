@@ -34,3 +34,21 @@ vector with one value per run; for `"chain"` a named vector with one
 value per chain (a single value `total` when the chains were not run in
 parallel); for `"phase and run"` a list with elements `adapt` and
 `sample`, each a named vector with one value per run.
+
+## Examples
+
+``` r
+# \donttest{
+mod <- lm_imp(y ~ C1 + C2, data = wideDF, n.iter = 100, mess = FALSE)
+
+sum_duration(mod)
+#> Time difference of 0.0254035 secs
+sum_duration(mod, by = "phase")
+#> $adapt
+#> Time difference of 0.01373696 secs
+#> 
+#> $sample
+#> Time difference of 0.01166654 secs
+#> 
+# }
+```

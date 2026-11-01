@@ -58,3 +58,20 @@ with one matrix per grouping level: the posterior mean of the
 variance-covariance matrix of the random effects, with rows and columns
 named by the random effects. When only one outcome is selected, the list
 for this outcome is returned directly.
+
+## Examples
+
+``` r
+# \donttest{
+mod <- lme_imp(y ~ C1 + time + (time | id), data = longDF, n.iter = 100,
+               mess = FALSE)
+
+rd_vcov(mod)
+#> $id
+#>                                   y           y
+#>                         (Intercept)        time
+#>           y (Intercept)  14.7952025  -0.4352103
+#>           y        time  -0.4352103   0.2293438
+#> 
+# }
+```

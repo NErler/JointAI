@@ -117,6 +117,23 @@ columns named by the random effects. When only one outcome is
 selected, the list for this outcome is returned directly.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">+</span> <span class="op">(</span><span class="va">time</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">longDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>               mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">rd_vcov</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   y           y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         (Intercept)        time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           y (Intercept)  14.7952025  -0.4352103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           y        time  -0.4352103   0.2293438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

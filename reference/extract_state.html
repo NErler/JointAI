@@ -74,11 +74,43 @@
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list with one element per chain of the MCMC sampler, containing the
-Returns the current state of the MCMC sampler (values of the last
-iteration) for the subset of nodes identified based on the pattern
-the user has specified.</p>
+current state of the sampler (values of the last iteration) for the
+subset of nodes identified based on the pattern the user has
+specified.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">+</span> <span class="op">(</span><span class="va">time</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">longDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>               mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># by default: the random effects and the (inverse) variance parameters</span></span></span>
+<span class="r-in"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu">extract_state</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">state</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "RinvD_y_id" "invD_y_id"  "tau_y"      "b_y_id"    </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># only the nodes whose name matches a pattern</span></span></span>
+<span class="r-in"><span><span class="fu">extract_state</span><span class="op">(</span><span class="va">mod</span>, pattern <span class="op">=</span> <span class="st">"^tau_"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$tau_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0508033</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$tau_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05117399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]$tau_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05106452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

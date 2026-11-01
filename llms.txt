@@ -224,8 +224,6 @@ confint(lm1)
 - [`auto_corr()`](https://nerler.github.io/JointAI/reference/auto_corr.md)
   [`auto_corr_plot()`](https://nerler.github.io/JointAI/reference/auto_corr.md)
   : Autocorrelation of MCMC samples
-- [`clean_survname()`](https://nerler.github.io/JointAI/reference/clean_survname.md)
-  : Convert a survival outcome to a model name
 - [`cross_corr()`](https://nerler.github.io/JointAI/reference/cross_corr.md)
   [`cross_corr_plot()`](https://nerler.github.io/JointAI/reference/cross_corr.md)
   : Cross-correlation of MCMC samples
