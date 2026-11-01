@@ -45,3 +45,12 @@ selected, the list for this outcome is returned directly.
 Returns the posterior mean of the variance-covariance matrix/matrices of
 the random effects in a fitted JointAI object.
 }
+\examples{
+\donttest{
+mod <- lme_imp(y ~ C1 + time + (time | id), data = longDF, n.iter = 100,
+               mess = FALSE)
+
+rd_vcov(mod)
+}
+
+}

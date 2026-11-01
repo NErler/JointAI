@@ -87,6 +87,14 @@ get_D_names <- function(params, varname, lvls) {
 #'         columns named by the random effects. When only one outcome is
 #'         selected, the list for this outcome is returned directly.
 #'
+#' @examples
+#' \donttest{
+#' mod <- lme_imp(y ~ C1 + time + (time | id), data = longDF, n.iter = 100,
+#'                mess = FALSE)
+#'
+#' rd_vcov(mod)
+#' }
+#'
 #' @export
 rd_vcov <- function(
   object,
