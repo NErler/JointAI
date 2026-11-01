@@ -190,6 +190,9 @@ add_samples <- function(
     list("adapt" = jags_res$time_adapt, "sample" = jags_res$time_sample)
   )
 
+  # the fitted values and residuals have to be those of the new sample
+  newobject <- update_fitted_residuals(newobject)
+
   return(newobject)
 }
 

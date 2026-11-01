@@ -1119,22 +1119,7 @@ model_imp <- function(
     class = "JointAI"
   )
 
-  object$fitted.values <- try(
-    fitted_values(object, mess = FALSE, warn = FALSE),
-    silent = TRUE
-  )
-
-  object$residuals <- try(
-    residuals(object, type = "working", warn = FALSE),
-    silent = TRUE
-  )
-
-  if (inherits(object$fitted.values, "try-error")) {
-    object$fitted.values <- NULL
-  }
-  if (inherits(object$residuals, "try-error")) {
-    object$residuals <- NULL
-  }
+  object <- update_fitted_residuals(object)
 
   if (inherits(adapt, "try-error")) {
     class(object) <- "JointAI_errored"

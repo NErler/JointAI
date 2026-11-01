@@ -235,6 +235,10 @@
   that level. Its value was then that of the first observation of each group,
   without error or warning. Such an interaction is now placed on the level on
   which it varies.
+* `add_samples()` kept the fitted values and residuals of the first run, also with
+  `add = FALSE`, so that `plot()` used these old values and `residuals()` used
+  the old fitted values. They are now calculated from the sample of the returned
+  object (or removed if that is not possible).
 * When `add_samples()` failed while re-creating the JAGS model (e.g., because
   of invalid parameter values), the console output stayed redirected to a
   temporary file, so that the error message and all later output were not
