@@ -847,3 +847,17 @@ reset_seed <- function(oldseed) {
     rm(".Random.seed", envir = globalenv())
   }
 }
+
+
+#' Escape special characters for use in a regular expression
+#'
+#' Names of variables and parameters may contain characters with a special
+#' meaning in a regular expression, e.g., `.` in `y.1` and `[` in `beta[1]`. With
+#' this function they only match themselves.
+#'
+#' @param x character vector.
+#' @return `x` with a backslash before each special character.
+#' @keywords internal
+escape_regex <- function(x) {
+  gsub("([.|()\\\\^{}+$*?\\[\\]])", "\\\\\\1", x, perl = TRUE)
+}

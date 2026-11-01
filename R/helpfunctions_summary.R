@@ -317,7 +317,7 @@ get_intercepts <- function(stats, varname, lvls, rev = FALSE) {
   # - lvls: levels of the ordinal factor
 
   interc <- stats[
-    grep(paste0("gamma_", varname), rownames(stats)),
+    grep(paste0("^gamma_", escape_regex(varname), "\\["), rownames(stats)),
     ,
     drop = FALSE
   ]
