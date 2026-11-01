@@ -368,6 +368,8 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       )
 
       # write the syntax for other longitudinal variables
+      # In the quadrature part only the lowest level has a matrix of data at the
+      # quadrature points (M_lvlonegk); the other levels do not change with time.
       other <- if (!is.null(info$hc_list$othervars[[lvl]])) {
         paste_other(
           othervars = info$hc_list$othervars[[lvl]],
@@ -375,7 +377,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
           index = index,
           scale_pars = info$scale_pars[[paste0("M_", lvl)]],
           scale_mat = paste0("spM_", lvl),
-          isgk = isgk
+          isgk = isgk && lvl == "lvlone"
         )
       }
 
@@ -429,6 +431,8 @@ write_nonprop <- function(info, isgk = FALSE) {
         isgk = isgk
       )
 
+      # In the quadrature part only the lowest level has a matrix of data at the
+      # quadrature points (M_lvlonegk); the other levels do not change with time.
       if (!is.null(info$hc_list$nonprop[[lvl]])) {
         paste_other(
           othervars = info$hc_list$nonprop[[lvl]],
@@ -436,11 +440,18 @@ write_nonprop <- function(info, isgk = FALSE) {
           index = index,
           scale_pars = info$scale_pars[[paste0("M_", lvl)]],
           scale_mat = paste0("spM_", lvl),
-          isgk = isgk
+          isgk = isgk && lvl == "lvlone"
         )
       }
     }
   )
+
+  # the levels without non-proportional effects
+  nonprop <- Filter(Negate(is.null), nonprop)
+
+  if (length(nonprop) == 0L) {
+    return(NULL)
+  }
 
   apply(as.data.frame(nonprop), 1L, paste0, collapse = " + ")
 }
@@ -1246,7 +1257,7 @@ paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
         ", ",
         resp_col,
         "] == ",
-        refs,
+        categories[as.integer(refs)],
         ", -1, 0))"
       )
     } else {
@@ -1821,7 +1832,18 @@ write_logits <- function(
         if (isgk) ", k",
         "]",
         if (nonprop) {
-          paste0(" + eta_", info$varname, "_", k, "[", index, "]")
+          paste0(
+            " + eta",
+            if (isgk) "gk",
+            "_",
+            info$varname,
+            "_",
+            k,
+            "[",
+            index,
+            if (isgk) ", k",
+            "]"
+          )
         }
       )
     }

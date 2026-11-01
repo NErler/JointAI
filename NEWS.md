@@ -26,12 +26,39 @@
   (`Surv(time, event, type = "left")`) were accepted and fitted as if they were
   right-censored, without any message. Start-stop and interval-censored outcomes
   (e.g., `Surv(start, stop, event)`) failed with an error about competing risks.
+* Factors with `contr.sum` or `contr.helmert` (set via `options("contrasts")`):
+  * Incomplete factors with `contr.sum` stopped with an error. They now work,
+    using the category number (not the label) in the JAGS model.
+  * Complete factors with `contr.sum` did not get the documented coding (for more
+    than two categories, only the first contrast variable was correct). They do
+    now; the reference category is coded as -1 in all contrast variables, and the
+    coefficients are named after the category they belong to (e.g., `fb`, `fc`
+    instead of `f1`, `f2`). Results of such models fitted with earlier versions
+    differ.
+  * In the development version, any factor with these contrasts stopped with an
+    error about the names of dummy variables. Complete factors with `contr.helmert`
+    work again, with coefficients `f1`, `f2`.
 * In models with three or more levels, an incomplete interaction of covariates
   from different levels above the lowest (e.g., a subject-level and a
   center-level covariate) was calculated with the value of the wrong unit: the
   center was looked up with the subject number instead of the row of that
   subject in the data, so that subjects were combined with the value of another
   center. Results of such models fitted with earlier versions differ.
+* Non-proportional effects (`nonprop`) of ordinal outcomes in mixed models and
+  joint models. Results of such models fitted with earlier versions differ.
+  * If all non-proportional effects were on a higher level than the outcome
+    (e.g., a baseline covariate with a longitudinal outcome), they were silently
+    left out of the model. Their coefficients were only sampled from the prior.
+    Effects from the higher level of a model with random effects on two levels
+    (e.g., `(1 | id) + (1 | center)`) were always left out.
+  * If all were on the level of the outcome, `clmm_imp()` stopped with an error.
+  * For an ordinal time-varying covariate in a joint model (`JM_imp()`), they
+    were left out of the part of the model that calculates the covariate at the
+    quadrature points.
+* `JM_imp()` stopped with the JAGS error "Unknown variable M_idgk" (or similar)
+  when a time-varying covariate had a baseline covariate in its model that is
+  not part of the means of the random effects, e.g., without random intercept:
+  `albumin ~ age + day + (0 + day | id)`.
 * With several ordinal outcomes whose names start in the same way (e.g., `O1` and
   `O11`), `summary()` and `print()` stopped with an error, and `coef()`, `confint()`
   and `parameters()` were wrong without any message: the thresholds of `O11` were
