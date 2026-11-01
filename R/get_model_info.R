@@ -173,6 +173,19 @@ get_model1_info <- function(
     ))
   }
 
+  # * interactions with unknown elements ---------------------------------------
+  # interaction terms in the time-varying part of the linear predictor of the
+  # survival part need all their elements as columns of the design matrices
+  if (modeltype %in% "JM" && resp_mat[2L] != "M_lvlone") {
+    check_jm_unknown_interactions(
+      lp_cols = lp[["M_lvlone"]],
+      interactions = Mlist$interactions,
+      design_cols = unlist(lapply(Mlist$M, colnames)),
+      refs = Mlist$refs,
+      timevar = Mlist$timevar
+    )
+  }
+
   # * time-varying covariates --------------------------------------------------
   tv_vars <- if (modeltype %in% "JM") {
     # find the (longitudinal) covariates involved in the lp of the survival part
@@ -569,6 +582,157 @@ get_jm_interactions <- function(lp_cols, interactions, surv_mat) {
   }
 
   jm_interactions
+}
+
+
+#' Interactions in the survival part of a joint model with unknown elements
+#'
+#' An interaction term is only recognised as such (in `Mlist$interactions`)
+#' when all its elements are columns of the design matrices. In the
+#' time-varying part of the linear predictor of the survival part of a joint
+#' model, the value of an interaction term is the product of its elements
+#' (see `paste_jm_interaction()`), so that an interaction with an element that
+#' is not a column is not possible. This happens
+#' * for an interaction with a function of the time variable (e.g.,
+#'   `chol:ns(day, df = 3)`) without the main effect of this function: as a
+#'   workaround, the function can be added to the data with the argument
+#'   `auxvars` (this does not change the models for incomplete covariates,
+#'   because they already contain the time variable);
+#' * for an interaction of a factor with a variable without the main effect of
+#'   that variable (e.g., `sex + sex:day`): R (`model.matrix()`) then codes
+#'   the interaction with all categories of the factor, also the reference
+#'   category (`sexmale:day` and `sexfemale:day`), which is not a column of the
+#'   design matrix. Together, these terms contain a main effect of the other
+#'   variable, which, for the time variable or a function of it, cannot (or
+#'   hardly) be distinguished from the baseline hazard.
+#'
+#' Stops with an informative error if there is such an interaction.
+#'
+#' @param lp_cols named integer vector: the columns of `M_lvlone` in the linear
+#'   predictor of the survival model (names are the column names).
+#' @param interactions list of interaction terms, as in `Mlist$interactions`
+#'   (output of `match_interaction()`).
+#' @param design_cols character vector: the names of all columns of the design
+#'   matrices.
+#' @param refs list of reference category information (`Mlist$refs`).
+#' @param timevar name of the time variable.
+#'
+#' @returns `NULL`, invisibly; called for the error.
+#' @keywords internal
+check_jm_unknown_interactions <- function(
+  lp_cols,
+  interactions,
+  design_cols,
+  refs,
+  timevar
+) {
+  # interaction columns that were not recognised as interactions
+  is_inter <- grepl(":", names(lp_cols), fixed = TRUE)
+  unknown <- setdiff(names(lp_cols)[is_inter], names(interactions))
+
+  for (inter in unknown) {
+    elmts <- strsplit(inter, ":", fixed = TRUE)[[1L]]
+    missing_elmts <- setdiff(elmts, design_cols)
+
+    # does an element involve the time variable (e.g., "ns(day, df = 3)1")?
+    timevar_pattern <- paste0(
+      "(^|[^[:alnum:]._])",
+      gsub("([.])", "\\\\\\1", timevar),
+      "($|[^[:alnum:]._])"
+    )
+
+    # a missing element that starts with the name of a factor is a category of
+    # that factor: R codes the interaction of a factor with a variable whose
+    # main effect is not in the formula with all categories of the factor
+    # (e.g., "sexmale:day" and "sexfemale:day" for `sex + sex:day`), also with
+    # the reference category, which is not a column of the design matrix
+    factor_of <- function(elmt) {
+      fcts <- names(refs)[startsWith(elmt, names(refs))]
+      fcts[which.max(nchar(fcts))]
+    }
+    is_category <- vapply(
+      missing_elmts,
+      function(elmt) length(factor_of(elmt)) > 0L,
+      FUN.VALUE = logical(1L)
+    )
+
+    if (any(is_category)) {
+      category <- missing_elmts[is_category][1L]
+      fct <- factor_of(category)
+      # the other element(s) of the interaction, as terms of the formula
+      # (e.g., "ns(day, df = 3)" instead of "ns(day, df = 3)1")
+      others <- setdiff(elmts, category)
+      others <- unique(sub("\\)[0-9]+$", ")", others))
+
+      msg_coding <- sprintf(
+        "The interaction %s in the survival part of the joint model cannot be
+        used. Because the main effect of %s is not in the survival model, R
+        codes the interaction of the factor %s with %s using all categories
+        of %s, including the reference category (%s). Together, these
+        interaction terms contain a main effect of %s.",
+        dQuote(inter),
+        paste_and(dQuote(others)),
+        dQuote(fct),
+        paste_and(dQuote(others)),
+        dQuote(fct),
+        dQuote(category),
+        paste_and(dQuote(others))
+      )
+
+      if (any(grepl(timevar_pattern, others))) {
+        errormsg(
+          "%s A main effect of the time variable cannot be distinguished from
+          the baseline hazard, and a main effect of a function of it (e.g., a
+          spline) hardly. An interaction of %s with %s that is coded without
+          the reference category of %s is currently not possible in the
+          survival part of a joint model.",
+          msg_coding,
+          dQuote(fct),
+          paste_and(dQuote(others)),
+          dQuote(fct)
+        )
+      }
+
+      errormsg(
+        "%s Please add the main effect of %s to the survival model; the
+        interaction is then coded without the reference category of %s.",
+        msg_coding,
+        paste_and(dQuote(others)),
+        dQuote(fct)
+      )
+    }
+
+    if (grepl(timevar_pattern, missing_elmts[1L])) {
+      errormsg(
+        "The interaction %s in the survival part of the joint model involves
+        %s, which is not a column of the data used in the model, because its
+        main effect is not in the model. As a workaround, a function of the
+        time variable can be added to the data with the argument %s (e.g.,
+        %s). The argument %s is meant for additional variables in the models
+        for incomplete covariates; these models are not changed by a function
+        of the time variable, because the time variable itself is already
+        added to %s automatically.",
+        dQuote(inter),
+        dQuote(missing_elmts[1L]),
+        dQuote("auxvars"),
+        sQuote(paste0("auxvars = ~ ns(", timevar, ", df = 3)")),
+        dQuote("auxvars"),
+        dQuote("auxvars")
+      )
+    }
+
+    errormsg(
+      "The interaction %s in the survival part of the joint model involves
+      %s, which is not a column of the data used in the model, because its
+      main effect is not in the model. Please add the main effect of %s to
+      the model.",
+      dQuote(inter),
+      dQuote(missing_elmts[1L]),
+      dQuote(missing_elmts[1L])
+    )
+  }
+
+  invisible(NULL)
 }
 
 

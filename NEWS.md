@@ -186,6 +186,24 @@
   the time variable with its value at the event time (or the quadrature
   points). A covariate that is only part of an interaction now also gets an
   association type.
+* Joint models (`JM_imp()`) with an interaction in the time-varying part of
+  the survival model with an element that is not a column of the data used in
+  the model stopped with uninformative errors (e.g., "I do not know the model
+  type "NA"") or, for an interaction of a baseline covariate with a function
+  of time (e.g., `age:ns(day, df = 3)`), were fitted with values that did not
+  vary over time. They now stop with an informative error. This concerns
+  - an interaction with a function of the time variable without the main
+    effect of that function (e.g., `chol:ns(day, df = 3)` without
+    `ns(day, df = 3)`). As a workaround, the function can be added to the
+    data with the argument `auxvars` (e.g., `auxvars = ~ ns(day, df = 3)`);
+    this does not change the models for incomplete covariates.
+  - an interaction of a factor with a variable without the main effect of
+    that variable (e.g., `sex + sex:day`). R codes such an interaction with
+    all categories of the factor (`sexmale:day` and `sexfemale:day`), which
+    together contain a main effect of that variable. For the time variable
+    (or a function of it), this main effect cannot (or hardly) be
+    distinguished from the baseline hazard, and an interaction coded without
+    the reference category (only `sexfemale:day`) is currently not possible.
 * `parameters()` listed the regression coefficients of all models when all
   monitored parameters were regression coefficients (e.g., only `beta`
   monitored), also those of models that were not monitored.
