@@ -256,8 +256,8 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
 #' A linear predictor is identified by the outcome and, for models with
 #' category-specific coefficients (e.g. multinomial models), the category
 #' (`coefs$outcat`; `NA` otherwise). All matching is done by name: parameters
-#' by their name in `MCMC` (`coefs$coef`), scaling parameters by the name of
-#' the design-matrix column (`coefs$varname`).
+#' by their name in `MCMC` (`coefs$coef`), scaling parameters by the exact name
+#' of the design-matrix column (`coefs$varname`; `scale_pars_rows()`).
 #'
 #' @param MCMC MCMC sample of one chain (`mcmc` object or matrix), on the
 #'   scale used in JAGS.
@@ -309,11 +309,12 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
   #   i.e., x = w * z, center = -c_w * c_z and divisor = s_w * s_z. The terms
   #   -c_z * w and -c_w * z belong to the coefficients of w and z; they are
   #   added further below.
-  coefs$center <- scale_pars[coefs$varname, "center"]
-  coefs$divisor <- scale_pars[coefs$varname, "scale"]
+  sp_coefs <- scale_pars_rows(scale_pars, coefs$varname)
+  coefs$center <- sp_coefs$center
+  coefs$divisor <- sp_coefs$scale
 
-  sp_w <- scale_pars[coefs$w[is_product], ]
-  sp_z <- scale_pars[coefs$z[is_product], ]
+  sp_w <- scale_pars_rows(scale_pars, coefs$w[is_product])
+  sp_z <- scale_pars_rows(scale_pars, coefs$z[is_product])
   coefs$center[is_product] <- -sp_w$center * sp_z$center
   coefs$divisor[is_product] <- sp_w$scale * sp_z$scale
 
@@ -386,9 +387,11 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
     beta_s <- MCMC[, coefs$coef[k]]
 
     # the variable whose coefficient changes, and the centre of the other one
+    center_w <- scale_pars_rows(scale_pars, coefs$w[k])$center
+    center_z <- scale_pars_rows(scale_pars, coefs$z[k])$center
     changes <- list(
-      list(var = coefs$w[k], other_center = scale_pars[coefs$z[k], "center"]),
-      list(var = coefs$z[k], other_center = scale_pars[coefs$w[k], "center"])
+      list(var = coefs$w[k], other_center = center_z),
+      list(var = coefs$z[k], other_center = center_w)
     )
     for (change in changes) {
       target <- coefs$coef[same_lp & coefs$varname == change$var]
@@ -402,6 +405,23 @@ rescale_coefs <- function(MCMC, coefs, scale_pars, info_list, data_list) {
   }
 
   rescaled
+}
+
+
+#' Scaling parameters of design-matrix columns
+#'
+#' Finds the rows by the exact column name. (Indexing the rows of a `data.frame`
+#' with names, `scale_pars[columns, ]`, also accepts a partial match: `"age"`
+#' would find the row `"age_sq"` if there is no row `"age"`.)
+#'
+#' @param scale_pars `data.frame` of scaling parameters (columns `center` and
+#'   `scale`, one row per design-matrix column, named by the column).
+#' @param columns character vector of column names.
+#' @return `data.frame` with one row per element of `columns`, in that order;
+#'   the values are `NA` for a name that has no row in `scale_pars`.
+#' @keywords internal
+scale_pars_rows <- function(scale_pars, columns) {
+  scale_pars[match(columns, rownames(scale_pars)), , drop = FALSE]
 }
 
 
@@ -914,7 +934,7 @@ index_range <- function(x) {
 #' @keywords internal
 ranef_transformation <- function(lvl_info, scale_pars) {
   z_names <- attr(lvl_info, "z_names")
-  sp <- scale_pars[match(z_names, rownames(scale_pars)), ]
+  sp <- scale_pars_rows(scale_pars, z_names)
   # the random intercept is not scaled
   sp$center[z_names == "(Intercept)"] <- 0
   sp$scale[z_names == "(Intercept)"] <- 1
@@ -1072,7 +1092,7 @@ ranef_shift <- function(
       mu[, j] <- mu[, j] + rescaled[, coef]
     } else {
       # covariate at 0: (0 - c_w) / s_w on the scaled scale, 0 on the original
-      sp_w <- scale_pars[match(terms$w[k], rownames(scale_pars)), ]
+      sp_w <- scale_pars_rows(scale_pars, terms$w[k])
       mu_s[, j] <- mu_s[, j] + MCMC[, coef] * (-sp_w$center / sp_w$scale)
     }
   }
@@ -1134,7 +1154,7 @@ ranef_covariate_shift <- function(
   out <- list()
   for (w in unique(terms$w)) {
     w_terms <- terms[terms$w == w, ]
-    sp_w <- scale_pars[match(w, rownames(scale_pars)), ]
+    sp_w <- scale_pars_rows(scale_pars, w)
 
     # coefficient of w in mu(x) - A mu_s(x): the coefficient on the original
     # scale in the mean of random effect j, minus column j of A times the

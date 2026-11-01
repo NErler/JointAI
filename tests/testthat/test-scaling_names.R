@@ -54,6 +54,25 @@ test_that("a column without scaling parameters gives NA", {
   expect_false(anyNA(res[, others]))
 })
 
+test_that("scale_pars_rows() only finds exact names", {
+  sp <- data.frame(
+    center = c(1, 2, 3),
+    scale = c(4, 5, 6),
+    row.names = c("age_sq", "chol", "chol:age_sq")
+  )
+
+  # in the order of the names, also when a name is repeated
+  expect_identical(
+    scale_pars_rows(sp, c("chol", "age_sq", "chol"))$center,
+    c(2, 1, 2)
+  )
+  # no partial match: indexing the rows with sp["age", ] returns "age_sq"
+  expect_identical(scale_pars_rows(sp, "age")$center, NA_real_)
+  expect_identical(scale_pars_rows(sp, "age")$scale, NA_real_)
+  # no names
+  expect_identical(nrow(scale_pars_rows(sp, character(0L))), 0L)
+})
+
 
 # Parsing of parameter names ---------------------------------------------------
 
