@@ -1292,6 +1292,14 @@ paste_interactions <- function(interactions, group_lvls, n) {
   paste0(
     # for each of the levels on which interactions have to be written:
     sapply(unique(minlvl), function(lvl) {
+      # group_<level> has one entry per row of the data, so variables of a higher
+      # level need the row that corresponds to the current index value
+      row_index <- if (lvl == "lvlone") {
+        index[lvl]
+      } else {
+        paste0("pos_", lvl, "[", index[lvl], "]")
+      }
+
       paste0(
         tab(),
         "for (",
@@ -1319,7 +1327,7 @@ paste_interactions <- function(interactions, group_lvls, n) {
                       "group_",
                       gsub("M_", "", names(x$elmts)),
                       "[",
-                      index[lvl],
+                      row_index,
                       "]"
                     )
                   ),
