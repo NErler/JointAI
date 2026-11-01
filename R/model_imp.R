@@ -20,6 +20,9 @@
 #'               family function, a family function or the result of a call to
 #'               a family function. (For more details see below and
 #'               \code{\link[stats]{family}}.)
+#'               When \code{formula} is a list of formulas, \code{family} only
+#'               applies to the first outcome; see the section on multiple
+#'               models below.
 #' @param rd_vcov character string or list specifying the structure of the
 #'                random effects variance covariance matrix, see details below.
 #' @param monitor_params named list or vector specifying which parameters
@@ -71,7 +74,7 @@
 #'                non-linear effects see the vignette on
 #'                [Model Specification](https://nerler.github.io/JointAI/articles/ModelSpecification.html#auxvars)
 #' @param models optional; named vector specifying the types of models for
-#'               (incomplete) covariates.
+#'               (incomplete) covariates and for outcomes.
 #'               This arguments replaces the argument \code{meth} used in
 #'               earlier versions.
 #'               If \code{NULL} (default) models will be determined
@@ -224,6 +227,17 @@
 #'
 #' Note that it is not possible to specify multiple models for the same outcome
 #' variable.
+#'
+#' The argument \code{family} only applies to the first outcome. The other
+#' outcomes get the default model for their variable type (see the section on
+#' model types below), e.g., a linear model for a numeric variable, also when
+#' \code{family} is \code{poisson()}. To use another model for these outcomes,
+#' specify it in the argument \code{models}, which also takes precedence over
+#' \code{family} for the first outcome, for example:
+#' ```r
+#' glm_imp(list(B1 ~ C1, B2 ~ C1), family = binomial("probit"), data = wideDF,
+#'         models = c(B2 = "glm_binomial_probit"))
+#' ```
 #'
 #' ### Random effects variance-covariance structure
 #' (Note: This feature is new and has not been fully tested yet.)
