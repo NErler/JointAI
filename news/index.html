@@ -102,6 +102,7 @@
 </ul></li>
 <li>
 <code><a href="../reference/parameters.html">parameters()</a></code> listed the regression coefficients of all models when all monitored parameters were regression coefficients (e.g., only <code>beta</code> monitored), also those of models that were not monitored.</li>
+<li>A joint model (<code><a href="../reference/model_imp.html">JM_imp()</a></code>) with a term in the survival part that involves nothing but the time variable (e.g., <code>Surv(futime, status) ~ chol + day</code> or <code>Surv(futime, status) ~ chol + ns(day, df = 3)</code> with <code>timevar = "day"</code>) wrote invalid JAGS code. Since the effect of time is described by the baseline hazard, such a model now stops with an informative error.</li>
 <li>
 <code>sum_duration(by = "run")</code>: for models run in parallel, the duration per run was the longest chain over the adaptive and sampling phase together, instead of the sum of the longest chain per phase, so that the runs did not add up to the total duration.</li>
 <li>
