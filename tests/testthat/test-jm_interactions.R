@@ -390,3 +390,260 @@ test_that("the association type of each column of the same covariate is used", {
   expect_match(out$surv, "(log(mugk_chol[ii, 1:15]) - ", fixed = TRUE)
   expect_jags_compiles(fit)
 })
+
+# Association types: which column they belong to (#116) ------------------------
+two_tv_covariates <- list(
+  chol ~ day + age + (day | id),
+  albumin ~ day + age + (day | id)
+)
+
+# the term of a column in the log-hazard, for the observed or underlying value
+obs_term <- function(fit, colname) {
+  scaled_obs(col_of(fit, "M_lvlone", colname), isgk = FALSE)
+}
+underl_term <- function(varname) {
+  paste0("(mu_", varname, "[", srow, "] - ")
+}
+
+test_that("functions of several baseline variables do not shift association types", {
+  terms <- c(
+    "I(age * trig)",
+    "I(age + trig)",
+    "I(age/trig)",
+    "log(age * trig)"
+  )
+  for (term in terms) {
+    fml <- as.formula(paste(
+      'Surv(futime, status != "censored") ~ albumin +',
+      term
+    ))
+    fit <- jm_setup(fml, longfml = two_tv_covariates[2L])
+    expect_identical(
+      fit$info_list[[1L]]$assoc_type,
+      c(albumin = "underl.value")
+    )
+  }
+})
+
+test_that("a function of several baseline variables does not move assoc_type to another variable", {
+  fml1 <- Surv(futime, status != "censored") ~ albumin + I(age * trig)
+  fit <- jm_setup(
+    fml1,
+    assoc_type = c(albumin = "obs.value"),
+    longfml = two_tv_covariates[2L]
+  )
+  expect_identical(fit$info_list[[1L]]$assoc_type, c(albumin = "obs.value"))
+  out <- jm_survival_lines(fit)
+  expect_match(out$logh, obs_term(fit, "albumin"), fixed = TRUE)
+  expect_no_match(out$logh, underl_term("albumin"), fixed = TRUE)
+
+  fml2 <- Surv(futime, status != "censored") ~ chol + albumin + I(age * trig)
+  fit <- jm_setup(
+    fml2,
+    assoc_type = c(chol = "obs.value"),
+    longfml = two_tv_covariates
+  )
+  expect_identical(
+    fit$info_list[[1L]]$assoc_type,
+    c(chol = "obs.value", albumin = "underl.value")
+  )
+  out <- jm_survival_lines(fit)
+  expect_match(out$logh, obs_term(fit, "chol"), fixed = TRUE)
+  expect_match(out$logh, underl_term("albumin"), fixed = TRUE)
+  expect_jags_compiles(fit)
+
+  fit <- jm_setup(
+    fml2,
+    assoc_type = c(albumin = "obs.value"),
+    longfml = two_tv_covariates
+  )
+  expect_identical(
+    fit$info_list[[1L]]$assoc_type,
+    c(chol = "underl.value", albumin = "obs.value")
+  )
+  out <- jm_survival_lines(fit)
+  expect_match(out$logh, underl_term("chol"), fixed = TRUE)
+  expect_match(out$logh, obs_term(fit, "albumin"), fixed = TRUE)
+})
+
+test_that("each transformed term of a covariate has its own association type", {
+  fml <- Surv(futime, status != "censored") ~ age + log(chol) + I(chol^2)
+
+  fit <- jm_setup(
+    fml,
+    assoc_type = c("log(chol)" = "obs.value", "I(chol^2)" = "obs.value")
+  )
+  expect_identical(
+    fit$info_list[[1L]]$assoc_type,
+    c("log(chol)" = "obs.value", "I(chol^2)" = "obs.value")
+  )
+
+  fit <- jm_setup(fml, assoc_type = c("I(chol^2)" = "obs.value"))
+  expect_identical(
+    fit$info_list[[1L]]$assoc_type,
+    c("log(chol)" = "underl.value", "I(chol^2)" = "obs.value")
+  )
+})
+
+test_that("a name in assoc_type only applies to the term of that name", {
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ age + chol + log(chol),
+    assoc_type = c(chol = "obs.value")
+  )
+  expect_identical(
+    fit$info_list[[1L]]$assoc_type,
+    c(chol = "obs.value", "log(chol)" = "underl.value")
+  )
+})
+
+test_that("names in assoc_type that are no term with an association type give an error", {
+  jm_error <- function(
+    survfml,
+    assoc_type,
+    longfml = list(chol ~ day + age + (day | id)),
+    warn = TRUE
+  ) {
+    tryCatch(
+      {
+        suppressWarnings(JM_imp(
+          c(list(survfml), longfml),
+          timevar = "day",
+          data = golden_data()$PBC_small,
+          assoc_type = assoc_type,
+          n.adapt = 0,
+          n.iter = 0,
+          seed = 2020,
+          mess = FALSE,
+          warn = warn
+        ))
+        NA_character_
+      },
+      error = function(e) conditionMessage(e)
+    )
+  }
+  fml <- Surv(futime, status != "censored") ~ age + chol
+
+  # a typo: the message names it, and the possible names
+  err <- jm_error(fml, c(chl = "obs.value"))
+  expect_match(err, "assoc_type", fixed = TRUE)
+  expect_match(err, "chl", fixed = TRUE)
+  expect_match(err, "chol", fixed = TRUE)
+
+  # also next to a name that is used, and with warn = FALSE
+  err <- jm_error(fml, c(chol = "obs.value", chl = "obs.value"))
+  expect_match(err, "chl", fixed = TRUE)
+  expect_match(
+    jm_error(fml, c(chl = "obs.value"), warn = FALSE),
+    "assoc_type",
+    fixed = TRUE
+  )
+
+  # a baseline covariate, and a vector without names
+  expect_match(jm_error(fml, c(age = "obs.value")), "assoc_type", fixed = TRUE)
+  expect_match(jm_error(fml, "obs.value"), "assoc_type", fixed = TRUE)
+
+  # the variable of a transformed term is not a term
+  fml_log <- Surv(futime, status != "censored") ~ age + log(chol)
+  err <- jm_error(fml_log, c(chol = "obs.value"))
+  expect_match(err, "log(chol)", fixed = TRUE)
+  expect_identical(
+    jm_error(fml_log, c("log(chol)" = "obs.value")),
+    NA_character_
+  )
+
+  # a factor is named by the variable, not by its dummy variables
+  fml_fct <- Surv(futime, status != "censored") ~ age + stage
+  long_fct <- list(stage ~ day + age + (1 | id))
+  expect_identical(
+    jm_error(fml_fct, c(stage = "obs.value"), longfml = long_fct),
+    NA_character_
+  )
+  err <- jm_error(fml_fct, c(stage2 = "obs.value"), longfml = long_fct)
+  expect_match(err, "stage2", fixed = TRUE)
+})
+
+test_that("a name in assoc_type may apply to one of several survival outcomes", {
+  fit <- JM_imp(
+    list(
+      Surv(futime, status == "dead") ~ age + chol,
+      Surv(futime, status == "transplant") ~ age + albumin,
+      chol ~ day + age + (day | id),
+      albumin ~ day + age + (day | id)
+    ),
+    timevar = "day",
+    data = golden_data()$PBC_small,
+    assoc_type = c(albumin = "obs.value", chol = "obs.value"),
+    n.adapt = 0,
+    n.iter = 0,
+    seed = 2020,
+    mess = FALSE,
+    warn = FALSE
+  )
+  expect_identical(
+    unname(unlist(lapply(fit$info_list[1:2], "[[", "assoc_type"))),
+    c("obs.value", "obs.value")
+  )
+})
+
+test_that("an interaction has no association type of its own", {
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ age * chol,
+    assoc_type = c(chol = "obs.value")
+  )
+  expect_identical(fit$info_list[[1L]]$assoc_type, c(chol = "obs.value"))
+
+  expect_error(
+    jm_setup(
+      Surv(futime, status != "censored") ~ age * chol,
+      assoc_type = c("age:chol" = "obs.value")
+    ),
+    "age:chol",
+    fixed = TRUE
+  )
+})
+
+test_that("check_assoc_type_names() takes a term with several columns as one name", {
+  # splines of time-varying covariates in the survival part are not implemented
+  # (so these objects cannot be created by JM_imp()), but the check is ready
+  for (spline in c("ns", "bs")) {
+    term <- paste0(spline, "(chol, df = 2)")
+    columns <- paste0(term, 1:2)
+    info_list <- list(
+      surv = list(
+        modeltype = "JM",
+        lp = list(M_id = c(age = 1L), M_lvlone = setNames(1:2, columns)),
+        tv_vars = list(chol = list())
+      )
+    )
+    Mlist <- list(
+      interactions = NULL,
+      refs = list(),
+      fcts_all = data.frame(
+        var = "chol",
+        colname = columns,
+        fct = term,
+        type = spline
+      )
+    )
+
+    expect_no_error(check_assoc_type_names(
+      setNames("obs.value", term),
+      info_list,
+      Mlist
+    ))
+    expect_error(
+      check_assoc_type_names(
+        setNames("obs.value", columns[1L]),
+        info_list,
+        Mlist
+      ),
+      term,
+      fixed = TRUE
+    )
+    expect_error(
+      check_assoc_type_names(c(chol = "obs.value"), info_list, Mlist),
+      term,
+      fixed = TRUE
+    )
+  }
+})
