@@ -740,6 +740,33 @@ test_that("random effects are re-scaled if a coefficient could be in two levels 
   }
 })
 
+test_that("random effects are re-scaled if the highest level has no random intercept (#133)", {
+  # the intercept and the center-level covariate zc are in the linear predictor,
+  # not in the means of random effects
+  data <- golden_data()
+  data$longDF$zc <- as.numeric(factor(data$longDF$center))^2
+  cases <- list(
+    quote(lme_imp(
+      y ~ zc + C1 + time + (1 | id) + (0 + time | center),
+      data = longDF
+    )),
+    quote(lme_imp(
+      y ~ zc + C1 + time + (0 + time | id) + (0 + time | center),
+      data = longDF
+    ))
+  )
+  set.seed(2020)
+  for (case in cases) {
+    fit <- golden_fit(case, data)
+    expect_true("zc" %in% names(fit$info_list$y$parelmts$M_center))
+    expect_lp_invariant(fit, "y")
+    for (g in ranef_groups(fit)) {
+      expect_ranefs_invariant(fit, g$outcomes, g$lvl)
+    }
+    expect_subject_lp_invariant(fit, "y")
+  }
+})
+
 # C1 (id level) is in the interaction C1:time in the mean of the id-level
 # random slope of time, and C1 has a random slope on the center level. The
 # shift of the id-level random effects then depends on C1 of the subject, and
