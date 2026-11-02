@@ -34,6 +34,21 @@
 
 ### Bug fixes
 
+- [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  when the survival part contained a function of several baseline
+  variables (e.g., `I(age * trig)`), the association types were linked
+  to the wrong variables.
+  [`summary()`](https://rdrr.io/r/base/summary.html) and
+  [`list_models()`](https://nerler.github.io/JointAI/reference/list_models.md)
+  showed the wrong variable or `NA`, and an `assoc_type` given by the
+  user was ignored or applied to another time-varying covariate, without
+  error or warning. Results of such models with `assoc_type` fitted with
+  earlier versions differ.
+- [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  names in `assoc_type` that are not a time-varying term in the survival
+  part now give an error that lists the possible names. They were
+  silently ignored, e.g., `c(chol = "obs.value")` for a model with
+  `log(chol)`, where `c("log(chol)" = "obs.value")` is needed.
 - [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
   [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
   and
@@ -57,6 +72,21 @@
   - In the development version, any factor with these contrasts stopped
     with an error about the names of dummy variables. Complete factors
     with `contr.helmert` work again, with coefficients `f1`, `f2`.
+- In mixed models with random effects on two or more levels, the
+  intercept and the covariates of a higher level were silently left out
+  of the model if they could not be in the means of the random effects
+  of that level. Their coefficients were only sampled from the prior,
+  and the other coefficients were estimated without these terms. They
+  are now part of the linear predictor. This affected, for example,
+  `(1 | id) + (0 + time | center)` and
+  `(0 + time | id) + (0 + time | center)`, for all types of mixed models
+  and for time-varying covariates in
+  [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md);
+  [`mlogitmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  also with `(1 | id) + (1 | center)`; and models of an outcome without
+  random effects on a level that exists because of another outcome,
+  e.g., `list(y ~ z + (1 | id) + (1 | center), x ~ z + (1 | id))`.
+  Results of such models fitted with earlier versions differ.
 - In models with three or more levels, an incomplete interaction of
   covariates from different levels above the lowest (e.g., a
   subject-level and a center-level covariate) was calculated with the

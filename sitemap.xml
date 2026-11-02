@@ -23,6 +23,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/all_vars.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/auto_corr.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/bs.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/check_assoc_type_names.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_classes.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_data.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_dummy_names.html</loc></url>
@@ -43,6 +44,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/clean_names.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/clean_survname.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/coef_is_monitored.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/column_to_term.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/combine_formula_lists.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/combine_formulas.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/compare_data_structure.html</loc></url>
@@ -67,6 +69,7 @@
 <url><loc>https://nerler.github.io/JointAI/reference/factor_to_integer.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_MIdat.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_Mlist.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/get_assoc_covars.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_datlvls.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_family.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/get_grouping_levels.html</loc></url>

@@ -376,9 +376,12 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   time-varying covariate in the linear predictor of the survival model
   when using a "JM" model. Implemented options are "underl.value"
   (linear predictor; default for covariates modelled using a Gaussian,
-  Gamma, beta or log-normal distribution) covariates) and "obs.value"
-  (the observed/imputed value; default for covariates modelled using
-  other distributions).
+  Gamma, beta or log-normal distribution) and "obs.value" (the
+  observed/imputed value; default for covariates modelled using other
+  distributions). The names are the terms of the survival model that
+  should not use the default, as written in the formula, e.g., `"chol"`
+  or `"log(chol)"`; other names give an error. An interaction uses the
+  association types of its elements and has no name of its own.
 
 ## Value
 
