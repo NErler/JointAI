@@ -514,6 +514,13 @@ covariates (which must be supplied via the argument \code{timevar}).
 It is possible to have multiple time-varying covariates, which do not
 have to be measured at the same time points, but there can only be one
 \code{timevar}.
+
+\code{JM_imp} needs a random effects structure that defines the subjects, and
+a time-varying term in the survival part or a longitudinal model; otherwise
+it gives an error (a proportional hazards model can be fitted with
+\code{coxph_imp}). The outcome of a sub-model that is neither in the survival
+part nor a covariate in another sub-model is assumed to be independent of the
+survival outcome, and there is a warning.
 }
 
 \section{Distribution families and link functions}{

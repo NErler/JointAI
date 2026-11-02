@@ -339,7 +339,7 @@ list_models <- function(
             },
             "\n"
           ))
-          if (i$modeltype %in% 'JM') {
+          if (i$modeltype %in% 'JM' && length(i$assoc_type) > 0L) {
             cat(paste0(
               "* association types:\n",
               paste0(
