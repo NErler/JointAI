@@ -52,7 +52,7 @@ test_that("a joint model needs a grouping variable", {
   for (case in names(cases)) {
     expect_error(
       jm_spec_setup(cases[[case]]),
-      "needs\\s+a\\s+grouping\\s+variable.*coxph_imp.*random\\s+effects\\s+structure",
+      "needs\\s+a\\s+grouping\\s+variable.*without\\s+time-varying\\s+covariates\\s+is\\s+not\\s+meaningful",
       info = case
     )
   }
