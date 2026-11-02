@@ -30,7 +30,7 @@
   data, and time-varying covariates were used as baseline covariates, without
   error or warning: this is now an error, as is a model with neither a
   time-varying term in the survival part nor a longitudinal model, e.g.,
-  `Surv(time, event) ~ age + (1 | id)`. Both errors point to `coxph_imp()`.
+  `Surv(time, event) ~ age + (1 | id)`, which points to `coxph_imp()`.
   There are new warnings for a time-varying covariate in the survival part
   without a model in the formula (the automatically added model only has a
   random intercept), and for a model in which the only time-varying terms are

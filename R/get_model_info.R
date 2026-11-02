@@ -829,16 +829,14 @@ check_jm_specification <- function(info_list, Mlist, warn = TRUE) {
       is specified, so that each row of the data would be one subject.
       Specify a longitudinal model for the time-varying covariates in the
       survival part (e.g., %s), or add a random effects structure to the
-      formula. For a proportional hazards model use %s, with a random effects
-      structure if the data are in long format.",
+      formula. A joint model without time-varying covariates is not meaningful.",
       dQuote(paste0(
         "x ~ ",
         Mlist$timevar,
         " + (",
         Mlist$timevar,
         " | id)"
-      )),
-      dQuote("coxph_imp()")
+      ))
     )
   }
 
