@@ -27,9 +27,9 @@ covariates;
 \item stops if there is nothing longitudinal at all, i.e., no time-varying term
 in the survival part and no longitudinal model (this is a proportional
 hazards model);
-\item gives a warning for a time-varying covariate with an automatically added
-model, which only has a random intercept and so may not describe the change
-of the covariate over time well enough for a joint model;
+\item gives a warning for a time-varying covariate in the survival part with an
+automatically added model, which only has a random intercept and so may not
+describe the change of the covariate over time well enough for a joint model;
 \item gives a warning if the only time-varying terms in the survival part are
 effects of baseline covariates that change with time, and there is no
 longitudinal model. (It does not point to \code{coxph_imp()}, which currently

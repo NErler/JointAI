@@ -359,9 +359,9 @@
 #' \code{coxph_imp}). The outcome of a sub-model that is neither in the survival
 #' part nor a covariate in another sub-model is assumed to be independent of the
 #' survival outcome, and there is a warning. There is also a warning for a
-#' time-varying covariate without a model in the formula: its automatically added
-#' model only has a random intercept, which may not describe the change of the
-#' covariate over time well enough for a joint model.
+#' time-varying covariate in the survival part without a model in the formula: its
+#' automatically added model only has a random intercept, which may not describe
+#' the change of the covariate over time well enough for a joint model.
 #'
 #'
 #'

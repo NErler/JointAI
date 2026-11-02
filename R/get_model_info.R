@@ -795,9 +795,9 @@ column_to_term <- function(columns, trafos) {
 #' * stops if there is nothing longitudinal at all, i.e., no time-varying term
 #'   in the survival part and no longitudinal model (this is a proportional
 #'   hazards model);
-#' * gives a warning for a time-varying covariate with an automatically added
-#'   model, which only has a random intercept and so may not describe the change
-#'   of the covariate over time well enough for a joint model;
+#' * gives a warning for a time-varying covariate in the survival part with an
+#'   automatically added model, which only has a random intercept and so may not
+#'   describe the change of the covariate over time well enough for a joint model;
 #' * gives a warning if the only time-varying terms in the survival part are
 #'   effects of baseline covariates that change with time, and there is no
 #'   longitudinal model. (It does not point to `coxph_imp()`, which currently
@@ -867,11 +867,15 @@ check_jm_specification <- function(info_list, Mlist, warn = TRUE) {
     return(invisible(NULL))
   }
 
-  # automatically added models of time-varying covariates
+  # automatically added models of time-varying covariates in the survival part
+  # (`tv_vars` also has the covariates of the models of these covariates)
   tv_vars <- unique(unlist(lapply(info_list[is_jm], function(info) {
     names(info$tv_vars)
   })))
-  automatic <- setdiff(tv_vars, names(Mlist$fixed))
+  surv_vars <- unlist(lapply(Mlist$fixed[is_surv], function(fmla) {
+    all.vars(fmla[[3L]])
+  }))
+  automatic <- setdiff(intersect(tv_vars, surv_vars), names(Mlist$fixed))
   if (length(automatic) > 0L) {
     warnmsg(
       "The models for the time-varying covariate(s) %s were added automatically,
