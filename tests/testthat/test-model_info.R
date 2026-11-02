@@ -646,6 +646,114 @@ test_that("check_jm_time_terms() passes terms that involve other variables", {
   }
 })
 
+test_that("JM with a function of several variables in the time-varying part gives an informative error", {
+  # the term, the interaction that the error points to, and the longitudinal
+  # models that are needed
+  chol_model <- quote(chol ~ age + day + (day | id))
+  bili_model <- quote(bili ~ age + day + (day | id))
+
+  cases <- list(
+    baseline_timevarying = list(
+      term = quote(I(age * chol)),
+      name = "I(age * chol)",
+      interaction = "age:chol",
+      models = list(chol_model)
+    ),
+    baseline_time = list(
+      term = quote(I(age * day)),
+      name = "I(age * day)",
+      interaction = "age:day",
+      models = list(chol_model)
+    ),
+    two_timevarying = list(
+      term = quote(I(chol * bili)),
+      name = "I(chol * bili)",
+      interaction = "chol:bili",
+      models = list(chol_model, bili_model)
+    ),
+    not_a_product = list(
+      term = quote(log(age * chol)),
+      name = "log(age * chol)",
+      interaction = "age:chol",
+      models = list(chol_model)
+    ),
+    several_columns = list(
+      term = quote(ns(age * day, df = 2)),
+      name = "ns(age * day, df = 2)",
+      interaction = "age:day",
+      models = list(chol_model)
+    )
+  )
+
+  for (case in names(cases)) {
+    survival_formula <- bquote(
+      Surv(futime, status != "censored") ~ chol + .(cases[[case]]$term)
+    )
+    formulas <- as.call(c(
+      quote(list),
+      survival_formula,
+      cases[[case]]$models
+    ))
+    call <- bquote(JM_imp(.(formulas), timevar = "day", data = PBC_small))
+
+    # the message is wrapped: compare it with single spaces
+    message <- tryCatch(
+      {
+        setup_case(call)
+        ""
+      },
+      error = conditionMessage
+    )
+    message <- gsub("\\s+", " ", message)
+
+    expect_match(message, "function of several variables", info = case)
+    expect_match(message, cases[[case]]$name, fixed = TRUE, info = case)
+    expect_match(message, cases[[case]]$interaction, fixed = TRUE, info = case)
+  }
+})
+
+test_that("JM with other functions and interactions in the survival part is still set up", {
+  terms_to_keep <- list(
+    two_baseline = quote(chol + I(age * trig)),
+    one_variable = quote(I(chol^2)),
+    one_variable_twice = quote(I(chol * chol)),
+    interaction_baseline = quote(age + chol + age:chol),
+    interaction_without_main_effects = quote(age:chol),
+    interaction_with_time = quote(chol + age:day)
+  )
+
+  for (case in names(terms_to_keep)) {
+    survival_formula <- bquote(
+      Surv(futime, status != "censored") ~ .(terms_to_keep[[case]])
+    )
+    call <- bquote(JM_imp(
+      list(.(survival_formula), chol ~ age + day + (day | id)),
+      timevar = "day",
+      data = PBC_small
+    ))
+    expect_no_error(setup_case(call), message = case)
+  }
+})
+
+test_that("check_jm_function_terms() only stops for columns with several variables", {
+  trafos <- data.frame(
+    colname = c("I(age * chol)", "I(age * chol)", "log(chol)"),
+    fct = c("I(age * chol)", "I(age * chol)", "log(chol)"),
+    var = c("age", "chol", "chol")
+  )
+
+  expect_error(
+    check_jm_function_terms(c("chol" = 1L, "I(age * chol)" = 2L), trafos),
+    "function\\s+of\\s+several\\s+variables"
+  )
+  expect_no_error(
+    check_jm_function_terms(c("chol" = 1L, "log(chol)" = 2L), trafos)
+  )
+  # no time-varying terms, and no functions in the model
+  expect_no_error(check_jm_function_terms(NULL, trafos))
+  expect_no_error(check_jm_function_terms(c("chol" = 1L), NULL))
+})
+
 test_that("covariate models have an intercept also if the analysis model has none", {
   # the covariate models are the same as with an analysis model with
   # intercept: an intercept for linear and binary models and for each
