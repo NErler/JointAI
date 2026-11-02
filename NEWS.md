@@ -21,6 +21,16 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `JM_imp()`: when the survival part contained a function of several baseline
+  variables (e.g., `I(age * trig)`), the association types were linked to the
+  wrong variables. `summary()` and `list_models()` showed the wrong variable or
+  `NA`, and an `assoc_type` given by the user was ignored or applied to another
+  time-varying covariate, without error or warning. Results of such models with
+  `assoc_type` fitted with earlier versions differ.
+* `JM_imp()`: names in `assoc_type` that are not a time-varying term in the
+  survival part now give an error that lists the possible names. They were
+  silently ignored, e.g., `c(chol = "obs.value")` for a model with `log(chol)`,
+  where `c("log(chol)" = "obs.value")` is needed.
 * `survreg_imp()`, `coxph_imp()` and `JM_imp()` now give an informative error for
   survival outcomes that are not right-censored. Left-censored outcomes
   (`Surv(time, event, type = "left")`) were accepted and fitted as if they were

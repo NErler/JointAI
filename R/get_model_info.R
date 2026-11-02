@@ -312,26 +312,8 @@ get_model1_info <- function(
   }
 
   assoc_type <- if (modeltype %in% "JM") {
-    # columns of the linear predictor; interaction terms are replaced by their
-    # elements, so that a covariate that is only part of an interaction also
-    # gets an association type
-    lp_columns <- unique(unlist(lapply(
-      names(unlist(unname(lp))),
-      replace_interaction,
-      Mlist$interactions
-    )))
-    covrs <- unique(unlist(lapply(
-      lp_columns,
-      replace_dummy,
-      Mlist$refs
-    )))
-    covrs <- setNames(
-      unlist(lapply(covrs, replace_trafo, Mlist$fcts_all)),
-      covrs
-    )
-
     get_assoc_type(
-      covrs[covrs %in% tvars],
+      get_assoc_covars(lp, Mlist, tvars),
       Mlist$models,
       assoc_type,
       Mlist$refs
@@ -735,6 +717,124 @@ check_jm_unknown_interactions <- function(
       dQuote(inter),
       dQuote(missing_elmts[1L]),
       dQuote(missing_elmts[1L])
+    )
+  }
+
+  invisible(NULL)
+}
+
+
+#' Time-varying covariates with an association type in a joint model
+#'
+#' Finds the columns of the linear predictor of the survival part of a joint
+#' model that need an association type, and the variable each of them belongs to.
+#'
+#' Interaction terms are replaced by their elements, so that a covariate that is
+#' only part of an interaction also gets an association type. Dummy variables
+#' are replaced by their factor. A function of several variables (e.g.,
+#' `I(age * trig)`) has one entry per variable, with the name of the column
+#' repeated, so that names and variables stay aligned; those that are not
+#' time-varying are then dropped.
+#'
+#' @param lp list per design matrix with the columns of the linear predictor
+#'   (named vectors of column numbers)
+#' @param Mlist list of model information, as created by `divide_matrices()`;
+#'   used are `interactions`, `refs` and `fcts_all`
+#' @param tvars character vector with the names of the time-varying covariates
+#'
+#' @returns A character vector with the names of the variables, named by the
+#'   column (for a factor: the name of the factor).
+#' @keywords internal
+get_assoc_covars <- function(lp, Mlist, tvars) {
+  lp_columns <- unique(unlist(lapply(
+    names(unlist(unname(lp))),
+    replace_interaction,
+    Mlist$interactions
+  )))
+  columns <- unique(unlist(lapply(lp_columns, replace_dummy, Mlist$refs)))
+
+  vars_per_column <- lapply(columns, replace_trafo, Mlist$fcts_all)
+  covrs <- setNames(
+    unlist(vars_per_column),
+    rep(columns, lengths(vars_per_column))
+  )
+
+  covrs[covrs %in% tvars]
+}
+
+
+#' The term in the model formula that a column of a design matrix belongs to
+#'
+#' A function with several columns (e.g., `ns(chol, df = 2)`, with the columns
+#' `ns(chol, df = 2)1` and `ns(chol, df = 2)2`) is one term. Any other column is
+#' its own term.
+#'
+#' @param columns character vector of column names
+#' @param trafos data.frame with information on the transformations, with the
+#'   columns `colname` and `fct` (`Mlist$fcts_all`), or `NULL`
+#'
+#' @returns A character vector with the term of each column.
+#' @keywords internal
+column_to_term <- function(columns, trafos) {
+  terms <- columns
+  rows <- match(columns, trafos$colname)
+  has_trafo <- !is.na(rows)
+  terms[has_trafo] <- trafos$fct[rows[has_trafo]]
+  terms
+}
+
+
+#' Check the names in `assoc_type`
+#'
+#' The names in `assoc_type` have to be terms in the survival part of a joint
+#' model that have an association type, i.e., a time-varying covariate or a
+#' function of it. Anything else (which would otherwise be ignored) is an error.
+#' A function with several columns is one term, and an interaction has no name of
+#' its own: it uses the association types of its elements.
+#' With several survival outcomes, a name has to apply to one of them. Does
+#' nothing if the model has no survival part of a joint model.
+#'
+#' @param assoc_type named vector of association types, as given by the user, or
+#'   `NULL`
+#' @param info_list list of model information, from `get_model_info()`
+#' @param Mlist list of model information, as created by `divide_matrices()`
+#'
+#' @returns `NULL`, invisibly; called for its error.
+#' @keywords internal
+check_assoc_type_names <- function(assoc_type, info_list, Mlist) {
+  is_jm <- vapply(
+    info_list,
+    function(info) info$modeltype %in% "JM",
+    logical(1L)
+  )
+
+  if (is.null(assoc_type) || !any(is_jm)) {
+    return(invisible(NULL))
+  }
+
+  possible <- character(0L)
+  for (info in info_list[is_jm]) {
+    covrs <- get_assoc_covars(info$lp, Mlist, names(info$tv_vars))
+    possible <- c(possible, column_to_term(names(covrs), Mlist$fcts_all))
+  }
+  possible <- unique(possible)
+
+  # a vector without names cannot be used at all
+  usernames <- if (is.null(names(assoc_type))) {
+    rep("", length(assoc_type))
+  } else {
+    names(assoc_type)
+  }
+  unknown <- unique(usernames[!usernames %in% possible])
+
+  if (length(unknown) > 0L) {
+    errormsg(
+      "The name(s) %s in %s are not valid. The names have to be time-varying
+      terms in the survival part of the model, as written in the formula.
+      Possible names are: %s.",
+      paste_and(unknown, dQ = TRUE),
+      dQuote("assoc_type"),
+      if (length(possible) > 0L) paste_and(possible, dQ = TRUE) else "none"
     )
   }
 

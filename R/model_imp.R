@@ -58,8 +58,14 @@
 #'                   Implemented options are "underl.value"
 #'                   (linear predictor; default for covariates modelled using a
 #'                   Gaussian, Gamma, beta or log-normal distribution)
-#'                   covariates) and "obs.value" (the observed/imputed value;
+#'                   and "obs.value" (the observed/imputed value;
 #'                   default for covariates modelled using other distributions).
+#'                   The names are the terms of the survival model that should
+#'                   not use the default, as written in the formula, e.g.,
+#'                   \code{"chol"} or \code{"log(chol)"}; other names give an
+#'                   error.
+#'                   An interaction uses the association types of its elements
+#'                   and has no name of its own.
 #' @param ppc logical: should monitors for posterior predictive checks be
 #'                     set? (not yet used)
 #' @param seed optional; seed value (for reproducibility)
@@ -928,6 +934,7 @@ model_imp <- function(
     assoc_type = assoc_type,
     custom = custom
   )
+  check_assoc_type_names(assoc_type, info_list, Mlist)
 
   # * scaling without centring -------------------------------------------------
   # where no intercept (or random intercept, ...) takes the centring of a
