@@ -27,6 +27,10 @@
   `NA`, and an `assoc_type` given by the user was ignored or applied to another
   time-varying covariate, without error or warning. Results of such models with
   `assoc_type` fitted with earlier versions differ.
+* `JM_imp()`: a function of several variables of which at least one is
+  time-varying (e.g., `I(age * chol)`) in the survival part now gives an error
+  that names the term and points to the interaction (`age:chol`). It stopped
+  with "values must be length 1". Such a model still cannot be fitted.
 * `JM_imp()`: names in `assoc_type` that are not a time-varying term in the
   survival part now give an error that lists the possible names. They were
   silently ignored, e.g., `c(chol = "obs.value")` for a model with `log(chol)`,
