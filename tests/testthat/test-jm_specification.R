@@ -52,7 +52,7 @@ test_that("a joint model needs a grouping variable", {
   for (case in names(cases)) {
     expect_error(
       jm_spec_setup(cases[[case]]),
-      "needs\\s+a\\s+grouping\\s+variable.*coxph_imp",
+      "needs\\s+a\\s+grouping\\s+variable.*coxph_imp.*random\\s+effects\\s+structure",
       info = case
     )
   }
@@ -181,23 +181,96 @@ test_that("the warning only names outcomes that are not linked to the survival m
 })
 
 
-test_that("intended joint models without a model in the formula still work", {
-  # the model for the time-varying covariate is added automatically
-  expect_no_warning(
-    fit <- jm_spec_setup(
-      Surv(futime, status != "censored") ~ age + albumin + (1 | id)
+test_that("there is a warning for automatically added models of time-varying covariates", {
+  cases <- list(
+    # only the survival formula
+    survival_only = list(
+      formula = Surv(futime, status != "censored") ~ age + albumin + (1 | id),
+      automatic = "albumin"
+    ),
+    function_of_covariate = list(
+      formula = Surv(futime, status != "censored") ~ age +
+        log(albumin) +
+        (1 | id),
+      automatic = "albumin"
+    ),
+    # one of the covariates of the survival part has a model in the formula
+    one_given = list(
+      formula = list(
+        Surv(futime, status != "censored") ~ age + albumin + bili,
+        albumin ~ day + (day | id)
+      ),
+      automatic = "bili"
+    ),
+    # a time-varying covariate in the model of a longitudinal outcome
+    covariate_of_longitudinal = list(
+      formula = list(
+        Surv(futime, status != "censored") ~ age + albumin,
+        albumin ~ chol + day + (day | id)
+      ),
+      automatic = "chol"
     )
   )
-  expect_identical(names(fit$info_list[[1L]]$tv_vars), "albumin")
 
-  # a time-varying effect of a baseline covariate is time-varying, too
-  expect_no_warning(
+  for (case in names(cases)) {
+    expect_warning(
+      fit <- jm_spec_setup(cases[[case]]$formula),
+      paste0(
+        "time-varying\\s+covariate\\(s\\)\\s+.",
+        cases[[case]]$automatic,
+        ".\\s+were\\s+added\\s+automatically.*random\\s+intercept.*coxph_imp"
+      ),
+      info = case
+    )
+    expect_true(
+      cases[[case]]$automatic %in% names(fit$info_list[[1L]]$tv_vars),
+      info = case
+    )
+    # the description of the model is correct: a random intercept only
+    expect_equal(
+      unname(fit$info_list[[cases[[case]]$automatic]]$nranef),
+      1L,
+      info = case
+    )
+  }
+
+  expect_no_warning(jm_spec_setup(
+    Surv(futime, status != "censored") ~ age + albumin + (1 | id),
+    warn = FALSE
+  ))
+})
+
+
+test_that("there is a warning if the only time-varying terms are effects of baseline covariates", {
+  expect_warning(
     fit <- jm_spec_setup(
       Surv(futime, status != "censored") ~ age + age:day + (1 | id)
-    )
+    ),
+    "not\\s+really\\s+a\\s+joint\\s+model"
   )
+  # the model is still set up
   expect_identical(names(fit$info_list[[1L]]$lp$M_lvlone), "age:day")
   expect_true("M_lvlonegk" %in% names(fit$data_list))
+
+  expect_no_warning(jm_spec_setup(
+    Surv(futime, status != "censored") ~ age + age:day + (1 | id),
+    warn = FALSE
+  ))
+
+  # with a longitudinal model, the warning is about that outcome
+  expect_warning(
+    jm_spec_setup(list(
+      Surv(futime, status != "censored") ~ age + age:day,
+      albumin ~ day + (day | id)
+    )),
+    "The\\s+outcome\\(s\\)\\s+.albumin.\\s+of"
+  )
+
+  # with a time-varying covariate, this is a joint model
+  expect_no_warning(jm_spec_setup(list(
+    Surv(futime, status != "censored") ~ age + chol + age:day,
+    chol ~ age + day + (day | id)
+  )))
 })
 
 
