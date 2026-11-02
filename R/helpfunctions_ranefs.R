@@ -518,23 +518,27 @@ orga_hc_parelmts <- function(
 
   used <- lapply(nlapply(hc_vars, do.call, what = rbind), "[[", "parelmts")
 
-  othervars <- nlapply(
-    names(all_lvls)[all_lvls <= min(all_lvls[lvls])],
-    function(lvl) {
-      other <- get_othervars_mat(lvl, parelmts, lp)
+  # The coefficients that are not in the means of the random effects go into the
+  # linear predictor. This is needed from any level: above the lowest level with
+  # random effects there are such coefficients if the level has no random
+  # intercept, or none that can take them (multinomial models).
+  # In multinomial models `other` is a list (one data.frame per linear
+  # predictor) and not filtered, because their random effects never have
+  # coefficients in their means.
+  othervars <- nlapply(names(all_lvls), function(lvl) {
+    other <- get_othervars_mat(lvl, parelmts, lp)
 
-      if (!inherits(other, 'list')) {
-        other <- other[!other$parelmts %in% unlist(used), ]
-      }
-
-      if (all(dim(other) > 0)) {
-        other
-      }
+    if (!inherits(other, 'list')) {
+      other <- other[!other$parelmts %in% unlist(used), ]
     }
-  )
+
+    if (all(dim(other) > 0)) {
+      other
+    }
+  })
 
   # Non-proportional effects are not in the means of the random effects, so they
-  # are needed from any level, also above the lowest level with random effects.
+  # are also needed from any level.
   nonprop <- nlapply(names(all_lvls), function(lvl) {
     get_othervars_mat(
       lvl,
@@ -542,12 +546,16 @@ orga_hc_parelmts <- function(
       attr(lp, 'nonprop')
     )
   })
+
+  # Levels above the lowest level with random effects are only listed if they
+  # have something to contribute.
   is_lower_lvl <- all_lvls <= min(all_lvls[lvls])
+  has_othervars <- !lvapply(othervars, is.null)
   has_nonprop <- !lvapply(nonprop, is.null)
 
   list(
     hcvars = hc_vars,
-    othervars = othervars,
+    othervars = othervars[is_lower_lvl | has_othervars],
     nonprop = nonprop[is_lower_lvl | has_nonprop]
   )
 }

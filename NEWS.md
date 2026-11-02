@@ -38,6 +38,18 @@
   * In the development version, any factor with these contrasts stopped with an
     error about the names of dummy variables. Complete factors with `contr.helmert`
     work again, with coefficients `f1`, `f2`.
+* In mixed models with random effects on two or more levels, the intercept and
+  the covariates of a higher level were silently left out of the model if they
+  could not be in the means of the random effects of that level. Their
+  coefficients were only sampled from the prior, and the other coefficients were
+  estimated without these terms. They are now part of the linear predictor. This
+  affected, for example, `(1 | id) + (0 + time | center)` and
+  `(0 + time | id) + (0 + time | center)`, for all types of mixed models and for
+  time-varying covariates in `JM_imp()`; `mlogitmm_imp()` also with
+  `(1 | id) + (1 | center)`; and models of an outcome without random effects on
+  a level that exists because of another outcome, e.g.,
+  `list(y ~ z + (1 | id) + (1 | center), x ~ z + (1 | id))`. Results of such
+  models fitted with earlier versions differ.
 * In models with three or more levels, an incomplete interaction of covariates
   from different levels above the lowest (e.g., a subject-level and a
   center-level covariate) was calculated with the value of the wrong unit: the
