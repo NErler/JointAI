@@ -201,14 +201,6 @@ test_that("there is a warning for automatically added models of time-varying cov
         albumin ~ day + (day | id)
       ),
       automatic = "bili"
-    ),
-    # a time-varying covariate in the model of a longitudinal outcome
-    covariate_of_longitudinal = list(
-      formula = list(
-        Surv(futime, status != "censored") ~ age + albumin,
-        albumin ~ chol + day + (day | id)
-      ),
-      automatic = "chol"
     )
   )
 
@@ -238,6 +230,16 @@ test_that("there is a warning for automatically added models of time-varying cov
     Surv(futime, status != "censored") ~ age + albumin + (1 | id),
     warn = FALSE
   ))
+
+  # no warning for a covariate that is only in the model of a longitudinal
+  # outcome, not in the survival part
+  expect_no_warning(
+    fit <- jm_spec_setup(list(
+      Surv(futime, status != "censored") ~ age + albumin,
+      albumin ~ chol + day + (day | id)
+    ))
+  )
+  expect_true("chol" %in% names(fit$info_list[[1L]]$tv_vars))
 })
 
 
