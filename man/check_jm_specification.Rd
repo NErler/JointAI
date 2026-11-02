@@ -11,10 +11,10 @@ check_jm_specification(info_list, Mlist, warn = TRUE)
 
 \item{Mlist}{list of model information, as created by \code{divide_matrices()}}
 
-\item{warn}{logical; should the warning be given?}
+\item{warn}{logical; should the warnings be given?}
 }
 \value{
-\code{NULL}, invisibly; called for its errors and warning.
+\code{NULL}, invisibly; called for its errors and warnings.
 }
 \description{
 A joint model needs subjects with repeated measurements and something that
@@ -27,6 +27,13 @@ covariates;
 \item stops if there is nothing longitudinal at all, i.e., no time-varying term
 in the survival part and no longitudinal model (this is a proportional
 hazards model);
+\item gives a warning for a time-varying covariate with an automatically added
+model, which only has a random intercept and so may not describe the change
+of the covariate over time well enough for a joint model;
+\item gives a warning if the only time-varying terms in the survival part are
+effects of baseline covariates that change with time, and there is no
+longitudinal model. (It does not point to \code{coxph_imp()}, which currently
+stops with an error for a term with the time variable.)
 \item gives a warning for a sub-model whose outcome is neither in the survival
 part nor a covariate in another sub-model, because this outcome is assumed
 to be independent of the survival outcome.

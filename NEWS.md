@@ -31,6 +31,10 @@
   error or warning: this is now an error, as is a model with neither a
   time-varying term in the survival part nor a longitudinal model, e.g.,
   `Surv(time, event) ~ age + (1 | id)`. Both errors point to `coxph_imp()`.
+  There are new warnings for a time-varying covariate without a model in the
+  formula (the automatically added model only has a random intercept), and for a
+  model in which the only time-varying terms are effects of baseline covariates
+  that change with time (e.g., `age:day`), which is not really a joint model.
 * `JM_imp()`: when the survival part contained a function of several baseline
   variables (e.g., `I(age * trig)`), the association types were linked to the
   wrong variables. `summary()` and `list_models()` showed the wrong variable or

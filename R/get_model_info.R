@@ -795,15 +795,22 @@ column_to_term <- function(columns, trafos) {
 #' * stops if there is nothing longitudinal at all, i.e., no time-varying term
 #'   in the survival part and no longitudinal model (this is a proportional
 #'   hazards model);
+#' * gives a warning for a time-varying covariate with an automatically added
+#'   model, which only has a random intercept and so may not describe the change
+#'   of the covariate over time well enough for a joint model;
+#' * gives a warning if the only time-varying terms in the survival part are
+#'   effects of baseline covariates that change with time, and there is no
+#'   longitudinal model. (It does not point to `coxph_imp()`, which currently
+#'   stops with an error for a term with the time variable.)
 #' * gives a warning for a sub-model whose outcome is neither in the survival
 #'   part nor a covariate in another sub-model, because this outcome is assumed
 #'   to be independent of the survival outcome.
 #'
 #' @param info_list list of model information, from `get_model_info()`
 #' @param Mlist list of model information, as created by `divide_matrices()`
-#' @param warn logical; should the warning be given?
+#' @param warn logical; should the warnings be given?
 #'
-#' @returns `NULL`, invisibly; called for its errors and warning.
+#' @returns `NULL`, invisibly; called for its errors and warnings.
 #' @keywords internal
 check_jm_specification <- function(info_list, Mlist, warn = TRUE) {
   is_jm <- lvapply(info_list, function(info) info$modeltype %in% "JM")
@@ -822,7 +829,8 @@ check_jm_specification <- function(info_list, Mlist, warn = TRUE) {
       is specified, so that each row of the data would be one subject.
       Specify a longitudinal model for the time-varying covariates in the
       survival part (e.g., %s), or add a random effects structure to the
-      formula. For a proportional hazards model use %s.",
+      formula. For a proportional hazards model use %s, with a random effects
+      structure if the data are in long format.",
       dQuote(paste0(
         "x ~ ",
         Mlist$timevar,
@@ -855,6 +863,45 @@ check_jm_specification <- function(info_list, Mlist, warn = TRUE) {
     )
   }
 
+  if (!warn) {
+    return(invisible(NULL))
+  }
+
+  # automatically added models of time-varying covariates
+  tv_vars <- unique(unlist(lapply(info_list[is_jm], function(info) {
+    names(info$tv_vars)
+  })))
+  automatic <- setdiff(tv_vars, names(Mlist$fixed))
+  if (length(automatic) > 0L) {
+    warnmsg(
+      "The models for the time-varying covariate(s) %s were added automatically,
+      with only a random intercept. In a joint model, the change of these
+      covariates over time needs to be modelled appropriately. Specify the
+      model(s) in the formula (e.g., %s), or use a time-dependent proportional
+      hazards model (%s).",
+      paste_and(automatic, dQ = TRUE),
+      dQuote(paste0(
+        automatic[1L],
+        " ~ ",
+        Mlist$timevar,
+        " + (",
+        Mlist$timevar,
+        " | id)"
+      )),
+      dQuote("coxph_imp()")
+    )
+  }
+
+  # time-varying effects of baseline covariates are the only time-varying terms
+  if (any(has_tv_part) && length(tv_vars) == 0L && !any(is_long)) {
+    warnmsg(
+      "This is not really a joint model: the only time-varying terms in the
+      survival part are effects of baseline covariates that change with %s, and
+      there is no longitudinal model.",
+      dQuote(Mlist$timevar)
+    )
+  }
+
   # outcomes that are not linked to the survival outcome
   unlinked <- character(0L)
   for (outcome in submodels) {
@@ -864,7 +911,7 @@ check_jm_specification <- function(info_list, Mlist, warn = TRUE) {
       unlinked <- c(unlinked, outcome)
     }
   }
-  if (warn && length(unlinked) > 0L) {
+  if (length(unlinked) > 0L) {
     warnmsg(
       "The outcome(s) %s of the sub-models are not part of the survival model or
       of another sub-model. They are assumed to be independent of the survival
