@@ -612,6 +612,15 @@ covariates (which must be supplied via the argument <code>timevar</code>).</p>
 <p>It is possible to have multiple time-varying covariates, which do not
 have to be measured at the same time points, but there can only be one
 <code>timevar</code>.</p>
+<p><code>JM_imp</code> needs a random effects structure that defines the subjects, and
+a time-varying term in the survival part or a longitudinal model; otherwise
+it gives an error (a proportional hazards model can be fitted with
+<code>coxph_imp</code>). The outcome of a sub-model that is neither in the survival
+part nor a covariate in another sub-model is assumed to be independent of the
+survival outcome, and there is a warning. There is also a warning for a
+time-varying covariate in the survival part without a model in the formula: its
+automatically added model only has a random intercept, which may not describe
+the change of the covariate over time well enough for a joint model.</p>
     </div>
     <div class="section level2">
     <h2 id="distribution-families-and-link-functions">Distribution families and link functions<a class="anchor" aria-label="anchor" href="#distribution-families-and-link-functions"></a></h2>
