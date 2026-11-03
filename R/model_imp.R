@@ -353,6 +353,16 @@
 #' have to be measured at the same time points, but there can only be one
 #' \code{timevar}.
 #'
+#' \code{JM_imp} needs a random effects structure that defines the subjects, and
+#' a time-varying term in the survival part or a longitudinal model; otherwise
+#' it gives an error (a proportional hazards model can be fitted with
+#' \code{coxph_imp}). The outcome of a sub-model that is neither in the survival
+#' part nor a covariate in another sub-model is assumed to be independent of the
+#' survival outcome, and there is a warning. There is also a warning for a
+#' time-varying covariate in the survival part without a model in the formula: its
+#' automatically added model only has a random intercept, which may not describe
+#' the change of the covariate over time well enough for a joint model.
+#'
 #'
 #'
 #'
@@ -934,6 +944,7 @@ model_imp <- function(
     assoc_type = assoc_type,
     custom = custom
   )
+  check_jm_specification(info_list, Mlist, warn = warn)
   check_assoc_type_names(assoc_type, info_list, Mlist)
 
   # * scaling without centring -------------------------------------------------

@@ -499,6 +499,11 @@ jagsmodel_jm <- function(info) {
   index <- info$index[gsub("M_", "", info$resp_mat[2L])]
   indent <- 4L + 4L + nchar(info$varname) + 1L + nchar(index) + 5L
 
+  # is there a time-varying part in the linear predictor? There is none if the
+  # outcomes of the longitudinal models are not in the survival model
+  has_tv_part <- info$resp_mat[2L] != "M_lvlone" &&
+    length(info$lp[["M_lvlone"]]) > 0L
+
   # main model elements --------------------------------------------------------
 
   # random effects
@@ -552,7 +557,7 @@ jagsmodel_jm <- function(info) {
         index,
         "]"
       ),
-      if (info$resp_mat[2L] != "M_lvlone") {
+      if (has_tv_part) {
         paste_linpred_jm(
           varname = info$varname,
           parname = info$parname,
@@ -581,7 +586,7 @@ jagsmodel_jm <- function(info) {
     paste0(
       c(
         paste0("gkw[] * exp(1)^(logh0s_", info$varname, "[", index, ", ]"),
-        if (info$resp_mat[2L] != "M_lvlone") {
+        if (has_tv_part) {
           paste_linpred_jm(
             varname = info$varname,
             parname = info$parname,

@@ -21,6 +21,21 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `JM_imp()`: specifications that are not the intended use of a joint model
+  (#110). A longitudinal model whose outcome is not in the survival part failed
+  with a cryptic error. It can now be fitted, with a warning that this outcome
+  is assumed to be independent of the survival outcome (also for an outcome that
+  is not used anywhere in a model that otherwise is a joint model). A model
+  without a random effects structure was set up with one subject per row of the
+  data, and time-varying covariates were used as baseline covariates, without
+  error or warning: this is now an error, as is a model with neither a
+  time-varying term in the survival part nor a longitudinal model, e.g.,
+  `Surv(time, event) ~ age + (1 | id)`, which points to `coxph_imp()`.
+  There are new warnings for a time-varying covariate in the survival part
+  without a model in the formula (the automatically added model only has a
+  random intercept), and for a model in which the only time-varying terms are
+  effects of baseline covariates that change with time (e.g., `age:day`), which
+  is not really a joint model.
 * `JM_imp()`: when the survival part contained a function of several baseline
   variables (e.g., `I(age * trig)`), the association types were linked to the
   wrong variables. `summary()` and `list_models()` showed the wrong variable or
