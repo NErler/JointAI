@@ -5,16 +5,22 @@
 \alias{cross_corr_plot}
 \title{Cross-correlation of MCMC samples}
 \usage{
-cross_corr(object, outcome = 1L, start = NULL, end = NULL, thin = NULL)
+cross_corr(object, outcome = NULL, start = NULL, end = NULL,
+  thin = NULL)
 
-cross_corr_plot(object, outcome = 1L, start = NULL, end = NULL,
+cross_corr_plot(object, outcome = NULL, start = NULL, end = NULL,
   thin = NULL, type = "corrplot")
 }
 \arguments{
 \item{object}{an object of class JointAI}
 
-\item{outcome}{integer; index of the outcome model for which the
-correlations should be plotted}
+\item{outcome}{optional; vector identifying the sub-models whose parameters
+are included, either by their indices (in the order of the
+list of model formulas) or their names (LHS of the respective
+model formula as character string). If \code{NULL} (default),
+all monitored parameters are included. With parameters from
+several sub-models, the coefficients are named
+\code{"outcome: variable"}, otherwise by the variable only.}
 
 \item{start}{the first iteration of interest
 (see \code{\link[coda]{window.mcmc}})}
