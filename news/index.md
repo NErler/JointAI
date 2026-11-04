@@ -35,6 +35,13 @@
 ### Bug fixes
 
 - [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
+  [`exp()`](https://rdrr.io/r/base/Log.html) of a modelled time-varying
+  covariate in the survival part (`exp(x)`, or within
+  [`I()`](https://rdrr.io/r/base/AsIs.html)) failed in JAGS with
+  “Invalid vector argument to exp”, when using the association type
+  `"underl.value"` (the default for, e.g., covariates with a Gaussian
+  model).
+- [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
   specifications that are not the intended use of a joint model
   ([\#110](https://github.com/nerler/JointAI/issues/110)). A
   longitudinal model whose outcome is not in the survival part failed
