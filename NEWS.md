@@ -1,5 +1,11 @@
 # JointAI (development version)
 
+## New features
+* `JM_imp()`: a time-varying residual standard deviation for a longitudinal
+  outcome with a linear mixed model, via a model for its logarithm in the list of
+  model formulas, `logsd(y) ~ time + (time | id)`. It can be used as a covariate
+  in the survival part, e.g., `exp(logsd(y))` for the standard deviation.
+
 ## Small improvements
 * Labelled variables (class `"haven_labelled"` from **haven**, or `"labelled"`
   from **Hmisc** and older versions of **haven**), e.g., from data imported

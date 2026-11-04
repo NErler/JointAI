@@ -231,6 +231,22 @@
 #' This principle is also used for the specification of a joint model for
 #' longitudinal and survival data.
 #'
+#' In a joint model, the residual standard deviation of a longitudinal outcome
+#' \code{y} with a linear mixed model can be time-varying, via a linear mixed
+#' model for its logarithm, written as \code{logsd(y)}. It can be used in the
+#' survival part like any other time-varying covariate, for example:
+#' ```r
+#' JM_imp(list(Surv(time, event) ~ age + y + exp(logsd(y)),
+#'             y ~ age + time + (time | id),
+#'             logsd(y) ~ time + (time | id)),
+#'        timevar = "time", data = data)
+#' ```
+#' Here, \code{exp(logsd(y))} is the standard deviation, and \code{logsd(y)} its
+#' logarithm. In the results, this sub-model has the name \code{logsd.y}. It
+#' replaces the parameter \code{sigma_y}. Random effects of the log standard
+#' deviation are independent of the random effects of \code{y}, unless specified
+#' otherwise via \code{rd_vcov}.
+#'
 #' Note that it is not possible to specify multiple models for the same outcome
 #' variable.
 #'
@@ -864,10 +880,18 @@ model_imp <- function(
 ) {
   modimpcall <- as.list(match.call())[-1L]
   start_time <- Sys.time()
+  logsd_of <- NULL
 
   # checks & warnings -------------------------------------------------------
   if (!is.null(formula) & is.null(fixed) & is.null(random)) {
     formula <- check_formula_list(formula)
+
+    # sub-models for the log of a residual standard deviation, `logsd(y)`
+    logsd <- prepare_logsd_models(formula, data, analysis_type)
+    formula <- logsd$formula
+    data <- logsd$data
+    logsd_of <- logsd$logsd_of
+
     fixed <- split_formula_list(formula)$fixed
     random <- split_formula_list(formula)$random
   }
@@ -918,6 +942,11 @@ model_imp <- function(
     df_basehaz = df_basehaz,
     rd_vcov = rd_vcov
   )
+
+  if (length(logsd_of) > 0L) {
+    check_logsd_models(logsd_of, Mlist)
+    Mlist <- set_logsd_columns(Mlist, logsd_of)
+  }
 
   # * model dimensions ---------------------------------------------------------
   par_index_main <- get_model_dim(
@@ -1105,6 +1134,9 @@ model_imp <- function(
   if (length(fmla) == 1L) {
     fmla <- fmla[[1]]
   }
+
+  # the values of a log standard deviation are placeholders, not data
+  Mlist$data[names(logsd_of)] <- NA_real_
 
   object <- structure(
     list(

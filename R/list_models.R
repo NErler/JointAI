@@ -214,7 +214,11 @@ list_models <- function(
       # * opar -------------------------------------------------------------------
       if (otherpars) {
         if (
-          i$family %in% c('gaussian', 'lognorm', 'Gamma') && !is.null(i$family)
+          i$family %in%
+            c('gaussian', 'lognorm', 'Gamma') &&
+            !is.null(i$family) &&
+            is.null(i$logsd_var) &&
+            !isTRUE(i$is_logsd)
         ) {
           cat("* Precision of ", dQuote(i$varname), ":\n")
           cat(paste0(

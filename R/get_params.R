@@ -164,6 +164,10 @@ get_modelpars <- function(info_list, Mlist, args, set = "main") {
     )
   }
 
+  # a model for the residual standard deviation replaces these parameters
+  sigvars <- setdiff(sigvars, c(Mlist$logsd_of, names(Mlist$logsd_of)))
+  tauvars <- setdiff(tauvars, c(Mlist$logsd_of, names(Mlist$logsd_of)))
+
   params <- c(
     params,
     if (length(sigvars) > 0L) paste0("sigma_", sigvars),

@@ -18,6 +18,16 @@ jagsmodel_glmm <- function(info) {
 
   secndpar <- get_secndpar(family = info$family, varname = info$varname)
 
+  # a model for the residual standard deviation replaces the second parameter
+  relation <- " ~ "
+  logsd_parts <- get_logsd_parts(info, index, isgk = FALSE)
+  if (!is.null(logsd_parts)) {
+    relation <- logsd_parts$relation
+    distr <- logsd_parts$distr
+    repar <- logsd_parts$repar
+    secndpar <- NULL
+  }
+
   modelname <- get_glm_modelname(info$family)
 
   linkindent <- get_linkindent(info$link)
@@ -157,9 +167,10 @@ jagsmodel_glmm <- function(info) {
     index,
     ", ",
     info$resp_col,
-    "] ~ ",
+    "]",
+    relation,
     distr,
-    trunc,
+    if (!isTRUE(info$is_logsd)) trunc,
     "\n",
     repar,
     tab(4),
@@ -232,6 +243,14 @@ glmm_in_jm <- function(info) {
     isgk = TRUE
   )
 
+  relation <- " ~ "
+  logsd_parts <- get_logsd_parts(info, index, isgk = TRUE)
+  if (!is.null(logsd_parts)) {
+    relation <- logsd_parts$relation
+    distr <- logsd_parts$distr
+    repar <- logsd_parts$repar
+  }
+
   linkindent <- get_linkindent(info$link)
 
   # model parts ----------------------------------------------------------------
@@ -275,9 +294,10 @@ glmm_in_jm <- function(info) {
     index,
     ", ",
     info$resp_col,
-    ", k] ~ ",
+    ", k]",
+    relation,
     distr,
-    trunc,
+    if (!isTRUE(info$is_logsd)) trunc,
     "\n",
     repar,
     tab(6),

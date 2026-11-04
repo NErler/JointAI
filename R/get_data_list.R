@@ -59,6 +59,18 @@ get_data_list <- function(
     ]))
   )
 
+  # a model for the residual standard deviation replaces the precision; if no
+  # other model has a precision, remove its hyperparameters to prevent warning
+  # message from JAGS
+  has_precision <- lvapply(info_list, function(info) {
+    any(info$family %in% c("gaussian", "lognorm")) &&
+      is.null(info$logsd_var) &&
+      !isTRUE(info$is_logsd)
+  })
+  if (length(Mlist$logsd_of) > 0L && !any(has_precision)) {
+    l[c("shape_tau_norm", "rate_tau_norm")] <- NULL
+  }
+
   # if there are no regression coefficients in the ordinal models, remove the
   # hyperpars for regression coefficients in ordinal models to prevent warning
   # message from JAGS

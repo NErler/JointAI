@@ -215,6 +215,8 @@ get_model1_info <- function(
       FUN.VALUE = character(1L)
     )
     covars <- covars[covars %in% unlist(lapply(Mlist$M, colnames))]
+    logsd_vars <- get_logsd_vars(covars, Mlist$logsd_of)
+    covars <- c(covars, logsd_vars)
 
     rep_lvls <- names(which(
       Mlist$group_lvls <
@@ -247,6 +249,10 @@ get_model1_info <- function(
     ))
 
     tvars <- tvars[Mlist$Mlvls[tvars] %in% paste0("M_", rep_lvls)]
+
+    # the model of a variable with a model for its residual standard deviation
+    # needs this standard deviation at the quadrature points
+    tvars <- unique(c(tvars, get_logsd_vars(tvars, Mlist$logsd_of)))
 
     # get the model info for these variables
     setNames(
@@ -380,6 +386,14 @@ get_model1_info <- function(
   # all other models stays as it was
   if (length(jm_interactions) > 0L) {
     info$jm_interactions <- jm_interactions
+  }
+
+  # the same for models that are part of a model for a residual standard deviation
+  if (k %in% Mlist$logsd_of) {
+    info$logsd_var <- names(Mlist$logsd_of)[Mlist$logsd_of == k]
+  }
+  if (k %in% names(Mlist$logsd_of)) {
+    info$is_logsd <- TRUE
   }
 
   info
@@ -919,7 +933,14 @@ check_jm_specification <- function(info_list, Mlist, warn = TRUE) {
   for (outcome in submodels) {
     other_fmlas <- Mlist$fixed[names(Mlist$fixed) != outcome]
     used <- unlist(lapply(other_fmlas, function(fmla) all.vars(fmla[[3L]])))
-    if (!outcome %in% used) {
+    # an outcome and the log of its residual standard deviation are linked to
+    # the survival outcome if one of them is used
+    pair <- c(
+      outcome,
+      Mlist$logsd_of[outcome],
+      names(Mlist$logsd_of)[Mlist$logsd_of == outcome]
+    )
+    if (!any(pair %in% used)) {
       unlinked <- c(unlinked, outcome)
     }
   }
