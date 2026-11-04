@@ -647,3 +647,65 @@ test_that("check_assoc_type_names() takes a term with several columns as one nam
     )
   }
 })
+
+# exp() of the underlying value in the quadrature part -------------------------
+# JAGS does not accept a vector as argument of exp()
+
+test_that("exp() of a modelled covariate is possible in the survival part", {
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ age + exp(albumin),
+    longfml = list(albumin ~ day + age + (day | id))
+  )
+  out <- jm_survival_lines(fit)
+
+  expect_match(
+    out$logh,
+    paste0("(exp(mu_albumin[", srow, "]) - "),
+    fixed = TRUE
+  )
+  expect_match(out$surv, "((exp(1)^(mugk_albumin[ii, 1:15])) - ", fixed = TRUE)
+  expect_jags_compiles(fit)
+})
+
+test_that("exp() in a function written with I() keeps its precedence", {
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ age + I(exp(albumin)^2),
+    longfml = list(albumin ~ day + age + (day | id))
+  )
+  out <- jm_survival_lines(fit)
+
+  expect_match(
+    out$surv,
+    "((exp(1)^(mugk_albumin[ii, 1:15]))^2 - ",
+    fixed = TRUE
+  )
+  expect_jags_compiles(fit)
+})
+
+test_that("exp() of a modelled covariate is possible in an interaction", {
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ age + exp(albumin) + exp(albumin):age,
+    longfml = list(albumin ~ day + age + (day | id))
+  )
+  out <- jm_survival_lines(fit)
+  age <- col_of(fit, "M_id", "age")
+
+  expect_match(
+    out$surv,
+    paste0("(M_id[ii, ", age, "] * (exp(1)^(mugk_albumin[ii, 1:15])) - "),
+    fixed = TRUE
+  )
+  expect_jags_compiles(fit)
+})
+
+test_that("the observed value in the quadrature part is not changed", {
+  fit <- jm_setup(
+    Surv(futime, status != "censored") ~ age + exp(albumin),
+    assoc_type = c("exp(albumin)" = "obs.value"),
+    longfml = list(albumin ~ day + age + (day | id))
+  )
+  out <- jm_survival_lines(fit)
+
+  expect_no_match(out$surv, "mugk_albumin", fixed = TRUE)
+  expect_jags_compiles(fit)
+})
