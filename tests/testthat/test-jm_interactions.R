@@ -709,3 +709,19 @@ test_that("the observed value in the quadrature part is not changed", {
   expect_no_match(out$surv, "mugk_albumin", fixed = TRUE)
   expect_jags_compiles(fit)
 })
+
+test_that("vectorize_exp() replaces each call to exp()", {
+  expect_identical(vectorize_exp("log(x)"), "log(x)")
+  expect_identical(vectorize_exp("exp(x)"), "(exp(1)^(x))")
+  expect_identical(
+    vectorize_exp("exp(x[1, 1:15])^2"),
+    "(exp(1)^(x[1, 1:15]))^2"
+  )
+  expect_identical(vectorize_exp("exp(log(x) + 1)"), "(exp(1)^(log(x) + 1))")
+  expect_identical(vectorize_exp("exp(exp(x))"), "(exp(1)^((exp(1)^(x))))")
+  expect_identical(
+    vectorize_exp("exp(a) + exp(b)"),
+    "(exp(1)^(a)) + (exp(1)^(b))"
+  )
+  expect_identical(vectorize_exp("fexp(x)"), "fexp(x)")
+})
