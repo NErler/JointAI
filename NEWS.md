@@ -21,6 +21,10 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `JM_imp()`: `exp()` of a modelled time-varying covariate in the survival part
+  (`exp(x)`, or within `I()`) failed in JAGS with "Invalid vector argument to
+  exp", when using the association type `"underl.value"` (the default for, e.g.,
+  covariates with a Gaussian model).
 * `JM_imp()`: specifications that are not the intended use of a joint model
   (#110). A longitudinal model whose outcome is not in the survival part failed
   with a cryptic error. It can now be fitted, with a warning that this outcome

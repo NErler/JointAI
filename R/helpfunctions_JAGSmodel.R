@@ -995,7 +995,8 @@ paste_linpred_jm <- function(
           if (trafo$type[trafo$colname == colname] == "I") {
             fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
           }
-          gsub(pattern = covname, replacement = strng, x = fct)
+          expr <- gsub(pattern = covname, replacement = strng, x = fct)
+          if (isgk) vectorize_exp(expr) else expr
         } else {
           strng
         }
@@ -1074,9 +1075,48 @@ paste_jm_column <- function(
       fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
     }
     strng <- gsub(pattern = covname, replacement = strng, x = fct)
+    if (isgk) {
+      strng <- vectorize_exp(strng)
+    }
   }
 
   unname(strng)
+}
+
+
+#' Write `exp()` so that JAGS accepts a vector as its argument
+#'
+#' In the quadrature part of a joint model, the underlying value of a
+#' time-varying covariate is a vector (e.g., `mugk_x[ii, 1:15]`), but JAGS does
+#' not accept a vector as argument of `exp()`. Each `exp(a)` is replaced by
+#' `(exp(1)^(a))`, in which the outer parentheses keep the precedence of the
+#' original function call. Used in `paste_linpred_jm()` and `paste_jm_column()`.
+#'
+#' @param x character string with (part of) a JAGS expression
+#'
+#' @returns The character string with all calls to `exp()` replaced.
+#' @keywords internal
+vectorize_exp <- function(x) {
+  while (TRUE) {
+    start <- regexpr("\\bexp\\((?!1\\)\\^)", x, perl = TRUE)[[1L]]
+    if (start < 0L) {
+      return(x)
+    }
+
+    # find the parenthesis that closes this call to exp()
+    first_arg <- start + 4L
+    chars <- strsplit(substring(x, first_arg), "", fixed = TRUE)[[1L]]
+    depth <- cumsum((chars == "(") - (chars == ")"))
+    end <- first_arg + which(depth == -1L)[1L] - 1L
+
+    x <- paste0(
+      substr(x, 1L, start - 1L),
+      "(exp(1)^(",
+      substr(x, first_arg, end - 1L),
+      "))",
+      substring(x, end + 1L)
+    )
+  }
 }
 
 
