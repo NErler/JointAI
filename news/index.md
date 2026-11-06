@@ -44,6 +44,13 @@
   their node (`beta[3]`). Its default changes from `1L` to `NULL`, which
   includes all monitored parameters, as before. With parameters from
   several sub-models the coefficients are named `"outcome: variable"`.
+- [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  with time-varying covariates (`timevar`) and a list of formulas in
+  which a survival formula comes after a formula for another outcome
+  (e.g., `list(Surv(...) ~ age, y ~ day, Surv(...) ~ x)`) failed in
+  JAGS, because the last observation carried forward was applied to the
+  covariates of the first formulas instead of those of the survival
+  formulas.
 - [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
   [`exp()`](https://rdrr.io/r/base/Log.html) of a modelled time-varying
   covariate in the survival part (`exp(x)`, or within
