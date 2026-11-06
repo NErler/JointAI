@@ -391,3 +391,35 @@ test_that("auto_corr_plot() and cross_corr_plot() use the selected sub-models", 
   expect_true(all(object$coef_list[[1L]]$varnam_print %in% colnames(corr)))
   expect_false("sigma_chol" %in% colnames(corr))
 })
+
+test_that("traceplot() and densplot(): sub-models selected by name (as by index)", {
+  skip_if_not_installed("ggplot2")
+  object <- fixture_load("jm")
+  for (k in seq_along(object$fixed)) {
+    name <- names(object$fixed)[k]
+    expect_identical(
+      traceplot(object, outcome = name, use_ggplot = TRUE)$data,
+      traceplot(object, outcome = k, use_ggplot = TRUE)$data
+    )
+    expect_identical(
+      densplot(object, outcome = name, use_ggplot = TRUE)$data,
+      densplot(object, outcome = k, use_ggplot = TRUE)$data
+    )
+    expect_no_error(traceplot(object, outcome = name))
+    expect_no_error(densplot(object, outcome = name))
+  }
+})
+
+test_that("traceplot() and densplot(): outcome that is not a sub-model", {
+  object <- fixture_load("jm")
+  for (outcome in list("xyz", 3L)) {
+    expect_error(
+      traceplot(object, outcome = outcome),
+      "does not match the sub-models"
+    )
+    expect_error(
+      densplot(object, outcome = outcome),
+      "does not match the sub-models"
+    )
+  }
+})
