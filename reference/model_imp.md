@@ -653,7 +653,7 @@ be used.
 |  |  |
 |----|----|
 | **name/key word** | **what is monitored** |
-| `analysis_main` | `betas` and `sigma_main`, `tau_main` (for beta regression) or `shape_main` (for parametric survival models), `gamma_main` (for cumulative logit models), `D_main` (for multi-level models) and `basehaz` in proportional hazards models) |
+| `analysis_main` | `betas` and `sigma_main`, `tau_main` (for beta regression) or the shape parameter (for parametric survival models; it has no key word of its own, see below), `gamma_main` (for cumulative logit models), `D_main` (for multi-level models) and `basehaz` in proportional hazards models) |
 | `analysis_random` | `ranef_main`, `D_main`, `invD_main`, `RinvD_main` |
 | `other_models` | `alphas`, `tau_other`, `gamma_other`, `delta_other` |
 | `imps` | imputed values |
@@ -675,6 +675,15 @@ be used.
 | `invD_other` | inverses of `D_other` |
 | `RinvD_other` | matrices in the priors for `invD_other` |
 | `other` | additional parameters |
+
+**Shape parameter of parametric survival models:**  
+The shape parameter of a parametric (Weibull) survival model
+(`survreg_imp()`) is monitored together with the other parameters of
+`analysis_main`. To monitor it without them, its name (e.g.,
+`shape_Surv_time_stats`; shown by
+[`list_models()`](https://nerler.github.io/JointAI/reference/list_models.md))
+can be given in `other`, e.g.,
+`monitor_params = list(analysis_main = FALSE, other = "shape_Surv_time_stats")`.
 
 **For example:**  
 `monitor_params = c(analysis_main = TRUE, tau_main = TRUE, sigma_main = FALSE)`

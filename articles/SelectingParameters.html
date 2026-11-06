@@ -80,7 +80,7 @@
             <h3 data-toc-skip class="subtitle">How to specify which
 parameters to monitor and display in the results</h3>
             
-            <h4 data-toc-skip class="date">October 31, 2026</h4>
+            <h4 data-toc-skip class="date">November 06, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/SelectingParameters.Rmd" class="external-link"><code>vignettes/SelectingParameters.Rmd</code></a></small>
       <div class="d-none name"><code>SelectingParameters.Rmd</code></div>
@@ -115,8 +115,8 @@ have an argument <code>monitor_params</code>.</p>
 also works) with the following possible entries:</p>
 <table class="table">
 <colgroup>
-<col width="7%">
-<col width="92%">
+<col width="6%">
+<col width="93%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name/key word</th>
@@ -127,10 +127,11 @@ also works) with the following possible entries:</p>
 <td align="left"><code>analysis_main</code></td>
 <td align="left">
 <code>betas</code> and <code>sigma_main</code>,
-<code>tau_main</code> (in beta regression) or <code>shape_main</code>
-(in parametric survival models), <code>gamma_main</code> (in cumulative
-logit models), <code>D_main</code> (in multi-level models) and
-<code>basehaz</code> (in proportional hazards models)</td>
+<code>tau_main</code> (in beta regression) or the shape parameter (in
+parametric survival models; no key word of its own),
+<code>gamma_main</code> (in cumulative logit models),
+<code>D_main</code> (in multi-level models) and <code>basehaz</code> (in
+proportional hazards models)</td>
 </tr>
 <tr class="even">
 <td align="left"><code>analysis_random</code></td>
@@ -255,6 +256,11 @@ random effects used in the main models, the shape parameter in a
 parametric Weibull survival model, and the coefficients used in the
 spline specification of the baseline hazard of proportional hazards
 survival models.</p>
+<p>The shape parameter of a parametric Weibull survival model does not
+have a key word of its own. To monitor it without the other main
+parameters, its name (e.g., <code>shape_Surv_time_stats</code>, shown by
+<code><a href="../reference/list_models.html">list_models()</a></code>) can be given in <code>other</code>, e.g.,
+<code>monitor_params = list(analysis_main = FALSE, other = "shape_Surv_time_stats")</code>.</p>
 <p>The function <code><a href="../reference/parameters.html">parameters()</a></code> returns the parameters that
 are specified to be followed (even for models where no MCMC sampling was
 performed, i.e. when <code>n.iter = 0</code> and
@@ -290,78 +296,78 @@ setting <code>monitor_params = c(imps = TRUE)</code>.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">lm2</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    outcat varname            coef outcome</span></span>
-<span><span class="co">#&gt; 1      NA      NA   M_lvlone[1,2]      NA</span></span>
-<span><span class="co">#&gt; 2      NA      NA   M_lvlone[7,2]      NA</span></span>
-<span><span class="co">#&gt; 3      NA      NA   M_lvlone[8,2]      NA</span></span>
-<span><span class="co">#&gt; 4      NA      NA  M_lvlone[12,2]      NA</span></span>
-<span><span class="co">#&gt; 5      NA      NA  M_lvlone[13,2]      NA</span></span>
-<span><span class="co">#&gt; 6      NA      NA  M_lvlone[21,2]      NA</span></span>
-<span><span class="co">#&gt; 7      NA      NA  M_lvlone[22,2]      NA</span></span>
-<span><span class="co">#&gt; 8      NA      NA  M_lvlone[31,2]      NA</span></span>
-<span><span class="co">#&gt; 9      NA      NA  M_lvlone[33,2]      NA</span></span>
-<span><span class="co">#&gt; 10     NA      NA  M_lvlone[34,2]      NA</span></span>
-<span><span class="co">#&gt; 11     NA      NA  M_lvlone[39,2]      NA</span></span>
-<span><span class="co">#&gt; 12     NA      NA  M_lvlone[49,2]      NA</span></span>
-<span><span class="co">#&gt; 13     NA      NA  M_lvlone[66,2]      NA</span></span>
-<span><span class="co">#&gt; 14     NA      NA  M_lvlone[67,2]      NA</span></span>
-<span><span class="co">#&gt; 15     NA      NA  M_lvlone[80,2]      NA</span></span>
-<span><span class="co">#&gt; 16     NA      NA  M_lvlone[86,2]      NA</span></span>
-<span><span class="co">#&gt; 17     NA      NA  M_lvlone[91,2]      NA</span></span>
-<span><span class="co">#&gt; 18     NA      NA  M_lvlone[92,2]      NA</span></span>
-<span><span class="co">#&gt; 19     NA      NA M_lvlone[105,2]      NA</span></span>
-<span><span class="co">#&gt; 20     NA      NA M_lvlone[111,2]      NA</span></span>
-<span><span class="co">#&gt; 21     NA      NA M_lvlone[115,2]      NA</span></span>
-<span><span class="co">#&gt; 22     NA      NA M_lvlone[118,2]      NA</span></span>
-<span><span class="co">#&gt; 23     NA      NA M_lvlone[120,2]      NA</span></span>
-<span><span class="co">#&gt; 24     NA      NA M_lvlone[127,2]      NA</span></span>
-<span><span class="co">#&gt; 25     NA      NA M_lvlone[132,2]      NA</span></span>
-<span><span class="co">#&gt; 26     NA      NA M_lvlone[139,2]      NA</span></span>
-<span><span class="co">#&gt; 27     NA      NA M_lvlone[146,2]      NA</span></span>
-<span><span class="co">#&gt; 28     NA      NA M_lvlone[149,2]      NA</span></span>
-<span><span class="co">#&gt; 29     NA      NA M_lvlone[152,2]      NA</span></span>
-<span><span class="co">#&gt; 30     NA      NA M_lvlone[163,2]      NA</span></span>
-<span><span class="co">#&gt; 31     NA      NA M_lvlone[165,2]      NA</span></span>
-<span><span class="co">#&gt; 32     NA      NA M_lvlone[169,2]      NA</span></span>
-<span><span class="co">#&gt; 33     NA      NA M_lvlone[180,2]      NA</span></span>
-<span><span class="co">#&gt; 34     NA      NA M_lvlone[185,2]      NA</span></span>
-<span><span class="co">#&gt; 35     NA      NA   M_lvlone[6,3]      NA</span></span>
-<span><span class="co">#&gt; 36     NA      NA  M_lvlone[16,3]      NA</span></span>
-<span><span class="co">#&gt; 37     NA      NA  M_lvlone[24,3]      NA</span></span>
-<span><span class="co">#&gt; 38     NA      NA  M_lvlone[27,3]      NA</span></span>
-<span><span class="co">#&gt; 39     NA      NA  M_lvlone[45,3]      NA</span></span>
-<span><span class="co">#&gt; 40     NA      NA  M_lvlone[57,3]      NA</span></span>
-<span><span class="co">#&gt; 41     NA      NA  M_lvlone[58,3]      NA</span></span>
-<span><span class="co">#&gt; 42     NA      NA  M_lvlone[60,3]      NA</span></span>
-<span><span class="co">#&gt; 43     NA      NA  M_lvlone[61,3]      NA</span></span>
-<span><span class="co">#&gt; 44     NA      NA  M_lvlone[65,3]      NA</span></span>
-<span><span class="co">#&gt; 45     NA      NA  M_lvlone[66,3]      NA</span></span>
-<span><span class="co">#&gt; 46     NA      NA  M_lvlone[70,3]      NA</span></span>
-<span><span class="co">#&gt; 47     NA      NA  M_lvlone[80,3]      NA</span></span>
-<span><span class="co">#&gt; 48     NA      NA  M_lvlone[81,3]      NA</span></span>
-<span><span class="co">#&gt; 49     NA      NA  M_lvlone[85,3]      NA</span></span>
-<span><span class="co">#&gt; 50     NA      NA  M_lvlone[88,3]      NA</span></span>
-<span><span class="co">#&gt; 51     NA      NA  M_lvlone[89,3]      NA</span></span>
-<span><span class="co">#&gt; 52     NA      NA  M_lvlone[90,3]      NA</span></span>
-<span><span class="co">#&gt; 53     NA      NA M_lvlone[101,3]      NA</span></span>
-<span><span class="co">#&gt; 54     NA      NA M_lvlone[104,3]      NA</span></span>
-<span><span class="co">#&gt; 55     NA      NA M_lvlone[116,3]      NA</span></span>
-<span><span class="co">#&gt; 56     NA      NA M_lvlone[133,3]      NA</span></span>
-<span><span class="co">#&gt; 57     NA      NA M_lvlone[137,3]      NA</span></span>
-<span><span class="co">#&gt; 58     NA      NA M_lvlone[143,3]      NA</span></span>
-<span><span class="co">#&gt; 59     NA      NA M_lvlone[168,3]      NA</span></span>
-<span><span class="co">#&gt; 60     NA      NA M_lvlone[170,3]      NA</span></span>
-<span><span class="co">#&gt; 61     NA      NA M_lvlone[180,3]      NA</span></span>
-<span><span class="co">#&gt; 62     NA      NA M_lvlone[186,3]      NA</span></span>
-<span><span class="co">#&gt; 63     NA      NA  M_lvlone[16,4]      NA</span></span>
-<span><span class="co">#&gt; 64     NA      NA  M_lvlone[99,4]      NA</span></span>
-<span><span class="co">#&gt; 65     NA      NA M_lvlone[123,4]      NA</span></span>
-<span><span class="co">#&gt; 66     NA      NA M_lvlone[156,4]      NA</span></span>
-<span><span class="co">#&gt; 67     NA      NA M_lvlone[158,4]      NA</span></span>
-<span><span class="co">#&gt; 68     NA      NA M_lvlone[166,4]      NA</span></span>
-<span><span class="co">#&gt; 69     NA      NA M_lvlone[172,4]      NA</span></span>
-<span><span class="co">#&gt; 70     NA      NA  M_lvlone[33,5]      NA</span></span>
-<span><span class="co">#&gt; 71     NA      NA M_lvlone[150,5]      NA</span></span></code></pre></div>
+<span><span class="co">#&gt;    outcome outcat varname            coef</span></span>
+<span><span class="co">#&gt; 1       NA     NA      NA   M_lvlone[1,2]</span></span>
+<span><span class="co">#&gt; 2       NA     NA      NA   M_lvlone[7,2]</span></span>
+<span><span class="co">#&gt; 3       NA     NA      NA   M_lvlone[8,2]</span></span>
+<span><span class="co">#&gt; 4       NA     NA      NA  M_lvlone[12,2]</span></span>
+<span><span class="co">#&gt; 5       NA     NA      NA  M_lvlone[13,2]</span></span>
+<span><span class="co">#&gt; 6       NA     NA      NA  M_lvlone[21,2]</span></span>
+<span><span class="co">#&gt; 7       NA     NA      NA  M_lvlone[22,2]</span></span>
+<span><span class="co">#&gt; 8       NA     NA      NA  M_lvlone[31,2]</span></span>
+<span><span class="co">#&gt; 9       NA     NA      NA  M_lvlone[33,2]</span></span>
+<span><span class="co">#&gt; 10      NA     NA      NA  M_lvlone[34,2]</span></span>
+<span><span class="co">#&gt; 11      NA     NA      NA  M_lvlone[39,2]</span></span>
+<span><span class="co">#&gt; 12      NA     NA      NA  M_lvlone[49,2]</span></span>
+<span><span class="co">#&gt; 13      NA     NA      NA  M_lvlone[66,2]</span></span>
+<span><span class="co">#&gt; 14      NA     NA      NA  M_lvlone[67,2]</span></span>
+<span><span class="co">#&gt; 15      NA     NA      NA  M_lvlone[80,2]</span></span>
+<span><span class="co">#&gt; 16      NA     NA      NA  M_lvlone[86,2]</span></span>
+<span><span class="co">#&gt; 17      NA     NA      NA  M_lvlone[91,2]</span></span>
+<span><span class="co">#&gt; 18      NA     NA      NA  M_lvlone[92,2]</span></span>
+<span><span class="co">#&gt; 19      NA     NA      NA M_lvlone[105,2]</span></span>
+<span><span class="co">#&gt; 20      NA     NA      NA M_lvlone[111,2]</span></span>
+<span><span class="co">#&gt; 21      NA     NA      NA M_lvlone[115,2]</span></span>
+<span><span class="co">#&gt; 22      NA     NA      NA M_lvlone[118,2]</span></span>
+<span><span class="co">#&gt; 23      NA     NA      NA M_lvlone[120,2]</span></span>
+<span><span class="co">#&gt; 24      NA     NA      NA M_lvlone[127,2]</span></span>
+<span><span class="co">#&gt; 25      NA     NA      NA M_lvlone[132,2]</span></span>
+<span><span class="co">#&gt; 26      NA     NA      NA M_lvlone[139,2]</span></span>
+<span><span class="co">#&gt; 27      NA     NA      NA M_lvlone[146,2]</span></span>
+<span><span class="co">#&gt; 28      NA     NA      NA M_lvlone[149,2]</span></span>
+<span><span class="co">#&gt; 29      NA     NA      NA M_lvlone[152,2]</span></span>
+<span><span class="co">#&gt; 30      NA     NA      NA M_lvlone[163,2]</span></span>
+<span><span class="co">#&gt; 31      NA     NA      NA M_lvlone[165,2]</span></span>
+<span><span class="co">#&gt; 32      NA     NA      NA M_lvlone[169,2]</span></span>
+<span><span class="co">#&gt; 33      NA     NA      NA M_lvlone[180,2]</span></span>
+<span><span class="co">#&gt; 34      NA     NA      NA M_lvlone[185,2]</span></span>
+<span><span class="co">#&gt; 35      NA     NA      NA   M_lvlone[6,3]</span></span>
+<span><span class="co">#&gt; 36      NA     NA      NA  M_lvlone[16,3]</span></span>
+<span><span class="co">#&gt; 37      NA     NA      NA  M_lvlone[24,3]</span></span>
+<span><span class="co">#&gt; 38      NA     NA      NA  M_lvlone[27,3]</span></span>
+<span><span class="co">#&gt; 39      NA     NA      NA  M_lvlone[45,3]</span></span>
+<span><span class="co">#&gt; 40      NA     NA      NA  M_lvlone[57,3]</span></span>
+<span><span class="co">#&gt; 41      NA     NA      NA  M_lvlone[58,3]</span></span>
+<span><span class="co">#&gt; 42      NA     NA      NA  M_lvlone[60,3]</span></span>
+<span><span class="co">#&gt; 43      NA     NA      NA  M_lvlone[61,3]</span></span>
+<span><span class="co">#&gt; 44      NA     NA      NA  M_lvlone[65,3]</span></span>
+<span><span class="co">#&gt; 45      NA     NA      NA  M_lvlone[66,3]</span></span>
+<span><span class="co">#&gt; 46      NA     NA      NA  M_lvlone[70,3]</span></span>
+<span><span class="co">#&gt; 47      NA     NA      NA  M_lvlone[80,3]</span></span>
+<span><span class="co">#&gt; 48      NA     NA      NA  M_lvlone[81,3]</span></span>
+<span><span class="co">#&gt; 49      NA     NA      NA  M_lvlone[85,3]</span></span>
+<span><span class="co">#&gt; 50      NA     NA      NA  M_lvlone[88,3]</span></span>
+<span><span class="co">#&gt; 51      NA     NA      NA  M_lvlone[89,3]</span></span>
+<span><span class="co">#&gt; 52      NA     NA      NA  M_lvlone[90,3]</span></span>
+<span><span class="co">#&gt; 53      NA     NA      NA M_lvlone[101,3]</span></span>
+<span><span class="co">#&gt; 54      NA     NA      NA M_lvlone[104,3]</span></span>
+<span><span class="co">#&gt; 55      NA     NA      NA M_lvlone[116,3]</span></span>
+<span><span class="co">#&gt; 56      NA     NA      NA M_lvlone[133,3]</span></span>
+<span><span class="co">#&gt; 57      NA     NA      NA M_lvlone[137,3]</span></span>
+<span><span class="co">#&gt; 58      NA     NA      NA M_lvlone[143,3]</span></span>
+<span><span class="co">#&gt; 59      NA     NA      NA M_lvlone[168,3]</span></span>
+<span><span class="co">#&gt; 60      NA     NA      NA M_lvlone[170,3]</span></span>
+<span><span class="co">#&gt; 61      NA     NA      NA M_lvlone[180,3]</span></span>
+<span><span class="co">#&gt; 62      NA     NA      NA M_lvlone[186,3]</span></span>
+<span><span class="co">#&gt; 63      NA     NA      NA  M_lvlone[16,4]</span></span>
+<span><span class="co">#&gt; 64      NA     NA      NA  M_lvlone[99,4]</span></span>
+<span><span class="co">#&gt; 65      NA     NA      NA M_lvlone[123,4]</span></span>
+<span><span class="co">#&gt; 66      NA     NA      NA M_lvlone[156,4]</span></span>
+<span><span class="co">#&gt; 67      NA     NA      NA M_lvlone[158,4]</span></span>
+<span><span class="co">#&gt; 68      NA     NA      NA M_lvlone[166,4]</span></span>
+<span><span class="co">#&gt; 69      NA     NA      NA M_lvlone[172,4]</span></span>
+<span><span class="co">#&gt; 70      NA     NA      NA  M_lvlone[33,5]</span></span>
+<span><span class="co">#&gt; 71      NA     NA      NA M_lvlone[150,5]</span></span></code></pre></div>
 <p><strong>JointAI</strong> uses separate data matrices per level in the
 hierarchy of a multi-level model. The lowest level (and only level for
 models with no hierarchical structure) is called <code>lvlone</code>,
@@ -372,20 +378,13 @@ corresponding dummy variables are stored in the matrices. The same is
 the case for interaction terms and transformations of variables.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lm2</span><span class="op">$</span><span class="va">data_list</span><span class="op">$</span><span class="va">M_lvlone</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          SBP alc occup smoke    WC (Intercept) age alc&gt;=1 smokeformer smokecurrent</span></span>
-<span><span class="co">#&gt; 10  108.0000  NA     1     1  99.0           1  35     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 14  105.3333   0     1     1  82.7           1  38     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 41  110.0000   0     3     1  94.9           1  78     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 77  106.0000   1     2     1  82.4           1  23     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 91  114.6667   0     3     1  93.1           1  40     NA          NA           NA</span></span>
-<span><span class="co">#&gt; 105 139.3333   1    NA     3 105.4           1  54     NA          NA           NA</span></span>
-<span><span class="co">#&gt;     occuplooking for work occupnot working</span></span>
-<span><span class="co">#&gt; 10                     NA               NA</span></span>
-<span><span class="co">#&gt; 14                     NA               NA</span></span>
-<span><span class="co">#&gt; 41                     NA               NA</span></span>
-<span><span class="co">#&gt; 77                     NA               NA</span></span>
-<span><span class="co">#&gt; 91                     NA               NA</span></span>
-<span><span class="co">#&gt; 105                    NA               NA</span></span></code></pre></div>
+<span><span class="co">#&gt;          SBP alc occup smoke    WC (Intercept) age alc&gt;=1 smokeformer smokecurrent occuplooking for work occupnot working</span></span>
+<span><span class="co">#&gt; 10  108.0000  NA     1     1  99.0           1  35     NA          NA           NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 14  105.3333   0     1     1  82.7           1  38     NA          NA           NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 41  110.0000   0     3     1  94.9           1  78     NA          NA           NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 77  106.0000   1     2     1  82.4           1  23     NA          NA           NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 91  114.6667   0     3     1  93.1           1  40     NA          NA           NA                    NA               NA</span></span>
+<span><span class="co">#&gt; 105 139.3333   1    NA     3 105.4           1  54     NA          NA           NA                    NA               NA</span></span></code></pre></div>
 <p>The parameters of the models for the incomplete variables can be
 selected with <code>monitor_params = c(other_models = TRUE)</code>. This
 will set monitors for the regression coefficients (<code>alpha</code>)
@@ -435,8 +434,7 @@ obtained with</p>
 <span><span class="co">#&gt;    family: gaussian </span></span>
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
-<span><span class="co">#&gt;   (Intercept), age, WC, alc&gt;=1, smokeformer, smokecurrent, occuplooking for </span></span>
-<span><span class="co">#&gt;   work, occupnot working </span></span>
+<span><span class="co">#&gt;   (Intercept), age, WC, alc&gt;=1, smokeformer, smokecurrent, occuplooking for work, occupnot working </span></span>
 <span><span class="co">#&gt; * Regression coefficients:</span></span>
 <span><span class="co">#&gt;   beta[1:8] (normal prior(s) with mean 0 and precision 1e-04) </span></span>
 <span><span class="co">#&gt; * Precision of  "SBP" :</span></span>
@@ -448,8 +446,7 @@ obtained with</p>
 <span><span class="co">#&gt;    link: logit </span></span>
 <span><span class="co">#&gt; * Reference category: "&lt;1"</span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
-<span><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, </span></span>
-<span><span class="co">#&gt;   occupnot working </span></span>
+<span><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, occupnot working </span></span>
 <span><span class="co">#&gt; * Regression coefficients:</span></span>
 <span><span class="co">#&gt;   alpha[1:7] (normal prior(s) with mean 0 and precision 1e-04) </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -628,9 +625,8 @@ e.g.</p>
 <span>                                   RinvD_main <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                   ranef_main <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: </span></span>
-<span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical</span></span>
-<span><span class="co">#&gt; covariates. I will use "contr.treatment" instead.  You can specify (globally)</span></span>
-<span><span class="co">#&gt; which types of contrasts are used by changing "options('contrasts')".</span></span>
+<span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates. I will use "contr.treatment" instead.  You can specify (globally) which types of contrasts are</span></span>
+<span><span class="co">#&gt; used by changing "options('contrasts')".</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">lme3b</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    outcome outcat     varname             coef</span></span>
@@ -668,9 +664,9 @@ model can be quite useful when investigating convergence issues.)</p>
 <span>                                    other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'mu_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">lm4</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   outcat varname        coef outcome</span></span>
-<span><span class="co">#&gt; 1     NA      NA mu_alc[1:3]     alc</span></span>
-<span><span class="co">#&gt; 2     NA      NA mu_creat[1]   creat</span></span></code></pre></div>
+<span><span class="co">#&gt;   outcome outcat varname        coef</span></span>
+<span><span class="co">#&gt; 1     alc     NA      NA mu_alc[1:3]</span></span>
+<span><span class="co">#&gt; 2   creat     NA      NA mu_creat[1]</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="scaled-covariates-and-automatically-added-parameters">Scaled covariates and automatically added parameters<a class="anchor" aria-label="anchor" href="#scaled-covariates-and-automatically-added-parameters"></a>
@@ -709,22 +705,20 @@ coefficients of the analysis model are added:</p>
 <span>                 monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                       other <span class="op">=</span> <span class="st">"b_bmi_ID[5,2]"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Note: To transform the monitored random effects and/or their covariance matrices</span></span>
-<span><span class="co">#&gt; back to the scale of the original (unscaled) covariates, the following</span></span>
-<span><span class="co">#&gt; parameters were added to the monitored parameters: "b_bmi_ID[5,1:2]", "beta[1]",</span></span>
-<span><span class="co">#&gt; "beta[2]", "beta[3]" and "beta[4]".</span></span>
+<span><span class="co">#&gt; Note: To transform the monitored random effects and/or their covariance matrices back to the scale of the original (unscaled) covariates, the following parameters were added to the</span></span>
+<span><span class="co">#&gt; monitored parameters: "b_bmi_ID[5,1:2]", "beta[1]", "beta[2]", "beta[3]" and "beta[4]".</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note: No MCMC sample will be created when n.iter is set to 0.</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">lme4a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note: "lme4a" does not contain MCMC samples.</span></span>
-<span><span class="co">#&gt;   outcat varname            coef outcome</span></span>
-<span><span class="co">#&gt; 1     NA      NA b_bmi_ID[5,1:2]     bmi</span></span>
-<span><span class="co">#&gt; 2     NA      NA         beta[1]    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 3     NA      NA         beta[2]    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 4     NA      NA         beta[3]    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 5     NA      NA         beta[4]    &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;   outcome outcat     varname            coef</span></span>
+<span><span class="co">#&gt; 1     bmi   &lt;NA&gt; (Intercept)         beta[1]</span></span>
+<span><span class="co">#&gt; 2     bmi   &lt;NA&gt;     EDUCmid         beta[2]</span></span>
+<span><span class="co">#&gt; 3     bmi   &lt;NA&gt;     EDUClow         beta[3]</span></span>
+<span><span class="co">#&gt; 4     bmi   &lt;NA&gt;         age         beta[4]</span></span>
+<span><span class="co">#&gt; 5     bmi   &lt;NA&gt;        &lt;NA&gt; b_bmi_ID[5,1:2]</span></span></code></pre></div>
 <p>To monitor exactly the specified parameters, the scaling can be
 switched off with <code>scale_vars = FALSE</code>. This may, however,
 make the MCMC sampling less efficient.</p>
@@ -765,15 +759,15 @@ displayed if they were monitored:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary:</span></span>
 <span><span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.708 10.3976 61.019 100.484       0.00   0.999 0.0577</span></span>
-<span><span class="co">#&gt; genderfemale  0.413  2.4822 -3.858   5.514       0.90   1.012 0.0577</span></span>
-<span><span class="co">#&gt; WC            0.304  0.0764  0.155   0.439       0.00   1.011 0.0577</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.410  2.3783  1.768  10.827       0.00   1.055 0.0641</span></span>
-<span><span class="co">#&gt; creat         7.255  7.8566 -7.333  23.822       0.38   1.006 0.0577</span></span>
+<span><span class="co">#&gt; (Intercept)  82.057 10.0852 63.433 104.247      0.000    1.07 0.0577</span></span>
+<span><span class="co">#&gt; genderfemale  0.151  2.6636 -4.851   5.371      0.993    1.00 0.0577</span></span>
+<span><span class="co">#&gt; WC            0.298  0.0741  0.159   0.433      0.000    1.12 0.0577</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.461  2.6801  1.000  11.403      0.020    1.06 0.0684</span></span>
+<span><span class="co">#&gt; creat         7.560  8.2127 -8.060  23.864      0.380    1.00 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; sigma_SBP 14.4 0.808   13  16.2    1.01 0.0577</span></span>
+<span><span class="co">#&gt; sigma_SBP 14.4 0.756   13    16    1.04 0.0612</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; MCMC settings:</span></span>
@@ -799,26 +793,26 @@ displayed if they were monitored:</p>
 <span><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;              Point est. Upper C.I.</span></span>
-<span><span class="co">#&gt; (Intercept)       0.999      0.999</span></span>
-<span><span class="co">#&gt; genderfemale      1.004      1.012</span></span>
-<span><span class="co">#&gt; WC                1.003      1.011</span></span>
-<span><span class="co">#&gt; alc&gt;=1            1.017      1.055</span></span>
-<span><span class="co">#&gt; creat             0.999      1.006</span></span>
-<span><span class="co">#&gt; sigma_SBP         1.006      1.007</span></span>
+<span><span class="co">#&gt; (Intercept)        1.02       1.07</span></span>
+<span><span class="co">#&gt; genderfemale       1.00       1.00</span></span>
+<span><span class="co">#&gt; WC                 1.03       1.12</span></span>
+<span><span class="co">#&gt; alc&gt;=1             1.02       1.06</span></span>
+<span><span class="co">#&gt; creat              1.00       1.00</span></span>
+<span><span class="co">#&gt; sigma_SBP          1.01       1.04</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Multivariate psrf</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1.02</span></span>
+<span><span class="co">#&gt; 1.05</span></span>
 <span></span>
 <span><span class="co"># Monte Carlo Error of the MCMC sample</span></span>
 <span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">lm5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                est   MCSE     SD MCSE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.71 0.6003 10.398   0.058</span></span>
-<span><span class="co">#&gt; genderfemale  0.41 0.1433  2.482   0.058</span></span>
-<span><span class="co">#&gt; WC            0.30 0.0044  0.076   0.058</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.41 0.1525  2.378   0.064</span></span>
-<span><span class="co">#&gt; creat         7.25 0.4536  7.857   0.058</span></span>
-<span><span class="co">#&gt; sigma_SBP    14.42 0.0467  0.808   0.058</span></span></code></pre></div>
+<span><span class="co">#&gt; (Intercept)  82.06 0.5823 10.085   0.058</span></span>
+<span><span class="co">#&gt; genderfemale  0.15 0.1538  2.664   0.058</span></span>
+<span><span class="co">#&gt; WC            0.30 0.0043  0.074   0.058</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.46 0.1834  2.680   0.068</span></span>
+<span><span class="co">#&gt; creat         7.56 0.4742  8.213   0.058</span></span>
+<span><span class="co">#&gt; sigma_SBP    14.42 0.0463  0.756   0.061</span></span></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on the default
 behaviour is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -841,21 +835,21 @@ to be specified:</p>
 <span><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                     Point est. Upper C.I.</span></span>
-<span><span class="co">#&gt; alc: (Intercept)         1.006       1.02</span></span>
-<span><span class="co">#&gt; alc: genderfemale        1.019       1.06</span></span>
-<span><span class="co">#&gt; alc: WC                  1.006       1.02</span></span>
-<span><span class="co">#&gt; alc: creat               1.013       1.05</span></span>
-<span><span class="co">#&gt; creat: (Intercept)       0.997       1.00</span></span>
-<span><span class="co">#&gt; creat: genderfemale      1.001       1.01</span></span>
-<span><span class="co">#&gt; creat: WC                0.997       1.00</span></span>
-<span><span class="co">#&gt; WC: (Intercept)          1.003       1.02</span></span>
-<span><span class="co">#&gt; WC: genderfemale         0.999       1.00</span></span>
-<span><span class="co">#&gt; sigma_creat              0.997       1.00</span></span>
-<span><span class="co">#&gt; sigma_WC                 1.008       1.04</span></span>
+<span><span class="co">#&gt; alc: (Intercept)         1.019      1.075</span></span>
+<span><span class="co">#&gt; alc: genderfemale        1.050      1.173</span></span>
+<span><span class="co">#&gt; alc: WC                  1.007      1.022</span></span>
+<span><span class="co">#&gt; alc: creat               1.022      1.063</span></span>
+<span><span class="co">#&gt; creat: (Intercept)       1.008      1.013</span></span>
+<span><span class="co">#&gt; creat: genderfemale      0.999      1.005</span></span>
+<span><span class="co">#&gt; creat: WC                1.006      1.012</span></span>
+<span><span class="co">#&gt; WC: (Intercept)          0.999      1.006</span></span>
+<span><span class="co">#&gt; WC: genderfemale         0.997      0.999</span></span>
+<span><span class="co">#&gt; sigma_creat              0.998      0.999</span></span>
+<span><span class="co">#&gt; sigma_WC                 0.998      1.003</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Multivariate psrf</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1.03</span></span></code></pre></div>
+<span><span class="co">#&gt; 1.05</span></span></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly
 by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -870,15 +864,15 @@ by name via the <code>other</code> element of <code>subset</code>:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary:</span></span>
 <span><span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; (Intercept)  81.708 10.3976 61.019 100.484       0.00   0.999 0.0577</span></span>
-<span><span class="co">#&gt; genderfemale  0.413  2.4822 -3.858   5.514       0.90   1.012 0.0577</span></span>
-<span><span class="co">#&gt; WC            0.304  0.0764  0.155   0.439       0.00   1.011 0.0577</span></span>
-<span><span class="co">#&gt; alc&gt;=1        6.410  2.3783  1.768  10.827       0.00   1.055 0.0641</span></span>
-<span><span class="co">#&gt; creat         7.255  7.8566 -7.333  23.822       0.38   1.006 0.0577</span></span>
+<span><span class="co">#&gt; (Intercept)  82.057 10.0852 63.433 104.247      0.000    1.07 0.0577</span></span>
+<span><span class="co">#&gt; genderfemale  0.151  2.6636 -4.851   5.371      0.993    1.00 0.0577</span></span>
+<span><span class="co">#&gt; WC            0.298  0.0741  0.159   0.433      0.000    1.12 0.0577</span></span>
+<span><span class="co">#&gt; alc&gt;=1        6.461  2.6801  1.000  11.403      0.020    1.06 0.0684</span></span>
+<span><span class="co">#&gt; creat         7.560  8.2127 -8.060  23.864      0.380    1.00 0.0577</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span></span>
-<span><span class="co">#&gt; sigma_SBP 14.4 0.808   13  16.2    1.01 0.0577</span></span>
+<span><span class="co">#&gt; sigma_SBP 14.4 0.756   13    16    1.04 0.0612</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; MCMC settings:</span></span>
