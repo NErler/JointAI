@@ -65,3 +65,26 @@ test_that("fill_locf works", {
     c('hepato' = 0, 'platelet' = 0)
   )
 })
+
+test_that("fill_locf uses the survival formulas, wherever they are in the list", {
+  skip_on_cran()
+  # the second survival formula comes after a longitudinal model: only its
+  # time-varying covariate (platelet) is filled in; chol, a covariate of the
+  # longitudinal model only, keeps its missing values
+  locfdat <- JointAI:::fill_locf(
+    data = JointAI::PBC,
+    fixed = list(
+      Surv(futime, status == "dead") ~ age + (1 | id),
+      albumin ~ day + chol + (1 | id),
+      Surv(futime, status == "transplant") ~ platelet + (1 | id)
+    ),
+    auxvars = NULL,
+    random = list(~ 1 | id, ~ 1 | id, ~ 1 | id),
+    timevar = "day",
+    groups = JointAI:::get_groups("id", JointAI::PBC)
+  )
+
+  expect_gt(sum(is.na(JointAI::PBC$platelet)), 0)
+  expect_equal(sum(is.na(locfdat$platelet)), 0)
+  expect_equal(locfdat$chol, JointAI::PBC$chol)
+})
