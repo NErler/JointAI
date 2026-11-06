@@ -107,12 +107,14 @@ get_data_list <- function(
       hyp$ranef[c("shape_diag_RinvD", "rate_diag_RinvD")]
     )
 
-    # Include RinvD and KinvD for all grouping levels.
-    # This is done for all models that could contain time-varying covariates /
-    # multi-level models. In case of a JM, there will always also be a mixed
-    # model, so it does not be mentioned in the list of models separately.
+    # Include RinvD and KinvD (or invD) for all grouping levels of the models
+    # that can have random effects. The survival models (survreg, coxph, JM)
+    # can have random effects on a level above the subjects.
     rd_hyp_pars <- lapply(
-      info_list[modeltypes %in% c("coxph", "glmm", "clmm", "mlogitmm")],
+      info_list[
+        modeltypes %in%
+          c("survreg", "coxph", "JM", "glmm", "clmm", "mlogitmm")
+      ],
       function(info) {
         rd_hyp <- lapply(names(info$hc_list$hcvars), function(lvl) {
           if (isTRUE(info$rd_vcov[[lvl]] == "blockdiag")) {
