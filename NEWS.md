@@ -30,6 +30,17 @@
   in a different order, and by default in ordinal models with non-proportional
   effects and an interaction (e.g. `o1 ~ c1 * C2` with `nonprop = ~ c1 + C2`,
   where `c1:C2` was shown for a non-proportional effect of `C2`).
+* `list_models()` describes the whole model (#113): it now lists the
+  non-proportional effects of cumulative logit models, truncation, the random
+  effects per grouping level with their covariance matrix and its prior (also
+  for random effects in proportional hazards models), and the coefficients of
+  multinomial mixed models per category (they were listed per design matrix,
+  with the category names repeated). Small layout corrections.
+* Models with random effects for a grouping variable within which the outcome
+  does not vary (e.g., an outcome on the level of the subjects with
+  `(1 | id)`) now give an informative error. They failed in JAGS, or, for
+  multinomial mixed models, gave a model without covariates and random effects
+  without any message.
 * `traceplot()`, `densplot()` and `predict()`: sub-models can now be selected by
   name in `outcome` (e.g. `outcome = "chol"`), as documented; this failed with
   "'start' cannot be after 'end'" (plots) or "EXPR must be a length 1 vector"
