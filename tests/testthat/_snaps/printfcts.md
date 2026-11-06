@@ -10,8 +10,14 @@
         (Intercept), C1, B21, O22, O23, c1, c2, time 
       * Regression coefficients:
         beta[1:8] (normal prior(s) with mean 0 and precision 1e-04) 
-      * Precision of  "y" :
+      * Precision of "y":
         tau_y (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+      * Random effects on the level of "id":
+        b_y_id[, 1:2]: (Intercept), time
+      * Covariance matrix of the random effects on the level of "id":
+        D_y_id[1:2, 1:2] = inverse(invD_y_id)
+        invD_y_id[1:2, 1:2] (Wishart prior with scale matrix RinvD_y_id and 3 degrees of freedom)
+        RinvD_y_id[1:2, 1:2] (diagonal; Gamma priors with shape parameter 0.01 and rate parameter 0.001)
       
       
       Linear mixed model for "c2" 
@@ -21,8 +27,13 @@
         (Intercept), C1, B21, O22, O23, c1, time 
       * Regression coefficients:
         alpha[1:7] (normal prior(s) with mean 0 and precision 1e-04) 
-      * Precision of  "c2" :
+      * Precision of "c2":
         tau_c2 (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+      * Random effects on the level of "id":
+        b_c2_id[, 1]: (Intercept)
+      * Covariance matrix of the random effects on the level of "id":
+        D_c2_id[1, 1] = 1 / invD_c2_id[1, 1]
+        invD_c2_id[1, 1] (Gamma prior with shape parameter 0.01 and rate parameter 0.001)
       
       
       Linear mixed model for "c1" 
@@ -32,8 +43,13 @@
         (Intercept), C1, B21, O22, O23, time 
       * Regression coefficients:
         alpha[8:13] (normal prior(s) with mean 0 and precision 1e-04) 
-      * Precision of  "c1" :
+      * Precision of "c1":
         tau_c1 (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+      * Random effects on the level of "id":
+        b_c1_id[, 1]: (Intercept)
+      * Covariance matrix of the random effects on the level of "id":
+        D_c1_id[1, 1] = 1 / invD_c1_id[1, 1]
+        invD_c1_id[1, 1] (Gamma prior with shape parameter 0.01 and rate parameter 0.001)
       
       
       Linear mixed model for "time" 
@@ -43,8 +59,13 @@
         (Intercept), C1, B21, O22, O23 
       * Regression coefficients:
         alpha[14:18] (normal prior(s) with mean 0 and precision 1e-04) 
-      * Precision of  "time" :
+      * Precision of "time":
         tau_time (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+      * Random effects on the level of "id":
+        b_time_id[, 1]: (Intercept)
+      * Covariance matrix of the random effects on the level of "id":
+        D_time_id[1, 1] = 1 / invD_time_id[1, 1]
+        invD_time_id[1, 1] (Gamma prior with shape parameter 0.01 and rate parameter 0.001)
       
       
       Cumulative logit model for "O2" 
@@ -100,10 +121,14 @@
       * Predictor variables:
         (Intercept), C1, B21, O21, O22, p1, c2, y, time, y:time 
       * Regression coefficients:
-        x2: beta[1:5]
-        x3: beta[6:10]
-        x2: beta[11:15]
-        x3: beta[16:20] (normal prior(s) with mean 0 and precision 1e-04) 
+        x2: beta[1:5], beta[11:15]
+        x3: beta[6:10], beta[16:20] (normal prior(s) with mean 0 and precision 1e-04) 
+      * Random effects on the level of "id":
+        b_x_id[, 1:2]: (Intercept), time
+      * Covariance matrix of the random effects on the level of "id":
+        D_x_id[1:2, 1:2] = inverse(invD_x_id)
+        invD_x_id[1:2, 1:2] (Wishart prior with scale matrix RinvD_x_id and 3 degrees of freedom)
+        RinvD_x_id[1:2, 1:2] (diagonal; Gamma priors with shape parameter 0.01 and rate parameter 0.001)
       
       
       Linear mixed model for "c2" 
@@ -113,8 +138,13 @@
         (Intercept), C1, B21, O21, O22, p1, y, time 
       * Regression coefficients:
         alpha[1:8] (normal prior(s) with mean 0 and precision 1e-04) 
-      * Precision of  "c2" :
+      * Precision of "c2":
         tau_c2 (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+      * Random effects on the level of "id":
+        b_c2_id[, 1]: (Intercept)
+      * Covariance matrix of the random effects on the level of "id":
+        D_c2_id[1, 1] = 1 / invD_c2_id[1, 1]
+        invD_c2_id[1, 1] (Gamma prior with shape parameter 0.01 and rate parameter 0.001)
       
       
       Poisson mixed model for "p1" 
@@ -124,6 +154,11 @@
         (Intercept), C1, B21, O21, O22, y, time 
       * Regression coefficients:
         alpha[9:15] (normal prior(s) with mean 0 and precision 1e-04) 
+      * Random effects on the level of "id":
+        b_p1_id[, 1]: (Intercept)
+      * Covariance matrix of the random effects on the level of "id":
+        D_p1_id[1, 1] = 1 / invD_p1_id[1, 1]
+        invD_p1_id[1, 1] (Gamma prior with shape parameter 0.01 and rate parameter 0.001)
       
       
       Linear mixed model for "y" 
@@ -133,8 +168,13 @@
         (Intercept), C1, B21, O21, O22, time 
       * Regression coefficients:
         alpha[16:21] (normal prior(s) with mean 0 and precision 1e-04) 
-      * Precision of  "y" :
+      * Precision of "y":
         tau_y (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+      * Random effects on the level of "id":
+        b_y_id[, 1]: (Intercept)
+      * Covariance matrix of the random effects on the level of "id":
+        D_y_id[1, 1] = 1 / invD_y_id[1, 1]
+        invD_y_id[1, 1] (Gamma prior with shape parameter 0.01 and rate parameter 0.001)
       
       
       Linear mixed model for "time" 
@@ -144,8 +184,13 @@
         (Intercept), C1, B21, O21, O22 
       * Regression coefficients:
         alpha[22:26] (normal prior(s) with mean 0 and precision 1e-04) 
-      * Precision of  "time" :
+      * Precision of "time":
         tau_time (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+      * Random effects on the level of "id":
+        b_time_id[, 1]: (Intercept)
+      * Covariance matrix of the random effects on the level of "id":
+        D_time_id[1, 1] = 1 / invD_time_id[1, 1]
+        invD_time_id[1, 1] (Gamma prior with shape parameter 0.01 and rate parameter 0.001)
       
       
       Cumulative logit model for "O2" 

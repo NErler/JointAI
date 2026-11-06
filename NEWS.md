@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `list_models()` describes the whole model (#113): it now lists the
+  non-proportional effects of cumulative logit models, truncation, the random
+  effects per grouping level with their covariance matrix and its prior (also
+  for random effects in proportional hazards models), and the coefficients of
+  multinomial mixed models per category (they were listed per design matrix,
+  with the category names repeated). Small layout corrections.
 * Models with random effects for a grouping variable within which the outcome
   does not vary (e.g., an outcome on the level of the subjects with
   `(1 | id)`) now give an informative error. They failed in JAGS, or, for
