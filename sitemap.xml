@@ -33,9 +33,11 @@
 <url><loc>https://nerler.github.io/JointAI/reference/check_formula_list.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_full_blockdiag.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_groups_vary_within_lvl.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/check_has_coefficients.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_jm_function_terms.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_jm_specification.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_jm_time_terms.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/check_jm_tv_modeltypes.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_jm_unknown_interactions.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_na_groupings.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/check_rd_vcov.html</loc></url>

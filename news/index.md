@@ -34,6 +34,11 @@
 
 ### Bug fixes
 
+- Informative errors instead of errors from JAGS: for a joint model with
+  a time-varying unordered factor with more than two categories (its
+  values between the observation times cannot be modelled yet), and for
+  linear, generalized linear and multinomial (mixed) models without any
+  regression coefficient (e.g., `y ~ 0 + (1 | id)`).
 - [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
   and the survival part of
   [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),

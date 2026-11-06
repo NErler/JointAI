@@ -60,7 +60,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>
+<ul><li>Informative errors instead of errors from JAGS: for a joint model with a time-varying unordered factor with more than two categories (its values between the observation times cannot be modelled yet), and for linear, generalized linear and multinomial (mixed) models without any regression coefficient (e.g., <code>y ~ 0 + (1 | id)</code>).</li>
+<li>
 <code><a href="../reference/model_imp.html">survreg_imp()</a></code>, and the survival part of <code><a href="../reference/model_imp.html">JM_imp()</a></code>, with more than one random effect on a level (e.g. <code>(x | center)</code>) failed in JAGS (“Unknown variable KinvD_…”), because the hyper-parameters of the prior of the random effects covariance matrix were missing from the data.</li>
 <li>
 <code><a href="../reference/auto_corr.html">auto_corr()</a></code>, <code><a href="../reference/auto_corr.html">auto_corr_plot()</a></code>, <code><a href="../reference/cross_corr.html">cross_corr()</a></code>, <code><a href="../reference/cross_corr.html">cross_corr_plot()</a></code>: the argument <code>outcome</code> now restricts the output to the selected sub-models, as was documented; it had only determined which coefficients were named by variable, while the others kept the name of their node (<code>beta[3]</code>). Its default changes from <code>1L</code> to <code>NULL</code>, which includes all monitored parameters, as before. With parameters from several sub-models the coefficients are named <code>"outcome: variable"</code>.</li>
