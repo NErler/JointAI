@@ -34,6 +34,21 @@
 
 ### Bug fixes
 
+- Names of the regression coefficients in the output:
+  [`summary()`](https://rdrr.io/r/base/summary.html) with a subset of
+  the coefficients (`subset = list(other = ...)`) showed the values
+  under the names of other coefficients (e.g. `beta[3]` as
+  “(Intercept)”, with a warning “number of items to replace …”).
+  [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
+  [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md),
+  [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
+  and
+  [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
+  (models with one outcome) swapped names when the coefficients were not
+  in the order of the coefficient table: with a subset in a different
+  order, and by default in ordinal models with non-proportional effects
+  and an interaction (e.g. `o1 ~ c1 * C2` with `nonprop = ~ c1 + C2`,
+  where `c1:C2` was shown for a non-proportional effect of `C2`).
 - [`list_models()`](https://nerler.github.io/JointAI/reference/list_models.md)
   describes the whole model
   ([\#113](https://github.com/nerler/JointAI/issues/113)): it now lists
