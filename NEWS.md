@@ -37,6 +37,21 @@
   `list(Surv(...) ~ age, y ~ day, Surv(...) ~ x)`) failed in JAGS, because the
   last observation carried forward was applied to the covariates of the first
   formulas instead of those of the survival formulas.
+* Checks for an outcome that is used in more than one model formula:
+  * Two outcomes of `survreg_imp()` with the same survival times (e.g.,
+    `Surv(time, cause == 1)` and `Surv(time, cause == 2)`) now give an error
+    that says so, and that competing risks are not supported. (In
+    `coxph_imp()` and `JM_imp()`, several survival outcomes can still share
+    the survival time.)
+  * An event indicator that is used in two survival outcomes, or a survival
+    time or event indicator that is also the outcome of another model, now
+    gives an error in all survival models.
+  * A copy of an outcome (an outcome with identical values under another name)
+    now gives an error that says so, instead of claiming that the variables were
+    used in more than one formula. Identical values stored as integer and as
+    double were not recognised.
+  * Two outcomes of `survreg_imp()` whose event indicators have identical
+    values (e.g., no censoring in either outcome) gave a false error.
 * `JM_imp()`: `exp()` of a modelled time-varying covariate in the survival part
   (`exp(x)`, or within `I()`) failed in JAGS with "Invalid vector argument to
   exp", when using the association type `"underl.value"` (the default for, e.g.,
