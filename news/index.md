@@ -42,6 +42,10 @@
   or “EXPR must be a length 1 vector”
   ([`predict()`](https://rdrr.io/r/stats/predict.html)). A value that is
   not a sub-model of the model now gives an informative error.
+- [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
+  with a survival part without covariates (e.g.,
+  `Surv(time, status) ~ 1`) gives an informative error; it stopped with
+  “‘names’ attribute \[2\] must be the same length as the vector \[0\]”.
 - Survival outcomes:
   [`Surv()`](https://nerler.github.io/JointAI/reference/Surv.md) with
   named arguments, e.g. `Surv(time = futime, event = status)` or
