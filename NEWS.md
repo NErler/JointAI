@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Survival outcomes: `Surv()` with named arguments, e.g.
+  `Surv(time = futime, event = status)` or `Surv(futime, event = status)`, now
+  gives the same model as `Surv(futime, status)`; it failed with a syntax error
+  in the JAGS model. Models with time-varying covariates no longer fail when the
+  name of the survival time is part of the name of the id variable (e.g. `t`
+  and `patient`).
 * `survreg_imp()`, and the survival part of `JM_imp()`, with more than one
   random effect on a level (e.g. `(x | center)`) failed in JAGS ("Unknown
   variable KinvD_..."), because the hyper-parameters of the prior of the random

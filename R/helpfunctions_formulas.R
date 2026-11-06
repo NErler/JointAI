@@ -33,6 +33,56 @@ extract_outcomes_list <- function(fixed) {
 }
 
 
+#' Write the arguments of `Surv()` on the left-hand side without names
+#'
+#' The names of the survival time and event variables are taken from the
+#' position of the arguments of `Surv()` (`idSurv()`), and the name of the
+#' outcome from the text of the left-hand side. Named arguments, e.g.
+#' `Surv(time = futime, event = status)` or `Surv(futime, time2 = status)`, are
+#' therefore rewritten to `Surv(futime, status)`. This is only done for
+#' right-censored data, i.e., the arguments `time` and, optionally, `time2` or
+#' `event`; other combinations are left unchanged (and give an error later on).
+#'
+#' @param fixed a formula or a list of formulas (other elements, e.g. `NULL`,
+#'   are returned unchanged)
+#'
+#' @returns `fixed`, with the left-hand side `Surv()` written with unnamed
+#'   arguments where it had named arguments
+#' @keywords internal
+
+unname_surv_args <- function(fixed) {
+  if (inherits(fixed, "list")) {
+    return(lapply(fixed, unname_surv_args))
+  }
+
+  if (!inherits(fixed, "formula") || length(fixed) != 3L) {
+    return(fixed)
+  }
+
+  lhs <- fixed[[2L]]
+  if (!is.call(lhs) || !identical(lhs[[1L]], as.name("Surv"))) {
+    return(fixed)
+  }
+
+  # nothing to do if no argument has a name
+  if (is.null(names(lhs)) || all(names(lhs)[-1L] == "")) {
+    return(fixed)
+  }
+
+  # the arguments, named as in survival::Surv()
+  args <- as.list(match.call(survival::Surv, lhs))[-1L]
+
+  right_censored <- list(c("time"), c("time", "time2"), c("time", "event"))
+  if (!any(vapply(right_censored, setequal, logical(1L), names(args)))) {
+    return(fixed)
+  }
+
+  status <- if (is.null(args$time2)) args$event else args$time2
+  fixed[[2L]] <- as.call(c(list(as.name("Surv"), args$time), status))
+  fixed
+}
+
+
 #' Extract variable names from the left-hand side of a formula
 #'
 #' This internal helper function extracts variable names from the left-hand

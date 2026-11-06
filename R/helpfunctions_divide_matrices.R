@@ -65,7 +65,7 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
           timevar = "eventtime"
         )
       } else {
-        names(datsurv) <- gsub(unique(survtimes), timevar, names(datsurv))
+        names(datsurv)[names(datsurv) == unique(survtimes)] <- timevar
       }
 
       datlong <- subset(
