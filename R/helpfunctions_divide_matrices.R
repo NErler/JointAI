@@ -370,40 +370,127 @@ outcomes_to_mat <- function(outcomes) {
   # make a design matrix from the outcomes of a list of formulas
   # - outcomes: list produced by extract_outcome_data()
 
+  check_duplicate_outcomes(outcomes)
+
   outlist <- unlist(
     unname(lapply(outcomes$outcomes, as.list)),
     recursive = FALSE
   )
 
-  nosurv <- !lapply(outcomes$fixed, "attr", "type") %in% c("coxph", "JM")
-  outlist_nosurv <- unlist(
-    unname(lapply(outcomes$outcomes[nosurv], as.list)),
-    recursive = FALSE
-  )
+  data.matrix(as.data.frame(outlist, check.names = FALSE))
+}
 
-  if (any(duplicated(outlist_nosurv))) {
-    d1 <- duplicated(outlist_nosurv)
-    d2 <- duplicated(outlist_nosurv, fromLast = TRUE)
 
-    d <- unique(unlist(outcomes$outnams[nosurv])[d1 | d2])
-    if (length(d) == 1L) {
-      errormsg(
-        "You can only specify one model per outcome.
-               The variable %s is used on the left hand side of more than one
-               of the model formulas.",
-        paste0(dQuote(d), collapse = ", ")
-      )
-    } else {
-      errormsg(
-        "You can only specify one model per outcome.
-               The variables %s are used on the left hand side of more than
-               one of the model formulas.",
-        paste0(dQuote(d), collapse = ", ")
-      )
-    }
+#' Check that no outcome is used in more than one model formula
+#'
+#' A variable can only be the outcome of one model (JAGS needs a directed
+#' acyclic graph, and a copy of an outcome would count its information twice).
+#' Gives an error when
+#' 1. two parametric survival outcomes (`survreg`) have the same survival
+#'    times (competing risks are not supported),
+#' 2. the same variable (time, event indicator or other outcome) is used on the
+#'    left hand side of more than one model formula,
+#' 3. two different outcomes (other than event indicators) have identical
+#'    values, e.g., a copy of an outcome.
+#'
+#' Event indicators are compared by name only, so that, e.g., two survival
+#' outcomes without censoring are possible.
+#'
+#' Proportional hazards models (`coxph`, `JM`) may share the survival time:
+#' with time-varying covariates, several survival outcomes are only possible
+#' with the same time variable (`reformat_longsurvdata()` and
+#' `get_data_list()` expect one), and with mutually exclusive event types this
+#' gives a cause-specific hazards model. A shared time variable is counted only
+#' once in checks 2 and 3. To be revisited when competing risks are
+#' implemented (`Surv()` with an event indicator with more than two values).
+#'
+#' @param outcomes list produced by `extract_outcome_data()`; uses the elements
+#'   `outcomes` (a named list of data.frames, one per model formula; for
+#'   survival outcomes the columns are time and event indicator) and `fixed`
+#'   (the formulas, with attribute `"type"`)
+#'
+#' @return `NULL` (invisibly); called for the error.
+#' @keywords internal
+check_duplicate_outcomes <- function(outcomes) {
+  types <- lapply(outcomes$fixed, attr, "type")
+  is_survreg <- types %in% "survreg"
+  is_ph <- types %in% c("coxph", "JM")
+
+  # values to compare: integer and double values count as identical
+  value_key <- function(x) {
+    if (is.numeric(x) || is.logical(x)) as.numeric(x) else as.character(x)
   }
 
-  data.matrix(as.data.frame(outlist, check.names = FALSE))
+  # 1. parametric survival outcomes with the same survival times
+  times <- lapply(outcomes$outcomes[is_survreg], function(x) {
+    value_key(x[[1L]])
+  })
+  same_time <- duplicated(times) | duplicated(times, fromLast = TRUE)
+  if (any(same_time)) {
+    errormsg(
+      "The survival outcomes %s have the same survival times. Only one
+      survival model per survival time is possible (competing risks are
+      currently not supported).",
+      paste_and(names(times)[same_time], dQ = TRUE)
+    )
+  }
+
+  # collect the outcome columns: names of all columns (for check 2) and values
+  # of all columns except event indicators (for check 3)
+  colnams <- character(0L)
+  values <- list()
+  ph_times <- list()
+  for (i in seq_along(outcomes$outcomes)) {
+    out_i <- outcomes$outcomes[[i]]
+    if (is_ph[i]) {
+      # the time may be shared between proportional hazards models: the event
+      # indicator is added here, the time below (once)
+      colnams <- c(colnams, names(out_i)[2L])
+      ph_times[[names(out_i)[1L]]] <- value_key(out_i[[1L]])
+    } else {
+      colnams <- c(colnams, names(out_i))
+      cols <- if (is_survreg[i]) names(out_i)[1L] else names(out_i)
+      for (col in cols) {
+        values[[col]] <- value_key(out_i[[col]])
+      }
+    }
+  }
+  # shared times of proportional hazards models count once (by name and by
+  # value)
+  ph_times <- ph_times[!duplicated(ph_times)]
+  colnams <- c(colnams, names(ph_times))
+  values <- c(values, ph_times)
+
+  # 2. the same variable on the left hand side of more than one formula
+  d <- unique(colnams[duplicated(colnams)])
+  if (length(d) == 1L) {
+    errormsg(
+      "You can only specify one model per outcome.
+               The variable %s is used on the left hand side of more than one
+               of the model formulas.",
+      paste0(dQuote(d), collapse = ", ")
+    )
+  } else if (length(d) > 1L) {
+    errormsg(
+      "You can only specify one model per outcome.
+               The variables %s are used on the left hand side of more than
+               one of the model formulas.",
+      paste0(dQuote(d), collapse = ", ")
+    )
+  }
+
+  # 3. different outcomes with identical values (survival times and other
+  # outcomes; event indicators are only compared by name, above)
+  same_values <- duplicated(values) | duplicated(values, fromLast = TRUE)
+  if (any(same_values)) {
+    errormsg(
+      "The outcomes %s have identical values. You can only specify one model
+      per outcome, also when one outcome is a copy of another.",
+      paste_and(names(values)[same_values], dQ = TRUE)
+    )
+  }
+
+  invisible(NULL)
 }
 
 #' Create data.frame from variable term and data
