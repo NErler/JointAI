@@ -101,7 +101,7 @@ list_models(mod1)
 #>   (Intercept), C1, C2, M22, M23, M24, O22, O23, O24, B21 
 #> * Regression coefficients:
 #>   beta[1:10] (normal prior(s) with mean 0 and precision 1e-04) 
-#> * Precision of  “y” :
+#> * Precision of “y”:
 #>   tau_y (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
 #> 
 #> 
@@ -122,7 +122,7 @@ list_models(mod1)
 #>   (Intercept), C1, M22, M23, M24, O22, O23, O24 
 #> * Regression coefficients:
 #>   alpha[10:17] (normal prior(s) with mean 0 and precision 1e-04) 
-#> * Precision of  “C2” :
+#> * Precision of “C2”:
 #>   tau_C2 (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
 #> 
 #> 

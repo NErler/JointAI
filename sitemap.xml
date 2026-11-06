@@ -121,6 +121,11 @@
 <url><loc>https://nerler.github.io/JointAI/reference/predDF.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/predict.JointAI.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/prep_arglist.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/print_nonprop_predvars.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/print_nonprop_regcoef.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/print_ranefs.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/print_regcoef.html</loc></url>
+<url><loc>https://nerler.github.io/JointAI/reference/print_trunc.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ranef_covariate_shift.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ranef_mean_terms.html</loc></url>
 <url><loc>https://nerler.github.io/JointAI/reference/ranef_shift.html</loc></url>
