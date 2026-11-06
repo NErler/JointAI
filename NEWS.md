@@ -26,6 +26,11 @@
   same parameters as with `list()`; the logical values were silently ignored,
   because `c()` turns them into character strings (#114). Unknown or unnamed
   elements of `monitor_params` give an informative error.
+* `subset` in `summary()`, `coef()`, `confint()`, `traceplot()`, `densplot()`,
+  `GR_crit()` and `MC_error()` combined with `c()` now selects the same
+  parameters as with `list()`: e.g. `c(analysis_main = FALSE, other = "beta[2]")`
+  included all parameters of the analysis model, because `c()` turns `FALSE`
+  into `"FALSE"`. Unknown or unnamed elements give an informative error.
 * Misspelled arguments of the `*_imp()` functions (e.g. `n.itre`) are no longer
   ignored silently, but give a warning that names them (#114).
 * Survival outcomes: `Surv()` with named arguments, e.g.
