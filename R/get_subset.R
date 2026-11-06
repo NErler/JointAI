@@ -6,7 +6,8 @@ get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
     return(object$MCMC)
   }
 
-  subset <- as.list(subset)
+  # named list, also when given with c() ("FALSE" -> FALSE, other1 -> other)
+  subset <- check_monitor_params(subset, argname = "subset")
 
   if (
     length(subset) == 0 &
