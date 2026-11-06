@@ -1826,6 +1826,8 @@ JM_imp <- function(
     )
   }
 
+  check_jm_survival_covariates(formula)
+
   arglist <- prep_arglist(
     analysis_type = "JM",
     formals = formals(),

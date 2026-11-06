@@ -38,6 +38,9 @@
   into `"FALSE"`. Unknown or unnamed elements give an informative error.
 * Misspelled arguments of the `*_imp()` functions (e.g. `n.itre`) are no longer
   ignored silently, but give a warning that names them (#114).
+* `JM_imp()` with a survival part without covariates (e.g.,
+  `Surv(time, status) ~ 1`) gives an informative error; it stopped with
+  "'names' attribute [2] must be the same length as the vector [0]".
 * Survival outcomes: `Surv()` with named arguments, e.g.
   `Surv(time = futime, event = status)` or `Surv(futime, event = status)`, now
   gives the same model as `Surv(futime, status)`; it failed with a syntax error
