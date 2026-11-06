@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Informative errors instead of errors from JAGS: for a joint model with a
+  time-varying unordered factor with more than two categories (its values
+  between the observation times cannot be modelled yet), and for linear,
+  generalized linear and multinomial (mixed) models without any regression
+  coefficient (e.g., `y ~ 0 + (1 | id)`).
 * `survreg_imp()`, and the survival part of `JM_imp()`, with more than one
   random effect on a level (e.g. `(x | center)`) failed in JAGS ("Unknown
   variable KinvD_..."), because the hyper-parameters of the prior of the random
