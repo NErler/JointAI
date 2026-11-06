@@ -132,3 +132,31 @@ test_that("for Gaussian models, all types of residuals are the same", {
     expect_equal(res$pearson, res$response, label = k)
   }
 })
+
+test_that("predict(): sub-model selected by name (as by index)", {
+  # the jm fixture: prediction is implemented for the model of chol (2nd)
+  object <- fixture_load("jm")
+  name <- names(object$fixed)[2L]
+  expect_identical(name, "chol")
+  newdata <- object$data[1:5, ]
+  expect_identical(
+    pred(object, outcome = name, newdata = newdata),
+    pred(object, outcome = 2L, newdata = newdata)
+  )
+
+  for (k in predict_names) {
+    object <- fixture_load(k)
+    newdata <- object$data[1:5, ]
+    expect_identical(
+      pred(object, outcome = names(object$fixed)[1L], newdata = newdata),
+      pred(object, outcome = 1L, newdata = newdata),
+      info = k
+    )
+  }
+})
+
+test_that("predict(): outcome that is not a sub-model", {
+  object <- fixture_load("lm")
+  expect_error(pred(object, outcome = "xyz"), "does not match the sub-models")
+  expect_error(pred(object, outcome = 5L), "does not match the sub-models")
+})

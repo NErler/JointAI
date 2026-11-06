@@ -27,6 +27,11 @@
   for random effects in proportional hazards models), and the coefficients of
   multinomial mixed models per category (they were listed per design matrix,
   with the category names repeated). Small layout corrections.
+* `traceplot()`, `densplot()` and `predict()`: sub-models can now be selected by
+  name in `outcome` (e.g. `outcome = "chol"`), as documented; this failed with
+  "'start' cannot be after 'end'" (plots) or "EXPR must be a length 1 vector"
+  (`predict()`). A value that is not a sub-model of the model now gives an
+  informative error.
 * Survival outcomes: `Surv()` with named arguments, e.g.
   `Surv(time = futime, event = status)` or `Surv(futime, event = status)`, now
   gives the same model as `Surv(futime, status)`; it failed with a syntax error
