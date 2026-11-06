@@ -487,8 +487,9 @@
 #' \tabular{ll}{
 #' \strong{name/key word} \tab \strong{what is monitored}\cr
 #' \code{analysis_main} \tab \code{betas} and \code{sigma_main}, \code{tau_main}
-#'                           (for beta regression) or \code{shape_main}
-#'                           (for parametric survival models), \code{gamma_main}
+#'                           (for beta regression) or the shape parameter
+#'                           (for parametric survival models; it has no key
+#'                           word of its own, see below), \code{gamma_main}
 #'                           (for cumulative logit models),
 #'                           \code{D_main} (for multi-level models) and
 #'                           \code{basehaz} in proportional hazards models)\cr
@@ -522,6 +523,14 @@
 #' \code{RinvD_other} \tab matrices in the priors for \code{invD_other}\cr
 #' \code{other} \tab additional parameters
 #' }
+#'
+#' **Shape parameter of parametric survival models:**\cr
+#' The shape parameter of a parametric (Weibull) survival model
+#' (\code{survreg_imp()}) is monitored together with the other parameters of
+#' \code{analysis_main}. To monitor it without them, its name (e.g.,
+#' \code{shape_Surv_time_stats}; shown by \code{\link{list_models}()}) can be
+#' given in \code{other}, e.g.,
+#' \code{monitor_params = list(analysis_main = FALSE, other = "shape_Surv_time_stats")}.
 #'
 #' **For example:**\cr
 #' \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE,
