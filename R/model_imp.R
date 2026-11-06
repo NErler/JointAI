@@ -183,6 +183,8 @@
 #'                 should be saved or removed from (\code{FALSE}; default) when
 #'                 the sampling has finished.}
 #' }
+#'            Other arguments are not used; their names are given in a warning
+#'            (unless \code{warn = FALSE}).
 #'
 #' @name model_imp
 #'
@@ -467,6 +469,10 @@
 #' by one of the key words selecting a set of parameters.
 #' Except for \code{other}, in which parameter names are specified directly,
 #' parameter (groups) are just set as \code{TRUE} or \code{FALSE}.
+#' When parameter groups and \code{other} are combined with \code{c()}, the
+#' logical values become character strings (\code{"TRUE"}, \code{"FALSE"}),
+#' and several parameter names in \code{other} get the names \code{other1},
+#' \code{other2}, ...; both are interpreted as intended.
 #'
 #' Models are divided into two groups, the main models, which are the models
 #' for which the user has explicitly specified a formula (via \code{formula}
@@ -897,6 +903,14 @@ model_imp <- function(
     )
   }
 
+  # arguments in `...` are not used: warn about misspelled arguments (#114);
+  # `thecall` is added by prep_arglist()
+  warn_unknown_args(
+    names(args)[-1L],
+    known = c(names(formals(model_imp)), "thecall"),
+    warn = warn
+  )
+
   # data pre-processing --------------------------------------------------------
   data <- check_data(data, fixed, random, auxvars, timevar, mess, warn)
 
@@ -1015,7 +1029,10 @@ model_imp <- function(
 
   var_names <- do.call(
     get_params,
-    c(list(Mlist = Mlist, info_list = info_list, mess = mess), monitor_params)
+    c(
+      list(Mlist = Mlist, info_list = info_list, mess = mess),
+      check_monitor_params(monitor_params)
+    )
   )
 
   # with scaled covariates, monitored coefficients, thresholds, baseline

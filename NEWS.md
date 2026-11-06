@@ -21,6 +21,13 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `monitor_params` (in the `*_imp()` functions and `add_samples()`) combined
+  with `c()`, e.g. `c(analysis_main = TRUE, other = "tau_y")`, now monitors the
+  same parameters as with `list()`; the logical values were silently ignored,
+  because `c()` turns them into character strings (#114). Unknown or unnamed
+  elements of `monitor_params` give an informative error.
+* Misspelled arguments of the `*_imp()` functions (e.g. `n.itre`) are no longer
+  ignored silently, but give a warning that names them (#114).
 * Survival outcomes: `Surv()` with named arguments, e.g.
   `Surv(time = futime, event = status)` or `Surv(futime, event = status)`, now
   gives the same model as `Surv(futime, status)`; it failed with a syntax error
