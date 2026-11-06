@@ -63,7 +63,7 @@ the following possible entries:
 
 ```{r, echo = F}
 tab <- rbind(
-c("`analysis_main`", "`betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `gamma_main` (in cumulative logit models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models)"),
+c("`analysis_main`", "`betas` and `sigma_main`, `tau_main` (in beta regression) or the shape parameter (in parametric survival models; no key word of its own), `gamma_main` (in cumulative logit models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models)"),
 c("`analysis_random`", "`ranef_main`, `D_main`, `invD_main`, `RinvD_main`"),
 c('`other_models`', '`alphas`, `tau_other`, `gamma_other`, `delta_other`'),
 c('`imps`', 'imputed values'),
@@ -107,6 +107,12 @@ parameters), the variance-covariance matrices of random effects used in the main
 models, the shape parameter in a parametric Weibull survival model, and the
 coefficients used in the spline specification of the baseline
 hazard of proportional hazards survival models.
+
+The shape parameter of a parametric Weibull survival model does not have a key
+word of its own. To monitor it without the other main parameters, its name
+(e.g., `shape_Surv_time_stats`, shown by `list_models()`) can be given in
+`other`, e.g.,
+`monitor_params = list(analysis_main = FALSE, other = "shape_Surv_time_stats")`.
 
 The function `parameters()` returns the parameters that are specified to be
 followed (even for models where no MCMC sampling was performed, i.e. when
