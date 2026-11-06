@@ -27,6 +27,13 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `auto_corr()`, `auto_corr_plot()`, `cross_corr()`, `cross_corr_plot()`: the
+  argument `outcome` now restricts the output to the selected sub-models, as was
+  documented; it had only determined which coefficients were named by variable,
+  while the others kept the name of their node (`beta[3]`). Its default changes
+  from `1L` to `NULL`, which includes all monitored parameters, as before. With
+  parameters from several sub-models the coefficients are named
+  `"outcome: variable"`.
 * `JM_imp()`: `exp()` of a modelled time-varying covariate in the survival part
   (`exp(x)`, or within `I()`) failed in JAGS with "Invalid vector argument to
   exp", when using the association type `"underl.value"` (the default for, e.g.,
