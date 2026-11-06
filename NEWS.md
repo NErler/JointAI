@@ -21,6 +21,9 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `JM_imp()` with a survival part without covariates (e.g.,
+  `Surv(time, status) ~ 1`) gives an informative error; it stopped with
+  "'names' attribute [2] must be the same length as the vector [0]".
 * Survival outcomes: `Surv()` with named arguments, e.g.
   `Surv(time = futime, event = status)` or `Surv(futime, event = status)`, now
   gives the same model as `Surv(futime, status)`; it failed with a syntax error
