@@ -418,7 +418,17 @@ plot_prep <- function(
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
   if (!is.null(outcome)) {
-    outcomes <- internal_clean_survname(names(object$fixed)[outcome])
+    # sub-models selected by index or by name (`names(object$fixed)[outcome]`
+    # works for indices only)
+    outcome_names <- names(object$fixed[outcome])
+    if (anyNA(outcome_names)) {
+      errormsg(
+        "The value given for %s does not match the sub-models of this
+             model.",
+        dQuote("outcome")
+      )
+    }
+    outcomes <- internal_clean_survname(outcome_names)
     params <- parameters(object, expand_ranef = TRUE)
     selected_params <- params$coef[lvapply(params$outcome, function(x) {
       any(outcomes %in% x)

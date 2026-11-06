@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `traceplot()`, `densplot()` and `predict()`: sub-models can now be selected by
+  name in `outcome` (e.g. `outcome = "chol"`), as documented; this failed with
+  "'start' cannot be after 'end'" (plots) or "EXPR must be a length 1 vector"
+  (`predict()`). A value that is not a sub-model of the model now gives an
+  informative error.
 * `JM_imp()` with a survival part without covariates (e.g.,
   `Surv(time, status) ~ 1`) gives an informative error; it stopped with
   "'names' attribute [2] must be the same length as the vector [0]".

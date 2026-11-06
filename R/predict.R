@@ -230,6 +230,16 @@ predict.JointAI <- function(
     errormsg("Use only with 'JointAI' objects.")
   }
 
+  # sub-models selected by index or by name (`names(object$fixed)[outcome]`
+  # works for indices only)
+  outcome_names <- names(object$fixed[outcome])
+  if (anyNA(outcome_names)) {
+    errormsg(
+      "The value given for %s does not match the sub-models of this model.",
+      dQuote("outcome")
+    )
+  }
+
   if (missing(newdata)) {
     newdata <- object$data
   } else {
@@ -298,7 +308,7 @@ predict.JointAI <- function(
     types[names(type)] <- type
   }
 
-  preds <- lapply(names(object$fixed)[outcome], function(varname) {
+  preds <- lapply(outcome_names, function(varname) {
     if (!is.null(object$info_list[[varname]]$hc_list) & warn) {
       warnmsg(
         "Prediction in multi-level settings currently only takes into
@@ -344,7 +354,7 @@ predict.JointAI <- function(
       )
     }
   })
-  names(preds) <- names(object$fixed)[outcome]
+  names(preds) <- outcome_names
 
   pred_df <- nlapply(preds, "[[", "res_df")
   sample <- nlapply(preds, "[[", "sample")
