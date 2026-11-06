@@ -9,9 +9,10 @@ plot them using either the **corrplot** package or
 ## Usage
 
 ``` r
-cross_corr(object, outcome = 1L, start = NULL, end = NULL, thin = NULL)
+cross_corr(object, outcome = NULL, start = NULL, end = NULL,
+  thin = NULL)
 
-cross_corr_plot(object, outcome = 1L, start = NULL, end = NULL,
+cross_corr_plot(object, outcome = NULL, start = NULL, end = NULL,
   thin = NULL, type = "corrplot")
 ```
 
@@ -23,8 +24,12 @@ cross_corr_plot(object, outcome = 1L, start = NULL, end = NULL,
 
 - outcome:
 
-  integer; index of the outcome model for which the correlations should
-  be plotted
+  optional; vector identifying the sub-models whose parameters are
+  included, either by their indices (in the order of the list of model
+  formulas) or their names (LHS of the respective model formula as
+  character string). If `NULL` (default), all monitored parameters are
+  included. With parameters from several sub-models, the coefficients
+  are named `"outcome: variable"`, otherwise by the variable only.
 
 - start:
 

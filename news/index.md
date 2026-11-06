@@ -34,6 +34,16 @@
 
 ### Bug fixes
 
+- [`auto_corr()`](https://nerler.github.io/JointAI/reference/auto_corr.md),
+  [`auto_corr_plot()`](https://nerler.github.io/JointAI/reference/auto_corr.md),
+  [`cross_corr()`](https://nerler.github.io/JointAI/reference/cross_corr.md),
+  [`cross_corr_plot()`](https://nerler.github.io/JointAI/reference/cross_corr.md):
+  the argument `outcome` now restricts the output to the selected
+  sub-models, as was documented; it had only determined which
+  coefficients were named by variable, while the others kept the name of
+  their node (`beta[3]`). Its default changes from `1L` to `NULL`, which
+  includes all monitored parameters, as before. With parameters from
+  several sub-models the coefficients are named `"outcome: variable"`.
 - [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md):
   [`exp()`](https://rdrr.io/r/base/Log.html) of a modelled time-varying
   covariate in the survival part (`exp(x)`, or within

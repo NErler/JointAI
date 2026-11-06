@@ -8,10 +8,10 @@ JointAI object via
 ## Usage
 
 ``` r
-auto_corr(object, lags = 0:30, by_chain = TRUE, outcome = 1L,
+auto_corr(object, lags = 0:30, by_chain = TRUE, outcome = NULL,
   start = NULL, end = NULL, thin = NULL)
 
-auto_corr_plot(object, lags = 0:30, by_chain = TRUE, outcome = 1L,
+auto_corr_plot(object, lags = 0:30, by_chain = TRUE, outcome = NULL,
   start = NULL, end = NULL, thin = NULL)
 ```
 
@@ -32,8 +32,12 @@ auto_corr_plot(object, lags = 0:30, by_chain = TRUE, outcome = 1L,
 
 - outcome:
 
-  integer; index of the outcome model for which the autocorrelation
-  should be plotted
+  optional; vector identifying the sub-models whose parameters are
+  included, either by their indices (in the order of the list of model
+  formulas) or their names (LHS of the respective model formula as
+  character string). If `NULL` (default), all monitored parameters are
+  included. With parameters from several sub-models, the coefficients
+  are named `"outcome: variable"`, otherwise by the variable only.
 
 - start:
 
