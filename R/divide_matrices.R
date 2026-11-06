@@ -60,6 +60,9 @@ divide_matrices <- function(
   fixed <- outcomes$fixed
   names(random) <- names(fixed)
 
+  # an outcome must vary within the grouping variables of its random effects
+  check_outcome_varies_within_groups(fixed, random, data)
+
   #FIXME: Continue refactoring functons here!
   # in case of last-observation-carried forward: the value of the time-varying
   # covariates at the event times is filled in

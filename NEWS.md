@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Models with random effects for a grouping variable within which the outcome
+  does not vary (e.g., an outcome on the level of the subjects with
+  `(1 | id)`) now give an informative error. They failed in JAGS, or, for
+  multinomial mixed models, gave a model without covariates and random effects
+  without any message.
 * `traceplot()`, `densplot()` and `predict()`: sub-models can now be selected by
   name in `outcome` (e.g. `outcome = "chol"`), as documented; this failed with
   "'start' cannot be after 'end'" (plots) or "EXPR must be a length 1 vector"
