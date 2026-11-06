@@ -104,3 +104,39 @@ test_that("models without regression coefficients", {
     "no regression coefficients"
   )
 })
+
+# the check functions ----------------------------------------------------------
+
+test_that("check_jm_tv_modeltypes(): only glmm and clmm models", {
+  expect_null(check_jm_tv_modeltypes(list(
+    chol = list(modeltype = "glmm"),
+    stage = list(modeltype = "clmm")
+  )))
+  expect_null(check_jm_tv_modeltypes(list()))
+
+  # all variables with another model type are named
+  expect_error(
+    check_jm_tv_modeltypes(list(
+      chol = list(modeltype = "glmm"),
+      f3 = list(modeltype = "mlogitmm"),
+      f4 = list(modeltype = "mlogitmm")
+    )),
+    "\"f3\"[[:space:]]+and[[:space:]]+\"f4\""
+  )
+})
+
+test_that("check_has_coefficients()", {
+  expect_null(check_has_coefficients(list(M_lvlone = 1:2), varname = "y"))
+  expect_null(
+    check_has_coefficients(list(M_id = 3L, M_lvlone = NULL), varname = "y")
+  )
+
+  expect_error(
+    check_has_coefficients(list(M_lvlone = NULL), varname = "y"),
+    "The model for \"y\" has no regression coefficients"
+  )
+  expect_error(
+    check_has_coefficients(list(), varname = "y"),
+    "no regression coefficients"
+  )
+})
