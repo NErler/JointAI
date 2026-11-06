@@ -34,6 +34,14 @@
 
 ### Bug fixes
 
+- [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
+  [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
+  and [`predict()`](https://rdrr.io/r/stats/predict.html): sub-models
+  can now be selected by name in `outcome` (e.g. `outcome = "chol"`), as
+  documented; this failed with “‘start’ cannot be after ‘end’” (plots)
+  or “EXPR must be a length 1 vector”
+  ([`predict()`](https://rdrr.io/r/stats/predict.html)). A value that is
+  not a sub-model of the model now gives an informative error.
 - Survival outcomes:
   [`Surv()`](https://nerler.github.io/JointAI/reference/Surv.md) with
   named arguments, e.g. `Surv(time = futime, event = status)` or
