@@ -803,6 +803,43 @@ column_to_term <- function(columns, trafos) {
 }
 
 
+#' Covariates in the survival part of a joint model
+#'
+#' In a joint model, the survival outcome is linked to the longitudinal
+#' outcomes through the covariates of the survival part. A survival part
+#' without covariates (e.g., `Surv(time, status) ~ 1`, also with random
+#' effects) is therefore not meaningful, and the model set-up would stop with
+#' an uninformative error.
+#'
+#' Stops with an informative error if the fixed effects part of a survival
+#' formula has no covariates. Other formulas are not concerned.
+#'
+#' @param formula a formula or a list of formulas, as given to `JM_imp()`.
+#'
+#' @returns `NULL`, invisibly; called for the error.
+#' @keywords internal
+check_jm_survival_covariates <- function(formula) {
+  fixed <- split_formula_list(check_formula_list(formula))$fixed
+
+  for (fmla in fixed) {
+    lhs <- fmla[[2L]]
+    is_surv <- is.call(lhs) && identical(lhs[[1L]], as.name("Surv"))
+
+    if (is_surv && length(attr(terms(fmla), "term.labels")) == 0L) {
+      errormsg(
+        "The survival part of the joint model, %s, has no covariates. In a
+        joint model, the survival outcome is linked to the longitudinal
+        outcome(s) through the covariates of the survival part (e.g., %s).",
+        dQuote(paste(deparse(lhs, width.cutoff = 500L), collapse = " ")),
+        dQuote(paste(deparse(lhs, width.cutoff = 500L), "~ chol + age"))
+      )
+    }
+  }
+
+  invisible(NULL)
+}
+
+
 #' Check the specification of a joint model
 #'
 #' A joint model needs subjects with repeated measurements and something that

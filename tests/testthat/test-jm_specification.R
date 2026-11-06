@@ -300,3 +300,51 @@ test_that("no association types are printed if there are none", {
     capture.output(print(summary(fit)))
   )))
 })
+
+
+test_that("the survival part of a joint model needs covariates", {
+  cases <- list(
+    intercept = Surv(futime, status != "censored") ~ 1,
+    nothing = Surv(futime, status != "censored") ~ 0,
+    only_random = Surv(futime, status != "censored") ~ 1 + (1 | id)
+  )
+
+  for (case in names(cases)) {
+    expect_error(
+      jm_spec_setup(list(cases[[case]], chol ~ age + day + (day | id))),
+      "survival\\s+part\\s+of\\s+the\\s+joint\\s+model.*has\\s+no\\s+covariates",
+      info = case
+    )
+  }
+})
+
+
+test_that("check_jm_survival_covariates()", {
+  # covariates in the survival part: no error
+  expect_null(check_jm_survival_covariates(
+    Surv(futime, status) ~ age
+  ))
+  expect_null(check_jm_survival_covariates(list(
+    Surv(futime, status) ~ chol + (1 | id),
+    chol ~ day + (day | id)
+  )))
+  # other sub-models without covariates are not concerned
+  expect_null(check_jm_survival_covariates(list(
+    Surv(futime, status) ~ chol,
+    chol ~ 1 + (1 | id)
+  )))
+
+  # the survival part (also the second of two) without covariates
+  expect_error(
+    check_jm_survival_covariates(Surv(futime, status) ~ 1),
+    "\"Surv\\(futime, status\\)\",\\s+has\\s+no\\s+covariates"
+  )
+  expect_error(
+    check_jm_survival_covariates(list(
+      Surv(futime, status == 1) ~ chol,
+      Surv(futime, status == 2) ~ 1,
+      chol ~ day + (day | id)
+    )),
+    "\"Surv\\(futime, status == 2\\)\",\\s+has\\s+no\\s+covariates"
+  )
+})
