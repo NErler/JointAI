@@ -792,16 +792,22 @@ restore_var_labels <- function(data, var_labels) {
 #' with an informative error for names that are not parameter groups of
 #' `get_params()`.
 #'
-#' used in `model_imp()` and `add_samples()` (2026-11-06)
+#' used in `model_imp()`, `add_samples()` and `get_subset()` (2026-11-06)
 #' @param monitor_params named list or vector specifying which parameters
-#'                       should be monitored (see `model_imp()`), or `NULL`
+#'                       should be monitored (see `model_imp()`), or `NULL`;
+#'                       also the argument `subset` of the output functions
+#' @param argname character string; the name of the argument, used in the
+#'                error messages (`"monitor_params"` or `"subset"`)
 #'
 #' @returns a named list with one element per parameter group: `TRUE` or
 #'          `FALSE` (or as given, e.g. `NULL`) for the parameter groups, and a
 #'          character vector of parameter names for `other`
 #' @keywords internal
 #'
-check_monitor_params <- function(monitor_params) {
+check_monitor_params <- function(
+  monitor_params,
+  argname = "monitor_params"
+) {
   params <- as.list(monitor_params)
   if (length(params) == 0L) {
     return(list())
@@ -811,7 +817,7 @@ check_monitor_params <- function(monitor_params) {
   if (is.null(param_names) || any(param_names == "")) {
     errormsg(
       "All elements of %s must be named, e.g., %s.",
-      dQuote("monitor_params"),
+      dQuote(argname),
       dQuote("list(analysis_main = TRUE, other = \"tau_y\")")
     )
   }
@@ -837,7 +843,7 @@ check_monitor_params <- function(monitor_params) {
       section \"Parameters to follow\" in the help of %s).",
       ifelse(length(unknown) == 1L, "The name", "The names"),
       paste_and(unknown, dQ = TRUE),
-      dQuote("monitor_params"),
+      dQuote(argname),
       ifelse(
         length(unknown) == 1L,
         "is not a known parameter group",
@@ -853,7 +859,7 @@ check_monitor_params <- function(monitor_params) {
     errormsg(
       "The name %s is used more than once in %s.",
       paste_and(duplicates, dQ = TRUE),
-      dQuote("monitor_params")
+      dQuote(argname)
     )
   }
 
@@ -871,7 +877,7 @@ check_monitor_params <- function(monitor_params) {
         "The value of %s in %s must be TRUE or FALSE. Names of single
         parameters are given in %s.",
         dQuote(k),
-        dQuote("monitor_params"),
+        dQuote(argname),
         dQuote("other")
       )
     }

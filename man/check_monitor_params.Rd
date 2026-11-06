@@ -4,11 +4,15 @@
 \alias{check_monitor_params}
 \title{Check and normalise the specification of the parameters to monitor}
 \usage{
-check_monitor_params(monitor_params)
+check_monitor_params(monitor_params, argname = "monitor_params")
 }
 \arguments{
 \item{monitor_params}{named list or vector specifying which parameters
-should be monitored (see \code{model_imp()}), or \code{NULL}}
+should be monitored (see \code{model_imp()}), or \code{NULL};
+also the argument \code{subset} of the output functions}
+
+\item{argname}{character string; the name of the argument, used in the
+error messages (\code{"monitor_params"} or \code{"subset"})}
 }
 \value{
 a named list with one element per parameter group: \code{TRUE} or
@@ -25,6 +29,6 @@ with an informative error for names that are not parameter groups of
 \code{get_params()}.
 }
 \details{
-used in \code{model_imp()} and \code{add_samples()} (2026-11-06)
+used in \code{model_imp()}, \code{add_samples()} and \code{get_subset()} (2026-11-06)
 }
 \keyword{internal}
