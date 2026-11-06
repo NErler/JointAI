@@ -34,6 +34,11 @@
 
 ### Bug fixes
 
+- Models with random effects for a grouping variable within which the
+  outcome does not vary (e.g., an outcome on the level of the subjects
+  with `(1 | id)`) now give an informative error. They failed in JAGS,
+  or, for multinomial mixed models, gave a model without covariates and
+  random effects without any message.
 - [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
   [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md)
   and [`predict()`](https://rdrr.io/r/stats/predict.html): sub-models
