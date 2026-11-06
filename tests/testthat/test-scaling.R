@@ -1581,3 +1581,45 @@ test_that("monitoring is completed for a joint model with an interaction (F11)",
     fit$coef_list[[1L]]$coef %in% fit$mcmc_settings$variable.names
   ))
 })
+
+# survival models with random effects on a level above the subjects (random
+# intercept and slope per center): random effects, D and the linear predictor
+# of a subject are re-scaled correctly
+surv_center_data <- function() {
+  pbc <- JointAI::PBC[JointAI::PBC$id %in% unique(JointAI::PBC$id)[1:60], ]
+  pbc$center <- factor(as.integer(pbc$id) %% 5)
+  pbc$event <- pbc$status != "censored"
+  list(pbc = pbc, pbc1 = pbc[!duplicated(pbc$id), ])
+}
+
+surv_center_cases <- list(
+  survreg = quote(survreg_imp(
+    Surv(futime, event) ~ age + sex + (age | center),
+    data = pbc1
+  )),
+  coxph = quote(coxph_imp(
+    Surv(futime, event) ~ age + sex + (age | center),
+    data = pbc1
+  )),
+  JM = quote(JM_imp(
+    list(
+      Surv(futime, event) ~ age + sex + chol + (age | center),
+      chol ~ day + age + (day | id)
+    ),
+    timevar = "day",
+    data = pbc
+  ))
+)
+
+for (case in names(surv_center_cases)) {
+  test_that(paste("random effects of a survival model per center:", case), {
+    set.seed(2020)
+    fit <- golden_fit(surv_center_cases[[case]], surv_center_data())
+    for (g in ranef_groups(fit)) {
+      expect_ranefs_invariant(fit, g$outcomes, g$lvl)
+    }
+    for (outcome in mixed_outcomes(fit)) {
+      expect_subject_lp_invariant(fit, outcome)
+    }
+  })
+}
