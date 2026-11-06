@@ -21,6 +21,10 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `survreg_imp()`, and the survival part of `JM_imp()`, with more than one
+  random effect on a level (e.g. `(x | center)`) failed in JAGS ("Unknown
+  variable KinvD_..."), because the hyper-parameters of the prior of the random
+  effects covariance matrix were missing from the data.
 * `auto_corr()`, `auto_corr_plot()`, `cross_corr()`, `cross_corr_plot()`: the
   argument `outcome` now restricts the output to the selected sub-models, as was
   documented; it had only determined which coefficients were named by variable,
