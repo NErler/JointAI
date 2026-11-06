@@ -117,16 +117,18 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   allvars <- all_vars(fixed, random, auxvars, timevar)
 
   # identify survival outcomes and the related variables
-  survout <- extract_outcomes_list(fixed)[grepl("^Surv\\(", fixed)]
+  is_surv <- grepl("^Surv\\(", fixed)
+  survout <- extract_outcomes_list(fixed)[is_surv]
 
   # identify data levels
   datlvls <- get_datlvls(data[, allvars], groups)
   surv_lvl <- unique(datlvls[unlist(survout)])
 
-  # identify covariates in the survival models
+  # identify covariates in the survival models (only the survival formulas,
+  # wherever they are in the list)
   covars <- unique(
-    unlist(lapply(seq_along(survout), function(k) {
-      all_vars(remove_lhs(fixed[[k]]))
+    unlist(lapply(fixed[is_surv], function(fmla) {
+      all_vars(remove_lhs(fmla))
     }))
   )
 
