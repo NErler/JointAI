@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `list_models()` describes the whole model (#113): it now lists the
+  non-proportional effects of cumulative logit models, truncation, the random
+  effects per grouping level with their covariance matrix and its prior (also
+  for random effects in proportional hazards models), and the coefficients of
+  multinomial mixed models per category (they were listed per design matrix,
+  with the category names repeated). Small layout corrections.
 * Survival outcomes: `Surv()` with named arguments, e.g.
   `Surv(time = futime, event = status)` or `Surv(futime, event = status)`, now
   gives the same model as `Surv(futime, status)`; it failed with a syntax error
