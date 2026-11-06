@@ -17725,9 +17725,9 @@
       M24                 NaN        NaN
       O22                 NaN        NaN
       O23                 NaN        NaN
+      o12: C2             NaN        NaN
       o13: C2             NaN        NaN
       c1:C2               NaN        NaN
-      o12: C2             NaN        NaN
       o12: c1             NaN        NaN
       o13: c1             NaN        NaN
       gamma_o1[1]         NaN        NaN
@@ -17831,9 +17831,9 @@
       M24                 NaN        NaN
       O22                 NaN        NaN
       O23                 NaN        NaN
+      o12: C2             NaN        NaN
       o13: C2             NaN        NaN
       c1:C2               NaN        NaN
-      o12: C2             NaN        NaN
       o12: c1             NaN        NaN
       o13: c1             NaN        NaN
       gamma_o1[1]         NaN        NaN
@@ -18419,9 +18419,9 @@
       M24            0    0  0     NaN
       O22            0    0  0     NaN
       O23            0    0  0     NaN
+      o12: C2        0    0  0     NaN
       o13: C2        0    0  0     NaN
       c1:C2          0    0  0     NaN
-      o12: C2        0    0  0     NaN
       o12: c1        0    0  0     NaN
       o13: c1        0    0  0     NaN
       gamma_o1[1]    0    0  0     NaN
@@ -18510,9 +18510,9 @@
       M24            0    0  0     NaN
       O22            0    0  0     NaN
       O23            0    0  0     NaN
+      o12: C2        0    0  0     NaN
       o13: C2        0    0  0     NaN
       c1:C2          0    0  0     NaN
-      o12: C2        0    0  0     NaN
       o12: c1        0    0  0     NaN
       o13: c1        0    0  0     NaN
       gamma_o1[1]    0    0  0     NaN

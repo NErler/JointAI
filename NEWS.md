@@ -21,6 +21,15 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Names of the regression coefficients in the output: `summary()` with a
+  subset of the coefficients (`subset = list(other = ...)`) showed the values
+  under the names of other coefficients (e.g. `beta[3]` as "(Intercept)", with
+  a warning "number of items to replace ..."). `traceplot()`, `densplot()`,
+  `GR_crit()` and `MC_error()` (models with one outcome) swapped names when the
+  coefficients were not in the order of the coefficient table: with a subset
+  in a different order, and by default in ordinal models with non-proportional
+  effects and an interaction (e.g. `o1 ~ c1 * C2` with `nonprop = ~ c1 + C2`,
+  where `c1:C2` was shown for a non-proportional effect of `C2`).
 * `list_models()` describes the whole model (#113): it now lists the
   non-proportional effects of cumulative logit models, truncation, the random
   effects per grouping level with their covariance matrix and its prior (also
