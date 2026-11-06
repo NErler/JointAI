@@ -103,11 +103,83 @@ test_that("JM_imp(): survival time t and id variable patient", {
     n.adapt = 1,
     n.iter = 0,
     seed = 1,
-    mess = FALSE
+    mess = FALSE,
+    warn = FALSE
   )
 
   expect_s3_class(fit$model, "jags")
   # the same data list as with the other names (only names differ: of the
   # elements, and the row and column names)
   expect_equal(fit$data_list, ref$data_list, ignore_attr = TRUE)
+})
+
+# unname_surv_args() ----------------------------------------------------------
+# The expected formulas are written out. The environment of the formula is
+# tested separately.
+
+test_that("unname_surv_args(): named arguments are removed", {
+  expect_equal(
+    unname_surv_args(Surv(futime, event = status) ~ age),
+    Surv(futime, status) ~ age
+  )
+  expect_equal(
+    unname_surv_args(Surv(time = futime, event = status) ~ age),
+    Surv(futime, status) ~ age
+  )
+  expect_equal(
+    unname_surv_args(Surv(event = status, time = futime) ~ age),
+    Surv(futime, status) ~ age
+  )
+  expect_equal(
+    unname_surv_args(Surv(futime, time2 = status) ~ age),
+    Surv(futime, status) ~ age
+  )
+  expect_equal(
+    unname_surv_args(Surv(time = futime) ~ age),
+    Surv(futime) ~ age
+  )
+  # expressions as arguments
+  expect_equal(
+    unname_surv_args(Surv(futime, event = status == "dead") ~ age + sex),
+    Surv(futime, status == "dead") ~ age + sex
+  )
+})
+
+test_that("unname_surv_args(): other formulas are unchanged", {
+  unchanged <- list(
+    Surv(futime, status) ~ age,
+    Surv(futime) ~ age,
+    y ~ age + (1 | id),
+    log(y) ~ age,
+    ~age,
+    # not right-censored: left to the checks of the survival outcome
+    Surv(time = t1, time2 = t2, event = status) ~ age,
+    Surv(futime, event = status, type = "right") ~ age
+  )
+  for (fmla in unchanged) {
+    expect_identical(unname_surv_args(fmla), fmla)
+  }
+  expect_null(unname_surv_args(NULL))
+})
+
+test_that("unname_surv_args(): lists of formulas", {
+  fixed <- list(
+    surv = Surv(futime, event = status) ~ age + chol,
+    long = chol ~ day + (day | id),
+    none = NULL
+  )
+  expect_equal(
+    unname_surv_args(fixed),
+    list(
+      surv = Surv(futime, status) ~ age + chol,
+      long = chol ~ day + (day | id),
+      none = NULL
+    )
+  )
+})
+
+test_that("unname_surv_args(): the environment of the formula is kept", {
+  env <- new.env()
+  fmla <- as.formula("Surv(futime, event = status) ~ age", env = env)
+  expect_identical(environment(unname_surv_args(fmla)), env)
 })
