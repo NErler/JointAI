@@ -34,6 +34,14 @@
 
 ### Bug fixes
 
+- Survival outcomes:
+  [`Surv()`](https://nerler.github.io/JointAI/reference/Surv.md) with
+  named arguments, e.g. `Surv(time = futime, event = status)` or
+  `Surv(futime, event = status)`, now gives the same model as
+  `Surv(futime, status)`; it failed with a syntax error in the JAGS
+  model. Models with time-varying covariates no longer fail when the
+  name of the survival time is part of the name of the id variable
+  (e.g. `t` and `patient`).
 - Informative errors instead of errors from JAGS: for a joint model with
   a time-varying unordered factor with more than two categories (its
   values between the observation times cannot be modelled yet), and for
