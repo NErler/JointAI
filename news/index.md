@@ -56,6 +56,33 @@
   or “EXPR must be a length 1 vector”
   ([`predict()`](https://rdrr.io/r/stats/predict.html)). A value that is
   not a sub-model of the model now gives an informative error.
+- `monitor_params` (in the `*_imp()` functions and
+  [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.md))
+  combined with [`c()`](https://rdrr.io/r/base/c.html),
+  e.g. `c(analysis_main = TRUE, other = "tau_y")`, now monitors the same
+  parameters as with [`list()`](https://rdrr.io/r/base/list.html); the
+  logical values were silently ignored, because
+  [`c()`](https://rdrr.io/r/base/c.html) turns them into character
+  strings ([\#114](https://github.com/nerler/JointAI/issues/114)).
+  Unknown or unnamed elements of `monitor_params` give an informative
+  error.
+- `subset` in [`summary()`](https://rdrr.io/r/base/summary.html),
+  [`coef()`](https://rdrr.io/r/stats/coef.html),
+  [`confint()`](https://rdrr.io/r/stats/confint.html),
+  [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.md),
+  [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.md),
+  [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.md)
+  and
+  [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.md)
+  combined with [`c()`](https://rdrr.io/r/base/c.html) now selects the
+  same parameters as with [`list()`](https://rdrr.io/r/base/list.html):
+  e.g. `c(analysis_main = FALSE, other = "beta[2]")` included all
+  parameters of the analysis model, because
+  [`c()`](https://rdrr.io/r/base/c.html) turns `FALSE` into `"FALSE"`.
+  Unknown or unnamed elements give an informative error.
+- Misspelled arguments of the `*_imp()` functions (e.g. `n.itre`) are no
+  longer ignored silently, but give a warning that names them
+  ([\#114](https://github.com/nerler/JointAI/issues/114)).
 - [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md)
   with a survival part without covariates (e.g.,
   `Surv(time, status) ~ 1`) gives an informative error; it stopped with

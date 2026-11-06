@@ -318,6 +318,9 @@ JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   :   logical; whether the created JAGS model file should be saved or
       removed from (`FALSE`; default) when the sampling has finished.
 
+  Other arguments are not used; their names are given in a warning
+  (unless `warn = FALSE`).
+
 - family:
 
   only for `glm_imp` and `glmm_imp`/`glmer_imp`: a description of the
@@ -633,7 +636,11 @@ Named vector specifying which parameters should be monitored. This can
 be done either directly by specifying the name of the parameter or
 indirectly by one of the key words selecting a set of parameters. Except
 for `other`, in which parameter names are specified directly, parameter
-(groups) are just set as `TRUE` or `FALSE`.
+(groups) are just set as `TRUE` or `FALSE`. When parameter groups and
+`other` are combined with [`c()`](https://rdrr.io/r/base/c.html), the
+logical values become character strings (`"TRUE"`, `"FALSE"`), and
+several parameter names in `other` get the names `other1`, `other2`,
+...; both are interpreted as intended.
 
 Models are divided into two groups, the main models, which are the
 models for which the user has explicitly specified a formula (via

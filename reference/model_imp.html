@@ -372,7 +372,8 @@ should be saved or removed from (<code>FALSE</code>; default) when
 the sampling has finished.</p></dd>
 
 
-</dl></dd>
+</dl><p>Other arguments are not used; their names are given in a warning
+(unless <code>warn = FALSE</code>).</p></dd>
 
 
 <dt id="arg-family">family<a class="anchor" aria-label="anchor" href="#arg-family"></a></dt>
@@ -672,7 +673,11 @@ are used for the unspecified variables.</p>
 done either directly by specifying the name of the parameter or indirectly
 by one of the key words selecting a set of parameters.
 Except for <code>other</code>, in which parameter names are specified directly,
-parameter (groups) are just set as <code>TRUE</code> or <code>FALSE</code>.</p>
+parameter (groups) are just set as <code>TRUE</code> or <code>FALSE</code>.
+When parameter groups and <code>other</code> are combined with <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, the
+logical values become character strings (<code>"TRUE"</code>, <code>"FALSE"</code>),
+and several parameter names in <code>other</code> get the names <code>other1</code>,
+<code>other2</code>, ...; both are interpreted as intended.</p>
 <p>Models are divided into two groups, the main models, which are the models
 for which the user has explicitly specified a formula (via <code>formula</code>
 or <code>fixed</code>), and all other models, for which models were specified
