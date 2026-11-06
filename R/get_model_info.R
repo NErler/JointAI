@@ -127,6 +127,11 @@ get_model1_info <- function(
   # parameter elements ------------------------------------------------------
   parelmts <- get_parelmts(k, Mlist, par_index_main, par_index_other, lp)
 
+  # the JAGS models of these types need at least one regression coefficient
+  if (modeltype %in% c("glm", "glmm", "mlogit", "mlogitmm")) {
+    check_has_coefficients(parelmts, varname = k)
+  }
+
   # scaling parameter matrices -----------------------------------------------
   scale_pars <- Mlist$scale_pars
 
@@ -255,7 +260,7 @@ get_model1_info <- function(
     tvars <- unique(c(tvars, get_logsd_vars(tvars, Mlist$logsd_of)))
 
     # get the model info for these variables
-    setNames(
+    tv_info <- setNames(
       lapply(tvars, function(i) {
         arglist_new <- arglist
         arglist_new$k <- replace_dummy(i, refs = Mlist$refs)
@@ -266,6 +271,10 @@ get_model1_info <- function(
       }),
       tvars
     )
+
+    # these models are written again for the quadrature points
+    check_jm_tv_modeltypes(tv_info)
+    tv_info
   }
 
   # * interactions with time-varying covariates -------------------------------
@@ -808,6 +817,43 @@ column_to_term <- function(columns, trafos) {
 }
 
 
+#' Covariates in the survival part of a joint model
+#'
+#' In a joint model, the survival outcome is linked to the longitudinal
+#' outcomes through the covariates of the survival part. A survival part
+#' without covariates (e.g., `Surv(time, status) ~ 1`, also with random
+#' effects) is therefore not meaningful, and the model set-up would stop with
+#' an uninformative error.
+#'
+#' Stops with an informative error if the fixed effects part of a survival
+#' formula has no covariates. Other formulas are not concerned.
+#'
+#' @param formula a formula or a list of formulas, as given to `JM_imp()`.
+#'
+#' @returns `NULL`, invisibly; called for the error.
+#' @keywords internal
+check_jm_survival_covariates <- function(formula) {
+  fixed <- split_formula_list(check_formula_list(formula))$fixed
+
+  for (fmla in fixed) {
+    lhs <- fmla[[2L]]
+    is_surv <- is.call(lhs) && identical(lhs[[1L]], as.name("Surv"))
+
+    if (is_surv && length(attr(terms(fmla), "term.labels")) == 0L) {
+      errormsg(
+        "The survival part of the joint model, %s, has no covariates. In a
+        joint model, the survival outcome is linked to the longitudinal
+        outcome(s) through the covariates of the survival part (e.g., %s).",
+        dQuote(paste(deparse(lhs, width.cutoff = 500L), collapse = " ")),
+        dQuote(paste(deparse(lhs, width.cutoff = 500L), "~ chol + age"))
+      )
+    }
+  }
+
+  invisible(NULL)
+}
+
+
 #' Check the specification of a joint model
 #'
 #' A joint model needs subjects with repeated measurements and something that
@@ -1082,6 +1128,74 @@ check_jm_function_terms <- function(lp_cols, trafos) {
         dQuote(paste0(variables, collapse = ":"))
       )
     }
+  }
+
+  invisible(NULL)
+}
+
+
+#' Model types of the time-varying covariates of a joint model
+#'
+#' The integral over the hazard in a joint model is approximated with
+#' Gauss-Kronrod quadrature. The models of the time-varying covariates that
+#' are needed for it are written once more for the quadrature points
+#' (`gkmodel_in_jm()`). This is only implemented for the model types `glmm`
+#' and `clmm`; for others (`mlogitmm`, i.e., unordered factors with more than
+#' two categories, also complete ones) the JAGS model could not be set up.
+#'
+#' Stops with an informative error if a time-varying covariate has another
+#' model type.
+#'
+#' @param tv_info named list with the model information of the time-varying
+#'   covariates (the element `tv_vars` of the model information of the
+#'   survival part); each element has the element `modeltype`.
+#'
+#' @returns `NULL`, invisibly; called for the error.
+#' @keywords internal
+check_jm_tv_modeltypes <- function(tv_info) {
+  modeltypes <- vapply(tv_info, "[[", "modeltype", FUN.VALUE = character(1L))
+  unsupported <- names(tv_info)[!modeltypes %in% c("glmm", "clmm")]
+
+  if (length(unsupported) > 0L) {
+    errormsg(
+      "The joint model needs the values of the time-varying variable(s) %s
+      between the observation times (for the integral over the hazard). This
+      is not yet possible for unordered factors with more than two
+      categories.",
+      paste_and(dQuote(unsupported))
+    )
+  }
+
+  invisible(NULL)
+}
+
+
+#' Sub-models without regression coefficients
+#'
+#' The JAGS models of the types `glm`, `glmm`, `mlogit` and `mlogitmm` need
+#' at least one regression coefficient (the loop over the priors of the
+#' coefficients would otherwise run from `Inf` to `-Inf`). This is not the
+#' case for a model without an intercept and without covariates, e.g.
+#' `y ~ 0` or `y ~ 0 + (1 | id)`.
+#'
+#' Stops with an informative error if the model has no regression
+#' coefficients.
+#'
+#' @param parelmts the parameter elements of the model (list per design
+#'   matrix, as returned by `get_parelmts()`).
+#' @param varname name of the outcome of the model.
+#'
+#' @returns `NULL`, invisibly; called for the error.
+#' @keywords internal
+check_has_coefficients <- function(parelmts, varname) {
+  if (length(unlist(parelmts)) == 0L) {
+    errormsg(
+      "The model for %s has no regression coefficients. Models without an
+      intercept and without covariates (e.g., %s) are not possible for this
+      type of outcome; please include at least the intercept.",
+      dQuote(varname),
+      dQuote(paste(varname, "~ 0 + (1 | id)"))
+    )
   }
 
   invisible(NULL)

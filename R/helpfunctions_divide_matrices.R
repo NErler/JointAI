@@ -65,7 +65,7 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
           timevar = "eventtime"
         )
       } else {
-        names(datsurv) <- gsub(unique(survtimes), timevar, names(datsurv))
+        names(datsurv)[names(datsurv) == unique(survtimes)] <- timevar
       }
 
       datlong <- subset(
@@ -960,4 +960,64 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed, lp_cols) {
       intersect(nam, names(dsgn_mat_lvls)[dsgn_mat_lvls == k])
     })
   })
+}
+
+
+#' Outcomes that do not vary within the grouping of their random effects
+#'
+#' A model with random effects for a grouping variable needs an outcome that
+#' varies within the groups. An outcome that is constant within the groups
+#' (e.g., a variable on the level of the subjects with `(1 | id)`) has one
+#' value per group, and its random effects for this grouping cannot be
+#' estimated. Without this check, the JAGS model had an empty linear predictor
+#' (JAGS error) or, for multinomial mixed models, no covariates and no random
+#' effects at all.
+#'
+#' Survival outcomes are not checked: in survival models with time-varying
+#' covariates, the random-effects part specifies the subjects. Missing values
+#' of the outcome are ignored.
+#'
+#' @param fixed named list of fixed effects formulas.
+#' @param random list of random effects formulas, with the same names as
+#'   `fixed` (elements can be `NULL`).
+#' @param data the data.
+#'
+#' @returns `NULL`, invisibly; called for the error.
+#' @keywords internal
+check_outcome_varies_within_groups <- function(fixed, random, data) {
+  for (k in names(fixed)) {
+    lhs <- fixed[[k]][[2L]]
+    is_surv <- is.call(lhs) && identical(lhs[[1L]], as.name("Surv"))
+    if (is_surv || is.null(random[[k]])) {
+      next
+    }
+
+    for (group in extract_grouping(random[[k]])) {
+      for (outcome in all.vars(lhs)) {
+        observed <- !is.na(data[[outcome]])
+        if (!any(observed)) {
+          next
+        }
+
+        # number of different values of the outcome per group
+        n_values <- tapply(
+          data[[outcome]][observed],
+          data[[group]][observed],
+          function(x) length(unique(x))
+        )
+
+        if (all(n_values <= 1L, na.rm = TRUE)) {
+          errormsg(
+            "The outcome %s does not vary within %s, so its model cannot have
+            random effects for %s.",
+            dQuote(outcome),
+            dQuote(group),
+            dQuote(group)
+          )
+        }
+      }
+    }
+  }
+
+  invisible(NULL)
 }

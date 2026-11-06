@@ -896,6 +896,9 @@ model_imp <- function(
     random <- split_formula_list(formula)$random
   }
 
+  # Surv(time = t, event = e) -> Surv(t, e)
+  fixed <- unname_surv_args(fixed)
+
   # return an error if the deprecated arguments meth, n.cores or parallel are
   # provided
   args <- as.list(match.call())
@@ -1837,6 +1840,8 @@ JM_imp <- function(
       dQuote("Surv()")
     )
   }
+
+  check_jm_survival_covariates(formula)
 
   arglist <- prep_arglist(
     analysis_type = "JM",

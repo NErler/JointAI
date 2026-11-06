@@ -27,6 +27,36 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `list_models()` describes the whole model (#113): it now lists the
+  non-proportional effects of cumulative logit models, truncation, the random
+  effects per grouping level with their covariance matrix and its prior (also
+  for random effects in proportional hazards models), and the coefficients of
+  multinomial mixed models per category (they were listed per design matrix,
+  with the category names repeated). Small layout corrections.
+* Models with random effects for a grouping variable within which the outcome
+  does not vary (e.g., an outcome on the level of the subjects with
+  `(1 | id)`) now give an informative error. They failed in JAGS, or, for
+  multinomial mixed models, gave a model without covariates and random effects
+  without any message.
+* `traceplot()`, `densplot()` and `predict()`: sub-models can now be selected by
+  name in `outcome` (e.g. `outcome = "chol"`), as documented; this failed with
+  "'start' cannot be after 'end'" (plots) or "EXPR must be a length 1 vector"
+  (`predict()`). A value that is not a sub-model of the model now gives an
+  informative error.
+* `JM_imp()` with a survival part without covariates (e.g.,
+  `Surv(time, status) ~ 1`) gives an informative error; it stopped with
+  "'names' attribute [2] must be the same length as the vector [0]".
+* Survival outcomes: `Surv()` with named arguments, e.g.
+  `Surv(time = futime, event = status)` or `Surv(futime, event = status)`, now
+  gives the same model as `Surv(futime, status)`; it failed with a syntax error
+  in the JAGS model. Models with time-varying covariates no longer fail when the
+  name of the survival time is part of the name of the id variable (e.g. `t`
+  and `patient`).
+* Informative errors instead of errors from JAGS: for a joint model with a
+  time-varying unordered factor with more than two categories (its values
+  between the observation times cannot be modelled yet), and for linear,
+  generalized linear and multinomial (mixed) models without any regression
+  coefficient (e.g., `y ~ 0 + (1 | id)`).
 * `survreg_imp()`, and the survival part of `JM_imp()`, with more than one
   random effect on a level (e.g. `(x | center)`) failed in JAGS ("Unknown
   variable KinvD_..."), because the hyper-parameters of the prior of the random

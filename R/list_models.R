@@ -76,10 +76,6 @@ list_models <- function(
   priors = TRUE,
   refcat = TRUE
 ) {
-  #TODO: Include information on truncation in the output! Currently, the output
-  # just shows "linear model for..." but there is no information that the
-  # variable was truncated
-
   if (!inherits(object, "JointAI") & !inherits(object, "JointAI_errored")) {
     errormsg("Use only with 'JointAI' objects.\n")
   }
@@ -100,6 +96,9 @@ list_models <- function(
       }
       if (!is.null(i$link)) {
         cat(tab(), "link:", i$link, "\n")
+      }
+      if (!is.null(i$trunc)) {
+        print_trunc(i$trunc)
       }
 
       # * parametrization --------------------------------------------------------
@@ -170,45 +169,13 @@ list_models <- function(
         } else {
           cat(' (no predictor variables)', '\n')
         }
+        print_nonprop_predvars(i)
       }
 
       # * regcoef ---------------------------------------------------------------
-      if (regcoef & any(!sapply(i$parelmts, is.null))) {
-        cat("* Regression coefficients:\n")
-        if (i$modeltype %in% c('mlogit', 'mlogitmm')) {
-          cat(
-            paste0(
-              tab(),
-              attr(object$Mlist$refs[[i$varname]], "dummies"),
-              ": ",
-              i$parname,
-              "[",
-              sapply(unlist(i$parelmts, recursive = FALSE), function(x) {
-                print_seq(min(x), max(x))
-              }),
-              "]",
-              collapse = "\n"
-            ),
-            if (priors) {
-              paste_regcoef_prior(object$data_list, i$modeltype, i$family)
-            },
-            "\n"
-          )
-        } else {
-          cat(
-            paste0(
-              tab(),
-              i$parname,
-              "[",
-              print_seq(min(unlist(i$parelmts)), max(unlist(i$parelmts))),
-              "]"
-            ),
-            if (priors) {
-              paste_regcoef_prior(object$data_list, i$modeltype, i$family)
-            },
-            "\n"
-          )
-        }
+      if (regcoef) {
+        print_regcoef(i, object$data_list, priors)
+        print_nonprop_regcoef(i, object$data_list, priors)
       }
 
       # * opar -------------------------------------------------------------------
@@ -220,7 +187,7 @@ list_models <- function(
             is.null(i$logsd_var) &&
             !isTRUE(i$is_logsd)
         ) {
-          cat("* Precision of ", dQuote(i$varname), ":\n")
+          cat(paste0("* Precision of ", dQuote(i$varname), ":\n"))
           cat(paste0(
             tab(),
             "tau_",
@@ -345,7 +312,7 @@ list_models <- function(
           ))
           if (i$modeltype %in% 'JM' && length(i$assoc_type) > 0L) {
             cat(paste0(
-              "* association types:\n",
+              "* Association types:\n",
               paste0(
                 tab(),
                 "- ",
@@ -353,10 +320,16 @@ list_models <- function(
                 ": ",
                 i$assoc_type,
                 collapse = "\n"
-              )
+              ),
+              "\n"
             ))
           }
         }
+      }
+
+      # * random effects ----------------------------------------------------------
+      if (otherpars) {
+        print_ranefs(i, object$data_list, priors)
       }
       cat("\n\n")
     }
@@ -430,4 +403,294 @@ paste_regcoef_prior <- function(data_list, modeltype, family) {
     data_list[[paste0('tau_reg_', get_priortype(modeltype, family))]],
     ")"
   )
+}
+
+
+#' Print the truncation of a sub-model (used in `list_models()`)
+#'
+#' @param trunc numeric vector of length two with the lower and upper limit of
+#'   the truncation (`NA` if there is no limit), as in the element `trunc` of
+#'   the model information.
+#'
+#' @returns `NULL`, invisibly; called for the printed output.
+#' @keywords internal
+print_trunc <- function(trunc) {
+  limits <- c(
+    if (!is.na(trunc[1L])) paste("lower limit", trunc[1L]),
+    if (!is.na(trunc[2L])) paste("upper limit", trunc[2L])
+  )
+  cat(paste0("* Truncation:\n", tab(), paste(limits, collapse = ", "), "\n"))
+  invisible(NULL)
+}
+
+
+#' Print the regression coefficients of a sub-model (used in `list_models()`)
+#'
+#' Multinomial models have a set of coefficients per category (except the
+#' reference category); they are listed per category, also when they are in
+#' several design matrices (mixed models).
+#'
+#' @param info the model information of the sub-model (an element of
+#'   `info_list`).
+#' @param data_list the data list passed to JAGS (for the hyper-parameters of
+#'   the prior).
+#' @param priors logical; should the prior be printed?
+#'
+#' @returns `NULL`, invisibly; called for the printed output.
+#' @keywords internal
+print_regcoef <- function(info, data_list, priors) {
+  coefs <- unlist(info$parelmts)
+  if (length(coefs) == 0L) {
+    return(invisible(NULL))
+  }
+
+  prior <- if (priors) {
+    paste_regcoef_prior(data_list, info$modeltype, info$family)
+  }
+
+  cat("* Regression coefficients:\n")
+  if (info$modeltype %in% c("mlogit", "mlogitmm")) {
+    # info$parelmts: one list per design matrix, with an element per category
+    categories <- unique(unlist(lapply(info$parelmts, names)))
+    lines <- character(0L)
+    for (category in categories) {
+      ranges <- character(0L)
+      for (elmts in info$parelmts) {
+        if (!is.null(elmts[[category]])) {
+          ranges <- c(
+            ranges,
+            print_seq(min(elmts[[category]]), max(elmts[[category]]))
+          )
+        }
+      }
+      lines <- c(
+        lines,
+        paste0(
+          tab(),
+          category,
+          ": ",
+          paste0(info$parname, "[", ranges, "]", collapse = ", ")
+        )
+      )
+    }
+    cat(paste0(lines, collapse = "\n"), prior, "\n")
+  } else {
+    cat(
+      paste0(tab(), info$parname, "[", print_seq(min(coefs), max(coefs)), "]"),
+      prior,
+      "\n"
+    )
+  }
+  invisible(NULL)
+}
+
+
+#' Print the variables with non-proportional effects (used in `list_models()`)
+#'
+#' In cumulative logit models, the effects of the variables given in
+#' `nonprop` differ between the categories of the outcome.
+#'
+#' @param info the model information of the sub-model (an element of
+#'   `info_list`); the variables are in the attribute `nonprop` of `info$lp`.
+#'
+#' @returns `NULL`, invisibly; called for the printed output.
+#' @keywords internal
+print_nonprop_predvars <- function(info) {
+  vars <- names(unlist(unname(attr(info$lp, "nonprop"))))
+  if (length(vars) == 0L) {
+    return(invisible(NULL))
+  }
+
+  cat("* Predictor variables with non-proportional effects:\n")
+  cat(
+    strwrap(
+      paste0(vars, collapse = ", "),
+      prefix = "\n",
+      initial = "",
+      exdent = 2,
+      indent = 2
+    ),
+    "\n"
+  )
+  invisible(NULL)
+}
+
+
+#' Print the coefficients of non-proportional effects (used in `list_models()`)
+#'
+#' @param info the model information of the sub-model (an element of
+#'   `info_list`); the coefficients are in the attribute `nonprop` of the
+#'   elements of `info$parelmts`, with one element per category of the outcome
+#'   (except the first).
+#' @param data_list the data list passed to JAGS (for the hyper-parameters of
+#'   the prior).
+#' @param priors logical; should the prior be printed?
+#'
+#' @returns `NULL`, invisibly; called for the printed output.
+#' @keywords internal
+print_nonprop_regcoef <- function(info, data_list, priors) {
+  nonprop <- lapply(info$parelmts, attr, "nonprop")
+  nonprop <- nonprop[!vapply(nonprop, is.null, logical(1L))]
+  if (length(nonprop) == 0L) {
+    return(invisible(NULL))
+  }
+
+  categories <- unique(unlist(lapply(nonprop, names)))
+  lines <- character(0L)
+  for (category in categories) {
+    ranges <- character(0L)
+    for (elmts in nonprop) {
+      if (length(elmts[[category]]) > 0L) {
+        ranges <- c(
+          ranges,
+          print_seq(min(elmts[[category]]), max(elmts[[category]]))
+        )
+      }
+    }
+    lines <- c(
+      lines,
+      paste0(
+        tab(),
+        category,
+        ": ",
+        paste0(info$parname, "[", ranges, "]", collapse = ", ")
+      )
+    )
+  }
+
+  prior <- if (priors) {
+    paste_regcoef_prior(data_list, info$modeltype, info$family)
+  }
+  cat("* Regression coefficients of the non-proportional effects:\n")
+  cat(paste0(lines, collapse = "\n"), prior, "\n")
+  invisible(NULL)
+}
+
+
+#' Print the random effects of a sub-model (used in `list_models()`)
+#'
+#' For each grouping level with random effects: the random effects with their
+#' variables, and their covariance matrix with its prior, as in the JAGS model
+#' (`ranef_priors()`): a Gamma prior for the precision of a single random
+#' effect, Gamma priors for the diagonal precision matrix with
+#' `rd_vcov = "indep"`, and otherwise a Wishart prior for the precision matrix,
+#' with Gamma priors for the diagonal of its scale matrix. With
+#' `rd_vcov = "full"`, the random effects of several sub-models have one
+#' covariance matrix; the sub-models that share it are named.
+#'
+#' @param info the model information of the sub-model (an element of
+#'   `info_list`).
+#' @param data_list the data list passed to JAGS (for the hyper-parameters of
+#'   the priors).
+#' @param priors logical; should the priors be printed?
+#'
+#' @returns `NULL`, invisibly; called for the printed output.
+#' @keywords internal
+print_ranefs <- function(info, data_list, priors) {
+  for (lvl in names(info$hc_list$hcvars)) {
+    z_names <- attr(info$hc_list$hcvars[[lvl]], "z_names")
+    rd_vcov <- info$rd_vcov[[lvl]]
+    shared <- identical(as.character(rd_vcov), "full")
+
+    # name of the random effects and their covariance matrix, the columns of
+    # this sub-model, and the dimension of the covariance matrix
+    if (shared) {
+      name <- lvl
+      ranef_index <- attr(rd_vcov, "ranef_index")
+      cols <- ranef_index[[info$varname]]
+      nranef <- max(unlist(lapply(ranef_index, function(x) eval(str2lang(x)))))
+    } else {
+      name <- paste0(info$varname, "_", lvl)
+      cols <- print_seq(1L, info$nranef[[lvl]])
+      nranef <- info$nranef[[lvl]]
+    }
+
+    cat(paste0(
+      "* Random effects on the level of ",
+      dQuote(lvl),
+      ":\n",
+      tab(),
+      "b_",
+      name,
+      "[, ",
+      cols,
+      "]: ",
+      paste(z_names, collapse = ", "),
+      "\n"
+    ))
+
+    cat(paste0(
+      "* Covariance matrix of the random effects on the level of ",
+      dQuote(lvl),
+      ":\n"
+    ))
+    if (shared) {
+      cat(paste0(
+        tab(),
+        "(shared by the random effects of ",
+        paste_and(names(ranef_index), dQ = TRUE),
+        ")\n"
+      ))
+    }
+
+    dims <- paste0("[", print_seq(1L, nranef), ", ", print_seq(1L, nranef), "]")
+    gamma_prior <- paste0(
+      if (nranef == 1L) "Gamma prior" else "Gamma priors",
+      " with shape parameter ",
+      data_list$shape_diag_RinvD,
+      " and rate parameter ",
+      data_list$rate_diag_RinvD
+    )
+
+    if (nranef == 1L) {
+      cat(paste0(tab(), "D_", name, "[1, 1] = 1 / invD_", name, "[1, 1]\n"))
+      if (priors) {
+        cat(paste0(tab(), "invD_", name, "[1, 1] (", gamma_prior, ")\n"))
+      }
+    } else if (identical(as.character(rd_vcov), "indep")) {
+      cat(paste0(
+        tab(),
+        "D_",
+        name,
+        dims,
+        " = inverse(invD_",
+        name,
+        ") (diagonal)\n"
+      ))
+      if (priors) {
+        cat(paste0(
+          tab(),
+          "invD_",
+          name,
+          dims,
+          " (diagonal; ",
+          gamma_prior,
+          ")\n"
+        ))
+      }
+    } else {
+      cat(paste0(tab(), "D_", name, dims, " = inverse(invD_", name, ")\n"))
+      if (priors) {
+        cat(paste0(
+          tab(),
+          "invD_",
+          name,
+          dims,
+          " (Wishart prior with scale matrix RinvD_",
+          name,
+          " and ",
+          unname(data_list[[paste0("KinvD_", name)]]),
+          " degrees of freedom)\n",
+          tab(),
+          "RinvD_",
+          name,
+          dims,
+          " (diagonal; ",
+          gamma_prior,
+          ")\n"
+        ))
+      }
+    }
+  }
+  invisible(NULL)
 }
