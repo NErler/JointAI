@@ -273,7 +273,9 @@ proceed.}
 \item{\code{keep_model}}{logical; whether the created JAGS model file
 should be saved or removed from (\code{FALSE}; default) when
 the sampling has finished.}
-}}
+}
+Other arguments are not used; their names are given in a warning
+(unless \code{warn = FALSE}).}
 
 \item{family}{only for \code{glm_imp} and \code{glmm_imp}/\code{glmer_imp}:
 a description of the distribution and link function to
@@ -639,6 +641,10 @@ done either directly by specifying the name of the parameter or indirectly
 by one of the key words selecting a set of parameters.
 Except for \code{other}, in which parameter names are specified directly,
 parameter (groups) are just set as \code{TRUE} or \code{FALSE}.
+When parameter groups and \code{other} are combined with \code{c()}, the
+logical values become character strings (\code{"TRUE"}, \code{"FALSE"}),
+and several parameter names in \code{other} get the names \code{other1},
+\code{other2}, ...; both are interpreted as intended.
 
 Models are divided into two groups, the main models, which are the models
 for which the user has explicitly specified a formula (via \code{formula}
@@ -651,8 +657,9 @@ will be used.
 \tabular{ll}{
 \strong{name/key word} \tab \strong{what is monitored}\cr
 \code{analysis_main} \tab \code{betas} and \code{sigma_main}, \code{tau_main}
-(for beta regression) or \code{shape_main}
-(for parametric survival models), \code{gamma_main}
+(for beta regression) or the shape parameter
+(for parametric survival models; it has no key
+word of its own, see below), \code{gamma_main}
 (for cumulative logit models),
 \code{D_main} (for multi-level models) and
 \code{basehaz} in proportional hazards models)\cr
@@ -686,6 +693,14 @@ other models\cr
 \code{RinvD_other} \tab matrices in the priors for \code{invD_other}\cr
 \code{other} \tab additional parameters
 }
+
+\strong{Shape parameter of parametric survival models:}\cr
+The shape parameter of a parametric (Weibull) survival model
+(\code{survreg_imp()}) is monitored together with the other parameters of
+\code{analysis_main}. To monitor it without them, its name (e.g.,
+\code{shape_Surv_time_stats}; shown by \code{\link{list_models}()}) can be
+given in \code{other}, e.g.,
+\code{monitor_params = list(analysis_main = FALSE, other = "shape_Surv_time_stats")}.
 
 \strong{For example:}\cr
 \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE,

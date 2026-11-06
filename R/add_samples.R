@@ -253,7 +253,7 @@ check_add_varnames <- function(object, monitor_params, mess = TRUE, add) {
           info_list = object$info_list,
           mess = mess
         ),
-        monitor_params
+        check_monitor_params(monitor_params)
       )
     )
 

@@ -64,7 +64,6 @@ get_params <- function(
     "sigma_other",
     "tau_other",
     "gamma_other",
-    "shape_other",
     "D_other"
   )) {
     args[[k]] <- if (is.null(args[[k]])) {

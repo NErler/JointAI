@@ -780,3 +780,144 @@ restore_var_labels <- function(data, var_labels) {
   }
   data
 }
+
+
+#' Check and normalise the specification of the parameters to monitor
+#'
+#' `monitor_params` may be a named list or a named vector. When logical values
+#' and parameter names are combined with `c()`, the logical values become
+#' character strings (`"TRUE"`, `"FALSE"`), and a vector of parameter names in
+#' `other` is split into elements with the names `other1`, `other2`, ...
+#' (#114). This function converts both forms to the same named list, and stops
+#' with an informative error for names that are not parameter groups of
+#' `get_params()`.
+#'
+#' used in `model_imp()`, `add_samples()` and `get_subset()` (2026-11-06)
+#' @param monitor_params named list or vector specifying which parameters
+#'                       should be monitored (see `model_imp()`), or `NULL`;
+#'                       also the argument `subset` of the output functions
+#' @param argname character string; the name of the argument, used in the
+#'                error messages (`"monitor_params"` or `"subset"`)
+#'
+#' @returns a named list with one element per parameter group: `TRUE` or
+#'          `FALSE` (or as given, e.g. `NULL`) for the parameter groups, and a
+#'          character vector of parameter names for `other`
+#' @keywords internal
+#'
+check_monitor_params <- function(
+  monitor_params,
+  argname = "monitor_params"
+) {
+  params <- as.list(monitor_params)
+  if (length(params) == 0L) {
+    return(list())
+  }
+
+  param_names <- names(params)
+  if (is.null(param_names) || any(param_names == "")) {
+    errormsg(
+      "All elements of %s must be named, e.g., %s.",
+      dQuote(argname),
+      dQuote("list(analysis_main = TRUE, other = \"tau_y\")")
+    )
+  }
+
+  # c(other = c("a", "b")) gives the names other1 and other2: combine all
+  # elements for `other` into one, at the position of the first of them
+  is_other <- grepl("^other[0-9]*$", param_names)
+  if (any(is_other)) {
+    first_other <- which(is_other)[1L]
+    # [ ] <- list() instead of [[ ]] <-, which would remove a NULL element
+    params[first_other] <- list(unname(unlist(params[is_other])))
+    names(params)[first_other] <- "other"
+    params <- params[!is_other | seq_along(params) == first_other]
+    param_names <- names(params)
+  }
+
+  # all arguments of get_params() except the internal ones
+  known <- setdiff(names(formals(get_params)), c("mess", "Mlist", "info_list"))
+  unknown <- setdiff(param_names, known)
+  if (length(unknown) > 0L) {
+    errormsg(
+      "%s %s in %s %s. Names of single parameters are given in %s (see the
+      section \"Parameters to follow\" in the help of %s).",
+      ifelse(length(unknown) == 1L, "The name", "The names"),
+      paste_and(unknown, dQ = TRUE),
+      dQuote(argname),
+      ifelse(
+        length(unknown) == 1L,
+        "is not a known parameter group",
+        "are not known parameter groups"
+      ),
+      dQuote("other"),
+      dQuote("model_imp()")
+    )
+  }
+
+  duplicates <- unique(param_names[duplicated(param_names)])
+  if (length(duplicates) > 0L) {
+    errormsg(
+      "The name %s is used more than once in %s.",
+      paste_and(duplicates, dQ = TRUE),
+      dQuote(argname)
+    )
+  }
+
+  # the parameter groups are switched on or off with TRUE / FALSE; c() turns
+  # these into "TRUE" / "FALSE"
+  for (k in setdiff(param_names, "other")) {
+    value <- params[[k]]
+    if (!is.character(value)) {
+      next
+    }
+    if (length(value) == 1L && value %in% c("TRUE", "FALSE")) {
+      params[[k]] <- as.logical(value)
+    } else {
+      errormsg(
+        "The value of %s in %s must be TRUE or FALSE. Names of single
+        parameters are given in %s.",
+        dQuote(k),
+        dQuote(argname),
+        dQuote("other")
+      )
+    }
+  }
+
+  params
+}
+
+
+#' Warn about unknown arguments of the `*_imp()` functions
+#'
+#' Arguments of the `*_imp()` functions that are not arguments of
+#' `model_imp()` end up in the `...` of `model_imp()`, where they are not used.
+#' A misspelled argument (e.g., `n.itre` instead of `n.iter`) would otherwise
+#' be ignored silently (#114). A warning rather than an error, so that existing
+#' code keeps running.
+#'
+#' used in `model_imp()` (2026-11-06)
+#' @param arg_names character vector; the names of the arguments that
+#'                  `model_imp()` was called with
+#' @param known character vector; the names of the arguments that are used:
+#'              the formal arguments of `model_imp()` and the elements that
+#'              `prep_arglist()` adds (`thecall`)
+#' @param warn logical; if `FALSE`, no warning is given
+#'
+#' @returns `NULL` (invisibly); called for its warning
+#' @keywords internal
+#'
+warn_unknown_args <- function(arg_names, known, warn = TRUE) {
+  unknown <- setdiff(arg_names, known)
+  unknown[unknown == ""] <- "(unnamed)"
+
+  if (warn && length(unknown) > 0L) {
+    warnmsg(
+      "%s %s %s and %s ignored. Please check the spelling.",
+      ifelse(length(unknown) == 1L, "The argument", "The arguments"),
+      paste_and(unknown, dQ = TRUE),
+      ifelse(length(unknown) == 1L, "is unknown", "are unknown"),
+      ifelse(length(unknown) == 1L, "is", "are")
+    )
+  }
+  invisible(NULL)
+}

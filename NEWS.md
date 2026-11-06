@@ -27,6 +27,15 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Names of the regression coefficients in the output: `summary()` with a
+  subset of the coefficients (`subset = list(other = ...)`) showed the values
+  under the names of other coefficients (e.g. `beta[3]` as "(Intercept)", with
+  a warning "number of items to replace ..."). `traceplot()`, `densplot()`,
+  `GR_crit()` and `MC_error()` (models with one outcome) swapped names when the
+  coefficients were not in the order of the coefficient table: with a subset
+  in a different order, and by default in ordinal models with non-proportional
+  effects and an interaction (e.g. `o1 ~ c1 * C2` with `nonprop = ~ c1 + C2`,
+  where `c1:C2` was shown for a non-proportional effect of `C2`).
 * `list_models()` describes the whole model (#113): it now lists the
   non-proportional effects of cumulative logit models, truncation, the random
   effects per grouping level with their covariance matrix and its prior (also
@@ -43,6 +52,18 @@
   "'start' cannot be after 'end'" (plots) or "EXPR must be a length 1 vector"
   (`predict()`). A value that is not a sub-model of the model now gives an
   informative error.
+* `monitor_params` (in the `*_imp()` functions and `add_samples()`) combined
+  with `c()`, e.g. `c(analysis_main = TRUE, other = "tau_y")`, now monitors the
+  same parameters as with `list()`; the logical values were silently ignored,
+  because `c()` turns them into character strings (#114). Unknown or unnamed
+  elements of `monitor_params` give an informative error.
+* `subset` in `summary()`, `coef()`, `confint()`, `traceplot()`, `densplot()`,
+  `GR_crit()` and `MC_error()` combined with `c()` now selects the same
+  parameters as with `list()`: e.g. `c(analysis_main = FALSE, other = "beta[2]")`
+  included all parameters of the analysis model, because `c()` turns `FALSE`
+  into `"FALSE"`. Unknown or unnamed elements give an informative error.
+* Misspelled arguments of the `*_imp()` functions (e.g. `n.itre`) are no longer
+  ignored silently, but give a warning that names them (#114).
 * `JM_imp()` with a survival part without covariates (e.g.,
   `Surv(time, status) ~ 1`) gives an informative error; it stopped with
   "'names' attribute [2] must be the same length as the vector [0]".

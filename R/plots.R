@@ -503,28 +503,29 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
   # get the list of coefficient names from the JointAI object
   coefs <- do.call(rbind, object$coef_list)
 
-  coef_set <- coefs[na.omit(match(plotnams, coefs$coef)), ]
+  # row of each plotted column in `coefs` (NA if it is not a coefficient);
+  # the columns may be in any order (e.g., as selected via `subset`)
+  coef_pos <- match(plotnams, coefs$coef)
+  is_coef <- !is.na(coef_pos)
+  coef_set <- coefs[coef_pos[is_coef], ]
 
   if (length(unique(coef_set$outcome)) == 1) {
-    plotnams[na.omit(match(coefs$coef, plotnams))] <-
-      coefs$varnam_print[na.omit(match(plotnams, coefs$coef))]
+    plotnams[is_coef] <- coef_set$varnam_print
   } else {
     if (ylab) {
-      plotnams[na.omit(match(coefs$coef, plotnams))] <-
-        paste0(
-          coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))],
-          ": ",
-          coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))]
-        )
+      plotnams[is_coef] <- paste0(
+        coef_set$outcome,
+        ": ",
+        coef_set$varnam_print
+      )
     } else {
-      plotnams[na.omit(match(coefs$coef, plotnams))] <-
-        paste0(
-          coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))],
-          "\n",
-          "(",
-          coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))],
-          ")"
-        )
+      plotnams[is_coef] <- paste0(
+        coef_set$varnam_print,
+        "\n",
+        "(",
+        coef_set$outcome,
+        ")"
+      )
     }
   }
   plotnams
