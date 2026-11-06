@@ -5,10 +5,10 @@
 \alias{auto_corr_plot}
 \title{Autocorrelation of MCMC samples}
 \usage{
-auto_corr(object, lags = 0:30, by_chain = TRUE, outcome = 1L,
+auto_corr(object, lags = 0:30, by_chain = TRUE, outcome = NULL,
   start = NULL, end = NULL, thin = NULL)
 
-auto_corr_plot(object, lags = 0:30, by_chain = TRUE, outcome = 1L,
+auto_corr_plot(object, lags = 0:30, by_chain = TRUE, outcome = NULL,
   start = NULL, end = NULL, thin = NULL)
 }
 \arguments{
@@ -19,8 +19,13 @@ auto_corr_plot(object, lags = 0:30, by_chain = TRUE, outcome = 1L,
 \item{by_chain}{logical; should the autocorrelation be computed for each
 chain separately?}
 
-\item{outcome}{integer; index of the outcome model for which the
-autocorrelation should be plotted}
+\item{outcome}{optional; vector identifying the sub-models whose parameters
+are included, either by their indices (in the order of the
+list of model formulas) or their names (LHS of the respective
+model formula as character string). If \code{NULL} (default),
+all monitored parameters are included. With parameters from
+several sub-models, the coefficients are named
+\code{"outcome: variable"}, otherwise by the variable only.}
 
 \item{start}{the first iteration of interest
 (see \code{\link[coda]{window.mcmc}})}

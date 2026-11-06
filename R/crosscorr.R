@@ -9,8 +9,13 @@
 #' @param lags a numeric vector indicating the lags to consider
 #' @param by_chain logical; should the autocorrelation be computed for each
 #'                 chain separately?
-#' @param outcome integer; index of the outcome model for which the
-#'               autocorrelation should be plotted
+#' @param outcome optional; vector identifying the sub-models whose parameters
+#'                are included, either by their indices (in the order of the
+#'                list of model formulas) or their names (LHS of the respective
+#'                model formula as character string). If \code{NULL} (default),
+#'                all monitored parameters are included. With parameters from
+#'                several sub-models, the coefficients are named
+#'                \code{"outcome: variable"}, otherwise by the variable only.
 #' @param start the first iteration of interest
 #'              (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest
@@ -35,7 +40,7 @@ auto_corr <- function(
   object,
   lags = 0:30,
   by_chain = TRUE,
-  outcome = 1L,
+  outcome = NULL,
   start = NULL,
   end = NULL,
   thin = NULL
@@ -59,16 +64,11 @@ auto_corr <- function(
   }
 
   #TODO add validation of input to "outcome" to avoid unclear error messages
-  coefs <- with(object$coef_list[[outcome]], setNames(varnam_print, coef))
-
-  MCMC <- window(object$MCMC, start = start, end = end, thin = thin)
+  nodes <- get_corr_nodes(object, outcome)
+  MCMC <- window(object$MCMC[, nodes, drop = FALSE], start, end, thin)
 
   MCMC <- lapply(MCMC, function(mcmc) {
-    colnames(mcmc) <- ifelse(
-      colnames(mcmc) %in% names(coefs),
-      coefs[colnames(mcmc)],
-      colnames(mcmc)
-    )
+    colnames(mcmc) <- get_plotmain(object, nodes, ylab = TRUE)
     mcmc
   })
   MCMC <- coda::as.mcmc.list(MCMC)
@@ -88,7 +88,7 @@ auto_corr_plot <- function(
   object,
   lags = 0:30,
   by_chain = TRUE,
-  outcome = 1L,
+  outcome = NULL,
   start = NULL,
   end = NULL,
   thin = NULL
@@ -144,8 +144,13 @@ auto_corr_plot <- function(
 #' **corrplot** package or `coda::crosscorr.plot()`.
 #'
 #' @param object an object of class JointAI
-#' @param outcome integer; index of the outcome model for which the
-#'                correlations should be plotted
+#' @param outcome optional; vector identifying the sub-models whose parameters
+#'                are included, either by their indices (in the order of the
+#'                list of model formulas) or their names (LHS of the respective
+#'                model formula as character string). If \code{NULL} (default),
+#'                all monitored parameters are included. With parameters from
+#'                several sub-models, the coefficients are named
+#'                \code{"outcome: variable"}, otherwise by the variable only.
 #' @param start the first iteration of interest
 #'              (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest
@@ -167,7 +172,7 @@ auto_corr_plot <- function(
 #TODO: add unit tests
 cross_corr <- function(
   object,
-  outcome = 1L,
+  outcome = NULL,
   start = NULL,
   end = NULL,
   thin = NULL
@@ -190,16 +195,11 @@ cross_corr <- function(
     thin <- coda::thin(object$MCMC)
   }
 
-  MCMC <- window(object$MCMC, start = start, end = end, thin = thin)
+  nodes <- get_corr_nodes(object, outcome)
+  MCMC <- window(object$MCMC[, nodes, drop = FALSE], start, end, thin)
 
   mcmc <- coda::as.mcmc(do.call(rbind, MCMC))
-  coefs <- with(object$coef_list[[outcome]], setNames(varnam_print, coef))
-
-  colnames(mcmc) <- ifelse(
-    colnames(mcmc) %in% names(coefs),
-    coefs[colnames(mcmc)],
-    colnames(mcmc)
-  )
+  colnames(mcmc) <- get_plotmain(object, nodes, ylab = TRUE)
 
   coda::crosscorr(mcmc)
 }
@@ -209,7 +209,7 @@ cross_corr <- function(
 #' @export
 cross_corr_plot <- function(
   object,
-  outcome = 1L,
+  outcome = NULL,
   start = NULL,
   end = NULL,
   thin = NULL,
@@ -233,16 +233,11 @@ cross_corr_plot <- function(
     thin <- coda::thin(object$MCMC)
   }
 
-  MCMC <- window(object$MCMC, start = start, end = end, thin = thin)
+  nodes <- get_corr_nodes(object, outcome)
+  MCMC <- window(object$MCMC[, nodes, drop = FALSE], start, end, thin)
 
   mcmc <- coda::as.mcmc(do.call(rbind, MCMC))
-  coefs <- with(object$coef_list[[outcome]], setNames(varnam_print, coef))
-
-  colnames(mcmc) <- ifelse(
-    colnames(mcmc) %in% names(coefs),
-    coefs[colnames(mcmc)],
-    colnames(mcmc)
-  )
+  colnames(mcmc) <- get_plotmain(object, nodes, ylab = TRUE)
 
   corrmat <- coda::crosscorr(mcmc)
 
@@ -271,4 +266,42 @@ cross_corr_plot <- function(
       label = sprintf("%.2f", corrmat[lower.tri(corrmat)])
     )
   }
+}
+
+
+#' Parameters to include in the auto- and cross-correlation of MCMC samples
+#'
+#' @param object an object of class JointAI
+#' @param outcome optional; vector of indices or names of the sub-models whose
+#'                parameters are selected; \code{NULL} selects all monitored
+#'                parameters
+#'
+#' @returns a character vector with the names of the selected columns of the
+#'          MCMC sample, in the order of the MCMC sample
+#' @keywords internal
+get_corr_nodes <- function(object, outcome) {
+  nodes <- colnames(object$MCMC[[1L]])
+
+  if (is.null(outcome)) {
+    return(nodes)
+  }
+
+  outcome_names <- names(object$fixed[outcome])
+  if (anyNA(outcome_names)) {
+    errormsg(
+      "The value given for %s does not match the sub-models of this
+             model.",
+      dQuote("outcome")
+    )
+  }
+
+  # the sub-model each parameter belongs to is given by parameters()
+  params <- parameters(object, expand_ranef = TRUE)
+  in_outcome <- params$outcome %in% internal_clean_survname(outcome_names)
+  selected <- nodes[nodes %in% params$coef[in_outcome]]
+
+  if (length(selected) == 0L) {
+    errormsg("No parameters of the selected sub-model(s) are monitored.")
+  }
+  selected
 }

@@ -217,11 +217,13 @@ test_that("auto_corr() per chain and for all chains", {
   expect_length(ac, coda::nchain(object$MCMC))
   expect_identical(dim(ac[[1]]), c(6L, coda::nvar(object$MCMC)))
   expect_identical(rownames(ac[[1]]), paste("Lag", 0:5))
-  # regression coefficients are named by variable (other parameters, e.g.
-  # imputed values that do not vary, may have NaN)
-  expect_true(all(coefs$varnam_print %in% colnames(ac[[1]])))
+  # regression coefficients are named "outcome: variable", because this fixture
+  # also monitors covariate models (other parameters, e.g. imputed values that
+  # do not vary, may have NaN)
+  labels <- paste0("y: ", coefs$varnam_print)
+  expect_true(all(labels %in% colnames(ac[[1]])))
   expect_equal(
-    unname(ac[[1]]["Lag 0", coefs$varnam_print]),
+    unname(ac[[1]]["Lag 0", labels]),
     rep(1, nrow(coefs))
   )
 
@@ -247,7 +249,9 @@ test_that("cross_corr() gives a correlation matrix of all parameters", {
   expect_identical(dim(cc), c(n, n))
   expect_equal(unname(diag(cc)), rep(1, n))
   expect_equal(cc, t(cc))
-  expect_true(all(object$coef_list$y$varnam_print %in% colnames(cc)))
+  expect_true(all(
+    paste0("y: ", object$coef_list$y$varnam_print) %in% colnames(cc)
+  ))
 })
 
 test_that("cross_corr_plot() with corrplot and coda", {
@@ -267,4 +271,123 @@ test_that("auto- and cross-correlation need a JointAI object with MCMC sample", 
   for (fun in list(auto_corr, cross_corr, cross_corr_plot)) {
     expect_error(fun(object), "There is no MCMC sample")
   }
+})
+
+test_that("auto- and cross-correlation name the coefficients of all sub-models", {
+  object <- fixture_load("jm")
+  coefs <- do.call(rbind, object$coef_list)
+  expect_gt(length(unique(coefs$outcome)), 1L)
+  labels <- paste0(coefs$outcome, ": ", coefs$varnam_print)
+
+  # correlations of the original nodes, to check that each name is attached to
+  # the right column
+  raw_cc <- coda::crosscorr(coda::as.mcmc(do.call(rbind, object$MCMC)))
+  raw_ac <- coda::autocorr.diag(object$MCMC, lags = 0:2)
+
+  cc <- cross_corr(object)
+  expect_identical(ncol(cc), coda::nvar(object$MCMC))
+  expect_true(all(labels %in% colnames(cc)))
+  expect_false(any(coefs$coef %in% colnames(cc)))
+  # the same variable is in several sub-models, the names must stay unique
+  expect_false(anyDuplicated(colnames(cc)) > 0L)
+  expect_equal(
+    unname(cc[labels, labels]),
+    unname(raw_cc[coefs$coef, coefs$coef])
+  )
+
+  ac <- auto_corr(object, lags = 0:2, by_chain = FALSE)
+  expect_true(all(labels %in% colnames(ac)))
+  expect_false(any(coefs$coef %in% colnames(ac)))
+  expect_equal(unname(ac[, labels]), unname(raw_ac[, coefs$coef]))
+
+  ac_chains <- auto_corr(object, lags = 0:2)
+  expect_true(all(labels %in% colnames(ac_chains[[1L]])))
+  expect_false(any(coefs$coef %in% colnames(ac_chains[[1L]])))
+})
+
+test_that("auto- and cross-correlation are restricted to the selected sub-models", {
+  object <- fixture_load("jm")
+  params <- parameters(object, expand_ranef = TRUE)
+  raw_cc <- coda::crosscorr(coda::as.mcmc(do.call(rbind, object$MCMC)))
+
+  for (k in seq_along(object$fixed)) {
+    coefs <- object$coef_list[[k]]
+    in_model <- params$coef[params$outcome == coefs$outcome[1L]]
+    nodes <- intersect(colnames(raw_cc), in_model)
+
+    cc <- cross_corr(object, outcome = k)
+    expect_identical(ncol(cc), length(nodes))
+    expect_true(all(coefs$varnam_print %in% colnames(cc)))
+    expect_false(any(coefs$coef %in% colnames(cc)))
+    expect_equal(
+      unname(cc[coefs$varnam_print, coefs$varnam_print]),
+      unname(raw_cc[coefs$coef, coefs$coef])
+    )
+
+    ac <- auto_corr(object, lags = 0:2, by_chain = FALSE, outcome = k)
+    expect_identical(ncol(ac), length(nodes))
+    expect_true(all(coefs$varnam_print %in% colnames(ac)))
+
+    # selecting by name gives the same result
+    expect_identical(cross_corr(object, outcome = names(object$fixed)[k]), cc)
+  }
+
+  # the survival part does not include the parameters of the longitudinal model
+  expect_false("sigma_chol" %in% colnames(cross_corr(object, outcome = 1L)))
+  expect_true("sigma_chol" %in% colnames(cross_corr(object, outcome = 2L)))
+
+  # several sub-models
+  expect_identical(
+    dimnames(cross_corr(object, outcome = 1:2)),
+    dimnames(cross_corr(object))
+  )
+})
+
+test_that("auto- and cross-correlation give an error for an unknown sub-model", {
+  object <- fixture_load("jm")
+  expect_error(
+    cross_corr(object, outcome = 5L),
+    "does not match the sub-models"
+  )
+  expect_error(
+    auto_corr(object, outcome = "x"),
+    "does not match the sub-models"
+  )
+})
+
+test_that("the names of auto- and cross-correlation are unique in all fixtures", {
+  for (name in c("lm", "lme", "jm", "mlogit", "clm_nonprop", "clmm", "coxph")) {
+    object <- fixture_load(name)
+    # imputed values that do not vary give a warning about their zero SD
+    nams <- colnames(suppressWarnings(cross_corr(object)))
+    expect_false(anyDuplicated(nams) > 0L, label = name)
+    coefs <- do.call(rbind, object$coef_list)
+    expect_false(any(coefs$coef %in% nams), label = name)
+  }
+})
+
+test_that("auto_corr_plot() and cross_corr_plot() use the selected sub-models", {
+  object <- fixture_load("jm")
+  coefs <- do.call(rbind, object$coef_list)
+  labels <- paste0(coefs$outcome, ": ", coefs$varnam_print)
+
+  skip_if_not_installed("ggplot2")
+  panels <- unique(as.character(auto_corr_plot(object, lags = 0:2)$data$V2))
+  expect_true(all(labels %in% panels))
+  expect_false(any(coefs$coef %in% panels))
+
+  panels <- unique(as.character(
+    auto_corr_plot(object, lags = 0:2, outcome = 1L)$data$V2
+  ))
+  expect_true(all(object$coef_list[[1L]]$varnam_print %in% panels))
+  expect_false("sigma_chol" %in% panels)
+
+  skip_if_not_installed("corrplot")
+  corr <- cross_corr_plot(object)$corr
+  expect_true(all(labels %in% colnames(corr)))
+  expect_false(any(coefs$coef %in% colnames(corr)))
+
+  corr <- cross_corr_plot(object, outcome = 1L)$corr
+  expect_true(all(object$coef_list[[1L]]$varnam_print %in% colnames(corr)))
+  expect_false("sigma_chol" %in% colnames(corr))
 })
