@@ -193,11 +193,12 @@ summary.JointAI <- function(
           ))
         }
 
-        colnames(MCMCsub)[na.omit(match(
-          object$coef_list[[varname]]$coef,
-          colnames(MCMCsub)
-        ))] <-
-          object$coef_list[[varname]]$varnam_print
+        # print names of the coefficients; `subset` may have selected only
+        # some of them, in any order
+        coef_pos <- match(colnames(MCMCsub), object$coef_list[[varname]]$coef)
+        is_coef <- !is.na(coef_pos)
+        colnames(MCMCsub)[is_coef] <-
+          object$coef_list[[varname]]$varnam_print[coef_pos[is_coef]]
 
         stats <- matrix(
           nrow = length(colnames(MCMCsub)),
