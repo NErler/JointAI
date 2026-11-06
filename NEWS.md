@@ -454,6 +454,12 @@
     outcomes and its name was not checked, and with a partly named vector the
     other outcomes got a recycled value. Now the named outcomes get the given
     type, the others `"lp"`, and names that are not outcomes give an error.
+* Fitted models with a time variable (`timevar`), auxiliary variables
+  (`auxvars`), or a covariate that is only used inside a function (e.g.,
+  `I(C2^2)`) are much smaller when saved: they no longer carry a copy of the
+  data and all design matrices, which was stored with an internal formula and
+  did not show in `object.size()` (e.g., 4.7 MB instead of 0.7 MB for a joint
+  model on `PBC`). Results are not affected.
 
 # JointAI 1.1.0
 
