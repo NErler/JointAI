@@ -34,6 +34,13 @@
 
 ### Bug fixes
 
+- [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  and the survival part of
+  [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.md),
+  with more than one random effect on a level (e.g. `(x | center)`)
+  failed in JAGS (“Unknown variable KinvD\_…”), because the
+  hyper-parameters of the prior of the random effects covariance matrix
+  were missing from the data.
 - [`auto_corr()`](https://nerler.github.io/JointAI/reference/auto_corr.md),
   [`auto_corr_plot()`](https://nerler.github.io/JointAI/reference/auto_corr.md),
   [`cross_corr()`](https://nerler.github.io/JointAI/reference/cross_corr.md),
