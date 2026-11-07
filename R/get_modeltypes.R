@@ -231,6 +231,13 @@ get_models <- function(
 
     models <- unlist(setNames(models$type, models$L1))
 
+    # the model types given by the user for covariates (without a formula of
+    # their own) must fit the level of their variable
+    check_model_type_level(
+      models_user[setdiff(names(models_user), names(fixed))],
+      var_ranks = setNames(varinfo$lvl, varinfo$L1),
+      max_rank = max_lvl
+    )
     models[names(models_user)] <- models_user
   } else {
     models <- NULL
