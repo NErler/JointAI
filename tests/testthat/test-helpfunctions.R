@@ -2,24 +2,25 @@ library("JointAI")
 
 
 test_that('extract_outcomes_list works', {
-  ys <- list(list(fixed = y ~ a + b, out = list(y = 'y')),
-             list(fixed = y ~ 1, out = list(y = 'y')),
-             list(fixed = Surv(a, b) ~ 1,
-                  out = list('Surv(a, b)' = c('a', 'b'))),
-             list(fixed = Surv(a, b, d) ~ x + z,
-                  out = list('Surv(a, b, d)' = c('a', 'b', 'd'))),
-             list(fixed = cbind(a, b, d) ~ x + z,
-                  out = list('cbind(a, b, d)' = c('a', 'b', 'd')))
-             # list(fixed = y + x ~ a + b, out = c("y + x"))
+  ys <- list(
+    list(fixed = y ~ a + b, out = list(y = 'y')),
+    list(fixed = y ~ 1, out = list(y = 'y')),
+    list(fixed = Surv(a, b) ~ 1, out = list('Surv(a, b)' = c('a', 'b'))),
+    list(
+      fixed = Surv(a, b, d) ~ x + z,
+      out = list('Surv(a, b, d)' = c('a', 'b', 'd'))
+    ),
+    list(
+      fixed = cbind(a, b, d) ~ x + z,
+      out = list('cbind(a, b, d)' = c('a', 'b', 'd'))
+    )
+    # list(fixed = y + x ~ a + b, out = c("y + x"))
   )
 
   for (i in seq_along(ys)) {
     expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
   }
 })
-
-
-
 
 #
 # test_that("parameter selection work", {
@@ -36,10 +37,6 @@ test_that('extract_outcomes_list works', {
 #   expect_equal(mod3$mcmc_settings$variable.names, c("tau_x"))
 #
 # })
-
-
-
-
 
 # f1 <- Surv(time, status) ~ sex + age
 # f2 <- cbind(time, status) ~ sex + age
@@ -68,8 +65,6 @@ test_that('extract_outcomes_list works', {
 #   ), ',')[[1]]
 #   gsub("^ | $", '', n)
 # }
-
-
 
 #
 # test_that('extract_outcome gives error', {
