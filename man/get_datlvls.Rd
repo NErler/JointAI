@@ -4,13 +4,16 @@
 \alias{get_datlvls}
 \title{Determine grouping level of data}
 \usage{
-get_datlvls(data, groups_df)
+get_datlvls(data, groups_df, group_lvls = get_grouping_levels(groups_df))
 }
 \arguments{
 \item{data}{a \code{data.frame}}
 
 \item{groups_df}{the \code{data.frame} of (integer) grouping vectors of length
 \code{nrow(data)}.}
+
+\item{group_lvls}{the ranks of the grouping levels, as obtained from
+\code{get_grouping_levels(groups_df)} (in any order); computed if not given.}
 }
 \value{
 A named character vector of length \code{ncol(data)}. Each element is the

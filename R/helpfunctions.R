@@ -230,6 +230,8 @@ check_groups_vary_within_lvl <- function(lvl, grouping_df) {
 #' @param data a `data.frame`
 #' @param groups_df the `data.frame` of (integer) grouping vectors of length
 #'   `nrow(data)`.
+#' @param group_lvls the ranks of the grouping levels, as obtained from
+#'   `get_grouping_levels(groups_df)` (in any order); computed if not given.
 #'
 #' @return A named character vector of length `ncol(data)`. Each element is the
 #'   name of the grouping level at which the corresponding data column is
@@ -238,7 +240,11 @@ check_groups_vary_within_lvl <- function(lvl, grouping_df) {
 #' @seealso `get_grouping_levels`
 #' @keywords internal
 #'
-get_datlvls <- function(data, groups_df) {
+get_datlvls <- function(
+  data,
+  groups_df,
+  group_lvls = get_grouping_levels(groups_df)
+) {
   if (!inherits(data, "data.frame")) {
     data <- as.data.frame(data)
   }
@@ -260,8 +266,9 @@ get_datlvls <- function(data, groups_df) {
   })
   clus <- do.call(cbind, clus)
 
-  # obtain the grouping level hierarchy
-  lvl_rel <- get_grouping_levels(groups_df)
+  # the grouping level hierarchy, from the lowest to the highest level (ties
+  # between crossed levels are ordered by name, as in get_grouping_levels())
+  lvl_rel <- group_lvls[order(group_lvls, names(group_lvls))]
 
   lvls <- apply(!clus[, names(lvl_rel), drop = FALSE], 1, function(k) {
     if (any(k)) names(lvl_rel)[max(which(k))] else NA_character_
