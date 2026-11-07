@@ -65,13 +65,3 @@ test_that('extract_outcomes_list works', {
 #   ), ',')[[1]]
 #   gsub("^ | $", '', n)
 # }
-
-#
-# test_that('extract_outcome gives error', {
-#   ys <- list(y + x ~ a + b
-#   )
-#
-#   for (i in seq_along(ys)) {
-#     expect_equal(extract_outcomes_list(ys[[i]]$fixed), ys[[i]]$out)
-#   }
-# })

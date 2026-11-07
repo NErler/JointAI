@@ -8,8 +8,6 @@ deprecated_functions <- c(
   check_cluster = "get_groups",
   extract_id = "extract_grouping",
   check_varlevel = "get_datlvls",
-  extract_lhs = "extract_lhs_string",
-  extract_outcome = "extract_outcomes_list",
   melt_data.frame = "melt_data_frame"
 )
 
