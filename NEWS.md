@@ -21,6 +21,14 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* A model type given in `models` for a covariate must now fit the level of the
+  variable: with random effects (e.g., `"lmm"`) for a variable that varies
+  within the groups of a grouping level, without random effects (e.g., `"lm"`)
+  for a variable on the highest level. Before, a type without random effects
+  for a level-one variable in a multilevel model silently dropped the
+  intercept and the higher-level covariates from the linear predictor of that
+  variable's model; the other mismatches stopped with an error from JAGS. The
+  new error message names the type that fits.
 * Names of the regression coefficients in the output: `summary()` with a
   subset of the coefficients (`subset = list(other = ...)`) showed the values
   under the names of other coefficients (e.g. `beta[3]` as "(Intercept)", with
