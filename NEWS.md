@@ -1,6 +1,12 @@
 # JointAI (development version)
 
 ## Small improvements
+* A warning for variables that seem to belong to a higher level: their
+  observed values are constant within the groups of a grouping level, but some
+  groups have both observed and missing values, so that they are treated as
+  lower-level variables. The warning gives an expression that fills in the
+  missing values within the groups, in case the variable is indeed a variable
+  of that level.
 * Labelled variables (class `"haven_labelled"` from **haven**, or `"labelled"`
   from **Hmisc** and older versions of **haven**), e.g., from data imported
   from SPSS, can now be used (#17). Variables with value labels are converted

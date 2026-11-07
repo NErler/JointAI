@@ -81,6 +81,12 @@ divide_matrices <- function(
     )
   )
 
+  # warn about variables whose observed values are constant within the groups
+  # of a higher level while some groups are only partly observed
+  if (warn) {
+    warn_apparent_levels(find_apparent_levels(data, data_structure))
+  }
+
   # * model types --------------------------------------------------------------
   models <- get_models(
     fixed = fixed,
