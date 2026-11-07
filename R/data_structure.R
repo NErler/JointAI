@@ -115,3 +115,146 @@ get_variable_table <- function(data, data_structure, vars) {
     row.names = vars
   )
 }
+
+
+# used in divide_matrices (2026-11-07)
+#' Find variables that seem to belong to a higher level
+#'
+#' A variable whose observed values are constant within the groups of a
+#' grouping level, but where some groups have both observed and missing
+#' values, is treated as a variable of a lower level (missing values count as
+#' values when the level of a variable is determined). This can be an
+#' oversight in the data (a variable of that grouping level with missing
+#' values that should have been filled in) or a lower-level variable that
+#' happens to be constant within groups (e.g., because groups have only one
+#' observed value). This function finds such variables, so that the user can
+#' be told about them.
+#'
+#' @param data a `data.frame`
+#' @param data_structure the structure of the data, as obtained from
+#'        [get_data_structure()], with the table of variables
+#'        ([get_variable_table()])
+#'
+#' @returns a named list with, for each such variable, the names of the
+#'   grouping levels within which its observed values are constant and some
+#'   groups have both observed and missing values; of levels that are nested in
+#'   each other only the highest one. An empty list if there are no such
+#'   variables.
+#' @keywords internal
+#'
+find_apparent_levels <- function(data, data_structure) {
+  groups <- data_structure$groups
+  nested_in <- data_structure$nested_in
+  grouping_levels <- setdiff(names(groups), "lvlone")
+
+  apparent <- list()
+  for (v in rownames(data_structure$variables)) {
+    x <- data[[v]]
+    observed <- !is.na(x)
+    if (all(observed) || !any(observed)) {
+      next
+    }
+
+    # the grouping levels within which the observed values are constant, but
+    # some groups have both observed and missing values
+    candidates <- Filter(
+      function(lvl) is_partly_observed_constant(x, groups[[lvl]]),
+      grouping_levels
+    )
+
+    # of levels that are nested in each other, keep only the highest
+    highest <- vapply(
+      candidates,
+      function(lvl) !any(nested_in[lvl, setdiff(candidates, lvl)]),
+      logical(1L)
+    )
+    if (any(highest)) {
+      apparent[[v]] <- candidates[highest]
+    }
+  }
+  apparent
+}
+
+
+#' Check if a variable is constant within groups but some groups partly missing
+#'
+#' used in find_apparent_levels (2026-11-07)
+#'
+#' @param x a vector, the values of a variable
+#' @param group an integer vector of the same length, the group of each value
+#'
+#' @returns `TRUE` if the observed values of `x` are constant within each group
+#'   and at least one group has both observed and missing values, `FALSE`
+#'   otherwise
+#' @keywords internal
+#'
+is_partly_observed_constant <- function(x, group) {
+  observed <- !is.na(x)
+
+  # number of different observed values per group
+  n_values <- tapply(
+    x[observed],
+    group[observed],
+    function(values) length(unique(values))
+  )
+
+  # whether a group has both observed and missing values
+  partly_missing <- tapply(observed, group, function(o) any(o) && !all(o))
+
+  all(n_values <= 1L) && any(partly_missing)
+}
+
+
+# used in divide_matrices (2026-11-07)
+#' Warn about variables that seem to belong to a higher level
+#'
+#' Gives, for each variable found by [find_apparent_levels()], a warning with
+#' an expression that fills in the missing values within the groups.
+#'
+#' @param apparent a named list, as obtained from [find_apparent_levels()]
+#'
+#' @returns nothing; called for the warnings
+#' @keywords internal
+#'
+warn_apparent_levels <- function(apparent) {
+  for (v in names(apparent)) {
+    lvls <- apparent[[v]]
+
+    # an expression per grouping level that fills in the missing values with
+    # the observed value of the group
+    fill_in <- vapply(
+      lvls,
+      function(lvl) {
+        sprintf(
+          paste0(
+            "data[[\"%s\"]] <- ave(data[[\"%s\"]], data[[\"%s\"]], ",
+            "FUN = function(v) v[!is.na(v)][1])"
+          ),
+          v,
+          v,
+          lvl
+        )
+      },
+      character(1L)
+    )
+
+    msg_text <- gettextf(
+      "The observed values of %s are constant within %s, but some groups have
+      both observed and missing values, so %s is treated as a lower-level
+      variable. If it is a variable of %s, fill in its missing values, e.g.:",
+      dQuote(v),
+      paste_and(dQuote(lvls)),
+      dQuote(v),
+      paste(dQuote(lvls), collapse = " or ")
+    )
+
+    warning(
+      paste0(
+        paste(strwrap(msg_text), collapse = "\n"),
+        paste0("\n  ", fill_in, collapse = "")
+      ),
+      call. = FALSE,
+      immediate. = TRUE
+    )
+  }
+}
