@@ -63,6 +63,40 @@ grid <- list(
     )),
     "id"
   ),
+  functions_of_two_variables = list(
+    # on one level (C1, C2) and across levels (c2, C2)
+    quote(lme_imp(
+      y ~ C1 + I(C2 / C1^2) + c2 + I(c2 - C2) + time + (1 | id),
+      data = longDF
+    )),
+    "id"
+  ),
+  functions_in_interactions = list(
+    quote(lme_imp(
+      y ~ I(C2^2) * time + log(C1) + c2 + log(C1):c2 + b2 + (1 | id),
+      data = longDF
+    )),
+    "id"
+  ),
+  function_in_random_effects = list(
+    quote(lme_imp(
+      y ~ C2 + c2 + time + I(time^2) + (time + I(time^2) | id),
+      data = longDF
+    )),
+    "id"
+  ),
+  interaction_with_random_slope = list(
+    quote(lme_imp(y ~ C2 * c2 + b2 + time + (c2 | id), data = longDF)),
+    "id"
+  ),
+  function_and_interaction_in_random_effects = list(
+    # a function of variables of two levels, and an interaction
+    quote(lme_imp(
+      y ~ C2 + c2 * time + I(c2 * C2) + (I(c2 * C2) + c2:time | id),
+      data = longDF
+    )),
+    "id"
+  ),
   glmm = list(
     quote(glme_imp(
       b1 ~ C2 + c2 + time + (1 | id),
@@ -206,6 +240,37 @@ test_that("crossed levels with incomplete variables on both crossed levels", {
   for (x in names(preds)) {
     expect_identical(preds[[x]]$used, preds[[x]]$expected, label = x)
   }
+})
+
+test_that("crossed and nested levels", {
+  skip("known bug (as scan bug 4): V (level wave) gets Z (level center)")
+  # id nested in center; wave (number of the observation within id) crossed
+  # with both, with an incomplete variable V of wave
+  dat3$wave <- ave(seq_along(dat3$id), dat3$id, FUN = seq_along)
+  set.seed(4)
+  dat3$V <- rnorm(10)[dat3$wave]
+  dat3$V[dat3$wave == 2L] <- NA
+  fit <- setup_grid_case(quote(lme_imp(
+    y ~ C1 + C2 + Z + V + c2 + time + (1 | id) + (1 | center) + (1 | wave),
+    data = dat3
+  )))
+  expect_s3_class(fit$model, "jags")
+  preds <- covariate_model_predictors(fit, c("id", "center", "wave"))
+  for (x in names(preds)) {
+    expect_identical(preds[[x]]$used, preds[[x]]$expected, label = x)
+  }
+})
+
+test_that("a function in an interaction without the main effects", {
+  skip("known bug: the column log(C1):c2 is not computed in JAGS")
+  fit <- lme_imp(
+    y ~ log(C1):c2 + (1 | id),
+    data = longDF,
+    n.adapt = 1,
+    n.iter = 0,
+    mess = FALSE
+  )
+  expect_s3_class(fit$model, "jags")
 })
 
 test_that("a covariate named out", {
