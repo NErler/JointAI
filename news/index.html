@@ -185,6 +185,7 @@
 <li>Proportional hazards models with several survival outcomes failed for <code>type = "lp"</code> and <code>"risk"</code> (“non-conformable arguments”), and the object had no fitted values. The coefficients of the baseline hazard of the other outcomes were used as well.</li>
 <li>A single named <code>type</code>, e.g., <code>type = c(b = "response")</code>, applied to all outcomes and its name was not checked, and with a partly named vector the other outcomes got a recycled value. Now the named outcomes get the given type, the others <code>"lp"</code>, and names that are not outcomes give an error.</li>
 </ul></li>
+<li>Fitted models with a time variable (<code>timevar</code>), auxiliary variables (<code>auxvars</code>), or a covariate that is only used inside a function (e.g., <code>I(C2^2)</code>) are much smaller when saved: they no longer carry a copy of the data and all design matrices, which was stored with an internal formula and did not show in <code><a href="https://rdrr.io/r/utils/object.size.html" class="external-link">object.size()</a></code> (e.g., 4.7 MB instead of 0.7 MB for a joint model on <code>PBC</code>). Results are not affected.</li>
 </ul></div>
 </div>
     <div class="section level2">
