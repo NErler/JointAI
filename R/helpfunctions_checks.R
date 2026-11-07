@@ -921,3 +921,90 @@ warn_unknown_args <- function(arg_names, known, warn = TRUE) {
   }
   invisible(NULL)
 }
+
+
+#' Check that model types given by the user fit the level of their variables
+#'
+#' A variable below the highest level (it varies within the groups of a
+#' grouping level) needs a model with random effects, a variable on the
+#' highest level a model without random effects. With a type without random
+#' effects, the model of a variable below the highest level would lose the part
+#' of its linear predictor on the higher levels. Types that are not known here
+#' are left to the later checks.
+#'
+#' used in get_models (2026-11-07)
+#'
+#' @param models_user a named character vector with the model types given by
+#'                    the user (argument `models`)
+#' @param var_ranks a named numeric vector with the rank of the level of each
+#'                  variable (as in `get_grouping_levels()`)
+#' @param max_rank the rank of the highest level
+#'
+#' @returns nothing, but throws an error if a model type does not fit the
+#'          level of its variable
+#' @keywords internal
+#'
+check_model_type_level <- function(models_user, var_ranks, max_rank) {
+  # pairs of model types without and with random effects
+  glm_types <- c(
+    "glm_gaussian_identity",
+    "glm_gaussian_log",
+    "glm_gaussian_inverse",
+    "glm_binomial_logit",
+    "glm_binomial_probit",
+    "glm_binomial_log",
+    "glm_binomial_cloglog",
+    "glm_logit",
+    "glm_probit",
+    "glm_gamma_inverse",
+    "glm_gamma_identity",
+    "glm_gamma_log",
+    "glm_poisson_log",
+    "glm_poisson_identity"
+  )
+  without_ranef <- c("lm", "clm", "mlogit", "lognorm", "beta", glm_types)
+  with_ranef <- c(
+    "lmm",
+    "clmm",
+    "mlogitmm",
+    "glmm_lognorm",
+    "glmm_beta",
+    sub("^glm_", "glmm_", glm_types)
+  )
+
+  # for each variable with a model type that does not fit its level, describe
+  # the problem and the type that would fit
+  problems <- character(0L)
+  fitting <- character(0L)
+  for (v in intersect(names(models_user), names(var_ranks))) {
+    type <- models_user[[v]]
+    below_highest <- var_ranks[[v]] < max_rank
+
+    fitting_type <- if (below_highest && type %in% without_ranef) {
+      with_ranef[match(type, without_ranef)]
+    } else if (!below_highest && type %in% with_ranef) {
+      without_ranef[match(type, with_ranef)]
+    }
+
+    if (!is.null(fitting_type)) {
+      problems <- c(problems, gettextf("%s for %s", dQuote(type), dQuote(v)))
+      fitting <- c(
+        fitting,
+        gettextf("%s for %s", dQuote(fitting_type), dQuote(v))
+      )
+    }
+  }
+
+  if (length(problems) > 0L) {
+    # with one variable, the suggestion does not need to name it again
+    if (length(problems) == 1L) {
+      fitting <- sub(" for .*$", "", fitting)
+    }
+    errormsg(
+      "The model type(s) %s do(es) not fit the level of the variable(s).
+      Use %s.",
+      paste_and(problems),
+      paste_and(fitting)
+    )
+  }
+}
