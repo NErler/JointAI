@@ -132,6 +132,17 @@ divide_matrices <- function(
 
   add_to_aux <- c(timevar, names(av[!av]))
 
+  # The extended formula is built from text, so it would get the evaluation
+  # frame of this function as environment. It is stored in the fitted object
+  # (as `auxvars` and in `terms_list`), and the frame holds the data and all
+  # design matrices. Use the environment of the user's `auxvars` instead, or,
+  # without `auxvars`, that of the (first) fixed effects formula.
+  auxvars_env <- if (inherits(auxvars, "formula")) {
+    environment(auxvars)
+  } else {
+    environment(fixed[[1L]])
+  }
+
   auxvars <- if (is.null(auxvars)) {
     if (length(add_to_aux) > 0) {
       as.formula(paste("~", paste0(add_to_aux, collapse = " + ")))
@@ -141,6 +152,9 @@ divide_matrices <- function(
       c(deparse(auxvars, width.cutoff = 500L), add_to_aux),
       collapse = " + "
     ))
+  }
+  if (!is.null(auxvars)) {
+    environment(auxvars) <- auxvars_env
   }
 
   # design matrix with updated auxiliary variables
