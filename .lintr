@@ -1,2 +1,44 @@
-linters: linters_with_defaults() # see vignette("lintr")
+linters: lintr::linters_with_defaults(
+    # layout (indentation, line breaks) is decided by Air
+    indentation_linter = NULL,
+    # names in snake_case; a single capital letter is allowed for matrices
+    # (X, Z, M), as in mathematical notation
+    object_name_linter = lintr::object_name_linter(
+      styles = "snake_case",
+      regexes = c(matrix = "^[A-Z]$")
+    ),
+    # bugs and robustness
+    lintr::any_is_na_linter(),
+    lintr::class_equals_linter(),
+    lintr::fixed_regex_linter(),
+    lintr::length_levels_linter(),
+    lintr::lengths_linter(),
+    lintr::missing_argument_linter(),
+    lintr::nested_ifelse_linter(),
+    lintr::object_overwrite_linter(),
+    lintr::outer_negation_linter(),
+    lintr::redundant_equals_linter(),
+    lintr::redundant_ifelse_linter(),
+    lintr::scalar_in_linter(),
+    lintr::strings_as_factors_linter(),
+    lintr::unnecessary_concatenation_linter(),
+    lintr::unreachable_code_linter(),
+    lintr::paste_linter(),
+    lintr::function_argument_linter(),
+    lintr::implicit_assignment_linter(),
+    # functions whose use made bugs in JointAI (names handled with get() /
+    # assign(), sapply() returning a list) or that change global state
+    lintr::undesirable_function_linter(
+      fun = c(
+        lintr::default_undesirable_functions,
+        get = "use the object directly or a named list",
+        assign = "return the value instead",
+        sapply = "use vapply() or lapply()",
+        mapply = "use Map() or a loop"
+      )
+    ),
+    lintr::undesirable_operator_linter(),
+    # complexity of a function or a top-level expression
+    lintr::cyclocomp_linter(complexity_limit = 15L)
+  )
 encoding: "UTF-8"
