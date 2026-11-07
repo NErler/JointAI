@@ -7,7 +7,7 @@ idfun <- function(time, status, ...) {
   return(lapply(args, deparse, width.cutoff = 500))
 }
 
-# used in extract_outcome_data() (2020-06-11)
+# used in get_outcome_data() (2026-11-07)
 idSurv <- function(LHS) {
   # helper function to mirror the Surv() function from the survival package
   # to be able to extract the names of the arguments passed to this function

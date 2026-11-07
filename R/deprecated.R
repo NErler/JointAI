@@ -388,3 +388,228 @@ clean_survname <- function(x) {
   )
   internal_clean_survname(x)
 }
+
+
+# not used in JointAI (replaced by get_outcome_data()); kept unchanged for
+# remiod (2026-11-07)
+extract_outcome_data <- function(
+  fixed,
+  random = NULL,
+  data,
+  analysis_type = NULL,
+  warn = TRUE
+) {
+  fixed <- check_formula_list(fixed)
+
+  idvar <- extract_grouping(random, warn = warn)
+  groups <- get_groups(idvar, data)
+
+  lvls <- get_grouping_levels(groups)
+
+  outcomes <- outnams <- extract_outcomes_list(fixed)
+
+  for (i in seq_along(fixed)) {
+    # before the outcome is evaluated: `Surv()` may give an unrelated error
+    check_surv_type(names(outnams[i]), data)
+
+    if (
+      survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))
+    ) {
+      outcomes[[i]] <- varname_to_modelframe(names(outnams[i]), data)
+
+      if (any(is.na(outcomes[[i]]))) {
+        errormsg("There are missing values in the survival time or status.")
+      }
+
+      names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c("time", "status")]
+      outcomes[[i]] <- as.data.frame(
+        lapply(outcomes[[i]], factor_to_integer),
+        check.names = FALSE
+      )
+
+      attr(fixed[[i]], "type") <- if (analysis_type == "coxph") {
+        "coxph"
+      } else if (analysis_type == "JM") {
+        "JM"
+      } else {
+        "survreg"
+      }
+      names(fixed)[i] <- names(outnams[i])
+    } else {
+      outcomes[[i]] <- varname_to_modelframe(
+        extract_lhs_string(fixed[[i]]),
+        data
+      )
+
+      if (ncol(outcomes[[i]]) != 1L) {
+        errormsg(
+          "I expected a one-column response, but found the response has %s
+          columns for outcome %s.",
+          ncol(outcomes[[i]]),
+          i
+        )
+      }
+      nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
+      varlvl <- get_datlvls(outcomes[[i]], groups)
+
+      if (i == 1L) {
+        attr(fixed[[i]], "type") <- paste_analysis_type(analysis_type)
+      } else {
+        # the variable, not the one-column data.frame
+        attr(fixed[[i]], "type") <- choose_default_model(
+          outcomes[[i]][[1L]],
+          lvls[varlvl],
+          max(lvls)
+        )
+      }
+      outcomes[[i]] <- as.data.frame(
+        lapply(outcomes[[i]], factor_to_integer),
+        check.names = FALSE
+      )
+      names(fixed)[i] <- outnams[i]
+    }
+  }
+  list(fixed = fixed, outcomes = outcomes, outnams = outnams)
+}
+
+
+# not used in JointAI (replaced by get_linpred_columns()); kept unchanged for
+# remiod (2026-11-07)
+get_linpreds <- function(
+  fixed,
+  random,
+  data,
+  models,
+  auxvars = NULL,
+  analysis_type = NULL,
+  warn = TRUE,
+  refs
+) {
+  # obtain the linear predictor columns and variable names for all models
+  # involved
+  # - fixed: list of fixed effects formulas
+  # - random: list of random effects formulas
+  # - data: a data.frame with the pre-processed data
+  # - models: named vector of all model types
+  # - auxvars: optional formula of auxiliary variables
+  # - analysis_type: type of analysis, including family as attribute if glm(m)
+  # - warn: logical; should warning messages be given
+
+  # check if fixed is a list and otherwise convert it to a list
+  fixed <- check_formula_list(fixed)
+
+  # extract the id variable and clustering structure from the random effects
+  # formula and data
+  idvar <- extract_grouping(random, warn = warn)
+  groups <- get_groups(idvar, data)
+
+  # identify all variables involved and those variables that are covariates
+  allvars <- all_vars(fixed, remove_grouping(random), auxvars)
+
+  # in order to be able to include functions in the auxiliary variables,
+  # extract the term labels from auxvars and build the formula used
+  # to create the design matrices for the covariate models using these
+  # term labels.
+  auxterms <- if (!is.null(auxvars)) attr(terms(auxvars), "term.labels")
+
+  covar_terms <- all_vars(remove_lhs(fixed), remove_grouping(random), auxterms)
+
+  # identify the levels of all variables
+  lvl <- get_datlvls(data[, allvars, drop = FALSE], groups)
+
+  group_lvls <- get_grouping_levels(groups)
+
+  # make a subset containing only covariates
+  subdat <- subset(
+    data,
+    select = setdiff(allvars, unlist(extract_outcomes_list(fixed)))
+  )
+
+  contr_list <- lapply(refs, attr, "contr_matrix")
+
+  # for each fixed effects (main model) formula, get the column names of the
+  # design matrix of the fixed effects
+  lp <- nlapply(fixed, function(fmla) {
+    covars <- cvapply(
+      attr(
+        terms(remove_lhs(fmla)),
+        "variables"
+      )[-1L],
+      deparse,
+      width.cutoff = 500L
+    )
+
+    contr_list0 <- contr_list[intersect(covars, names(contr_list))]
+
+    if (attr(fmla, "type") %in% c("clm", "clmm", "coxph", "JM")) {
+      # for ordinal and cox models, exclude the intercept
+      colnam <- colnames(
+        model.matrix(fmla, data, contrasts.arg = contr_list0)
+      )[-1L]
+      if (length(colnam) > 0L) colnam
+    } else {
+      colnames(model.matrix(fmla, data, contrasts.arg = contr_list0))
+    }
+  })
+
+  #  for all models that are not specified in fixed
+  #  - identify if an intercept is needed (no intercept for ordinal and cox)
+  #  - generate a RHS formula
+  for (out in names(models)[!names(models) %in% names(fixed)]) {
+    nointercept <- models[out] %in% c("clmm", "clm", "coxph")
+
+    # identify variables that have
+    # - level higher than the level of the outcome, or
+    # - the same level (note: the same level name, not just the same value in
+    #   the hierarchy. This is important in case of crossed random effects
+    #   where two levels may have the same value in the hierarchy, but then
+    #   the model should only include covariates from the same level, but not
+    #   from the crossed level).
+    relvars <- group_lvls[lvl[colnames(subdat)]] > group_lvls[lvl[out]] |
+      lvl[colnames(subdat)] == lvl[out]
+
+    testdat <- subset(subdat, select = relvars & (colnames(subdat) != out))
+
+    keep_terms <- lvapply(covar_terms, function(k) {
+      check_effect <- try(model.frame(paste0("~", k), testdat), silent = TRUE)
+      !inherits(check_effect, "try-error") &
+        all_vars(formula(paste("~", k))) %in% names(testdat)
+    })
+
+    covar_terms <- covar_terms[keep_terms]
+
+    fmla <- as.formula(
+      paste0(
+        out,
+        " ~ ",
+        switch(
+          as.character(length(covar_terms) == 0L),
+          "TRUE" = "1",
+          "FALSE" = paste0(covar_terms, collapse = " + ")
+        ),
+        if (nointercept) "-1"
+      )
+    )
+
+    # get the names of the columns of the corresponding design matrix
+    lp[[out]] <- colnames(
+      model.matrix(
+        fmla,
+        subdat,
+        contrasts.arg = contr_list[intersect(
+          all_vars(remove_lhs(fmla)),
+          names(contr_list)
+        )]
+      )
+    )
+
+    # if the linear predictor is empty, create an empty object, to make the
+    # subsequent code work in any case
+    if (is.null(lp[[out]])) {
+      lp <- c(lp, setNames(list(NULL), out))
+    }
+
+    subdat <- subset(subdat, select = -c(get(out)))
+  }
+  lp
+}

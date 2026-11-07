@@ -7,7 +7,7 @@
 check_duplicate_outcomes(outcomes)
 }
 \arguments{
-\item{outcomes}{list produced by \code{extract_outcome_data()}; uses the elements
+\item{outcomes}{list produced by \code{get_outcome_data()}; uses the elements
 \code{outcomes} (a named list of data.frames, one per model formula; for
 survival outcomes the columns are time and event indicator) and \code{fixed}
 (the formulas, with attribute \code{"type"})}

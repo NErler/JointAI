@@ -1,3 +1,4 @@
+# used in divide_matrices and get_models (2026-11-07)
 #' Get the structure of the data
 #'
 #' Determines, once per model, how the rows of the data are grouped: the group
@@ -51,6 +52,7 @@ get_data_structure <- function(data, idvar) {
 }
 
 
+# used in divide_matrices and get_models (2026-11-07)
 #' Get the level and other properties of variables
 #'
 #' Creates a table with one row per variable, describing the variable for the

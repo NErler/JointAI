@@ -8,7 +8,8 @@ get_models <- function(
   no_model = NULL,
   models = NULL,
   analysis_type = NULL,
-  warn = TRUE
+  warn = TRUE,
+  data_structure = NULL
 ) {
   if (missing(fixed)) {
     errormsg("No formula specified.")
@@ -24,13 +25,18 @@ get_models <- function(
 
   models_user <- models
 
+  # the structure of the data (groupings, ranks of the levels); computed here
+  # only when get_models() is not called from divide_matrices()
+  if (is.null(data_structure)) {
+    data_structure <- get_data_structure(data, extract_grouping(random))
+  }
+
   if (is.null(attr(fixed[[1]], "type"))) {
-    fixed <- extract_outcome_data(
+    fixed <- get_outcome_data(
       fixed,
-      random = random,
       data = data,
-      analysis_type = analysis_type,
-      warn = FALSE
+      data_structure = data_structure,
+      analysis_type = analysis_type
     )$fixed
   }
 
@@ -75,9 +81,7 @@ get_models <- function(
     )
   }
 
-  # extract the id variable from the random effects formula and get groups
-  idvar <- extract_grouping(random, warn = warn)
-  groups <- get_groups(idvar, data)
+  groups <- data_structure$groups
 
   random2 <- remove_grouping(random)
 
@@ -94,45 +98,61 @@ get_models <- function(
     )
   ))
 
-  group_lvls <- get_grouping_levels(groups)
+  group_lvls <- data_structure$group_lvls
   max_lvl <- max(group_lvls)
 
-  dat_all <- if (any(!allvars %in% names(data))) {
-    cbind(
-      data[, allvars[allvars %in% names(data)], drop = FALSE],
-      sapply(
-        allvars[!allvars %in% names(data)],
-        function(x) {
-          eval(parse(text = x), envir = data)
-        },
-        simplify = FALSE
-      )
+  # the levels and other properties of the variables (the table is computed
+  # here only when get_models() is not called from divide_matrices())
+  variables <- data_structure$variables
+  if (is.null(variables)) {
+    variables <- get_variable_table(
+      data,
+      data_structure,
+      vars = intersect(allvars, names(data))
     )
-  } else {
-    data[, allvars, drop = FALSE]
   }
 
-  all_lvls <- get_datlvls(dat_all, groups)
+  # names that are not columns of the data (e.g., the names of survival
+  # outcomes, "Surv(time, status)") are evaluated in the data and their level
+  # is determined from the evaluated values
+  other_vars <- setdiff(allvars, rownames(variables))
+  other_lvls <- if (length(other_vars) > 0L) {
+    evaluated <- lapply(setNames(nm = other_vars), function(x) {
+      eval(parse(text = x), envir = data)
+    })
+    get_datlvls(
+      as.data.frame(evaluated, check.names = FALSE),
+      groups,
+      group_lvls = group_lvls
+    )
+  }
 
   if (length(allvars) > 0) {
     varinfo <- sapply(
       allvars,
       function(k) {
-        x <- eval(parse(text = k), envir = data)
         out <- k %in% names(fixed)
-        lvl <- group_lvls[all_lvls[k]]
-        nmis <- sum(is.na(x[match(
-          unique(groups[[names(lvl)]]),
-          groups[[names(lvl)]]
-        )]))
-        nlev <- length(levels(x))
-        ordered <- is.ordered(x)
+        if (k %in% rownames(variables)) {
+          lvl <- group_lvls[variables[k, "level"]]
+          nmis <- variables[k, "n_missing"]
+          nlev <- variables[k, "n_categories"]
+          is_ordered <- variables[k, "ordered"]
+        } else {
+          x <- eval(parse(text = k), envir = data)
+          lvl <- group_lvls[other_lvls[k]]
+          nmis <- sum(is.na(x[match(
+            unique(groups[[names(lvl)]]),
+            groups[[names(lvl)]]
+          )]))
+          nlev <- nlevels(x)
+          is_ordered <- is.ordered(x)
+        }
         data.frame(
           out = out,
           lvl = lvl,
           nmis = nmis,
           nlev = nlev,
-          ordered = ordered,
+          ordered = is_ordered,
           type = NA
         )
       },
