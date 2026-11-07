@@ -29,7 +29,7 @@
 
 skip_on_cran()
 
-# data --------------------------------------------------------------------------
+# data -------------------------------------------------------------------------
 # two levels, with an incomplete continuous variable on level id (C1) and an
 # incomplete unordered factor on level one (m2)
 dat2 <- longDF
@@ -66,7 +66,7 @@ set.seed(3)
 pbc$W <- rnorm(60)[match(pbc$id, unique(pbc$id))]
 pbc$W[pbc$id %in% unique(pbc$id)[c(2, 9, 30)]] <- NA
 
-# helpers -----------------------------------------------------------------------
+# helpers ----------------------------------------------------------------------
 # Write down what we expect for one sub-model:
 # * link: "identity", "logit", "probit", "log", "cumulative" (cumulative logit;
 #   the linear predictor is `eta_*`) or "multinomial" (the linear predictors
@@ -107,9 +107,9 @@ run_with_fixed_parameters <- function(fit, seed = 1) {
   ranefs <- regmatches(model, gregexpr("\\bb_\\w+\\[i+, 1:\\d+\\] ~", model))
   for (r in ranefs[[1L]]) {
     name <- sub("\\[.*", "", r)
-    ncol <- as.integer(sub(".*1:(\\d+)\\].*", "\\1", r))
+    n_col <- as.integer(sub(".*1:(\\d+)\\].*", "\\1", r))
     ngroups <- max(fit$data_list[[paste0("group_", sub(".*_", "", name))]])
-    fixed[[name]] <- matrix(rnorm(ngroups * ncol, sd = 0.3), nrow = ngroups)
+    fixed[[name]] <- matrix(rnorm(ngroups * n_col, sd = 0.3), nrow = ngroups)
   }
 
   # set the precision parameters to a fixed value
@@ -168,7 +168,7 @@ completed_data <- function(fit, res) {
 
   # loop over the data matrices (M_*) of the different levels in res
   for (m in names(Filter(is.matrix, res[startsWith(names(res), "M_")]))) {
-    lvl <- sub("M_", "", m)
+    lvl <- sub("M_", "", m, fixed = TRUE)
 
     # identify which rows of the data correspond to the level of the data matrix
     rows <- if (lvl == "lvlone") {
@@ -199,7 +199,7 @@ completed_data <- function(fit, res) {
 # Calculate the linear predictor of the sub-model for `x` in R: the design
 # matrix `X` times the coefficients of the sub-model (the fixed values in
 # `res`). For multinomial models: the linear predictor of category `outcat`.
-linpred_R <- function(fit, res, X, x, outcat = NULL) {
+linpred_from_coefs <- function(fit, res, X, x, outcat = NULL) {
   coefs <- fit$coef_list[[x]]
   if (!is.null(outcat)) {
     coefs <- coefs[coefs$outcat == outcat, ]
@@ -216,7 +216,7 @@ linpred_R <- function(fit, res, X, x, outcat = NULL) {
 # the variable of the random effect (1 for a random intercept). `rows` are the
 # rows of `dat` that belong to the outcome of the sub-model (one per group for
 # outcomes on a higher level).
-linpred_JAGS <- function(fit, res, dat, x, expected, rows, node) {
+linpred_from_jags <- function(fit, res, dat, x, expected, rows, node) {
   # transform the node to the scale of the linear predictor
   inverse_link <- switch(
     expected$link,
@@ -241,7 +241,50 @@ linpred_JAGS <- function(fit, res, dat, x, expected, rows, node) {
   unname(lp)
 }
 
-# cases -------------------------------------------------------------------------
+# Compare the linear predictors of the sub-model for `x` calculated two ways:
+# from the nodes computed by JAGS and from the completed data in R
+# (`expected`: the expectation for the sub-model, see `submodel()`). The
+# expectations are written with `testthat::`, so that the linter (which does
+# not know that testthat is attached in tests) finds them.
+expect_linpreds_equal <- function(fit, res, dat, X, x, expected) {
+  # identify the rows of the outcome: all rows for lvlone, otherwise the
+  # first row of each group
+  rows <- if (expected$level == "lvlone") {
+    seq_len(nrow(dat))
+  } else {
+    group <- fit$data_list[[paste0("group_", expected$level)]]
+    match(seq_len(max(group)), group)
+  }
+
+  if (expected$link == "multinomial") {
+    # multinomial models have one linear predictor per category; the
+    # first category is the reference (linear predictor 0)
+    phi <- res[[paste0("phi_", x)]]
+    testthat::expect_equal(log(phi[, 1L]), rep(0, length(rows)), label = x)
+    categories <- levels(dat[[x]])
+    for (k in seq_along(categories)[-1L]) {
+      testthat::expect_equal(
+        linpred_from_jags(fit, res, dat, x, expected, rows, phi[, k]),
+        linpred_from_coefs(fit, res, X, x, paste0(x, categories[k]))[rows],
+        label = paste0(x, ", category ", categories[k], " (JAGS)"),
+        expected.label = "R"
+      )
+    }
+  } else {
+    # the linear predictor node is called eta_* in cumulative logit models
+    # and mu_* in all other models
+    prefix <- if (expected$link == "cumulative") "eta_" else "mu_"
+    node <- res[[paste0(prefix, x)]]
+    testthat::expect_equal(
+      linpred_from_jags(fit, res, dat, x, expected, rows, node),
+      linpred_from_coefs(fit, res, X, x)[rows],
+      label = paste(x, "(JAGS)"),
+      expected.label = "R"
+    )
+  }
+}
+
+# cases ------------------------------------------------------------------------
 cases <- list(
   two_levels = list(
     call = quote(lme_imp(
@@ -418,7 +461,7 @@ cases <- list(
   )
 )
 
-# tests -------------------------------------------------------------------------
+# tests ------------------------------------------------------------------------
 for (case in names(cases)) {
   test_that(paste("linear predictors:", case), {
     spec <- cases[[case]]
@@ -428,7 +471,7 @@ for (case in names(cases)) {
 
     # set up the JointAI model without scaling (so that the data in JAGS are
     # the data in R), and without adaptation or sampling
-    call <- as.call(c(
+    model_call <- as.call(c(
       as.list(spec$call),
       list(
         scale_vars = FALSE,
@@ -438,7 +481,7 @@ for (case in names(cases)) {
         warn = FALSE
       )
     ))
-    fit <- eval(call)
+    fit <- eval(model_call)
 
     # every sub-model of the fitted model should be listed in the case (or
     # excluded explicitly in `not_compared`), so that none is left out
@@ -471,43 +514,7 @@ for (case in names(cases)) {
     # compare, for each sub-model, the linear predictors calculated two ways:
     # from the nodes computed by JAGS and from the completed data in R
     for (x in names(spec$submodels)) {
-      expected <- spec$submodels[[x]]
-
-      # identify the rows of the outcome: all rows for lvlone, otherwise the
-      # first row of each group
-      rows <- if (expected$level == "lvlone") {
-        seq_len(nrow(dat))
-      } else {
-        group <- fit$data_list[[paste0("group_", expected$level)]]
-        match(seq_len(max(group)), group)
-      }
-
-      if (expected$link == "multinomial") {
-        # multinomial models have one linear predictor per category; the
-        # first category is the reference (linear predictor 0)
-        phi <- res[[paste0("phi_", x)]]
-        expect_equal(log(phi[, 1L]), rep(0, length(rows)), label = x)
-        categories <- levels(dat[[x]])
-        for (k in seq_along(categories)[-1L]) {
-          expect_equal(
-            linpred_JAGS(fit, res, dat, x, expected, rows, phi[, k]),
-            linpred_R(fit, res, X, x, paste0(x, categories[k]))[rows],
-            label = paste0(x, ", category ", categories[k], " (JAGS)"),
-            expected.label = "R"
-          )
-        }
-      } else {
-        # the linear predictor node is eta_* for cumulative logit models,
-        # mu_* otherwise
-        prefix <- if (expected$link == "cumulative") "eta_" else "mu_"
-        node <- res[[paste0(prefix, x)]]
-        expect_equal(
-          linpred_JAGS(fit, res, dat, x, expected, rows, node),
-          linpred_R(fit, res, X, x)[rows],
-          label = paste(x, "(JAGS)"),
-          expected.label = "R"
-        )
-      }
+      expect_linpreds_equal(fit, res, dat, X, x, spec$submodels[[x]])
     }
   })
 }
