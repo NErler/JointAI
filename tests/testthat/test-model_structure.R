@@ -15,7 +15,7 @@
 
 skip_on_cran()
 
-# data --------------------------------------------------------------------------
+# data -------------------------------------------------------------------------
 # three nested levels: id in center, with an incomplete variable of center
 dat3 <- longDF
 dat3$center <- as.integer(dat3$id) %% 5L
@@ -43,7 +43,7 @@ pbc$W <- rnorm(60)[match(pbc$id, unique(pbc$id))]
 pbc$W[pbc$id %in% unique(pbc$id)[c(2, 9, 30)]] <- NA
 pbc1 <- pbc[!duplicated(pbc$id), ]
 
-# grid: model call and its grouping variables -----------------------------------
+# grid: model call and its grouping variables ----------------------------------
 grid <- list(
   one_level = list(
     quote(lm_imp(y ~ C1 + C2 + B2 + M2 + O2, data = wideDF)),
@@ -141,16 +141,16 @@ grid <- list(
 )
 
 setup_grid_case <- function(case) {
-  call <- as.call(c(
+  model_call <- as.call(c(
     as.list(case),
     list(n.adapt = 1, n.iter = 0, seed = 2020, mess = FALSE, warn = FALSE)
   ))
   # in the environment of the caller, so that a modified copy of the data
   # (in a test) is used
-  eval(call, parent.frame())
+  eval(model_call, parent.frame())
 }
 
-# helpers -----------------------------------------------------------------------
+# helpers ----------------------------------------------------------------------
 # the groupings (and "lvlone", the rows) within which a variable is constant;
 # missing values are ignored
 constant_within <- function(x, data, groupings) {
@@ -203,7 +203,7 @@ covariate_model_predictors <- function(fit, groupings) {
   })
 }
 
-# tests -------------------------------------------------------------------------
+# tests ------------------------------------------------------------------------
 for (k in names(grid)) {
   test_that(paste("model structure:", k), {
     fit <- setup_grid_case(grid[[k]][[1L]])
@@ -230,7 +230,7 @@ for (k in names(grid)) {
   })
 }
 
-# known bugs (to be solved by the re-design of the model set-up) -----------------
+# known bugs (to be solved by the re-design of the model set-up) ---------------
 test_that("crossed levels with incomplete variables on both crossed levels", {
   skip("known bug (scan bug 4): no intercept on level a, B1 loses B2")
   datx$A1[datx$a == 2L] <- NA
