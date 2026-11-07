@@ -189,20 +189,41 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
 # outcome and covariate data ---------------------------------------------------
 # * extract outcome data -------------------------------------------------------
 
-# used in divide_matrices and get_models (2020-06-10)
-extract_outcome_data <- function(
+# used in divide_matrices and get_models (2026-11-07)
+#' Get the outcomes of the formulas and their model types
+#'
+#' Evaluates the outcome (left-hand side) of each fixed effects formula, names
+#' the formulas by their outcome and sets the model type of each formula as its
+#' attribute `type`: the analysis type for the first formula, `coxph`, `JM` or
+#' `survreg` for survival outcomes, and a default type for the other outcomes.
+#' Replaces `extract_outcome_data()` (kept for remiod in `deprecated.R`); the
+#' groupings and their ranks are taken from `data_structure`.
+#'
+#' @param fixed a fixed effects formula or a list of such formulas
+#' @param data a `data.frame`
+#' @param data_structure the structure of the data, as obtained from
+#'        [get_data_structure()]
+#' @param analysis_type the type of the analysis model (character string,
+#'        with the family as attribute for `glm` and `glmm`)
+#'
+#' @returns a list with elements
+#'   * `fixed`: the list of formulas, named by their outcome, with the model
+#'     type as attribute `type`,
+#'   * `outcomes`: a list of `data.frame`s with the outcome values (factors as
+#'     integer codes; time and status for survival outcomes),
+#'   * `outnams`: the names of the outcome variables per formula.
+#' @keywords internal
+#'
+get_outcome_data <- function(
   fixed,
-  random = NULL,
   data,
-  analysis_type = NULL,
-  warn = TRUE
+  data_structure,
+  analysis_type = NULL
 ) {
   fixed <- check_formula_list(fixed)
 
-  idvar <- extract_grouping(random, warn = warn)
-  groups <- get_groups(idvar, data)
-
-  lvls <- get_grouping_levels(groups)
+  groups <- data_structure$groups
+  lvls <- data_structure$group_lvls
 
   outcomes <- outnams <- extract_outcomes_list(fixed)
 
@@ -248,7 +269,7 @@ extract_outcome_data <- function(
         )
       }
       nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
-      varlvl <- get_datlvls(outcomes[[i]], groups)
+      varlvl <- get_datlvls(outcomes[[i]], groups, group_lvls = lvls)
 
       if (i == 1L) {
         attr(fixed[[i]], "type") <- paste_analysis_type(analysis_type)
@@ -342,7 +363,7 @@ paste_analysis_type <- function(analysis_type) {
 #'
 #' @return An integer vector when `x` is a factor, otherwise the original `x`.
 #'
-#' @note Used in `extract_outcome_data()`.
+#' @note Used in `get_outcome_data()`.
 #' @keywords internal
 
 factor_to_integer <- function(x) {
@@ -368,7 +389,7 @@ factor_to_integer <- function(x) {
 # used in divide_matrices (2020-06-09)
 outcomes_to_mat <- function(outcomes) {
   # make a design matrix from the outcomes of a list of formulas
-  # - outcomes: list produced by extract_outcome_data()
+  # - outcomes: list produced by get_outcome_data()
 
   check_duplicate_outcomes(outcomes)
 
@@ -404,7 +425,7 @@ outcomes_to_mat <- function(outcomes) {
 #' once in checks 2 and 3. To be revisited when competing risks are
 #' implemented (`Surv()` with an event indicator with more than two values).
 #'
-#' @param outcomes list produced by `extract_outcome_data()`; uses the elements
+#' @param outcomes list produced by `get_outcome_data()`; uses the elements
 #'   `outcomes` (a named list of data.frames, one per model formula; for
 #'   survival outcomes the columns are time and event indicator) and `fixed`
 #'   (the formulas, with attribute `"type"`)
@@ -527,7 +548,7 @@ varname_to_modelframe <- function(varname, data) {
 #' @param data a `data.frame`; used to evaluate the argument `type`, in case it
 #'   is not given as a character string.
 #' @returns `NULL`, invisibly; called for the error.
-#' @note Used in `extract_outcome_data()`.
+#' @note Used in `get_outcome_data()`.
 #' @keywords internal
 check_surv_type <- function(lhs, data) {
   if (!grepl("^Surv\\(", lhs)) {
@@ -754,34 +775,44 @@ match_interaction <- function(inter, desgn_mat_list) {
 
 # linear predictor -------------------------------------------------------------
 
-# used in divide_matrices (2020-06-10)
-get_linpreds <- function(
+# used in divide_matrices (2026-11-07)
+#' Get the columns of the linear predictor of each model
+#'
+#' For each model (the models of the formulas and the covariate models, in the
+#' order of `models`), finds the names of the design-matrix columns of its
+#' linear predictor. The covariate models use the covariate terms of all
+#' formulas whose variables are on a higher level than, or the same level as,
+#' the modelled variable, and which are not modelled before it. Replaces
+#' `get_linpreds()` (kept for remiod in `deprecated.R`); the levels of the
+#' variables and the ranks of the levels are taken from `data_structure`.
+#'
+#' @param fixed a list of fixed effects formulas (with model types)
+#' @param random a list of random effects formulas
+#' @param data a `data.frame`
+#' @param models a named vector of the model types of all models, in the order
+#'        of the sequence of models
+#' @param refs a list of the reference categories (as obtained from
+#'        `get_refs()`)
+#' @param data_structure the structure of the data, as obtained from
+#'        [get_data_structure()], with the table of variables
+#'        ([get_variable_table()])
+#' @param auxvars a formula of auxiliary variables, or `NULL`
+#'
+#' @returns a named list with, for each model, the names of the columns of its
+#'   linear predictor (`NULL` if empty)
+#' @keywords internal
+#'
+get_linpred_columns <- function(
   fixed,
   random,
   data,
   models,
-  auxvars = NULL,
-  analysis_type = NULL,
-  warn = TRUE,
-  refs
+  refs,
+  data_structure,
+  auxvars = NULL
 ) {
-  # obtain the linear predictor columns and variable names for all models
-  # involved
-  # - fixed: list of fixed effects formulas
-  # - random: list of random effects formulas
-  # - data: a data.frame with the pre-processed data
-  # - models: named vector of all model types
-  # - auxvars: optional formula of auxiliary variables
-  # - analysis_type: type of analysis, including family as attribute if glm(m)
-  # - warn: logical; should warning messages be given
-
   # check if fixed is a list and otherwise convert it to a list
   fixed <- check_formula_list(fixed)
-
-  # extract the id variable and clustering structure from the random effects
-  # formula and data
-  idvar <- extract_grouping(random, warn = warn)
-  groups <- get_groups(idvar, data)
 
   # identify all variables involved and those variables that are covariates
   allvars <- all_vars(fixed, remove_grouping(random), auxvars)
@@ -794,10 +825,9 @@ get_linpreds <- function(
 
   covar_terms <- all_vars(remove_lhs(fixed), remove_grouping(random), auxterms)
 
-  # identify the levels of all variables
-  lvl <- get_datlvls(data[, allvars, drop = FALSE], groups)
-
-  group_lvls <- get_grouping_levels(groups)
+  # the levels of all variables and the ranks of the levels
+  lvl <- setNames(data_structure$variables[allvars, "level"], allvars)
+  group_lvls <- data_structure$group_lvls
 
   # make a subset containing only covariates
   subdat <- subset(

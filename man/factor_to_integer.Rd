@@ -17,6 +17,6 @@ An integer vector when \code{x} is a factor, otherwise the original \code{x}.
 Convert a factor to an integer representation
 }
 \note{
-Used in \code{extract_outcome_data()}.
+Used in \code{get_outcome_data()}.
 }
 \keyword{internal}

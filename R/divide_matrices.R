@@ -36,24 +36,24 @@ divide_matrices <- function(
     idvar = idvar
   )
 
-  groups <- get_groups(idvar, data)
-  group_lvls <- get_grouping_levels(groups)
-
-  # sort group levels and groups (so that higher levels, which contain the
-  # ("Intercept") appear first in the linear predictor)
-  #TODO: remove this sorting here? Maybe better assure intercept is column 1
+  # structure of the data: the groupings of the rows and the ranks and nesting
+  # of the grouping levels, computed once and used in all following steps
+  # (groupings and levels sorted from the highest to the lowest level, so that
+  # higher levels, which contain the "(Intercept)", appear first in the linear
+  # predictor)
+  #TODO: remove this sorting? Maybe better assure intercept is column 1
   # when creating the design matrices.
-  group_lvls <- sort(group_lvls, decreasing = TRUE)
-  groups <- groups[names(group_lvls)]
+  data_structure <- get_data_structure(data, idvar)
+  groups <- data_structure$groups
+  group_lvls <- data_structure$group_lvls
 
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
-  outcomes <- extract_outcome_data(
+  outcomes <- get_outcome_data(
     fixed,
-    random = random,
     data = data,
-    analysis_type = analysis_type,
-    warn = warn
+    data_structure = data_structure,
+    analysis_type = analysis_type
   )
 
   # name the elements of fixed:
@@ -70,6 +70,17 @@ divide_matrices <- function(
     data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
   }
 
+  # levels and other properties of all variables (after last observation
+  # carried forward: the filled-in values count as observed)
+  data_structure$variables <- get_variable_table(
+    data,
+    data_structure,
+    vars = intersect(
+      all_vars(fixed, remove_grouping(random), auxvars, timevar, names(models)),
+      names(data)
+    )
+  )
+
   # * model types --------------------------------------------------------------
   models <- get_models(
     fixed = fixed,
@@ -79,7 +90,8 @@ divide_matrices <- function(
     auxvars = auxvars,
     no_model = no_model,
     models = models,
-    warn = warn
+    warn = warn,
+    data_structure = data_structure
   )
 
   # * outcomes -----------------------------------------------------------------
@@ -184,7 +196,7 @@ divide_matrices <- function(
   # identify levels of all variables
   # Mlvls <- apply(MX, 2, check_varlevel, groups = groups,
   #                group_lvls = get_grouping_levels(groups))
-  Mlvls <- get_datlvls(MX, groups)
+  Mlvls <- get_datlvls(MX, groups, group_lvls = group_lvls)
 
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
 
@@ -307,12 +319,8 @@ divide_matrices <- function(
         # outcome matrix
         outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
         if (
-          get_grouping_levels(groups)[
-            gsub("M_", "", outmat)
-          ] <
-            get_grouping_levels(groups)[
-              gsub("M_", "", covmat)
-            ]
+          group_lvls[gsub("M_", "", outmat, fixed = TRUE)] <
+            group_lvls[gsub("M_", "", covmat, fixed = TRUE)]
         ) {
           M[[unique(Mlvls[
             attr(refs[[k]], "dummies")
@@ -323,22 +331,21 @@ divide_matrices <- function(
   }
 
   # column names of the linear predictors for all models -----------------------
-  XXnam <- get_linpreds(
+  lp_colnames <- get_linpred_columns(
     fixed,
     random,
     data,
     models,
-    auxvars,
-    analysis_type,
-    warn = warn,
-    refs = refs
+    refs = refs,
+    data_structure = data_structure,
+    auxvars = auxvars
   )
 
-  lp_cols <- lapply(XXnam, function(XX) {
+  lp_cols <- lapply(lp_colnames, function(cols) {
     Mcols <- if (!is.null(M)) {
       sapply(
         M,
-        function(x) c(na.omit(match(XX, colnames(x)))),
+        function(x) c(na.omit(match(cols, colnames(x)))),
         simplify = FALSE
       )
     }

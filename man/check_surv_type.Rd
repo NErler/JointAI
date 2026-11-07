@@ -27,6 +27,6 @@ The type is derived from the call and not from \code{attr(Surv(...), "type")}:
 a factor \code{Surv()} ignores \code{type} and returns "mright" or "mcounting".
 }
 \note{
-Used in \code{extract_outcome_data()}.
+Used in \code{get_outcome_data()}.
 }
 \keyword{internal}
