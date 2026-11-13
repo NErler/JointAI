@@ -1,7 +1,15 @@
 # Specify the default (imputation) model types
-get_models <- function(fixed, random = NULL, data, auxvars = NULL,
-                       timevar = NULL, no_model = NULL, models = NULL,
-                       analysis_type = NULL, warn = TRUE) {
+get_models <- function(
+  fixed,
+  random = NULL,
+  data,
+  auxvars = NULL,
+  timevar = NULL,
+  no_model = NULL,
+  models = NULL,
+  analysis_type = NULL,
+  warn = TRUE
+) {
   if (missing(fixed)) {
     errormsg("No formula specified.")
   }
@@ -17,13 +25,14 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   models_user <- models
 
   if (is.null(attr(fixed[[1]], "type"))) {
-    fixed <- extract_outcome_data(fixed,
-      random = random, data = data,
+    fixed <- extract_outcome_data(
+      fixed,
+      random = random,
+      data = data,
       analysis_type = analysis_type,
       warn = FALSE
     )$fixed
   }
-
 
   # if there is a time variable, add it to no_model
   if (!is.null(timevar)) {
@@ -40,9 +49,10 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     )
   }
 
-
-  if (!is.null(no_model) &&
-        any(colSums(is.na(data[, no_model, drop = FALSE])) > 0)) {
+  if (
+    !is.null(no_model) &&
+      any(colSums(is.na(data[, no_model, drop = FALSE])) > 0)
+  ) {
     errormsg(
       "Variable(s) %s have missing values and imputation models are
       needed for these variables.",
@@ -65,35 +75,38 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     )
   }
 
-
-
   # extract the id variable from the random effects formula and get groups
   idvar <- extract_grouping(random, warn = warn)
   groups <- get_groups(idvar, data)
 
   random2 <- remove_grouping(random)
 
-
   # NOTE: all_vars() checks if a string is a valid variable name but that is
   # not the case for all names of fixed (e.g., Surv(time, status))
   allvars <- unique(c(
     names(fixed),
     all_vars(
-      remove_lhs(fixed), random2, auxvars,
-      names(models), timevar
+      remove_lhs(fixed),
+      random2,
+      auxvars,
+      names(models),
+      timevar
     )
   ))
 
   group_lvls <- get_grouping_levels(groups)
   max_lvl <- max(group_lvls)
 
-
   dat_all <- if (any(!allvars %in% names(data))) {
     cbind(
       data[, allvars[allvars %in% names(data)], drop = FALSE],
-      sapply(allvars[!allvars %in% names(data)], function(x) {
-        eval(parse(text = x), envir = data)
-      }, simplify = FALSE)
+      sapply(
+        allvars[!allvars %in% names(data)],
+        function(x) {
+          eval(parse(text = x), envir = data)
+        },
+        simplify = FALSE
+      )
     )
   } else {
     data[, allvars, drop = FALSE]
@@ -101,38 +114,45 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
   all_lvls <- get_datlvls(dat_all, groups)
 
-
-
-
   if (length(allvars) > 0) {
-    varinfo <- sapply(allvars, function(k) {
-      x <- eval(parse(text = k), envir = data)
-      out <- k %in% names(fixed)
-      lvl <- group_lvls[all_lvls[k]]
-      nmis <- sum(is.na(x[match(
-        unique(groups[[names(lvl)]]),
-        groups[[names(lvl)]]
-      )]))
-      nlev <- length(levels(x))
-      ordered <- is.ordered(x)
-      data.frame(
-        out = out, lvl = lvl, nmis = nmis, nlev = nlev,
-        ordered = ordered, type = NA
-      )
-    }, simplify = FALSE)
+    varinfo <- sapply(
+      allvars,
+      function(k) {
+        x <- eval(parse(text = k), envir = data)
+        out <- k %in% names(fixed)
+        lvl <- group_lvls[all_lvls[k]]
+        nmis <- sum(is.na(x[match(
+          unique(groups[[names(lvl)]]),
+          groups[[names(lvl)]]
+        )]))
+        nlev <- length(levels(x))
+        ordered <- is.ordered(x)
+        data.frame(
+          out = out,
+          lvl = lvl,
+          nmis = nmis,
+          nlev = nlev,
+          ordered = ordered,
+          type = NA
+        )
+      },
+      simplify = FALSE
+    )
 
     varinfo <- melt_data_frame_list(varinfo, id_vars = colnames(varinfo[[1]]))
 
-
-
-    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
-                   varinfo$ordered] <- "clmm"
-    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
-                   varinfo$ordered] <- "clm"
-    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
-                   !varinfo$ordered] <- "mlogitmm"
-    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
-                   !varinfo$ordered] <- "mlogit"
+    varinfo$type[
+      !varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & varinfo$ordered
+    ] <- "clmm"
+    varinfo$type[
+      varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & varinfo$ordered
+    ] <- "clm"
+    varinfo$type[
+      !varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & !varinfo$ordered
+    ] <- "mlogitmm"
+    varinfo$type[
+      varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & !varinfo$ordered
+    ] <- "mlogit"
     varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <-
       "glmm_binomial_logit"
     varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <-
@@ -152,27 +172,25 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     varinfo <- varinfo[which(!varinfo$L1 %in% no_model), , drop = FALSE]
 
-
     types <- split(
       varinfo,
-      ifelse(varinfo$out, "outcome",
-        ifelse(varinfo$nmis > 0,
+      ifelse(
+        varinfo$out,
+        "outcome",
+        ifelse(
+          varinfo$nmis > 0,
           paste0("incomplete_lvl", varinfo$lvl),
           paste0("complete_lvl", varinfo$lvl)
         )
       )
     )
 
-
     types[which(names(types) != "outcome")] <-
       lapply(types[which(names(types) != "outcome")], function(x) {
         x[order(-x$lvl, x$nmis, decreasing = TRUE), , drop = FALSE]
       })
 
-
-
     na_lvls <- unique(varinfo$lvl[varinfo$nmis > 0])
-
 
     models <- do.call(
       rbind,
@@ -193,7 +211,13 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     models <- unlist(setNames(models$type, models$L1))
 
-
+    # the model types given by the user for covariates (without a formula of
+    # their own) must fit the level of their variable
+    check_model_type_level(
+      models_user[setdiff(names(models_user), names(fixed))],
+      var_ranks = setNames(varinfo$lvl, varinfo$L1),
+      max_rank = max_lvl
+    )
     models[names(models_user)] <- models_user
   } else {
     models <- NULL
