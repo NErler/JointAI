@@ -348,8 +348,10 @@ test_that("get_column_table() describes the columns of a two-level model", {
 # For each case, the table is created from the results of the model set-up and
 # compared with the structures that divide_matrices() creates now. The cases
 # are the golden master cases (stored results in tests/testthat/golden/) and
-# joint models with binary covariates on each level, set up here without
-# running JAGS (n.adapt = 0, n.iter = 0).
+# joint models with factors on each level, functions and interactions, set up
+# here without running JAGS (n.adapt = 0, n.iter = 0). The table describes the
+# data matrices M_<level>, not the matrix of the quadrature points of joint
+# models (M_lvlonegk).
 #
 # In joint models, the data get one row per subject at the event time, with
 # missing values in the time-varying variables (reformat_longsurvdata()). So
@@ -374,6 +376,18 @@ known_set_missing <- list(jm_center_factor = "centerb")
 pbc <- droplevels(PBC[PBC$id %in% unique(PBC$id)[1:60], ])
 pbc$Blong <- factor(ifelse(pbc$albumin > 3.5, "high", "low"))
 pbc$center <- factor(ifelse(as.numeric(pbc$id) %% 2L == 0L, "a", "b"))
+# ordered factor of the observations with three categories (Olong); unordered
+# factors of the subjects with three categories, complete (Msub) and
+# incomplete (Msubmis)
+pbc$Olong <- cut(
+  pbc$albumin,
+  c(-Inf, 3.2, 3.7, Inf),
+  labels = c("a", "b", "c"),
+  ordered_result = TRUE
+)
+pbc$Msub <- factor(c("a", "b", "c")[as.numeric(pbc$id) %% 3L + 1L])
+pbc$Msubmis <- pbc$Msub
+pbc$Msubmis[pbc$id %in% unique(pbc$id)[c(3L, 8L, 20L)]] <- NA
 
 cases <- list(
   # binary longitudinal covariate of the survival model, complete in the data
@@ -407,6 +421,81 @@ cases <- list(
     list(
       Surv(futime, status != "censored") ~ sex + chol + (1 | id),
       chol ~ day + sex + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # ordered factor of the observations with three categories, complete in
+  # the data (unordered factors of the observations are not possible in joint
+  # models)
+  jm_ordered_long_factor = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ age + Olong + (1 | id),
+      Olong ~ day + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # unordered factors of the subjects with three categories, complete and
+  # incomplete
+  jm_subject_multinomial = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ Msub + Msubmis + chol + (1 | id),
+      chol ~ day + Msubmis + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # functions of time-varying variables in the survival model and in a
+  # longitudinal model
+  jm_functions = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ age + log(albumin) + (1 | id),
+      albumin ~ day + I(platelet / 100) + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # interactions of time-varying variables (binary and continuous) with
+  # variables of the subjects (continuous and unordered factor) in the
+  # survival model
+  jm_interactions_survival = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ Blong *
+        age +
+        Msubmis * albumin +
+        (1 | id),
+      Blong ~ day + (1 | id),
+      albumin ~ day + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # the same kind of interactions in a longitudinal model
+  jm_interactions_long_model = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ age + chol + (1 | id),
+      chol ~ day + Blong * age + albumin * sex + (1 | id)
     ),
     timevar = "day",
     data = pbc,
@@ -462,6 +551,54 @@ test_that("joint models: only dummies of time-varying factors are computed", {
   expect_equal(
     setNames(tab$computed, tab$column)[c("Blonglow", "sexfemale", "centerb")],
     c(Blonglow = TRUE, sexfemale = FALSE, centerb = FALSE)
+  )
+})
+
+test_that("joint models: functions and interactions of time-varying data", {
+  # set-up: a joint model with a function of a variable of the subjects
+  # (log(age)) and an interaction of a binary time-varying variable with a
+  # variable of the subjects (Blong:age)
+  fit <- suppressWarnings(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ log(age) + Blong * age + (1 | id),
+      Blong ~ day + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  ))
+  data_structure <- get_data_structure(fit$data, fit$Mlist$idvar)
+
+  tab <- get_column_table(
+    fit$Mlist$terms_list,
+    fit$Mlist$outcomes,
+    fit$models,
+    fit$Mlist$refs,
+    fit$data,
+    data_structure
+  )
+
+  # the function of age is data on the level of the subjects; the dummy of
+  # Blong and the interaction are computed on the level of the observations
+  expect_equal(
+    tab[
+      match(c("log(age)", "Blonglow", "Blonglow:age"), tab$column),
+      c(
+        "kind",
+        "level",
+        "computed"
+      )
+    ],
+    data.frame(
+      kind = c("function", "dummy", "interaction"),
+      level = c("id", "lvlone", "lvlone"),
+      computed = c(FALSE, TRUE, TRUE),
+      stringsAsFactors = FALSE
+    ),
+    ignore_attr = TRUE
   )
 })
 
