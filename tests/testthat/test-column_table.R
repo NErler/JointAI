@@ -344,25 +344,139 @@ test_that("get_column_table() describes the columns of a two-level model", {
 })
 
 
-# agreement with the current structures (golden master cases) ------------------
-# For each golden master case, the table is created from the stored results
-# (tests/testthat/golden/) and compared with the structures that
-# divide_matrices() creates now. Known difference: in a model without
-# intercept, model.matrix() codes a factor with all its categories; the dummy
-# of the reference category of an incomplete factor (B20 in lm_no_intercept)
-# is marked as computed in the table, but is not computed by the current code
-# (JAGS stops because the column has missing values).
+# agreement with the current structures --------------------------------------
+# For each case, the table is created from the results of the model set-up and
+# compared with the structures that divide_matrices() creates now. The cases
+# are the golden master cases (stored results in tests/testthat/golden/) and
+# joint models with binary covariates on each level, set up here without
+# running JAGS (n.adapt = 0, n.iter = 0).
+#
+# In joint models, the data get one row per subject at the event time, with
+# missing values in the time-varying variables (reformat_longsurvdata()). So
+# complete longitudinal variables are incomplete in the model, and their
+# dummies are computed in JAGS, as for any incomplete factor.
+#
+# Known differences, where the current code is wrong and the table is right:
+# * In a model without intercept, model.matrix() codes a factor with all its
+#   categories. The dummy of the reference category of an incomplete factor
+#   (B20 in lm_no_intercept) is computed according to the table, but not by
+#   the current code (JAGS stops because the column has missing values).
+# * In a joint model, the current code sets the dummies of complete factors on
+#   a level above the survival outcome to NA (centerb in jm_center_factor),
+#   but nothing computes them (JAGS stops). According to the table they are
+#   data.
 known_not_computed <- list(lm_no_intercept = "B20")
+known_set_missing <- list(jm_center_factor = "centerb")
 
+# data for the joint models: 60 subjects of PBC, with a complete binary
+# variable of the observations (Blong), and subjects in two centers (with a
+# complete binary variable of the centers)
+pbc <- droplevels(PBC[PBC$id %in% unique(PBC$id)[1:60], ])
+pbc$Blong <- factor(ifelse(pbc$albumin > 3.5, "high", "low"))
+pbc$center <- factor(ifelse(as.numeric(pbc$id) %% 2L == 0L, "a", "b"))
+
+cases <- list(
+  # binary longitudinal covariate of the survival model, complete in the data
+  jm_complete_long_factor = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ age + Blong + (1 | id),
+      Blong ~ day + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # the same variable only as covariate of the longitudinal model
+  jm_complete_long_covariate = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ age + chol + (1 | id),
+      chol ~ day + Blong + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # binary covariate of the subjects (the level of the survival outcome)
+  jm_subject_factor = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ sex + chol + (1 | id),
+      chol ~ day + sex + (1 | id)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )),
+  # binary covariate of the centers (above the level of the survival outcome)
+  jm_center_factor = quote(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ center + chol + (1 | id),
+      chol ~ day + center + (1 | id) + (1 | center)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  ))
+)
+
+test_that("joint models: only dummies of time-varying factors are computed", {
+  # set-up: a joint model with a complete binary variable on each level: of
+  # the observations (Blong), the subjects (sex) and the centers (center)
+  fit <- suppressWarnings(JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ center + sex + Blong + (1 | id),
+      Blong ~ day + center + (1 | id) + (1 | center)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  ))
+  data_structure <- get_data_structure(fit$data, fit$Mlist$idvar)
+
+  tab <- get_column_table(
+    fit$Mlist$terms_list,
+    fit$Mlist$outcomes,
+    fit$models,
+    fit$Mlist$refs,
+    fit$data,
+    data_structure
+  )
+
+  # Blong is missing in the rows added at the event times, so its dummy is
+  # computed; sex and center are constant within subjects and complete
+  expect_true(anyNA(fit$data$Blong))
+  expect_equal(
+    setNames(tab$computed, tab$column)[c("Blonglow", "sexfemale", "centerb")],
+    c(Blonglow = TRUE, sexfemale = FALSE, centerb = FALSE)
+  )
+})
+
+# add the golden master cases, which read the stored results
 golden_files <- list.files(test_path("golden"), pattern = "\\.rds$")
-golden_files <- setdiff(golden_files, "info.rds")
+for (file in setdiff(golden_files, "info.rds")) {
+  cases[[sub("\\.rds$", "", file)]] <- bquote(
+    readRDS(test_path("golden", .(file)))
+  )
+}
 
-for (file in golden_files) {
-  case <- sub("\\.rds$", "", file)
-
+for (case in names(cases)) {
   test_that(paste("the column table agrees with divide_matrices():", case), {
-    # set-up: the stored results of the case and the structure of its data
-    stored <- readRDS(test_path("golden", file))
+    # set-up: the results of the model set-up and the structure of its data
+    stored <- suppressWarnings(eval(cases[[case]]))
     mlist <- stored$Mlist
     data_structure <- get_data_structure(stored$data, mlist$idvar)
 
@@ -404,7 +518,7 @@ for (file in golden_files) {
 
     # the computed columns are those that are completely missing in the data
     # matrices (they are set to NA, to be computed in JAGS), apart from the
-    # known difference
+    # known differences
     all_missing <- character(0L)
     for (mat in unique(tab$matrix)) {
       data_matrix <- stored$data_list[[mat]]
@@ -415,7 +529,7 @@ for (file in golden_files) {
     }
     expect_setequal(
       setdiff(tab$column[tab$computed], known_not_computed[[case]]),
-      all_missing
+      setdiff(all_missing, known_set_missing[[case]])
     )
 
     # the functions of covariates (fcts_all) are the function columns, with
