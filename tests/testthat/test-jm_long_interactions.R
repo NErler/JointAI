@@ -11,14 +11,14 @@ pbc$Blong <- factor(ifelse(pbc$albumin > 3.5, "high", "low"))
 
 # set up the joint model (without sampling) with the given longitudinal model
 # for chol and further longitudinal models
-jm_long_setup <- function(longfml) {
+jm_long_setup <- function(longfml, data = pbc) {
   JM_imp(
     c(
       list(Surv(futime, status != "censored") ~ age + chol + (1 | id)),
       longfml
     ),
     timevar = "day",
-    data = pbc,
+    data = data,
     n.adapt = 0,
     n.iter = 0,
     seed = 2020,
@@ -94,7 +94,30 @@ test_that("interaction of two time-varying covariates", {
   expect_equal(inter, matgk[, "albumin", ] * matgk[, "platelet", ])
 })
 
-test_that("the sub-model at the quadrature points uses the interaction column", {
+test_that("interaction of a time-varying and a higher-level covariate", {
+  # a covariate on the level of centres, which contain several subjects
+  pbc_center <- pbc
+  pbc_center$center <- as.numeric(pbc_center$id) %% 5
+  pbc_center$cvar <- c(-1.2, 0.3, 0.8, -0.4, 1.5)[pbc_center$center + 1]
+
+  # the set-up of the random effects of this model warns "no non-missing
+  # arguments to min", which is not what this test is about
+  fit <- suppressWarnings(jm_long_setup(
+    list(chol ~ day + albumin * cvar + (1 | id) + (1 | center)),
+    data = pbc_center
+  ))
+  matgk <- draw_matgk(fit)
+
+  # the centre of each subject
+  center <- fit$data_list$group_center[fit$data_list$pos_id]
+  cvar <- matrix(fit$data_list$M_center[center, "cvar"], nrow = 60L, ncol = 15L)
+
+  inter <- matgk[, "albumin:cvar", ]
+  expect_false(anyNA(inter))
+  expect_equal(inter, matgk[, "albumin", ] * cvar)
+})
+
+test_that("the model at the quadrature points uses the interaction column", {
   fit <- jm_long_setup(list(chol ~ day + albumin * age + (1 | id)))
   column <- match("albumin:age", colnames(fit$data_list$M_lvlone))
 
