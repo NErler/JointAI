@@ -21,6 +21,10 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* `JM_imp()`: an interaction of a time-varying covariate with another variable
+  in a longitudinal sub-model (e.g., `chol ~ day + albumin * age + (1 | id)`)
+  is now calculated at the quadrature points of the survival part. Before, the
+  JAGS model did not compile.
 * A model type given in `models` for a covariate must now fit the level of the
   variable: with random effects (e.g., `"lmm"`) for a variable that varies
   within the groups of a grouping level, without random effects (e.g., `"lm"`)
