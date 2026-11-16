@@ -358,17 +358,12 @@ test_that("get_column_table() describes the columns of a two-level model", {
 # complete longitudinal variables are incomplete in the model, and their
 # dummies are computed in JAGS, as for any incomplete factor.
 #
-# Known differences, where the current code is wrong and the table is right:
-# * In a model without intercept, model.matrix() codes a factor with all its
-#   categories. The dummy of the reference category of an incomplete factor
-#   (B20 in lm_no_intercept) is computed according to the table, but not by
-#   the current code (JAGS stops because the column has missing values).
-# * In a joint model, the current code sets the dummies of complete factors on
-#   a level above the survival outcome to NA (centerb in jm_center_factor),
-#   but nothing computes them (JAGS stops). According to the table they are
-#   data.
+# Known difference, where the stored golden master is wrong and the table is
+# right: in a model without intercept, model.matrix() codes a factor with all
+# its categories. The dummy of the reference category of an incomplete factor
+# (B20 in lm_no_intercept) is computed according to the table, but not in the
+# stored golden master (JAGS stops because the column has missing values).
 known_not_computed <- list(lm_no_intercept = "B20")
-known_set_missing <- list(jm_center_factor = "centerb")
 
 # data for the joint models: 60 subjects of PBC, with a complete binary
 # variable of the observations (Blong), and subjects in two centers (with a
@@ -666,7 +661,7 @@ for (case in names(cases)) {
     }
     expect_setequal(
       setdiff(tab$column[tab$computed], known_not_computed[[case]]),
-      setdiff(all_missing, known_set_missing[[case]])
+      all_missing
     )
 
     # the functions of covariates (fcts_all) are the function columns, with

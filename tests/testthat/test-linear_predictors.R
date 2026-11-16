@@ -65,6 +65,8 @@ pbc$age <- pbc$age - 50
 set.seed(3)
 pbc$W <- rnorm(60)[match(pbc$id, unique(pbc$id))]
 pbc$W[pbc$id %in% unique(pbc$id)[c(2, 9, 30)]] <- NA
+# subjects in two centers
+pbc$center <- factor(ifelse(as.numeric(pbc$id) %% 2L == 0L, "a", "b"))
 
 # helpers ----------------------------------------------------------------------
 # Write down what we expect for one sub-model:
@@ -456,8 +458,37 @@ cases <- list(
       y = submodel("identity", "lvlone", id = ~1),
       b2 = submodel("logit", "lvlone", id = ~1),
       c2 = submodel("identity", "lvlone", id = ~1)
+    )
+  ),
+  # without intercept, model.matrix() codes the first factor with all its
+  # categories, also the reference category (B20)
+  factor_without_intercept = list(
+    call = quote(lm_imp(y ~ 0 + C1 + B2 + M2, data = wideDF)),
+    design = ~ 0 + C1 + B2 + M2,
+    submodels = list(
+      y = submodel("identity", "lvlone"),
+      B2 = submodel("logit", "lvlone"),
+      M2 = submodel("multinomial", "lvlone")
+    )
+  ),
+  # a complete factor of the centers in a joint model is data (it has no
+  # missing values, also not in the rows added at the event times)
+  jm_center_factor = list(
+    call = quote(JM_imp(
+      list(
+        Surv(futime, status != "censored") ~ center + chol,
+        chol ~ day + center + (1 | id) + (1 | center)
+      ),
+      timevar = "day",
+      data = pbc
+    )),
+    design = ~ center + chol + day,
+    submodels = list(
+      chol = submodel("identity", "lvlone", id = ~1, center = ~1)
     ),
-    known_bug = "the column of the reference category (b20:c2) is not computed"
+    # the survival model: its linear predictor is tested in
+    # test-ranef_survival.R
+    not_compared = 'Surv(futime, status != "censored")'
   )
 )
 
