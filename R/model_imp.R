@@ -1145,7 +1145,7 @@ model_imp <- function(
       random = Mlist$random,
       Mlist = Mlist[setdiff(
         names(Mlist),
-        c("data", "models", "fixed", "random", "M")
+        c("data", "models", "fixed", "random", "M", "column_table")
       )],
       par_index_main = par_index_main,
       par_index_other = par_index_other,

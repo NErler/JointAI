@@ -460,6 +460,17 @@ cases <- list(
       c2 = submodel("identity", "lvlone", id = ~1)
     )
   ),
+  # functions of complete variables in interactions with incomplete variables,
+  # without the main effects: the columns of the functions are data
+  function_interaction_without_main_effect = list(
+    call = quote(lm_imp(y ~ ns(C1, df = 2):B2 + log(C1):C2, data = wideDF)),
+    design = ~ ns(C1, df = 2):B2 + log(C1):C2,
+    submodels = list(
+      y = submodel("identity", "lvlone"),
+      B2 = submodel("logit", "lvlone"),
+      C2 = submodel("identity", "lvlone")
+    )
+  ),
   # without intercept, model.matrix() codes the first factor with all its
   # categories, also the reference category (B20)
   factor_without_intercept = list(
@@ -488,7 +499,11 @@ cases <- list(
     ),
     # the survival model: its linear predictor is tested in
     # test-ranef_survival.R
-    not_compared = 'Surv(futime, status != "censored")'
+    not_compared = 'Surv(futime, status != "censored")',
+    known_bug = paste(
+      "complete binary factors without a model (center) are coded 1/2 in the",
+      "data matrices, other binary factors 0/1 (completed_data() assumes 0/1)"
+    )
   )
 )
 

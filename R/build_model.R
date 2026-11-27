@@ -58,6 +58,17 @@ write_model <- function(info_list, Mlist, modelfile = "") {
     }
   })
 
+  # the interactions and the other computed columns that no model writes, one
+  # loop per level
+  computed_block <- paste_computed_block(
+    column_table = Mlist$column_table,
+    trafos = Mlist$trafos,
+    refs = Mlist$refs,
+    modelled = names(info_list),
+    group_lvls = Mlist$group_lvls,
+    n = Mlist$N
+  )
+
   cat(
     "model {",
     "\n\n",
@@ -85,16 +96,12 @@ write_model <- function(info_list, Mlist, modelfile = "") {
     },
 
     '\n',
-    if (any(sapply(Mlist$interactions, "attr", "has_NAs"))) {
+    if (length(computed_block) > 0L) {
       paste0(
         "\n",
         tab(),
         "# Re-calculate interaction terms\n",
-        paste_interactions(
-          Mlist$interactions,
-          group_lvls = Mlist$group_lvls,
-          n = Mlist$N
-        ),
+        computed_block,
         "\n"
       )
     },

@@ -226,3 +226,302 @@ test_that("get_column_table() adds the parts of computed interactions", {
   )
   expect_equal(values[, "log(C1)"], log(fit$data$C1))
 })
+
+
+# get_data_reference() ---------------------------------------------------------
+
+test_that("get_data_reference() indexes higher levels through the groupings", {
+  group_lvls <- c(lvlone = 1L, id = 2L, center = 3L)
+
+  # the same level: the loop index of the level
+  expect_equal(
+    deparse_call(get_data_reference("lvlone", 3L, "lvlone", group_lvls)),
+    "M_lvlone[i, 3]"
+  )
+  expect_equal(
+    deparse_call(get_data_reference("id", 2L, "id", group_lvls)),
+    "M_id[ii, 2]"
+  )
+  # a higher level from the lowest level, and from a level above it
+  expect_equal(
+    deparse_call(get_data_reference("id", 2L, "lvlone", group_lvls)),
+    "M_id[group_id[i], 2]"
+  )
+  expect_equal(
+    deparse_call(get_data_reference("center", 1L, "id", group_lvls)),
+    "M_center[group_center[pos_id[ii]], 1]"
+  )
+})
+
+
+# prepare_jags_call() ----------------------------------------------------------
+
+test_that("prepare_jags_call() rewrites calls for JAGS", {
+  # I() is removed, as.numeric(x) becomes (x)
+  expect_equal(
+    prepare_jags_call(quote(I(C1^2)), "I(C1^2)"),
+    quote(C1^2)
+  )
+  expect_equal(
+    deparse_call(prepare_jags_call(
+      quote(as.numeric(O2) > as.numeric(M1)),
+      "x"
+    )),
+    "(O2) > (M1)"
+  )
+  # functions that JAGS does not know and text give an error
+  expect_error(
+    prepare_jags_call(quote(log10(C2)), "log10(C2)"),
+    "does not know[[:space:]]+the[[:space:]]+function"
+  )
+  expect_error(
+    prepare_jags_call(quote(M2 == "a"), 'M2 == "a"'),
+    "compares[[:space:]]+with[[:space:]]+the[[:space:]]+text"
+  )
+})
+
+
+# get_factor_call() and get_variable_reference() ------------------------------
+
+# set-up for writing parts: a table with the factor M2 in column 3 of the data
+# matrix of the lowest level, and the column that is computed
+factor_setting <- list(
+  column = "M22:C1",
+  variables = c("M2", "C1"),
+  level = "lvlone",
+  column_table = data.frame(
+    column = "M2",
+    kind = "variable",
+    level = "lvlone",
+    index = 3L,
+    stringsAsFactors = FALSE
+  ),
+  group_lvls = c(lvlone = 1L)
+)
+
+test_that("get_factor_call() writes treatment and sum contrasts", {
+  codes <- c(`1` = 1, `2` = 2, `3` = 3, `4` = 4)
+
+  # indicator (and treatment contrast) of the category 2
+  indicator <- list(
+    call = "M2",
+    type = "factor",
+    name = "M22",
+    values = c(`1` = 0, `2` = 1, `3` = 0, `4` = 0),
+    codes = codes
+  )
+  expect_equal(
+    deparse_call(get_factor_call(indicator, factor_setting)),
+    "ifelse(M_lvlone[i, 3] == 2, 1, 0)"
+  )
+
+  # sum contrast of the category 2, with the reference category 4 as -1
+  sum_contrast <- indicator
+  sum_contrast$values <- c(`1` = 0, `2` = 1, `3` = 0, `4` = -1)
+  expect_equal(
+    deparse_call(get_factor_call(sum_contrast, factor_setting)),
+    "ifelse(M_lvlone[i, 3] == 2, 1, ifelse(M_lvlone[i, 3] == 4, -1, 0))"
+  )
+
+  # other contrasts (here polynomial) give an error
+  polynomial <- indicator
+  polynomial$values <- contr.poly(4L)[, 1L]
+  expect_error(
+    get_factor_call(polynomial, factor_setting),
+    "only[[:space:]]+treatment[[:space:]]+and[[:space:]]+sum"
+  )
+})
+
+test_that("write_out_part() stops for the column of a matrix", {
+  # a column of a spline of an incomplete variable cannot be computed in JAGS
+  # (models with such splines stop earlier, in divide_matrices())
+  spline_part <- list(
+    call = "ns(C2, df = 2)",
+    type = "matrix",
+    name = "ns(C2, df = 2)1",
+    column = 1L
+  )
+  expect_error(
+    write_out_part(spline_part, factor_setting),
+    "cannot[[:space:]]+be[[:space:]]+computed"
+  )
+})
+
+test_that("get_variable_reference() stops for a variable without column", {
+  # B2 is not a column of the table
+  expect_error(
+    get_variable_reference("B2", factor_setting),
+    "is not a[[:space:]]+column"
+  )
+})
+
+
+# paste_computed_column() ------------------------------------------------------
+
+test_that("paste_computed_column(): interactions without main effects", {
+  # set-up: a factor and a function of a variable of a higher level in
+  # interactions without their main effects
+  fit <- lme_imp(
+    y ~ b2:c2 + log(C1):c2 + (1 | id),
+    data = longDF,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )
+  tab <- column_table_of(fit)
+  index <- setNames(tab$index, tab$column)
+  group_lvls <- fit$Mlist$group_lvls
+
+  # log(C1) is data (computed in R), b20 is computed in JAGS
+  expect_equal(
+    unname(fit$data_list$M_id[, index[["log(C1)"]]]),
+    log(unname(fit$data_list$M_id[, index[["C1"]]]))
+  )
+  expect_equal(
+    paste_computed_column("b20", tab, group_lvls),
+    sprintf(
+      "M_lvlone[i, %d] <- ifelse(M_lvlone[i, %d] == 0, 1, 0)",
+      index[["b20"]],
+      index[["b2"]]
+    )
+  )
+
+  # each interaction is the product of the columns of its parts
+  expect_equal(
+    paste_computed_column("b20:c2", tab, group_lvls),
+    sprintf(
+      "M_lvlone[i, %d] <- M_lvlone[i, %d] * M_lvlone[i, %d]",
+      index[["b20:c2"]],
+      index[["b20"]],
+      index[["c2"]]
+    )
+  )
+  expect_equal(
+    paste_computed_column("b21:c2", tab, group_lvls),
+    sprintf(
+      "M_lvlone[i, %d] <- M_lvlone[i, %d] * M_lvlone[i, %d]",
+      index[["b21:c2"]],
+      index[["b21"]],
+      index[["c2"]]
+    )
+  )
+  expect_equal(
+    paste_computed_column("c2:log(C1)", tab, group_lvls),
+    sprintf(
+      "M_lvlone[i, %d] <- M_lvlone[i, %d] * M_id[group_id[i], %d]",
+      index[["c2:log(C1)"]],
+      index[["c2"]],
+      index[["log(C1)"]]
+    )
+  )
+
+  # the interactions and b20 are written in the block at the end of the model
+  expect_match(
+    fit$jagsmodel,
+    paste0(
+      "M_lvlone[i, 4] <- M_lvlone[i, ",
+      index[["b20"]],
+      "] * M_lvlone[i, 3]"
+    ),
+    fixed = TRUE
+  )
+})
+
+test_that("without intercept, the reference category is computed", {
+  # set-up: without intercept, B2 is coded by indicators (B20 and B21)
+  fit <- lm_imp(
+    y ~ 0 + C1 + B2 + M2,
+    data = wideDF,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )
+  tab <- column_table_of(fit)
+  index <- setNames(tab$index, tab$column)
+
+  # B20 is set to NA and computed from B2 (coded 0/1)
+  expect_true(all(is.na(fit$data_list$M_lvlone[, "B20"])))
+  expect_match(
+    fit$jagsmodel,
+    sprintf(
+      "M_lvlone[i, %d] <- ifelse(M_lvlone[i, %d] == 0, 1, 0)",
+      index[["B20"]],
+      index[["B2"]]
+    ),
+    fixed = TRUE
+  )
+})
+
+test_that("joint model: a complete factor of the centers is data", {
+  # set-up: 60 subjects of PBC in two centers
+  pbc <- droplevels(PBC[PBC$id %in% unique(PBC$id)[1:60], ])
+  pbc$center <- factor(ifelse(as.numeric(pbc$id) %% 2L == 0L, "a", "b"))
+
+  fit <- JM_imp(
+    list(
+      Surv(futime, status != "censored") ~ center + chol,
+      chol ~ day + center + (1 | id) + (1 | center)
+    ),
+    timevar = "day",
+    data = pbc,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )
+
+  # the dummy of center is not missing and not computed in JAGS
+  expect_false(anyNA(fit$data_list$M_center[, "centerb"]))
+  expect_no_match(fit$jagsmodel, "M_center\\[[a-z]+, 2\\] <-")
+})
+
+test_that("a spline in an interaction without main effect is data", {
+  # set-up: B2 is incomplete, so the interaction is computed in JAGS; the
+  # columns of the spline of the complete C1 are added as data
+  fit <- lm_imp(
+    y ~ ns(C1, df = 2):B2,
+    data = wideDF,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE,
+    warn = FALSE
+  )
+  M <- fit$data_list$M_lvlone
+
+  # the columns of the spline are the values of ns() in R, and not missing
+  expect_equal(
+    unname(M[, c("ns(C1, df = 2)1", "ns(C1, df = 2)2")]),
+    unname(unclass(splines::ns(wideDF$C1, df = 2))[, 1:2])
+  )
+
+  # the interactions are products of columns
+  expect_match(
+    fit$jagsmodel,
+    paste0(
+      "M_lvlone[i, ",
+      match("ns(C1, df = 2)1:B20", colnames(M)),
+      "] <- M_lvlone[i, ",
+      match("ns(C1, df = 2)1", colnames(M)),
+      "] * M_lvlone[i, ",
+      match("B20", colnames(M)),
+      "]"
+    ),
+    fixed = TRUE
+  )
+})
+
+test_that("functions that JAGS does not know give an informative error", {
+  expect_error(
+    lm_imp(
+      y ~ C1 + floor(C2),
+      data = wideDF,
+      n.adapt = 0,
+      n.iter = 0,
+      mess = FALSE,
+      warn = FALSE
+    ),
+    "JAGS[[:space:]]+does[[:space:]]+not[[:space:]]+know"
+  )
+})

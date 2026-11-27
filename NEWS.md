@@ -27,6 +27,18 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Models that did not compile in JAGS ("Unable to resolve ...") because a
+  column of the design matrix that involves incomplete variables was not
+  computed now work:
+  an interaction of a factor or a function without its main effect (e.g.,
+  `y ~ b2:c2`, `y ~ log(C1):c2` or `y ~ ns(C1, df = 2):B2`; not yet in joint
+  models), the reference category of a factor in a
+  model without intercept (e.g., `y ~ 0 + C1 + B2`), and a complete factor on a
+  level above the survival outcome in a joint model (e.g., a factor of the
+  centers when subjects are nested in centers).
+* A function that JAGS does not know (e.g., `log10()` or `floor()`) applied
+  to incomplete variables now gives an informative error instead of an error
+  from JAGS.
 * A model type given in `models` for a covariate must now fit the level of the
   variable: with random effects (e.g., `"lmm"`) for a variable that varies
   within the groups of a grouping level, without random effects (e.g., `"lm"`)
