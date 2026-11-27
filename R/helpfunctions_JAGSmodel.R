@@ -1166,6 +1166,77 @@ paste_jm_interaction <- function(
 }
 
 
+#' Write the interaction terms at the quadrature points of a joint model
+#'
+#' Writes the JAGS syntax that calculates the interaction terms selected by
+#' `get_gk_interactions()` in the design matrix at the quadrature points
+#' (`M_lvlonegk`), as the product of their elements, for each quadrature point.
+#' Elements in `M_lvlone` are taken from `M_lvlonegk`; elements on the level of
+#' the survival outcome or above from their design matrix, for the current
+#' unit of the survival outcome. Used in `jagsmodel_jm()`, inside the loop over
+#' the units of the survival outcome.
+#'
+#' @param interactions named list of interaction terms (the element
+#'   `gk_interactions` of the model information of the survival part).
+#' @param index character string; the index of the level of the survival
+#'   outcome, e.g., `"ii"`.
+#' @param surv_lvl character string; the level of the survival outcome, e.g.,
+#'   `"id"`.
+#'
+#' @returns A character string with the JAGS syntax, or `NULL` if there are no
+#'   interaction terms.
+#' @keywords internal
+paste_gk_interactions <- function(interactions, index, surv_lvl) {
+  if (length(interactions) == 0L) {
+    return(NULL)
+  }
+
+  jags_lines <- character(length(interactions))
+  for (i in seq_along(interactions)) {
+    inter <- interactions[[i]]
+    elmt_mats <- names(inter$elmts)
+
+    # write each element for the current quadrature point
+    factors <- character(length(elmt_mats))
+    for (j in seq_along(elmt_mats)) {
+      lvl <- sub("M_", "", elmt_mats[j], fixed = TRUE)
+      factors[j] <- if (lvl == "lvlone") {
+        paste_data("M_lvlone", index, inter$elmts[[j]], isgk = TRUE)
+      } else {
+        # same level as the survival outcome: its index; a higher level: the
+        # unit of that level of the current unit of the survival outcome
+        elmt_index <- get_index(
+          lvl = lvl,
+          resplvl = surv_lvl,
+          indices = setNames(index, surv_lvl),
+          surv_lvl = surv_lvl,
+          isgk = TRUE
+        )
+        paste_data(elmt_mats[j], elmt_index, inter$elmts[[j]])
+      }
+    }
+
+    jags_lines[i] <- paste0(
+      tab(6L),
+      paste_data("M_lvlone", index, inter$interterm[[1L]], isgk = TRUE),
+      " <- ",
+      paste(factors, collapse = " * ")
+    )
+  }
+
+  paste0(
+    tab(4L),
+    "# re-calculate interaction terms at the event times\n",
+    tab(4L),
+    "for (k in 1:15) {\n",
+    paste(jags_lines, collapse = "\n"),
+    "\n",
+    tab(4L),
+    "}\n"
+  )
+}
+
+
 # used in paste_linpred_jm() (2020-06-10)
 paste_association <- function(
   varname,
