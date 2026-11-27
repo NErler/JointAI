@@ -1,8 +1,8 @@
 # The table of the columns of the design matrices (get_column_table()) and its
 # helpers. The table describes each column once: its term, variables, level,
 # data matrix and position, and whether JAGS computes it and it can be scaled.
-# It is not used in the model set-up yet; the last part of this file checks
-# that it agrees with the structures that divide_matrices() creates now
+# It decides which columns JAGS computes; the last part of this file checks
+# that it agrees with the other structures that divide_matrices() creates
 # (Mlvls, the design matrices, fcts_all, interactions, lp_cols, scale_pars),
 # using the stored results of the golden master cases.
 
@@ -357,13 +357,6 @@ test_that("get_column_table() describes the columns of a two-level model", {
 # missing values in the time-varying variables (reformat_longsurvdata()). So
 # complete longitudinal variables are incomplete in the model, and their
 # dummies are computed in JAGS, as for any incomplete factor.
-#
-# Known difference, where the stored golden master is wrong and the table is
-# right: in a model without intercept, model.matrix() codes a factor with all
-# its categories. The dummy of the reference category of an incomplete factor
-# (B20 in lm_no_intercept) is computed according to the table, but not in the
-# stored golden master (JAGS stops because the column has missing values).
-known_not_computed <- list(lm_no_intercept = "B20")
 
 # data for the joint models: 60 subjects of PBC, with a complete binary
 # variable of the observations (Blong), and subjects in two centers (with a
@@ -649,8 +642,7 @@ for (case in names(cases)) {
     }
 
     # the computed columns are those that are completely missing in the data
-    # matrices (they are set to NA, to be computed in JAGS), apart from the
-    # known differences
+    # matrices (they are set to NA, to be computed in JAGS)
     all_missing <- character(0L)
     for (mat in unique(tab$matrix)) {
       data_matrix <- stored$data_list[[mat]]
@@ -659,10 +651,7 @@ for (case in names(cases)) {
         colnames(data_matrix)[colSums(!is.na(data_matrix)) == 0L]
       )
     }
-    expect_setequal(
-      setdiff(tab$column[tab$computed], known_not_computed[[case]]),
-      all_missing
-    )
+    expect_setequal(tab$column[tab$computed], all_missing)
 
     # the functions of covariates (fcts_all) are the function columns, with
     # the same variables; the event indicators of survival outcomes are
