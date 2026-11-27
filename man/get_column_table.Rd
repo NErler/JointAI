@@ -50,7 +50,12 @@ data that the column is computed from,
 \item \code{matrix}: the name of the data matrix (\code{"M_<level>"}),
 \item \code{index}: the number of the column in its data matrix,
 \item \code{computed}: whether JAGS has to compute the column,
-\item \code{scalable}: whether the column can be scaled.
+\item \code{added}: whether the column was added as part of a computed
+interaction (it is not a column of \code{model.matrix()} of any formula),
+\item \code{scalable}: whether the column can be scaled,
+\item \code{parts}: a list with, per row, one element per call of the term, which
+describes which column of the coding of that call the column uses (see
+\code{\link[=get_column_parts]{get_column_parts()}}).
 }
 }
 \description{
@@ -76,6 +81,12 @@ rank, the level that comes last by name is used, as in \code{\link[=get_datlvls]
 
 A column is computed in JAGS when it is a dummy variable, a function or an
 interaction and at least one of its variables has missing values.
+
+JAGS computes an interaction as the product of the columns of its parts.
+Parts that are not a column of any design matrix (e.g., \code{b20} and \code{log(C1)}
+in \code{b2:c2} and \code{log(C1):c2} without the main effects) are added at the end
+of the table (\code{added}): as data if their variables are complete (computed
+once in R, see \code{\link[=get_added_column_values]{get_added_column_values()}}), otherwise computed in JAGS.
 
 A column can be scaled when it is a numeric variable, a function with a
 numeric value, or an interaction of which at least one element has a
