@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Models with random effects work with rjags 5: the hyperparameters of the
+  prior of the random-effects variances (`shape_diag_RinvD`,
+  `rate_diag_RinvD`) were given to JAGS as text, which rjags 5 drops
+  ("Non-numeric data values supplied"), so that the variances were not
+  defined.
 * `JM_imp()`: an interaction of a time-varying covariate with another variable
   in a longitudinal sub-model (e.g., `chol ~ day + albumin * age + (1 | id)`)
   is now calculated at the quadrature points of the survival part. Before, the
