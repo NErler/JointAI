@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* With rjags 5 and JAGS 5, the covariance matrices of the random effects
+  (e.g., `D_y_id`) were not sampled ("Failed to set value trace monitor"), so
+  that, e.g., `rd_vcov()` failed: rjags 5 cannot monitor single elements of a
+  node whose name has two or more underscores. Such nodes are now monitored as
+  a whole, and only the requested elements are kept.
 * `JM_imp()`: an interaction of a time-varying covariate with another variable
   in a longitudinal sub-model (e.g., `chol ~ day + albumin * age + (1 | id)`)
   is now calculated at the quadrature points of the survival part. Before, the
