@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* With rjags 5 and JAGS 5, the covariance matrices of the random effects
+  (e.g., `D_y_id`) were not sampled ("Failed to set value trace monitor"), so
+  that, e.g., `rd_vcov()` failed: rjags 5 cannot monitor single elements of a
+  node whose name has two or more underscores. Such nodes are now monitored as
+  a whole, and only the requested elements are kept.
 * Models with random effects work with rjags 5: the hyperparameters of the
   prior of the random-effects variances (`shape_diag_RinvD`,
   `rate_diag_RinvD`) were given to JAGS as text, which rjags 5 drops
