@@ -26,6 +26,17 @@
   that, e.g., `rd_vcov()` failed: rjags 5 cannot monitor single elements of a
   node whose name has two or more underscores. Such nodes are now monitored as
   a whole, and only the requested elements are kept.
+* Models with random effects work with rjags 5: the hyperparameters of the
+  prior of the random-effects variances (`shape_diag_RinvD`,
+  `rate_diag_RinvD`) were given to JAGS as text, which rjags 5 drops
+  ("Non-numeric data values supplied"), so that the variances were not
+  defined.
+* With JAGS 5, models with a random intercept (or independent random effects)
+  often could not be initialised ("Node inconsistent with parents") or got
+  stuck, e.g., proportional hazards and generalised linear mixed models: JAGS 5 started
+  the precision of the random effects close to zero. With JAGS >= 5,
+  **JointAI** now draws initial values for these precisions (unless they are
+  given in `inits`).
 * `JM_imp()`: an interaction of a time-varying covariate with another variable
   in a longitudinal sub-model (e.g., `chol ~ day + albumin * age + (1 | id)`)
   is now calculated at the quadrature points of the survival part. Before, the
