@@ -367,15 +367,16 @@ golden_fit <- function(case, data = golden_data()) {
   out <- unclass(fit)[golden_parts]
   # the name of the temporary model file differs between runs
   out$mcmc_settings$modelfile <- NULL
-  # Remove the initial values of the precisions of the random effects (e.g.,
-  # invD_y_id). JointAI only adds them when JAGS >= 5 is used (see
-  # add_ranef_inits()), so with them the stored initial values would depend on
-  # the installed JAGS version. Without them, the same golden files can be
-  # compared with JAGS 4 and JAGS 5. Initial values that the user supplies for
-  # these nodes would be removed too; no golden case supplies them.
-  ranef_nodes <- names(get_ranef_precision_nodes(fit$info_list))
+  # Remove the initial values that JointAI only adds when JAGS >= 5 is used
+  # (the precisions of the random effects, e.g., invD_y_id, and the shape of
+  # Weibull survival models; see add_jags5_inits()). With them, the stored
+  # initial values would depend on the installed JAGS version. Without them,
+  # the same golden files can be compared with JAGS 4 and JAGS 5. Initial values
+  # that the user supplies for these nodes would be removed too; no golden case
+  # supplies them.
+  jags5_nodes <- names(get_jags5_init_nodes(fit$info_list))
   out$mcmc_settings$inits <- lapply(out$mcmc_settings$inits, function(chain) {
-    chain[setdiff(names(chain), ranef_nodes)]
+    chain[setdiff(names(chain), jags5_nodes)]
   })
   # the JAGS model text is read back from a file; on Windows, line ends are
   # then "\r\n" instead of "\n"
