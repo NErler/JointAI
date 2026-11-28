@@ -452,20 +452,20 @@ mod4c <- lme_imp(
 str(coef(mod4c$model))
 #> List of 15
 #>  $ M_ID        : num [1:200, 1:5] NA NA NA NA NA 1 NA NA NA NA ...
-#>  $ M_lvlone    : num [1:2400, 1:3] NA NA 0 0 NA NA NA NA NA NA ...
-#>  $ RinvD_bmi_ID: num [1:2, 1:2] 0.836 NA NA 0.114
-#>  $ alpha       : num [1:7] 45.5303 0.1008 0.0652 0.0802 3.8216 ...
-#>  $ b_bmi_ID    : num [1:200, 1:2] 16 17 15.4 15.6 17.2 ...
-#>  $ b_hc_ID     : num [1:200, 1] 44.3 45.2 47.2 47.4 45.7 ...
-#>  $ beta        : num [1:6] 16.4886 0.1199 0.1475 -0.0524 -1.3963 ...
-#>  $ delta_SMOKE : num -1.53
-#>  $ gamma_SMOKE : num [1:2] -1.2 NA
-#>  $ invD_bmi_ID : num [1:2, 1:2] 1.69 -1.87 -1.87 8.16
-#>  $ invD_hc_ID  : num [1, 1] 0.637
+#>  $ M_lvlone    : num [1:2400, 1:3] NA NA NA NA NA NA NA NA NA NA ...
+#>  $ RinvD_bmi_ID: num [1:2, 1:2] 2.878 NA NA 0.867
+#>  $ alpha       : num [1:7] 45.3184 0.278 -0.8822 -0.0515 3.9171 ...
+#>  $ b_bmi_ID    : num [1:200, 1:2] 16 16.7 15.1 15.5 17.3 ...
+#>  $ b_hc_ID     : num [1:200, 1] 43.8 45.2 47.5 47 46.2 ...
+#>  $ beta        : num [1:6] 16.495 -0.0176 -0.2702 0.1695 -1.3124 ...
+#>  $ delta_SMOKE : num -1.6
+#>  $ gamma_SMOKE : num [1:2] -1.12 NA
+#>  $ invD_bmi_ID : num [1:2, 1:2] 1.82 -1.63 -1.63 7.88
+#>  $ invD_hc_ID  : num [1, 1] 0.585
 #>  $ mu_b_bmi_ID : num [1:200, 1:2] NA NA NA NA NA NA NA NA NA NA ...
-#>  $ tau_HEIGHT_M: num 0.0195
-#>  $ tau_bmi     : num 4.19
-#>  $ tau_hc      : num 0.232
+#>  $ tau_HEIGHT_M: num 0.0203
+#>  $ tau_bmi     : num 4.97
+#>  $ tau_hc      : num 0.245
 ```
 
 `M_ID` and `M_lvlone` are design matrices containing the the parts of
@@ -577,9 +577,9 @@ elements, since these are fixed in the data:
 ``` r
 
 coef(mod4c$model)$RinvD_bmi_ID
-#>           [,1]      [,2]
-#> [1,] 0.1996369        NA
-#> [2,]        NA 0.9486955
+#>            [,1]      [,2]
+#> [1,] 0.08043666        NA
+#> [2,]         NA 0.0494272
 ```
 
 Elements that are completely unobserved, like the parameter vectors

@@ -70,8 +70,8 @@ rd_vcov(mod)
 #> $id
 #>                                   y           y
 #>                         (Intercept)        time
-#>           y (Intercept)  14.7952025  -0.4352103
-#>           y        time  -0.4352103   0.2293438
+#>           y (Intercept)  18.3264398  -1.2592139
+#>           y        time  -1.2592139   0.5162294
 #> 
 # }
 ```

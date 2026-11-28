@@ -54,10 +54,10 @@ formula, a list with one such vector per outcome.
 mod <- glm_imp(B1 ~ C1 + C2 + O1, data = wideDF, n.iter = 100,
                family = binomial(), mess = FALSE)
 summary(residuals(mod, type = 'response'))
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.      NAs 
-#> -0.89817  0.08904  0.16999 -0.01056  0.23780  0.40613        4 
+#>      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.       NAs 
+#> -0.908715  0.076955  0.162274 -0.008339  0.248156  0.424583         4 
 summary(residuals(mod, type = 'working'))
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.      NAs 
-#> -9.82016  1.09776  1.20481 -0.05372  1.31209  1.68388        4 
+#>      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.       NAs 
+#> -10.95465   1.08338   1.19371  -0.05455   1.33012   1.73787         4 
 
 ```
