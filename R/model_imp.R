@@ -31,7 +31,11 @@
 #'              or a function (see \code{\link[rjags]{jags.model}}).
 #'              If omitted, starting values for the random number generator are
 #'              created by \strong{JointAI}, initial values are then generated
-#'              by JAGS.
+#'              by JAGS. With JAGS >= 5, \strong{JointAI} draws initial values
+#'              for the precisions of random effects that have a truncated
+#'              gamma prior (a single random effect, or independent random
+#'              effects) and for the shape parameter of Weibull survival
+#'              models, if they are not given in `inits`.
 #'              It is an error to supply an initial value for an observed node.
 #' @param n.adapt number of iterations for adaptation of the MCMC samplers
 #'                (see \code{\link[rjags]{adapt}})
@@ -1040,6 +1044,14 @@ model_imp <- function(
     seed = seed,
     n_chains = n.chains,
     warn = warn
+  )
+  # with JAGS >= 5, some parameters (precisions of random effects, shape of
+  # Weibull survival models) get initial values from JointAI, because those
+  # of JAGS do not work (see add_jags5_inits())
+  inits <- add_jags5_inits(
+    inits = inits,
+    nodes = get_jags5_init_nodes(info_list),
+    seed = seed
   )
 
   # parameters to monitor ------------------------------------------------------

@@ -112,11 +112,20 @@ get_data_list <- function(
     names(groups) <- paste0("group_", names(groups))
     names(pos) <- if (length(pos) > 0L) paste0("pos_", names(pos))
 
+    # the hyperparameters of the random effects are stored in one vector with
+    # the text KinvD_expr (default_hyperpars()), so they are text; JAGS needs
+    # numbers (rjags >= 5 drops text values)
+    ranef_hyperpars <- vapply(
+      hyp$ranef[c("shape_diag_RinvD", "rate_diag_RinvD")],
+      as.numeric,
+      FUN.VALUE = numeric(1L)
+    )
+
     l <- c(
       l,
       groups,
       if (length(pos)) pos,
-      hyp$ranef[c("shape_diag_RinvD", "rate_diag_RinvD")]
+      ranef_hyperpars
     )
 
     # Include RinvD and KinvD (or invD) for all grouping levels of the models
