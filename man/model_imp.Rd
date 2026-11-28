@@ -195,7 +195,10 @@ set? (not yet used)}
 or a function (see \code{\link[rjags]{jags.model}}).
 If omitted, starting values for the random number generator are
 created by \strong{JointAI}, initial values are then generated
-by JAGS.
+by JAGS. With JAGS >= 5, \strong{JointAI} draws initial values
+for the precisions of random effects that have a truncated
+gamma prior (a single random effect, or independent random
+effects) that are not given in \code{inits}.
 It is an error to supply an initial value for an observed node.}
 
 \item{warn}{logical; should warnings be given? Default is

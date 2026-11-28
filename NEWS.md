@@ -21,6 +21,12 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* With JAGS 5, models with a random intercept (or independent random effects)
+  often could not be initialised ("Node inconsistent with parents") or got
+  stuck, e.g., proportional hazards and generalised linear mixed models: JAGS 5 started
+  the precision of the random effects close to zero. With JAGS >= 5,
+  **JointAI** now draws initial values for these precisions (unless they are
+  given in `inits`).
 * `JM_imp()`: an interaction of a time-varying covariate with another variable
   in a longitudinal sub-model (e.g., `chol ~ day + albumin * age + (1 | id)`)
   is now calculated at the quadrature points of the survival part. Before, the
