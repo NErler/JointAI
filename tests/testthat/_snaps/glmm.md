@@ -473,10 +473,10 @@
       [325] 100 100 100 100 100
       
       $m0a1$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0a1$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0a2
@@ -949,10 +949,10 @@
       [325] 100 100 100 100 100
       
       $m0a2$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0a2$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0a3
@@ -1425,10 +1425,10 @@
       [325] 100 100 100 100 100
       
       $m0a3$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0a3$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0a4
@@ -1901,10 +1901,10 @@
       [325] 100 100 100 100 100
       
       $m0a4$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0a4$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0b1
@@ -2371,10 +2371,10 @@
       [325] 100 100 100 100 100
       
       $m0b1$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0b1$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0b2
@@ -2841,10 +2841,10 @@
       [325] 100 100 100 100 100
       
       $m0b2$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0b2$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0b3
@@ -3311,10 +3311,10 @@
       [325] 100 100 100 100 100
       
       $m0b3$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0b3$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0b4
@@ -3781,10 +3781,10 @@
       [325] 100 100 100 100 100
       
       $m0b4$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0b4$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0c1
@@ -4257,10 +4257,10 @@
       [325] 100 100 100 100 100
       
       $m0c1$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0c1$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0c2
@@ -4733,10 +4733,10 @@
       [325] 100 100 100 100 100
       
       $m0c2$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0c2$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0d1
@@ -5203,10 +5203,10 @@
       [325] 100 100 100 100 100
       
       $m0d1$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0d1$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0d2
@@ -5673,10 +5673,10 @@
       [325] 100 100 100 100 100
       
       $m0d2$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0d2$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0e1
@@ -6149,10 +6149,10 @@
       [325] 100 100 100 100 100
       
       $m0e1$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0e1$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m0f1
@@ -6625,10 +6625,10 @@
       [325] 100 100 100 100 100
       
       $m0f1$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m0f1$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m1a
@@ -7106,10 +7106,10 @@
       [325] 100 100 100 100 100
       
       $m1a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m1a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m1b
@@ -7581,10 +7581,10 @@
       [325] 100 100 100 100 100
       
       $m1b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m1b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m1c
@@ -8062,10 +8062,10 @@
       [325] 100 100 100 100 100
       
       $m1c$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m1c$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m1d
@@ -8537,10 +8537,10 @@
       [325] 100 100 100 100 100
       
       $m1d$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m1d$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m1e
@@ -9018,10 +9018,10 @@
       [325] 100 100 100 100 100
       
       $m1e$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m1e$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m1f
@@ -9499,10 +9499,10 @@
       [325] 100 100 100 100 100
       
       $m1f$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m1f$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m2a
@@ -9980,10 +9980,10 @@
       [325] 100 100 100 100 100
       
       $m2a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m2a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m2b
@@ -10467,10 +10467,10 @@
       [325] 100 100 100 100 100
       
       $m2b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m2b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m2c
@@ -10960,10 +10960,10 @@
       [325] 100 100 100 100 100
       
       $m2c$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m2c$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m2d
@@ -11447,10 +11447,10 @@
       [325] 100 100 100 100 100
       
       $m2d$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m2d$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m2e
@@ -11928,10 +11928,10 @@
       [325] 100 100 100 100 100
       
       $m2e$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m2e$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m2f
@@ -12421,10 +12421,10 @@
       [325] 100 100 100 100 100
       
       $m2f$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m2f$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m3a
@@ -12902,10 +12902,10 @@
       [325] 100 100 100 100 100
       
       $m3a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m3a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m3b
@@ -13389,10 +13389,10 @@
       [325] 100 100 100 100 100
       
       $m3b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m3b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m3c
@@ -13882,10 +13882,10 @@
       [325] 100 100 100 100 100
       
       $m3c$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m3c$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m3d
@@ -14369,10 +14369,10 @@
       [325] 100 100 100 100 100
       
       $m3d$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m3d$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m3e
@@ -14850,10 +14850,10 @@
       [325] 100 100 100 100 100
       
       $m3e$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m3e$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m3f
@@ -15343,10 +15343,10 @@
       [325] 100 100 100 100 100
       
       $m3f$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m3f$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m4a
@@ -15863,10 +15863,10 @@
       [325] 100 100 100 100 100
       
       $m4a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m4a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m4b
@@ -16360,10 +16360,10 @@
       [325] 100 100 100 100 100
       
       $m4b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m4b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m4c
@@ -16869,10 +16869,10 @@
       [325] 100 100 100 100 100
       
       $m4c$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m4c$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m4d
@@ -17379,10 +17379,10 @@
       [325] 100 100 100 100 100
       
       $m4d$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m4d$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m5a
@@ -18228,10 +18228,10 @@
       [325] 100 100 100 100 100
       
       $m5a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m5a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m5a$RinvD_y_id
            [,1] [,2]
@@ -19089,10 +19089,10 @@
       [325] 100 100 100 100 100
       
       $m5b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m5b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m5b$RinvD_b1_id
            [,1] [,2] [,3]
@@ -19594,10 +19594,10 @@
       [325] 100 100 100 100 100
       
       $m6a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m6a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m6b
@@ -20089,10 +20089,10 @@
       [325] 100 100 100 100 100
       
       $m6b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m6b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m6b$RinvD_b1_id
            [,1] [,2]
@@ -20581,10 +20581,10 @@
       [325] 100 100 100 100 100
       
       $m7a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m7a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m7a$RinvD_y_id
            [,1] [,2] [,3]
@@ -21405,10 +21405,10 @@
       [325] 100 100 100 100 100
       
       $m7b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m7b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m7b$RinvD_y_id
            [,1] [,2] [,3] [,4]
@@ -22236,10 +22236,10 @@
       [325] 100 100 100 100 100
       
       $m7c$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m7c$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m7c$RinvD_y_id
            [,1] [,2] [,3] [,4]
@@ -23068,10 +23068,10 @@
       [325] 100 100 100 100 100
       
       $m7d$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m7d$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m7d$RinvD_y_id
            [,1] [,2]
@@ -23898,10 +23898,10 @@
       [325] 100 100 100 100 100
       
       $m7e$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m7e$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m7e$RinvD_y_id
            [,1] [,2] [,3] [,4]
@@ -24730,10 +24730,10 @@
       [325] 100 100 100 100 100
       
       $m7f$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m7f$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m7f$RinvD_y_id
            [,1] [,2]
@@ -25222,10 +25222,10 @@
       [325] 100 100 100 100 100
       
       $m8a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8a$RinvD_y_id
            [,1] [,2] [,3]
@@ -25715,10 +25715,10 @@
       [325] 100 100 100 100 100
       
       $m8b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8b$RinvD_y_id
            [,1] [,2] [,3]
@@ -26215,10 +26215,10 @@
       [325] 100 100 100 100 100
       
       $m8c$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8c$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8c$RinvD_y_id
            [,1] [,2] [,3]
@@ -26715,10 +26715,10 @@
       [325] 100 100 100 100 100
       
       $m8d$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8d$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8d$RinvD_y_id
            [,1] [,2] [,3]
@@ -27222,10 +27222,10 @@
       [325] 100 100 100 100 100
       
       $m8e$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8e$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8e$RinvD_y_id
            [,1] [,2] [,3]
@@ -27729,10 +27729,10 @@
       [325] 100 100 100 100 100
       
       $m8f$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8f$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8f$RinvD_y_id
            [,1] [,2] [,3]
@@ -28236,10 +28236,10 @@
       [325] 100 100 100 100 100
       
       $m8g$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8g$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8g$RinvD_y_id
            [,1] [,2] [,3]
@@ -28743,10 +28743,10 @@
       [325] 100 100 100 100 100
       
       $m8h$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8h$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8h$RinvD_y_id
            [,1] [,2] [,3]
@@ -29250,10 +29250,10 @@
       [325] 100 100 100 100 100
       
       $m8i$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8i$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8i$RinvD_y_id
            [,1] [,2] [,3]
@@ -29757,10 +29757,10 @@
       [325] 100 100 100 100 100
       
       $m8j$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8j$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8j$RinvD_y_id
            [,1] [,2] [,3]
@@ -30264,10 +30264,10 @@
       [325] 100 100 100 100 100
       
       $m8k$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8k$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8k$RinvD_y_id
            [,1] [,2] [,3]
@@ -31104,10 +31104,10 @@
       [325] 100 100 100 100 100
       
       $m8l$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8l$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8l$RinvD_y_id
            [,1] [,2] [,3]
@@ -31600,10 +31600,10 @@
       [325] 100 100 100 100 100
       
       $m8m$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8m$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8m$RinvD_y_id
            [,1] [,2]
@@ -32107,10 +32107,10 @@
       [325] 100 100 100 100 100
       
       $m8n$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m8n$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m8n$RinvD_y_id
            [,1] [,2] [,3] [,4]
@@ -32515,10 +32515,10 @@
       [297] 2 3 2 3 2 1 3 2 3 1 3 3 2 1 2 3 2 2 1 3 3 3 3 2 2 1 1 2 2 1 1 2 2
       
       $m9a$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m9a$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
       $m9b
@@ -33003,10 +33003,10 @@
       [325] 100 100 100 100 100
       
       $m9b$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m9b$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       $m9b$RinvD_y_id
            [,1] [,2]
@@ -33495,10 +33495,10 @@
       [325] 100 100 100 100 100
       
       $m9c$shape_diag_RinvD
-      [1] "0.01"
+      [1] 0.01
       
       $m9c$rate_diag_RinvD
-      [1] "0.001"
+      [1] 0.001
       
       
 
@@ -40191,6 +40191,7 @@
       lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
           n.adapt = 5, n.iter = 10, models = c(p2 = "glmm_poisson_log", 
               L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020, 
+          inits = alpha_inits(c(`10` = 2, `11` = 0, `12` = 0), n_alpha = 15), 
           warn = FALSE, mess = FALSE)
       
        Bayesian linear mixed model for "c1" 
@@ -40216,7 +40217,8 @@
       lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
           n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_inverse", 
               p2 = "glmm_poisson_identity", b2 = "glmm_binomial_probit", 
-              L1mis = "glmm_lognorm"), seed = 2020, warn = FALSE, mess = FALSE)
+              L1mis = "glmm_lognorm"), seed = 2020, inits = alpha_inits(c(`8` = 10, 
+              `9` = 0), n_alpha = 10), warn = FALSE, mess = FALSE)
       
        Bayesian linear mixed model for "c1" 
       
@@ -41735,6 +41737,7 @@
       lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
           n.adapt = 5, n.iter = 10, models = c(p2 = "glmm_poisson_log", 
               L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020, 
+          inits = alpha_inits(c(`10` = 2, `11` = 0, `12` = 0), n_alpha = 15), 
           warn = FALSE, mess = FALSE)
       
        Bayesian linear mixed model for "c1" 
@@ -41762,7 +41765,8 @@
       lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
           n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_inverse", 
               p2 = "glmm_poisson_identity", b2 = "glmm_binomial_probit", 
-              L1mis = "glmm_lognorm"), seed = 2020, warn = FALSE, mess = FALSE)
+              L1mis = "glmm_lognorm"), seed = 2020, inits = alpha_inits(c(`8` = 10, 
+              `9` = 0), n_alpha = 10), warn = FALSE, mess = FALSE)
       
        Bayesian linear mixed model for "c1" 
       
@@ -43891,3922 +43895,6 @@
       B11            0     0
       sigma_y        0     0
       D_y_id[1,1]    0     0
-      
-      
-
----
-
-    Code
-      lapply(models0, summary, missinfo = TRUE)
-    Output
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      [1] "No variability observed in a component. Setting batch size to 1"
-      $m0a1
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 1:10
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-         level # NA % NA
-      y lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0a2
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "identity"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 1:10
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-         level # NA % NA
-      y lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0a3
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "log"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-         level # NA % NA
-      y lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0a4
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "inverse"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-         level # NA % NA
-      y lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0b1
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "logit"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      b1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0b2
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "probit"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      b1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0b3
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log"), 
-          n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 51:60
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      b1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0b4
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "cloglog"), 
-          n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 51:60
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      b1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0c1
-      
-      Bayesian Gamma mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "inverse"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      L1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0c2
-      
-      Bayesian Gamma mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "log"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      L1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0d1
-      
-      Bayesian poisson mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "log"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_p1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      p1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0d2
-      
-      Bayesian poisson mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "identity"), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_p1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      p1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0e1
-      
-      Bayesian log-normal mixed model fitted with JointAI
-      
-      Call:
-      lognormmm_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      L1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m0f1
-      
-      Bayesian beta mixed model fitted with JointAI
-      
-      Call:
-      betamm_imp(fixed = Be1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                    Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_Be1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of other parameters:
-              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      tau_Be1    0  0    0     0          0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-           level # NA % NA
-      Be1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m1a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 1:10
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-         level # NA % NA
-      y lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      
-      
-      $m1b
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b1 ~ C1 + (1 | id), data = longDF, family = binomial(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      b1 lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      
-      
-      $m1c
-      
-      Bayesian Gamma mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, family = Gamma(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      L1 lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      
-      
-      $m1d
-      
-      Bayesian poisson mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = p1 ~ C1 + (1 | id), data = longDF, family = poisson(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_p1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      p1 lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      
-      
-      $m1e
-      
-      Bayesian log-normal mixed model fitted with JointAI
-      
-      Call:
-      lognormmm_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      L1 lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      
-      
-      $m1f
-      
-      Bayesian beta mixed model fitted with JointAI
-      
-      Call:
-      betamm_imp(fixed = Be1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                    Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_Be1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of other parameters:
-              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      tau_Be1    0  0    0     0          0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-           level # NA % NA
-      Be1 lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      
-      
-      $m2a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 1:10
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 263  79.9
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      y  lvlone    0  0.0
-      c2 lvlone   66 20.1
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m2b
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b2 ~ c2 + (1 | id), data = longDF, family = binomial(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b2_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 189  57.4
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      c2 lvlone   66 20.1
-      b2 lvlone   99 30.1
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m2c
-      
-      Bayesian Gamma mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, family = Gamma(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                      Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1mis_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-                  Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1mis    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 246  74.8
-      
-      Number and proportion of missing values:
-             level # NA  % NA
-      L1mis lvlone   20  6.08
-      c2    lvlone   66 20.06
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m2d
-      
-      Bayesian poisson mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = p2 ~ c2 + (1 | id), data = longDF, family = poisson(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_p2_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 142  43.2
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      c2 lvlone   66 20.1
-      p2 lvlone  162 49.2
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m2e
-      
-      Bayesian log-normal mixed model fitted with JointAI
-      
-      Call:
-      lognormmm_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                      Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1mis_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-                  Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1mis    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 246  74.8
-      
-      Number and proportion of missing values:
-             level # NA  % NA
-      L1mis lvlone   20  6.08
-      c2    lvlone   66 20.06
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m2f
-      
-      Bayesian beta mixed model fitted with JointAI
-      
-      Call:
-      betamm_imp(fixed = Be2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                    Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_Be2_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of other parameters:
-              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      tau_Be2    0  0    0     0          0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 246  74.8
-      
-      Number and proportion of missing values:
-           level # NA  % NA
-      Be2 lvlone   20  6.08
-      c2  lvlone   66 20.06
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m3a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-         Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      C2    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 1:10
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  58  58
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-         level # NA % NA
-      y lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m3b
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-         Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      C2    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b2_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  58 58.0
-      lvlone lvlone 230 69.9
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      b2 lvlone   99 30.1
-      
-         level # NA % NA
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m3c
-      
-      Bayesian Gamma mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, family = Gamma(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-         Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      C2    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                      Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1mis_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-                  Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1mis    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  58 58.0
-      lvlone lvlone 309 93.9
-      
-      Number and proportion of missing values:
-             level # NA % NA
-      L1mis lvlone   20 6.08
-      
-         level # NA % NA
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m3d
-      
-      Bayesian poisson mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = p2 ~ 0 + C2 + (1 | id), data = longDF, family = poisson(), 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-         Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      C2    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_p2_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  58 58.0
-      lvlone lvlone 167 50.8
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      p2 lvlone  162 49.2
-      
-         level # NA % NA
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m3e
-      
-      Bayesian log-normal mixed model fitted with JointAI
-      
-      Call:
-      lognormmm_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-         Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      C2    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                      Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_L1mis_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-                  Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_L1mis    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  58 58.0
-      lvlone lvlone 309 93.9
-      
-      Number and proportion of missing values:
-             level # NA % NA
-      L1mis lvlone   20 6.08
-      
-         level # NA % NA
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m3f
-      
-      Bayesian beta mixed model fitted with JointAI
-      
-      Call:
-      betamm_imp(fixed = Be2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-         Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      C2    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                    Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_Be2_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of other parameters:
-              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      tau_Be2    0  0    0     0          0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  58 58.0
-      lvlone lvlone 309 93.9
-      
-      Number and proportion of missing values:
-           level # NA % NA
-      Be2 lvlone   20 6.08
-      
-         level # NA % NA
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m4a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
-          n.adapt = 5, n.iter = 10, models = c(p2 = "glmm_poisson_log", 
-              L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      p2             0  0    0     0          0     NaN    NaN
-      L1mis          0  0    0     0          0     NaN    NaN
-      Be2            0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_c1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_c1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #  %
-      id         id  90 90
-      lvlone lvlone 125 38
-      
-      Number and proportion of missing values:
-             level # NA  % NA
-      c1    lvlone    0  0.00
-      L1mis lvlone   20  6.08
-      Be2   lvlone   20  6.08
-      c2    lvlone   66 20.06
-      p2    lvlone  162 49.24
-      
-         level # NA % NA
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m4b
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
-          n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_inverse", 
-              p2 = "glmm_poisson_identity", b2 = "glmm_binomial_probit", 
-              L1mis = "glmm_lognorm"), seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      b21            0  0    0     0          0     NaN    NaN
-      p2             0  0    0     0          0     NaN    NaN
-      L1mis          0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_c1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_c1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone  98  29.8
-      
-      Number and proportion of missing values:
-             level # NA  % NA
-      c1    lvlone    0  0.00
-      L1mis lvlone   20  6.08
-      c2    lvlone   66 20.06
-      b2    lvlone   99 30.09
-      p2    lvlone  162 49.24
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m4c
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
-          n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
-              p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
-              b2 = "glmm_binomial_log"), no_model = "time", seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      b21            0  0    0     0          0     NaN    NaN
-      p2             0  0    0     0          0     NaN    NaN
-      L1mis          0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_c1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_c1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone  98  29.8
-      
-      Number and proportion of missing values:
-             level # NA  % NA
-      c1    lvlone    0  0.00
-      L1mis lvlone   20  6.08
-      c2    lvlone   66 20.06
-      b2    lvlone   99 30.09
-      p2    lvlone  162 49.24
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m4d
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
-          n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
-              p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
-              b2 = "glmm_binomial_log"), shrinkage = "ridge", seed = 2020, 
-          warn = FALSE, mess = FALSE, trunc = list(Be2 = c(0, 1)))
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      b21            0  0    0     0          0     NaN    NaN
-      p2             0  0    0     0          0     NaN    NaN
-      L1mis          0  0    0     0          0     NaN    NaN
-      Be2            0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_c1_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-               Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_c1    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone  92  28
-      
-      Number and proportion of missing values:
-             level # NA  % NA
-      c1    lvlone    0  0.00
-      L1mis lvlone   20  6.08
-      Be2   lvlone   20  6.08
-      c2    lvlone   66 20.06
-      b2    lvlone   99 30.09
-      p2    lvlone  162 49.24
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m5a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ M2 + o2 * abs(C1 - c2) + log(C1) + time + 
-          I(time^2) + (time | id), data = longDF, n.adapt = 5, n.iter = 10, 
-          seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)         0  0    0     0          0     NaN    NaN
-      M22                 0  0    0     0          0     NaN    NaN
-      M23                 0  0    0     0          0     NaN    NaN
-      M24                 0  0    0     0          0     NaN    NaN
-      log(C1)             0  0    0     0          0     NaN    NaN
-      o22                 0  0    0     0          0     NaN    NaN
-      o23                 0  0    0     0          0     NaN    NaN
-      o24                 0  0    0     0          0     NaN    NaN
-      abs(C1 - c2)        0  0    0     0          0     NaN    NaN
-      time                0  0    0     0          0     NaN    NaN
-      I(time^2)           0  0    0     0          0     NaN    NaN
-      o22:abs(C1 - c2)    0  0    0     0          0     NaN    NaN
-      o23:abs(C1 - c2)    0  0    0     0          0     NaN    NaN
-      o24:abs(C1 - c2)    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #  %
-      id         id  56 56
-      lvlone lvlone 217 66
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      time lvlone    0  0.0
-      o2   lvlone   59 17.9
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      M2    id   44   44
-      
-      
-      $m5b
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b1 ~ L1mis + abs(c1 - C2) + log(Be2) + time + 
-          (time + I(time^2) | id), data = longDF, family = binomial(), 
-          n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
-              L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), shrinkage = "ridge", 
-          seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)     0  0    0     0          0     NaN    NaN
-      L1mis           0  0    0     0          0     NaN    NaN
-      abs(c1 - C2)    0  0    0     0          0     NaN    NaN
-      log(Be2)        0  0    0     0          0     NaN    NaN
-      time            0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b1_id[1,1]    0  0    0     0                NaN    NaN
-      D_b1_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_b1_id[2,2]    0  0    0     0                NaN    NaN
-      D_b1_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_b1_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_b1_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  58 58.0
-      lvlone lvlone 291 88.4
-      
-      Number and proportion of missing values:
-             level # NA % NA
-      b1    lvlone    0 0.00
-      c1    lvlone    0 0.00
-      time  lvlone    0 0.00
-      L1mis lvlone   20 6.08
-      Be2   lvlone   20 6.08
-      
-         level # NA % NA
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m6a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ b2 + C1 + C2 + time + (0 + time | id), data = longDF, 
-          n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      C2             0  0    0     0          0     NaN    NaN
-      b21            0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  58 58.0
-      lvlone lvlone 230 69.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      time lvlone    0  0.0
-      b2   lvlone   99 30.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m6b
-      
-      Bayesian binomial mixed model fitted with JointAI
-      
-      Call:
-      glme_imp(fixed = b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) | 
-          id), data = longDF, family = binomial(), n.adapt = 5, n.iter = 10, 
-          shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C2             0  0    0     0          0     NaN    NaN
-      B11            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_b1_id[1,1]    0  0    0     0                NaN    NaN
-      D_b1_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_b1_id[2,2]    0  0    0     0                NaN    NaN
-      
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  58  58
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      b1   lvlone    0    0
-      c1   lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      B1    id    0    0
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m7a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ ns(time, df = 2), data = longDF, random = ~ns(time, 
-          df = 2) | id, n.iter = 10, seed = 2020, adapt = 5)
-      
-      
-      Posterior summary:
-                        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)          0  0    0     0          0     NaN    NaN
-      ns(time, df = 2)1    0  0    0     0          0     NaN    NaN
-      ns(time, df = 2)2    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 101:110
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m7b
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ bs(time, df = 3), data = longDF, random = ~bs(time, 
-          df = 3) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
-          mess = FALSE)
-      
-      
-      Posterior summary:
-                        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)          0  0    0     0          0     NaN    NaN
-      bs(time, df = 3)1    0  0    0     0          0     NaN    NaN
-      bs(time, df = 3)2    0  0    0     0          0     NaN    NaN
-      bs(time, df = 3)3    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      D_y_id[1,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[4,4]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m7c
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + c1 + ns(time, df = 3), data = longDF, 
-          random = ~ns(time, df = 3) | id, n.iter = 10, seed = 2020, 
-          nadapt = 5)
-      
-      
-      Posterior summary:
-                        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)          0  0    0     0          0     NaN    NaN
-      C1                   0  0    0     0          0     NaN    NaN
-      c1                   0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)1    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)2    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)3    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      D_y_id[1,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[4,4]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 101:110
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      c1   lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      
-      
-      $m7d
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-          random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)          0  0    0     0          0     NaN    NaN
-      C1                   0  0    0     0          0     NaN    NaN
-      C2                   0  0    0     0          0     NaN    NaN
-      c1                   0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)1    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)2    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)3    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  58  58
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      c1   lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m7e
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-          random = ~ns(time, df = 3) | id, n.adapt = 5, n.iter = 10, 
-          no_model = "time", seed = 2020)
-      
-      
-      Posterior summary:
-                        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)          0  0    0     0          0     NaN    NaN
-      C1                   0  0    0     0          0     NaN    NaN
-      C2                   0  0    0     0          0     NaN    NaN
-      c1                   0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)1    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)2    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)3    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      D_y_id[1,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[4,4]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  58  58
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      c1   lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m7f
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-          random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)          0  0    0     0          0     NaN    NaN
-      C1                   0  0    0     0          0     NaN    NaN
-      C2                   0  0    0     0          0     NaN    NaN
-      c1                   0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)1    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)2    0  0    0     0          0     NaN    NaN
-      ns(time, df = 3)3    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  58  58
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      c1   lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m8a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-          c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 263  79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m8b
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-          c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
-          mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #     %
-      id         id 100 100.0
-      lvlone lvlone 263  79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m8c
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-          c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c1         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8d
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-          c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
-          mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c1         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8e
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
-          random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c1         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8f
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
-          random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-          seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c1         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8g
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
-          random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = c("time", 
-              "c1"), seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c1         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8h
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-          random = ~time + c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c2         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8i
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-          random = ~time + c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-          seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c2         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8j
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-          random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c2         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8k
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-          random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c2             0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c2         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #    %
-      id         id  90 90.0
-      lvlone lvlone 263 79.9
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0  0.0
-      c1   lvlone    0  0.0
-      time lvlone    0  0.0
-      c2   lvlone   66 20.1
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8l
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + B2 * c1 * time, data = longDF, random = ~time + 
-          I(time^2) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
-          mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      B21:c1         0  0    0     0          0     NaN    NaN
-      B21:time       0  0    0     0          0     NaN    NaN
-      c1:time        0  0    0     0          0     NaN    NaN
-      B21:c1:time    0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  90  90
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      c1   lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m8m
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ c1 * b1 + o1, data = longDF, random = ~b1 | 
-          id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
-          mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      b11            0  0    0     0          0     NaN    NaN
-      o1.L           0  0    0     0          0     NaN    NaN
-      o1.Q           0  0    0     0          0     NaN    NaN
-      c1:b11         0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-          level # NA % NA
-      y  lvlone    0    0
-      c1 lvlone    0    0
-      b1 lvlone    0    0
-      o1 lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-      
-      $m8n
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ c1 + C1 * time + b1 + B2, data = longDF, 
-          random = ~C1 * time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-          warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      B21            0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      b11            0  0    0     0          0     NaN    NaN
-      C1:time        0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      D_y_id[1,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,3]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,3]    0  0    0     0                NaN    NaN
-      D_y_id[1,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[3,4]    0  0    0     0          0     NaN    NaN
-      D_y_id[4,4]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  90  90
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      c1   lvlone    0    0
-      time lvlone    0    0
-      b1   lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      id    id    0    0
-      B2    id   10   10
-      
-      
-      $m9a
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ c1 + b1 + time + (1 | id) + (1 | o1), data = longDF, 
-          n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      c1             0  0    0     0          0     NaN    NaN
-      b11            0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-      
-      * For level "id":
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      * For level "o1":
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_o1[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 1:10
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-       - o1: 3
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id 100 100
-      o1         o1   3 100
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      c1   lvlone    0    0
-      b1   lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      id    id    0    0
-      
-         level # NA % NA
-      o1    o1    0    0
-      
-      
-      $m9b
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + C2 + B1 + time + (time | id), data = longDF, 
-          n.adapt = 5, n.iter = 10, monitor_params = c(analysis_random = TRUE), 
-          seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      C2             0  0    0     0          0     NaN    NaN
-      B11            0  0    0     0          0     NaN    NaN
-      time           0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      D_y_id[1,2]    0  0    0     0          0     NaN    NaN
-      D_y_id[2,2]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 6:15
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  58  58
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-            level # NA % NA
-      y    lvlone    0    0
-      time lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      B1    id    0    0
-      id    id    0    0
-      C2    id   42   42
-      
-      
-      $m9c
-      
-      Bayesian linear mixed model fitted with JointAI
-      
-      Call:
-      lme_imp(fixed = y ~ C1 + C2 + B1 + (1 | id), data = longDF, n.adapt = 5, 
-          n.iter = 10, monitor_params = c(analysis_random = TRUE), 
-          seed = 2020, warn = FALSE, mess = FALSE)
-      
-      
-      Posterior summary:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      (Intercept)    0  0    0     0          0     NaN    NaN
-      C1             0  0    0     0          0     NaN    NaN
-      C2             0  0    0     0          0     NaN    NaN
-      B11            0  0    0     0          0     NaN    NaN
-      
-      
-      Posterior summary of random effects covariance matrix:
-                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-      D_y_id[1,1]    0  0    0     0                NaN    NaN
-      
-      
-      Posterior summary of residual std. deviation:
-              Mean SD 2.5% 97.5% GR-crit MCE/SD
-      sigma_y    0  0    0     0     NaN    NaN
-      
-      
-      MCMC settings:
-      Iterations = 1:10
-      Sample size per chain = 10 
-      Thinning interval = 1 
-      Number of chains = 3 
-      
-      Number of observations: 329 
-      Number of groups:
-       - id: 100
-      
-      
-      Number and proportion of complete cases:
-              level   #   %
-      id         id  58  58
-      lvlone lvlone 329 100
-      
-      Number and proportion of missing values:
-         level # NA % NA
-      y lvlone    0    0
-      
-         level # NA % NA
-      C1    id    0    0
-      B1    id    0    0
-      id    id    0    0
-      C2    id   42   42
       
       
 

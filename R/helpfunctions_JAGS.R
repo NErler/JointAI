@@ -77,6 +77,10 @@ run_jags <- function(
 
   t1 <- Sys.time()
 
+  # the nodes to monitor: whole nodes for elements that rjags >= 5 cannot
+  # monitor, see get_monitor_nodes()
+  monitor_nodes <- get_monitor_nodes(var_names)
+
   mcmc <- if (n_iter > 0L & !inherits(adapt, "try-error")) {
     if (isFALSE(mess)) {
       sink(tempfile())
@@ -87,7 +91,7 @@ run_jags <- function(
           adapt,
           n.iter = n_iter,
           thin = thin,
-          variable.names = var_names,
+          variable.names = monitor_nodes,
           progress.bar = progress_bar
         ))
       ))
@@ -96,14 +100,160 @@ run_jags <- function(
         adapt,
         n.iter = n_iter,
         thin = thin,
-        variable.names = var_names,
+        variable.names = monitor_nodes,
         progress.bar = progress_bar
       ))
     }
   }
   t2 <- Sys.time()
 
+  # keep only the requested elements of the nodes monitored as a whole
+  if (inherits(mcmc, "mcmc.list")) {
+    mcmc <- select_monitored_columns(mcmc, var_names, monitor_nodes)
+  }
+
   list(adapt = adapt, mcmc = mcmc, time_adapt = t1 - t0, time_sample = t2 - t1)
+}
+
+
+# used in run_jags (2026-11-27)
+#' Get the nodes that JAGS monitors
+#'
+#' Temporary, until rjags is fixed: rjags >= 5 (checked with rjags 5-5 and
+#' 5-6) cannot set a monitor on an element of a node whose name contains an
+#' underscore, letters and another underscore (e.g., `D_y_id[1,2]`, the
+#' covariance matrix of the random effects of `y` on the level `id`); it warns
+#' "Failed to set value trace monitor". The cause is in `parse.varnames()` of
+#' rjags, which takes such names for reserved names (like `"_observed_"`) and
+#' does not split them into node and index. The whole node can be monitored.
+#' With rjags >= 5, such elements are therefore replaced by their node, and
+#' [select_monitored_columns()] keeps the requested elements. Other names
+#' (e.g., `beta`, `M_lvlone[3,2]`) are monitored as they are. Monitoring whole
+#' nodes costs time for large nodes (e.g., the random effects of all
+#' subjects), so it is only done with rjags >= 5.
+#'
+#' @param var_names a character vector with the names of the nodes and
+#'        elements to monitor (e.g., `"beta"`, `"D_y_id[1,2]"`)
+#' @param whole_nodes logical; whether the affected elements are replaced by
+#'        their node (by default with rjags >= 5)
+#'
+#' @returns a character vector with the names to give to JAGS: `var_names`,
+#'   with the affected elements replaced by the name of their node (each node
+#'   once) if `whole_nodes` is `TRUE`, otherwise `var_names`
+#' @keywords internal
+#'
+get_monitor_nodes <- function(
+  var_names,
+  whole_nodes = numeric_version(getNamespaceVersion("rjags")) >= "5.0"
+) {
+  if (!isTRUE(whole_nodes)) {
+    return(var_names)
+  }
+
+  node_names <- get_node_name(var_names)
+  is_element <- grepl("[", var_names, fixed = TRUE)
+  has_two_underscores <- grepl("[^_]_[^_]+_[^_]", node_names)
+
+  monitor <- ifelse(is_element & has_two_underscores, node_names, var_names)
+  unique(monitor)
+}
+
+
+# used in run_jags (2026-11-27)
+#' Keep the requested elements of nodes that were monitored as a whole
+#'
+#' The samples of a node that was monitored as a whole instead of some of its
+#' elements (see [get_monitor_nodes()]) are reduced to the requested elements,
+#' in the requested order, at the position of the node. All other columns stay
+#' as they are. The result is the same as if the elements had been monitored.
+#'
+#' @param mcmc an `mcmc.list` with the samples (one column per element)
+#' @param var_names a character vector with the requested names of nodes and
+#'        elements (as given to [get_monitor_nodes()])
+#' @param monitor_nodes a character vector with the names that were given to
+#'        JAGS, as obtained from [get_monitor_nodes()]
+#'
+#' @returns an `mcmc.list`
+#' @keywords internal
+#'
+select_monitored_columns <- function(mcmc, var_names, monitor_nodes) {
+  # the nodes monitored as a whole although only elements were requested
+  expanded <- setdiff(monitor_nodes, var_names)
+  if (length(expanded) == 0L) {
+    return(mcmc)
+  }
+
+  # the requested elements of these nodes, named like the columns (ranges
+  # such as b_y_id[5,1:2] written out)
+  requested <- var_names[get_node_name(var_names) %in% expanded]
+  elements <- unlist(lapply(requested, expand_element_names))
+
+  # a node with a single element (e.g., the 1 x 1 matrix D_y_center) has the
+  # name of the node as column name; give it the name of the element
+  columns <- colnames(mcmc[[1L]])
+  for (node in intersect(columns, expanded)) {
+    columns[columns == node] <- elements[get_node_name(elements) == node]
+  }
+
+  # the columns per node, in the order of the samples; for the expanded nodes
+  # only the requested elements
+  column_nodes <- get_node_name(columns)
+  blocks <- split(columns, factor(column_nodes, levels = unique(column_nodes)))
+  for (node in intersect(names(blocks), expanded)) {
+    blocks[[node]] <- elements[get_node_name(elements) == node]
+  }
+  keep <- unlist(blocks, use.names = FALSE)
+
+  coda::as.mcmc.list(lapply(mcmc, function(chain) {
+    colnames(chain) <- columns
+    chain[, keep, drop = FALSE]
+  }))
+}
+
+
+# used in select_monitored_columns (2026-11-27)
+#' Get the node names of names of nodes and elements
+#'
+#' @param x a character vector with names of nodes or elements (e.g.,
+#'        `"beta"`, `"D_y_id[1,2]"`)
+#'
+#' @returns a character vector with the names without the index (e.g.,
+#'   `"beta"`, `"D_y_id"`)
+#' @keywords internal
+#'
+get_node_name <- function(x) {
+  sub("\\[.*$", "", x)
+}
+
+
+# used in select_monitored_columns (2026-11-27)
+#' Write out the elements of a range of elements
+#'
+#' @param element a requested element or range of elements of a node, as
+#'        given to JAGS (e.g., `"b_y_id[5,1:2]"`)
+#'
+#' @returns a character vector with one name per element, as JAGS names the
+#'   columns of the samples, with the first index varying fastest (e.g.,
+#'   `c("b_y_id[5,1]", "b_y_id[5,2]")`)
+#' @keywords internal
+#'
+expand_element_names <- function(element) {
+  element <- gsub(" ", "", element, fixed = TRUE)
+  index <- sub("^[^[]*\\[(.*)\\]$", "\\1", element)
+
+  # the values of each index: a number or a range a:b
+  values <- lapply(strsplit(index, ",", fixed = TRUE)[[1L]], function(i) {
+    bounds <- as.integer(strsplit(i, ":", fixed = TRUE)[[1L]])
+    seq(bounds[1L], bounds[length(bounds)])
+  })
+
+  combinations <- expand.grid(values)
+  paste0(
+    get_node_name(element),
+    "[",
+    do.call(paste, c(combinations, sep = ",")),
+    "]"
+  )
 }
 
 
