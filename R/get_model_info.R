@@ -290,6 +290,22 @@ get_model1_info <- function(
     )
   }
 
+  # * interactions at the quadrature points ------------------------------------
+  # interaction terms with a time-varying covariate in the linear predictors of
+  # the models for the time-varying covariates have no value at the quadrature
+  # points (get_matgk()); they are calculated in the JAGS model (see
+  # paste_gk_interactions())
+  gk_interactions <- if (identical(modeltype, "JM")) {
+    get_gk_interactions(
+      tv_info = tv_vars,
+      interactions = Mlist$interactions,
+      trafos = Mlist$fcts_all,
+      refs = Mlist$refs,
+      surv_mat = resp_mat[2L],
+      group_lvls = Mlist$group_lvls
+    )
+  }
+
   # Hierarchical centering -----------------------------------------------------
   hc_list <- get_hc_info(
     varname = k,
@@ -396,6 +412,9 @@ get_model1_info <- function(
   # all other models stays as it was
   if (length(jm_interactions) > 0L) {
     info$jm_interactions <- jm_interactions
+  }
+  if (length(gk_interactions) > 0L) {
+    info$gk_interactions <- gk_interactions
   }
 
   info
@@ -596,6 +615,96 @@ get_jm_interactions <- function(lp_cols, interactions, surv_mat) {
   }
 
   jm_interactions
+}
+
+
+#' Interactions to calculate at the quadrature points of a joint model
+#'
+#' In the survival part of a joint model, the models for the time-varying
+#' covariates are written again for the quadrature points, with the design
+#' matrix `M_lvlonegk`. In this matrix, the time-varying covariates (and the
+#' columns calculated from them) are missing (`get_matgk()`) and modelled or
+#' calculated in the JAGS model. This function selects the interaction terms
+#' that have to be calculated there: the interactions that are columns of
+#' `M_lvlone`, are used in the linear predictor of one of these models, and
+#' have an element that is (calculated from) a time-varying covariate modelled
+#' at the quadrature points. Their elements must be on the lowest level, or on
+#' the level of the survival outcome or above.
+#'
+#' @param tv_info list with the model information of the time-varying
+#'   covariates at the quadrature points (the element `tv_vars` of the model
+#'   information of the survival part), named by the covariates.
+#' @param interactions list of interaction terms, as in `Mlist$interactions`
+#'   (output of `match_interaction()`).
+#' @param trafos data frame with information on the functions of variables
+#'   (`Mlist$fcts_all`).
+#' @param refs list with information on the reference categories of the factors
+#'   (`Mlist$refs`).
+#' @param surv_mat name of the design matrix of the level of the survival
+#'   outcome, e.g., `"M_id"`.
+#' @param group_lvls named integer vector of the order of the grouping levels
+#'   (`Mlist$group_lvls`).
+#'
+#' @returns A (possibly empty) named list: the elements of `interactions` to be
+#'   calculated at the quadrature points.
+#' @keywords internal
+get_gk_interactions <- function(
+  tv_info,
+  interactions,
+  trafos,
+  refs,
+  surv_mat,
+  group_lvls
+) {
+  # the columns of M_lvlone in the linear predictors of the models at the
+  # quadrature points (including non-proportional effects of ordinal models)
+  used_cols <- character(0L)
+  for (info in tv_info) {
+    used_cols <- c(
+      used_cols,
+      names(info$lp[["M_lvlone"]]),
+      names(attr(info$lp, "nonprop")[["M_lvlone"]])
+    )
+  }
+
+  gk_interactions <- list()
+  for (name in intersect(names(interactions), used_cols)) {
+    inter <- interactions[[name]]
+    elmt_mats <- names(inter$elmts)
+
+    # the variables of the elements in M_lvlone (without dummy coding and
+    # functions), to check whether one of them is modelled at the quadrature
+    # points
+    lvlone_elmts <- attr(inter, "elements")[elmt_mats == "M_lvlone"]
+    lvlone_vars <- character(0L)
+    for (elmt in lvlone_elmts) {
+      for (var in replace_trafo(elmt, trafos)) {
+        lvlone_vars <- c(lvlone_vars, replace_dummy(var, refs = refs))
+      }
+    }
+
+    if (!any(lvlone_vars %in% names(tv_info))) {
+      next
+    }
+
+    # the other elements are taken from the subject-level (or higher) data,
+    # which do not change over time; a level between the lowest level and the
+    # level of the survival outcome has no values at the quadrature points
+    surv_lvl <- group_lvls[[sub("M_", "", surv_mat, fixed = TRUE)]]
+    elmt_lvls <- group_lvls[sub("M_", "", elmt_mats, fixed = TRUE)]
+    if (any(elmt_mats != "M_lvlone" & elmt_lvls < surv_lvl)) {
+      errormsg(
+        "The interaction %s involves a variable from a level between the
+        level of the time-varying covariates and the level of the survival
+        outcome. This is not possible in a joint model.",
+        dQuote(attr(inter, "interaction"))
+      )
+    }
+
+    gk_interactions[[name]] <- inter
+  }
+
+  gk_interactions
 }
 
 
