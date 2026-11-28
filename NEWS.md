@@ -21,6 +21,11 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* Models with random effects work with rjags 5: the hyperparameters of the
+  prior of the random-effects variances (`shape_diag_RinvD`,
+  `rate_diag_RinvD`) were given to JAGS as text, which rjags 5 drops
+  ("Non-numeric data values supplied"), so that the variances were not
+  defined.
 * With JAGS 5, models with a random intercept (or independent random effects)
   often could not be initialised ("Node inconsistent with parents") or got
   stuck, e.g., proportional hazards and generalised linear mixed models: JAGS 5 started
