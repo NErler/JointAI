@@ -1,5 +1,4 @@
-# not used in the model set-up yet; built for the tests that compare it with
-# Mlvls, fcts_all, interactions and lp_cols (2026-11-09)
+# used in divide_matrices (2026-11-27)
 #' Get the table of the columns of the design matrices
 #'
 #' Describes each column of the design matrices (`Mlist$M`) in one table: where
@@ -23,6 +22,12 @@
 #'
 #' A column is computed in JAGS when it is a dummy variable, a function or an
 #' interaction and at least one of its variables has missing values.
+#'
+#' JAGS computes an interaction as the product of the columns of its parts.
+#' Parts that are not a column of any design matrix (e.g., `b20` and `log(C1)`
+#' in `b2:c2` and `log(C1):c2` without the main effects) are added at the end
+#' of the table (`added`): as data if their variables are complete (computed
+#' once in R, see [get_added_column_values()]), otherwise computed in JAGS.
 #'
 #' A column can be scaled when it is a numeric variable, a function with a
 #' numeric value, or an interaction of which at least one element has a
@@ -64,7 +69,12 @@
 #'   * `matrix`: the name of the data matrix (`"M_<level>"`),
 #'   * `index`: the number of the column in its data matrix,
 #'   * `computed`: whether JAGS has to compute the column,
-#'   * `scalable`: whether the column can be scaled.
+#'   * `added`: whether the column was added as part of a computed
+#'     interaction (it is not a column of `model.matrix()` of any formula),
+#'   * `scalable`: whether the column can be scaled,
+#'   * `parts`: a list with, per row, one element per call of the term, which
+#'     describes which column of the coding of that call the column uses (see
+#'     [get_column_parts()]).
 #' @keywords internal
 #'
 get_column_table <- function(
@@ -101,6 +111,32 @@ get_column_table <- function(
     )
   }
 
+  # describe, for each call of the term of a column, which of the columns of
+  # that call's own coding the column uses (needed to write the column in
+  # JAGS)
+  columns$parts <- get_column_parts(
+    columns,
+    terms_list,
+    refs,
+    data,
+    modelled = names(models)
+  )
+
+  # mark the dummy variables, functions and interactions of incomplete
+  # variables: JAGS computes them from the (imputed) variables
+  columns$computed <- is_computed_column(columns, variables)
+
+  # add the parts of computed interactions that are not yet a column (e.g.,
+  # b20 or log(C1) in b2:c2 or log(C1):c2 without the main effects), so that
+  # JAGS computes each interaction as the product of columns
+  columns$added <- FALSE
+  part_rows <- get_part_rows(columns, data)
+  if (nrow(part_rows) > 0L) {
+    part_rows$computed <- is_computed_column(part_rows, variables)
+    part_rows$added <- TRUE
+    columns <- rbind(columns, part_rows)
+  }
+
   # determine the level of each column from the levels of its variables
   columns$level <- vapply(
     columns$variables,
@@ -117,17 +153,6 @@ get_column_table <- function(
     in_matrix <- columns$matrix == mat
     columns$index[in_matrix] <- seq_len(sum(in_matrix))
   }
-
-  # mark the dummy variables, functions and interactions of incomplete
-  # variables: JAGS computes them from the (imputed) variables
-  has_incomplete_variable <- vapply(
-    columns$variables,
-    function(vars) any(variables[vars, "n_missing"] > 0L),
-    logical(1L)
-  )
-  columns$computed <- columns$kind %in%
-    c("dummy", "function", "interaction") &
-    has_incomplete_variable
 
   # mark the columns that can be scaled: the value of the column (variables,
   # functions) or of one of its elements (interactions) is numeric
@@ -152,6 +177,160 @@ get_column_table <- function(
 
   rownames(columns) <- NULL
   columns
+}
+
+
+# used in get_column_table (2026-11-27)
+#' Check which columns are computed in JAGS
+#'
+#' @param columns a table of columns with the columns `kind` and `variables`
+#'        (see [get_column_table()])
+#' @param variables the table of variables, as obtained from
+#'        [get_variable_table()], with the column `n_missing`
+#'
+#' @returns a logical vector: `TRUE` for dummy variables, functions and
+#'   interactions of which at least one variable has missing values
+#' @keywords internal
+#'
+is_computed_column <- function(columns, variables) {
+  has_incomplete_variable <- vapply(
+    columns$variables,
+    function(vars) any(variables[vars, "n_missing"] > 0L),
+    logical(1L)
+  )
+  columns$kind %in%
+    c("dummy", "function", "interaction") &
+    has_incomplete_variable
+}
+
+
+# used in get_column_table (2026-11-27)
+#' Get the parts of computed interactions that are not yet a column
+#'
+#' JAGS computes an interaction as the product of the columns of its parts. A
+#' part that is not a column with the same meaning (see [find_part_column()])
+#' gets a new column: a dummy variable for a category of a factor (e.g., `b20`
+#' in `b2:c2` without `b2`), otherwise a function (e.g., `log(C1)` or a column
+#' of a spline). Each part is added once, also when several interactions use
+#' it.
+#'
+#' @param columns the table of columns, with the columns `column`, `kind`,
+#'        `parts` and `computed` (see [get_column_table()])
+#' @param data a `data.frame`
+#'
+#' @returns a `data.frame` with the columns `column`, `term`, `kind`, `calls`,
+#'   `variables` and `parts`, one row per added column (no rows if none is
+#'   needed)
+#' @keywords internal
+#'
+get_part_rows <- function(columns, data) {
+  # collect the parts that are needed, by name
+  needed <- list()
+  for (i in which(columns$kind == "interaction" & columns$computed)) {
+    for (part in columns$parts[[i]]) {
+      if (!is.na(find_part_column(part, columns))) {
+        next
+      }
+      # a column with this name but another meaning (e.g., coded by sum
+      # contrasts instead of indicators) cannot be added
+      if (part$name %in% columns$column) {
+        errormsg(
+          "JAGS has to compute the column %s, but the column %s of the
+          design matrix is coded differently than in this interaction.",
+          dQuote(columns$column[i]),
+          dQuote(part$name)
+        )
+      }
+      needed[[part$name]] <- part
+    }
+  }
+
+  # describe each part as a column; its only part is the part itself
+  rows <- new_column_row(data)
+  for (part in needed) {
+    kind <- get_column_kind(part$name, part$call, data)
+    rows <- rbind(
+      rows,
+      new_column_row(data, part$name, part$call, kind, part$call)
+    )
+  }
+  rows$parts <- lapply(unname(needed), list)
+  rows
+}
+
+
+# used in get_part_rows and get_column_call (2026-11-27)
+#' Find the column of the design matrices that equals a part of an interaction
+#'
+#' @param part a part of a column, as obtained from [select_part()]
+#' @param column_table the table of the columns of the design matrices
+#'
+#' @returns the row of the column in `column_table` that has the name of the
+#'   part and the same meaning (the same call and, for a factor, the same
+#'   values per category), or `NA`
+#' @keywords internal
+#'
+find_part_column <- function(part, column_table) {
+  j <- match(part$name, column_table$column)
+  if (is.na(j) || length(column_table$parts[[j]]) != 1L) {
+    return(NA_integer_)
+  }
+
+  # a dummy variable with this name may be coded differently (e.g., by sum
+  # contrasts instead of indicators)
+  other <- column_table$parts[[j]][[1L]]
+  same <- identical(other$call, part$call) &&
+    identical(other$type, part$type) &&
+    isTRUE(all.equal(other$values, part$values)) &&
+    identical(other$column, part$column)
+  if (same) j else NA_integer_
+}
+
+
+# used in divide_matrices (2026-11-27)
+#' Get the values of the columns added as parts of interactions
+#'
+#' Computes, in R, the values of the columns that [get_column_table()] adds for
+#' the parts of computed interactions: the dummy variable of a category, the
+#' column of a matrix (e.g., a spline), or the value of a function. Values of
+#' incomplete variables are missing; these columns are set to `NA` later and
+#' computed in JAGS.
+#'
+#' @param column_table the table of columns, as obtained from
+#'        [get_column_table()]
+#' @param data a `data.frame` (the data from which the design matrices are
+#'        created)
+#' @param envir the environment in which functions in the calls are looked up
+#'        (the environment of the formulas)
+#'
+#' @returns a matrix with one row per row of `data` and one column per added
+#'   column (no columns if there are none)
+#' @keywords internal
+#'
+get_added_column_values <- function(column_table, data, envir) {
+  rows <- which(column_table$added)
+  values <- matrix(
+    NA_real_,
+    nrow = nrow(data),
+    ncol = length(rows),
+    dimnames = list(NULL, column_table$column[rows])
+  )
+
+  for (k in seq_along(rows)) {
+    part <- column_table$parts[[rows[k]]][[1L]]
+    x <- if (part$call %in% names(data)) {
+      data[[part$call]]
+    } else {
+      eval(str2lang(part$call), envir = data, enclos = envir)
+    }
+    values[, k] <- switch(
+      part$type,
+      factor = unname(part$values[as.character(x)]),
+      matrix = x[, part$column],
+      value = as.numeric(x)
+    )
+  }
+  values
 }
 
 
@@ -442,6 +621,312 @@ get_column_level <- function(vars, variable_levels, data_structure) {
 
   # take the highest of them
   candidates[length(candidates)]
+}
+
+
+# used in get_column_table (2026-11-27)
+#' Get the parts of the columns of the design matrices
+#'
+#' A column of a design matrix is the product of one column of the coding of
+#' each call of its term (e.g., the column `log(x):z1` of the term `log(x):z`
+#' is the value of `log(x)` times the dummy variable of the category `1` of
+#' `z`). For each column, this function describes these parts:
+#' * a factor (also a logical or character variable) is coded by contrasts or
+#'   by indicators (one column per category); the part gives the value of the
+#'   column for each category,
+#' * a call with a matrix value (e.g., a spline) has several columns; the part
+#'   gives the number of the column,
+#' * any other call (a numeric variable or a function) is used as it is.
+#'
+#' The parts are derived from the terms of the formulas and the coding of their
+#' factors (contrasts from `refs`), in the way `model.matrix()` creates the
+#' columns; the name that the parts give each column is checked against the
+#' columns of the table. Columns that are not the column of a term of a formula
+#' (the outcomes, and the variables of the model frames) have one part, the
+#' column itself; the intercept has none.
+#'
+#' @param columns the table of the columns, as created in
+#'        [get_column_table()] (at least the columns `column` and `kind`)
+#' @param terms_list a list of `terms` objects, one per formula, as obtained
+#'        from `get_terms_list()`
+#' @param refs a list with the reference categories of the factors, as
+#'        obtained from `get_refs()`
+#' @param data a `data.frame`
+#' @param modelled the names of the variables that have a model (their factors
+#'        are coded differently in the data matrices)
+#'
+#' @returns a list with one element per row of `columns`; each element is a
+#'   list of parts, one per call of the term, as created by
+#'   [get_call_codings()] and [select_part()]
+#' @keywords internal
+#'
+get_column_parts <- function(columns, terms_list, refs, data, modelled) {
+  contr_matrices <- if (length(refs) > 0L) lapply(refs, attr, "contr_matrix")
+
+  # start with the column itself as its only part (the intercept has none)
+  parts <- vector("list", nrow(columns))
+  for (i in seq_len(nrow(columns))) {
+    parts[[i]] <- if (columns$kind[i] == "intercept") {
+      list()
+    } else {
+      column <- columns$column[i]
+      list(list(call = column, type = "value", name = column))
+    }
+  }
+
+  # take the parts of the columns of the terms of the formulas; a column is
+  # described where it occurs first, as in the table
+  from_term <- logical(nrow(columns))
+  for (tt in terms_list) {
+    model_frame <- model.frame(tt, data = data, na.action = na.pass)
+    term_parts <- get_term_parts(tt, model_frame, contr_matrices, modelled)
+    rows <- match(names(term_parts), columns$column)
+    for (k in which(!is.na(rows) & !from_term[rows])) {
+      parts[[rows[k]]] <- term_parts[[k]]
+      from_term[rows[k]] <- TRUE
+    }
+  }
+
+  # dummy variables and interactions are always columns of a term; if one is
+  # not found, the coding of its term was not derived as model.matrix() does
+  not_found <- columns$kind %in% c("dummy", "interaction") & !from_term
+  if (any(not_found)) {
+    errormsg(
+      "I could not determine how the column(s) %s of the design matrix are
+      computed from the variables.",
+      paste_and(dQuote(columns$column[not_found]))
+    )
+  }
+  parts
+}
+
+
+# used in get_column_parts (2026-11-27)
+#' Get the parts of the columns of the terms of one formula
+#'
+#' The columns of a term are the combinations of the columns of the coding of
+#' its calls, with the first call varying fastest, as in `model.matrix()`.
+#'
+#' @param tt the `terms` object of the formula
+#' @param model_frame the model frame of the formula (`model.frame()` of `tt`)
+#' @param contr_matrices a named list with the contrast matrices of the factors
+#'        (from `refs`), or `NULL`
+#' @param modelled the names of the variables that have a model
+#'
+#' @returns a list with one element per column of the terms (named by the
+#'   column, as `model.matrix()` names it), each a list of the parts of the
+#'   column, one per call of the term
+#' @keywords internal
+#'
+get_term_parts <- function(tt, model_frame, contr_matrices, modelled) {
+  codes <- get_coding_codes(tt, model_frame)
+
+  out <- list()
+  for (term in colnames(codes)) {
+    # the coding of each call of the term, and its number of columns
+    calls <- rownames(codes)[codes[, term] > 0L]
+    codings <- lapply(calls, function(call) {
+      get_call_codings(
+        call,
+        codes[call, term],
+        model_frame,
+        contr_matrices,
+        modelled
+      )
+    })
+    n_columns <- vapply(codings, function(x) length(x$names), integer(1L))
+
+    # each column of the term takes one column of the coding of each call; the
+    # first call varies fastest
+    for (position in seq_len(prod(n_columns)) - 1L) {
+      digits <- (position %/% cumprod(c(1L, n_columns[-length(n_columns)]))) %%
+        n_columns
+      parts <- list()
+      for (k in seq_along(calls)) {
+        parts[[k]] <- select_part(codings[[k]], digits[k] + 1L)
+      }
+      column <- paste(
+        vapply(parts, "[[", character(1L), "name"),
+        collapse = ":"
+      )
+      out[[column]] <- parts
+    }
+  }
+  out
+}
+
+
+# used in get_term_parts (2026-11-27)
+#' Get how model.matrix() codes each variable in each term of a formula
+#'
+#' Returns, for each variable in each term, whether `model.matrix()` codes it
+#' by contrasts (1) or by indicators (2, one column per category).
+#' [get_term_parts()] needs this to know how many columns a factor contributes
+#' to a term and what they are (e.g., `B20` and `B21` instead of only `B21` in
+#' `~ 0 + C1 + B2`). The coding depends on the formula, not on the variable,
+#' so it is not in `refs`.
+#'
+#' The result is the `factors` attribute of `tt`, which already has a 2 where
+#' R codes a factor by indicators because the term without it is not in the
+#' formula (e.g., `b2` in `~ b2:c2`). One case is not recorded there:
+#' without an intercept (`attr(tt, "intercept")`), `model.matrix()` codes the
+#' first factor (also a logical or character variable) in the first term that
+#' has one by indicators. Which variables are factors is only known from the
+#' data, so this entry is set here from the model frame.
+#'
+#' @param tt the `terms` object of the formula
+#' @param model_frame the model frame of the formula
+#'
+#' @returns a matrix with one row per variable and one column per term (as the
+#'   `factors` attribute of `tt`): 0 if the variable is not in the term, 1 if
+#'   it is coded by contrasts (or is not a factor), 2 if it is coded by
+#'   indicators
+#' @keywords internal
+#'
+get_coding_codes <- function(tt, model_frame) {
+  codes <- attr(tt, "factors")
+  if (length(codes) == 0L || attr(tt, "intercept") == 1L) {
+    return(codes)
+  }
+
+  # without intercept: the first factor in the first term that has one is
+  # coded by indicators
+  for (term in colnames(codes)) {
+    for (call in rownames(codes)[codes[, term] > 0L]) {
+      if (is_factor_like(model_frame[[call]])) {
+        codes[call, term] <- 2L
+        return(codes)
+      }
+    }
+  }
+  codes
+}
+
+
+# used in get_coding_codes and get_call_codings (2026-11-27)
+#' Check whether a variable is coded as a factor by model.matrix()
+#'
+#' @param x a variable of a model frame
+#'
+#' @returns `TRUE` for factors and logical or character vectors
+#' @keywords internal
+#'
+is_factor_like <- function(x) {
+  is.factor(x) || is.logical(x) || is.character(x)
+}
+
+
+# used in get_term_parts (2026-11-27)
+#' Get the coding of one call of a term
+#'
+#' @param call the call as written in the formula (a row name of the `factors`
+#'        attribute of the terms)
+#' @param code the entry of the `factors` attribute (after
+#'        [get_coding_codes()]) for this call and term: 1 for contrasts, 2 for
+#'        indicators
+#' @param model_frame the model frame of the formula
+#' @param contr_matrices a named list with the contrast matrices of the factors
+#'        (from `refs`), or `NULL`
+#' @param modelled the names of the variables that have a model
+#'
+#' @returns a list with the elements `call`, `type` (`"factor"`, `"matrix"`
+#'   or `"value"`), `names` (the suffixes that `model.matrix()` adds to the
+#'   call to name each column; `""` for a value) and, for a factor, `matrix`
+#'   (the coding matrix, with one row per category) and `codes` (the number
+#'   that stands for each category in the data matrices)
+#' @keywords internal
+#'
+get_call_codings <- function(
+  call,
+  code,
+  model_frame,
+  contr_matrices,
+  modelled
+) {
+  x <- model_frame[[call]]
+
+  if (is_factor_like(x)) {
+    # the numbers of the categories in the data matrices: logical variables
+    # are 0/1; factors with a model are coded as JAGS needs them (binary: 0/1,
+    # otherwise 1, 2, ...; prep_covoutcomes()), other factors by data.matrix()
+    # (1, 2, ...)
+    codes <- if (is.logical(x)) {
+      c(0, 1)
+    } else if (call %in% modelled && nlevels(as.factor(x)) == 2L) {
+      c(0, 1)
+    } else {
+      seq_len(nlevels(as.factor(x)))
+    }
+
+    # the categories: model.matrix() codes a logical variable always with the
+    # categories FALSE and TRUE (also when one of them does not occur)
+    x <- if (is.logical(x)) {
+      factor(x, levels = c(FALSE, TRUE))
+    } else {
+      as.factor(x)
+    }
+
+    # a factor: indicators, the contrasts given in refs, or the contrasts of
+    # the factor (as model.matrix() uses them)
+    coding <- if (code == 2L) {
+      diag(nlevels(x))
+    } else if (call %in% names(contr_matrices)) {
+      contr_matrices[[call]]
+    } else {
+      contrasts(x)
+    }
+    rownames(coding) <- levels(x)
+    if (code == 2L) {
+      colnames(coding) <- levels(x)
+    } else if (is.null(colnames(coding))) {
+      colnames(coding) <- seq_len(ncol(coding))
+    }
+    list(
+      call = call,
+      type = "factor",
+      names = colnames(coding),
+      matrix = coding,
+      codes = setNames(as.numeric(codes), levels(x))
+    )
+  } else if (is.matrix(x)) {
+    # a matrix (e.g., a spline): its columns
+    suffixes <- colnames(x)
+    if (is.null(suffixes)) {
+      suffixes <- seq_len(ncol(x))
+    }
+    list(call = call, type = "matrix", names = as.character(suffixes))
+  } else {
+    list(call = call, type = "value", names = "")
+  }
+}
+
+
+# used in get_term_parts (2026-11-27)
+#' Select one column of the coding of a call
+#'
+#' @param coding the coding of the call, as obtained from [get_call_codings()]
+#' @param k the number of the column of the coding
+#'
+#' @returns a list with the elements `call`, `type`, `name` (the name that
+#'   `model.matrix()` gives this column of the call alone) and, for a factor,
+#'   `values` (the value of the column for each category, named by the
+#'   categories) and `codes` (the number of each category in the data
+#'   matrices), or, for a matrix, `column` (the number of the column)
+#' @keywords internal
+#'
+select_part <- function(coding, k) {
+  part <- list(
+    call = coding$call,
+    type = coding$type,
+    name = paste0(coding$call, coding$names[k])
+  )
+  if (coding$type == "factor") {
+    part$values <- coding$matrix[, k]
+    part$codes <- coding$codes
+  } else if (coding$type == "matrix") {
+    part$column <- k
+  }
+  part
 }
 
 

@@ -156,12 +156,19 @@ get_model1_info <- function(
   index <- get_indices(Mlist)
 
   # transformations ------------------------------------------------------------
-  trafos <- paste_trafos(
-    Mlist,
-    varname = k,
-    index = if (isgk) "ii" else index[gsub("M_", "", resp_mat[1L])],
-    isgk = isgk
-  )
+  # the functions that this model computes (Temporary: in the quadrature part
+  # of a joint model (isgk) still written by paste_trafos() from fcts_all,
+  # until that part uses the column table)
+  trafos <- if (isgk) {
+    paste_trafos(Mlist, varname = k, index = "ii", isgk = TRUE)
+  } else {
+    paste_computed_functions(
+      varname = k,
+      trafos = Mlist$trafos,
+      column_table = Mlist$column_table,
+      group_lvls = Mlist$group_lvls
+    )
+  }
 
   # JM settings ----------------------------------------------------------------
   # * time variable ------------------------------------------------------------

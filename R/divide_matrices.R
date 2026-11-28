@@ -199,9 +199,38 @@ divide_matrices <- function(
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
   MX <- MX[, unique(colnames(MX))]
 
+  # describe all columns in one table; it also has the columns that computed
+  # interactions need, but that no formula has (e.g., b20 in b2:c2): add their
+  # values, computed in R, at the end of the design matrix
+  column_table <- get_column_table(
+    terms_list = terms_list,
+    outcomes = outcomes,
+    models = models,
+    refs = refs,
+    data = data,
+    data_structure = data_structure
+  )
+  # Temporary: not in joint models, until their quadrature part (M_lvlonegk)
+  # uses the added columns; until then, interactions whose parts are not
+  # columns give an error there.
+  if (any(vapply(fixed, attr, character(1L), "type") == "JM")) {
+    column_table <- column_table[!column_table$added, , drop = FALSE]
+  }
+  MX <- cbind(
+    MX,
+    get_added_column_values(
+      column_table,
+      data = data,
+      envir = environment(terms_list[[1L]])
+    )
+  )
+
   # identify levels of all variables
   # Mlvls <- apply(MX, 2, check_varlevel, groups = groups,
   #                group_lvls = get_grouping_levels(groups))
+  # Temporary: the level and data matrix of each column are also in
+  # column_table; Mlvls (and the levels of the interactions below) are kept
+  # until the functions that read Mlist$Mlvls use the column table.
   Mlvls <- get_datlvls(MX, groups, group_lvls = group_lvls)
 
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
@@ -236,6 +265,11 @@ divide_matrices <- function(
     simplify = FALSE
   )
 
+  # Temporary: the functions of variables are also in column_table; fcts_mis
+  # (Mlist$trafos) and fcts_all are kept until the placement of the function
+  # lines in the JAGS model (paste_computed_functions()), the quadrature part
+  # of joint models (paste_trafos()) and the scaling (find_scalevars()) use the
+  # column table.
   fcts_mis <- extract_fcts(
     fixed = fixed,
     data,
@@ -264,7 +298,16 @@ divide_matrices <- function(
   # Please use B-splines (using %s) instead.", dQuote("bs()"))
 
   # * interactions -------------------------------------------------------------
-  interactions <- match_interaction(inter, M)
+  # Temporary: the interactions are also in column_table; this list is kept
+  # until the scaling (find_scalevars()), the joint-model code and the check
+  # for coxph models in get_model1_info() use the column table. It is matched
+  # without the columns added for the parts of computed interactions, which
+  # these functions do not know, so that it stays as before.
+  added <- column_table$column[column_table$added]
+  interactions <- match_interaction(
+    inter,
+    lapply(M, function(m) m[, !colnames(m) %in% added, drop = FALSE])
+  )
 
   # scaling --------------------------------------------------------------------
   scale_pars <- mapply(
@@ -281,59 +324,13 @@ divide_matrices <- function(
     SIMPLIFY = FALSE
   )
 
-  # * set columns NA -----------------------------------------------------------
-  # set interaction terms that involve incomplete variables to NA
-  # (otherwise error in JAGS)
-  if (
-    any(
-      unlist(sapply(M, colnames)) %in%
-        names(interactions)[
-          sapply(interactions, "attr", "has_NAs")
-        ]
-    )
-  ) {
-    for (k in names(M)) {
-      M[[k]][, which(
-        colnames(M[[k]]) %in%
-          names(interactions)[
-            sapply(interactions, "attr", "has_NAs")
-          ]
-      )] <- NA
-    }
-  }
-
-  # set columns of trafos that need to be re-calculated in JAGS to NA
+  # * set computed columns NA --------------------------------------------------
+  # the dummy variables, functions and interactions of incomplete variables
+  # are computed in JAGS from the (imputed) variables; the table of columns
+  # says which these are
   for (k in names(M)) {
-    M[[k]][, intersect(colnames(M[[k]]), fcts_mis$colname)] <- NA
-  }
-
-  # categorical variables ------------------------------------------------------
-  # set dummies of incomplete variables to NA because they need to be
-  # re-calculated
-  # also set dummies of complete long. variables to NA if there is a JM
-  # because they need to be re-calculated in the quadrature part
-  for (k in names(refs)) {
-    if (all(attr(refs[[k]], "dummies") %in% colnames(MX))) {
-      if (any(is.na(data[, k]))) {
-        M[[unique(Mlvls[attr(refs[[k]], "dummies")])]][, attr(
-          refs[[k]],
-          "dummies"
-        )] <- NA
-      } else if (any(sapply(fixed, "attr", "type") %in% "JM")) {
-        # dummy matrix
-        covmat <- unique(Mlvls[attr(refs[[k]], "dummies")])
-        # outcome matrix
-        outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
-        if (
-          group_lvls[gsub("M_", "", outmat, fixed = TRUE)] <
-            group_lvls[gsub("M_", "", covmat, fixed = TRUE)]
-        ) {
-          M[[unique(Mlvls[
-            attr(refs[[k]], "dummies")
-          ])]][, attr(refs[[k]], "dummies")] <- NA
-        }
-      }
-    }
+    computed <- column_table$computed & column_table$matrix == k
+    M[[k]][, column_table$column[computed]] <- NA
   }
 
   # column names of the linear predictors for all models -----------------------
@@ -419,7 +416,8 @@ divide_matrices <- function(
     rd_vcov = rd_vcov,
     scale_pars = scale_pars,
     outcomes = outcomes,
-    terms_list = terms_list
+    terms_list = terms_list,
+    column_table = column_table
   )
 }
 

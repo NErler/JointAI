@@ -262,7 +262,6 @@ test_that("crossed and nested levels", {
 })
 
 test_that("a function in an interaction without the main effects", {
-  skip("known bug: the column log(C1):c2 is not computed in JAGS")
   fit <- lme_imp(
     y ~ log(C1):c2 + (1 | id),
     data = longDF,
