@@ -1,9 +1,12 @@
-# Initial values for the precisions of random effects. Their prior is a
-# truncated gamma distribution (for a single random effect, and for independent
-# random effects). JAGS >= 5 starts such a bounded parameter at the mode of the
-# prior, close to the lower bound 1e-16; the random effects then start at
-# extreme values and the model cannot be initialised. With JAGS >= 5, JointAI
-# therefore draws initial values for these precisions.
+# Initial values that JointAI draws with JAGS >= 5. JAGS >= 5 sets initial
+# values from the prior: the mode for a bounded parameter, the mean of many
+# draws for an unbounded parameter. For two kinds of parameters this does not
+# work, and the model cannot be initialised:
+# - the precisions of random effects with a truncated gamma prior (a single
+#   random effect, or independent random effects) start close to the lower
+#   bound 1e-16, so that the random effects start at extreme values;
+# - the shape parameter of a Weibull survival model starts at about 100, so
+#   that the survival time to the power of the shape overflows.
 
 # get_ranef_precision_nodes() --------------------------------------------------
 
@@ -68,14 +71,48 @@ test_that("get_ranef_precision_nodes(): none without random effects", {
 })
 
 
-# add_ranef_inits() ------------------------------------------------------------
+# get_survreg_shape_nodes() ----------------------------------------------------
 
-test_that("add_ranef_inits() draws a value per chain (JAGS >= 5)", {
+test_that("get_survreg_shape_nodes(): the shape of a Weibull model", {
+  fit <- survreg_imp(
+    Surv(futime, status != "censored") ~ age + sex,
+    data = PBC[match(unique(PBC$id), PBC$id), ],
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE
+  )
+
+  # the node of the shape; 0L stands for a single value
+  expect_identical(
+    get_survreg_shape_nodes(fit$info_list),
+    c(shape_Srv_ftm_stts_cn = 0L)
+  )
+})
+
+
+test_that("get_survreg_shape_nodes(): none in other models", {
+  fit <- lme_imp(
+    y ~ C1 + (1 | id),
+    data = longDF,
+    n.adapt = 0,
+    n.iter = 0,
+    mess = FALSE
+  )
+
+  expect_length(get_survreg_shape_nodes(fit$info_list), 0L)
+  # get_jags5_init_nodes() combines the nodes of both kinds
+  expect_identical(get_jags5_init_nodes(fit$info_list), c(invD_y_id = 1L))
+})
+
+
+# add_jags5_inits() ------------------------------------------------------------
+
+test_that("add_jags5_inits() draws a value per chain (JAGS >= 5)", {
   # set-up: the initial values of the random number generators of two chains
   inits <- get_rng(seed = 1, n_chains = 2)
   nodes <- c(invD_y_id = 2L, invD_c1_id = 1L)
 
-  out <- add_ranef_inits(inits, nodes, seed = 1, jags5 = TRUE)
+  out <- add_jags5_inits(inits, nodes, seed = 1, jags5 = TRUE)
 
   # the generators are kept, the precisions added as matrices with the values
   # on the diagonal (the off-diagonal elements are data or not used)
@@ -92,28 +129,40 @@ test_that("add_ranef_inits() draws a value per chain (JAGS >= 5)", {
   expect_false(identical(out[[1L]]$invD_y_id, out[[2L]]$invD_y_id))
 
   # the same seed gives the same values
-  expect_identical(add_ranef_inits(inits, nodes, seed = 1, jags5 = TRUE), out)
+  expect_identical(add_jags5_inits(inits, nodes, seed = 1, jags5 = TRUE), out)
 })
 
 
-test_that("add_ranef_inits() keeps values the user supplied", {
+test_that("add_jags5_inits() draws a single value for size 0", {
+  inits <- get_rng(seed = 1, n_chains = 2)
+
+  out <- add_jags5_inits(inits, c(shape_y = 0L), seed = 1, jags5 = TRUE)
+
+  # a single number (no matrix), between 0.5 and 2
+  expect_null(dim(out[[1L]]$shape_y))
+  expect_length(out[[1L]]$shape_y, 1L)
+  expect_true(out[[1L]]$shape_y >= 0.5 && out[[1L]]$shape_y <= 2)
+})
+
+
+test_that("add_jags5_inits() keeps values the user supplied", {
   inits <- list(
     list(invD_y_id = matrix(3), .RNG.name = "base::Wichmann-Hill"),
     list(.RNG.name = "base::Wichmann-Hill")
   )
 
-  out <- add_ranef_inits(inits, c(invD_y_id = 1L), seed = 1, jags5 = TRUE)
+  out <- add_jags5_inits(inits, c(invD_y_id = 1L), seed = 1, jags5 = TRUE)
 
   expect_identical(out[[1L]], inits[[1L]])
   expect_true(out[[2L]]$invD_y_id >= 0.5)
 })
 
 
-test_that("add_ranef_inits() changes nothing with JAGS < 5", {
+test_that("add_jags5_inits() changes nothing with JAGS < 5", {
   inits <- get_rng(seed = 1, n_chains = 2)
 
   expect_identical(
-    add_ranef_inits(inits, c(invD_y_id = 1L), seed = 1, jags5 = FALSE),
+    add_jags5_inits(inits, c(invD_y_id = 1L), seed = 1, jags5 = FALSE),
     inits
   )
 })
@@ -145,6 +194,27 @@ test_that("a model with random intercepts in several sub-models runs", {
     n.iter = 10,
     seed = 2020,
     trunc = list(trig = c(1e-04, NA)),
+    warn = FALSE,
+    mess = FALSE
+  )
+
+  expect_s3_class(fit, "JointAI")
+  expect_s3_class(fit$MCMC, "mcmc.list")
+})
+
+
+test_that("a Weibull survival model can be initialised", {
+  skip_on_cran()
+  # set-up: a Weibull model of the time to death in PBC (times up to about
+  # 4800 days). With JAGS 5 and its own initial value of the shape (about
+  # 100), this model could not be initialised ("Node inconsistent with
+  # parents").
+  fit <- survreg_imp(
+    Surv(futime, status != "censored") ~ age + sex,
+    data = PBC[match(unique(PBC$id), PBC$id), ],
+    n.adapt = 10,
+    n.iter = 20,
+    seed = 2020,
     warn = FALSE,
     mess = FALSE
   )

@@ -34,7 +34,8 @@
 #'              by JAGS. With JAGS >= 5, \strong{JointAI} draws initial values
 #'              for the precisions of random effects that have a truncated
 #'              gamma prior (a single random effect, or independent random
-#'              effects) that are not given in `inits`.
+#'              effects) and for the shape parameter of Weibull survival
+#'              models, if they are not given in `inits`.
 #'              It is an error to supply an initial value for an observed node.
 #' @param n.adapt number of iterations for adaptation of the MCMC samplers
 #'                (see \code{\link[rjags]{adapt}})
@@ -1015,11 +1016,12 @@ model_imp <- function(
     n_chains = n.chains,
     warn = warn
   )
-  # with JAGS >= 5, the precisions of random effects with a truncated gamma
-  # prior get initial values from JointAI (see add_ranef_inits())
-  inits <- add_ranef_inits(
+  # with JAGS >= 5, some parameters (precisions of random effects, shape of
+  # Weibull survival models) get initial values from JointAI, because those
+  # of JAGS do not work (see add_jags5_inits())
+  inits <- add_jags5_inits(
     inits = inits,
-    nodes = get_ranef_precision_nodes(info_list),
+    nodes = get_jags5_init_nodes(info_list),
     seed = seed
   )
 

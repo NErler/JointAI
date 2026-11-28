@@ -198,7 +198,8 @@ created by \strong{JointAI}, initial values are then generated
 by JAGS. With JAGS >= 5, \strong{JointAI} draws initial values
 for the precisions of random effects that have a truncated
 gamma prior (a single random effect, or independent random
-effects) that are not given in \code{inits}.
+effects) and for the shape parameter of Weibull survival
+models, if they are not given in \code{inits}.
 It is an error to supply an initial value for an observed node.}
 
 \item{warn}{logical; should warnings be given? Default is

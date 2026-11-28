@@ -154,36 +154,82 @@ get_ranef_precision_nodes <- function(info_list) {
 }
 
 
-#' Add initial values for the precisions of random effects (JAGS >= 5)
+#' Get the shape parameters of Weibull survival models
 #'
-#' JAGS >= 5 sets initial values that are not given from the prior: for a
-#' bounded parameter, it takes the value with the highest prior density
-#' (see `rjags::jags.model()`, argument `initrep`). For the truncated gamma
-#' prior of the precision of random effects (see
-#' [get_ranef_precision_nodes()]), this is close to the lower bound 1e-16. The
-#' random effects then start at extreme values, and models with, e.g., a
-#' proportional hazards or a gamma model cannot be initialised ("Node
-#' inconsistent with parents"). JAGS 4 started the random effects at zero, so
-#' nothing is changed for JAGS < 5.
+#' The shape parameter of a Weibull survival model (`survreg_imp()`) has the
+#' prior `dexp(0.01)` (see `jagsmodel_survreg()`).
+#'
+#' @param info_list a list with the information on the sub-models, as obtained
+#'        from `get_model_info()`
+#'
+#' @returns a named integer vector with the value `0L` (a single value, see
+#'   [add_jags5_inits()]), named by the node of the shape parameter (e.g.,
+#'   `c(shape_Srv_ftm_stts_cn = 0L)`); of length zero if there are no survreg
+#'   models
+#' @keywords internal
+get_survreg_shape_nodes <- function(info_list) {
+  nodes <- integer(0L)
+
+  for (info in info_list) {
+    if (identical(info$modeltype, "survreg")) {
+      nodes[paste0("shape_", info$varname)] <- 0L
+    }
+  }
+  nodes
+}
+
+
+#' Get the nodes that get initial values from JointAI with JAGS >= 5
+#'
+#' @param info_list a list with the information on the sub-models, as obtained
+#'        from `get_model_info()`
+#'
+#' @returns a named integer vector, as obtained from
+#'   [get_ranef_precision_nodes()] and [get_survreg_shape_nodes()]: the number
+#'   of rows and columns of a precision matrix, or `0L` for a single value
+#' @keywords internal
+get_jags5_init_nodes <- function(info_list) {
+  c(get_ranef_precision_nodes(info_list), get_survreg_shape_nodes(info_list))
+}
+
+
+#' Add initial values for nodes that JAGS >= 5 cannot initialise
+#'
+#' JAGS >= 5 sets initial values that are not given from the prior (see
+#' `rjags::jags.model()`, argument `initrep`): for a bounded parameter, it
+#' takes the value with the highest prior density, for an unbounded parameter
+#' the mean of many draws from the prior. For some parameters of JointAI's
+#' models, these values are extreme, and the model cannot be initialised
+#' ("Node inconsistent with parents"):
+#' * The precision of random effects with a truncated gamma prior (see
+#'   [get_ranef_precision_nodes()]) starts close to the lower bound 1e-16; the
+#'   random effects then start at extreme values (e.g., in proportional hazards
+#'   models or generalised linear mixed models).
+#' * The shape parameter of a Weibull survival model (see
+#'   [get_survreg_shape_nodes()]) starts at about 100 (the mean of its prior);
+#'   the survival time to the power of the shape then overflows.
+#'
+#' JAGS 4 started these models at values that worked (the random effects at
+#' zero, the shape at about 10), so nothing is changed for JAGS < 5.
 #'
 #' The initial values are drawn per chain from a log-uniform distribution
-#' between 0.5 and 2 (so that the chains start at different values; the
-#' variances then lie in the same range). Values the user supplied for a node
-#' are kept.
+#' between 0.5 and 2 (so that the chains start at different values; for a
+#' precision, the variance then lies in the same range). Values the user
+#' supplied for a node are kept.
 #'
 #' @param inits a list with one list of initial values per chain, as obtained
 #'        from `get_initial_values()`
-#' @param nodes a named integer vector with the nodes of the precisions and
-#'        their dimension, as obtained from [get_ranef_precision_nodes()]
+#' @param nodes a named integer vector, as obtained from
+#'        [get_jags5_init_nodes()]: per node the number of rows and columns of
+#'        a precision matrix, or `0L` for a single value
 #' @param seed an optional seed value, to draw the same values again
 #' @param jags5 logical; whether the initial values are added (by default with
 #'        JAGS >= 5)
 #'
-#' @returns `inits`, with a matrix for each node that is not in the initial
-#'   values of a chain; the drawn values are on the diagonal, the other elements
-#'   are `NA` (they are data or not used)
+#' @returns `inits`, with an initial value for each node that is not in the
+#'   initial values of a chain (see [draw_jags5_init()])
 #' @keywords internal
-add_ranef_inits <- function(
+add_jags5_inits <- function(
   inits,
   nodes,
   seed,
@@ -202,15 +248,37 @@ add_ranef_inits <- function(
 
   for (chain in seq_along(inits)) {
     for (node in names(nodes)) {
-      # draw values also for a node the user supplied, so that the values of
+      # draw a value also for a node the user supplied, so that the values of
       # the other nodes do not depend on it
-      values <- exp(stats::runif(nodes[[node]], log(0.5), log(2)))
+      value <- draw_jags5_init(nodes[[node]])
       if (is.null(inits[[chain]][[node]])) {
-        precision <- matrix(NA_real_, nodes[[node]], nodes[[node]])
-        diag(precision) <- values
-        inits[[chain]][[node]] <- precision
+        inits[[chain]][[node]] <- value
       }
     }
   }
   inits
+}
+
+
+#' Draw an initial value for a node (JAGS >= 5)
+#'
+#' @param size the number of rows and columns of a precision matrix, or `0L`
+#'        for a single value (see [get_jags5_init_nodes()])
+#'
+#' @returns a single value, or, for `size > 0`, a matrix with the values on the
+#'   diagonal and `NA` elsewhere (these elements are data or not used); the
+#'   values are drawn from a log-uniform distribution between 0.5 and 2
+#' @keywords internal
+draw_jags5_init <- function(size) {
+  values <- exp(stats::runif(max(size, 1L), log(0.5), log(2)))
+
+  # a single value (e.g., the shape parameter)
+  if (size == 0L) {
+    return(values)
+  }
+
+  # a precision matrix, with the values on the diagonal
+  precision <- matrix(NA_real_, size, size)
+  diag(precision) <- values
+  precision
 }
