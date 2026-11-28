@@ -17,6 +17,22 @@ if (run_slow_tests()) {
   longDF$Be2 <- plogis(longDF$y + longDF$c1)
   longDF$Be2[c(1:20) * 5] <- NA
 
+  # Initial values for the coefficients of covariate models with an inverse link
+  # (the elements of alpha; the others are NA). The inverse link only allows a
+  # positive linear predictor (1 / max(1e-10, ...)). With the initial values of
+  # JAGS >= 5 (from the prior), these models could not be initialised or
+  # sampled ("Failure to calculate log density"). JAGS 4 runs them without
+  # these values, so they are only given with JAGS >= 5 and the samples with
+  # JAGS 4 stay the same (the call in the printed summary shows the argument).
+  alpha_inits <- function(values, n_alpha) {
+    if (rjags::jags.version() < "5.0.0") {
+      return(NULL)
+    }
+    alpha <- rep(NA_real_, n_alpha)
+    alpha[as.integer(names(values))] <- values
+    function() list(alpha = alpha)
+  }
+
   run_glmm_models <- function() {
     sink(tempfile())
     on.exit(sink())
@@ -357,6 +373,10 @@ if (run_slow_tests()) {
             L1mis = "glmm_gamma_inverse",
             Be2 = "glmm_beta"
           ),
+          # the coefficients of the gamma model for L1mis (alpha[10:12]): the
+          # intercept is the inverse of the mean of L1mis (about 0.5), the
+          # covariate coefficients are zero
+          inits = alpha_inits(c("10" = 2, "11" = 0, "12" = 0), n_alpha = 15),
           warn = FALSE,
           mess = FALSE
         ),
@@ -373,6 +393,11 @@ if (run_slow_tests()) {
             b2 = "glmm_binomial_probit",
             L1mis = "glmm_lognorm"
           ),
+          # the coefficients of the normal model with inverse link for c2
+          # (alpha[8:9]): the values of c2 are mostly negative, which this
+          # model cannot fit; a large intercept keeps its mean small and
+          # positive, the covariate coefficient is zero
+          inits = alpha_inits(c("8" = 10, "9" = 0), n_alpha = 10),
           warn = FALSE,
           mess = FALSE
         ),

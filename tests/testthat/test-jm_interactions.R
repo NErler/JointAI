@@ -37,12 +37,46 @@ jm_survival_lines <- function(fit) {
   list(logh = next_lines(logh), surv = next_lines(surv))
 }
 
+# Initial values of the intercepts of the longitudinal sub-models: the link
+# function of the mean of the observed values (e.g., about 300 for chol, the
+# log of the mean for a Poisson model). The covariates enter the survival part
+# as log(), which needs positive values. JAGS >= 5 starts the intercepts close
+# to zero (from the prior), so that, e.g., log(mu_chol) or the log of a
+# Poisson value of zero is not defined and the model cannot be initialised.
+intercept_inits <- function(fit, data = golden_data()$PBC_small) {
+  # one value per element of beta (the coefficients of the outcome models;
+  # covariate models have alpha)
+  coefs <- unlist(lapply(fit$coef_list, "[[", "coef"))
+  n_beta <- max(as.integer(gsub("\\D", "", grep("^beta", coefs, value = TRUE))))
+  beta_inits <- rep(NA_real_, n_beta)
+
+  for (outcome in names(fit$coef_list)) {
+    coefs <- fit$coef_list[[outcome]]
+    intercept <- coefs$coef[coefs$varname == "(Intercept)"]
+    # only outcome models (beta) with an intercept whose outcome is in the data
+    is_used <- length(intercept) == 1L &&
+      startsWith(intercept, "beta") &&
+      outcome %in% names(data)
+    if (!is_used) {
+      next
+    }
+    link <- fit$info_list[[outcome]]$link
+    value <- mean(data[[outcome]], na.rm = TRUE)
+    if (identical(link, "log")) {
+      value <- log(value)
+    }
+    beta_inits[as.integer(gsub("\\D", "", intercept))] <- value
+  }
+  beta_inits
+}
+
 expect_jags_compiles <- function(fit) {
+  inits <- c(fit$mcmc_settings$inits[[1L]], list(beta = intercept_inits(fit)))
   expect_s3_class(
     rjags::jags.model(
       textConnection(fit$jagsmodel),
       data = fit$data_list,
-      inits = fit$mcmc_settings$inits[1L],
+      inits = inits,
       n.chains = 1L,
       n.adapt = 0L,
       quiet = TRUE
