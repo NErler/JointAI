@@ -27,6 +27,30 @@
   and the name of the replacement no longer has a trailing space.
 
 ## Bug fixes
+* With rjags 5 and JAGS 5, the covariance matrices of the random effects
+  (e.g., `D_y_id`) were not sampled ("Failed to set value trace monitor"), so
+  that, e.g., `rd_vcov()` failed: rjags 5 cannot monitor single elements of a
+  node whose name has two or more underscores. Such nodes are now monitored as
+  a whole, and only the requested elements are kept.
+* Models with random effects work with rjags 5: the hyperparameters of the
+  prior of the random-effects variances (`shape_diag_RinvD`,
+  `rate_diag_RinvD`) were given to JAGS as text, which rjags 5 drops
+  ("Non-numeric data values supplied"), so that the variances were not
+  defined.
+* With JAGS 5, models with a random intercept (or independent random effects)
+  often could not be initialised ("Node inconsistent with parents") or got
+  stuck, e.g., proportional hazards and generalised linear mixed models: JAGS 5 started
+  the precision of the random effects close to zero. With JAGS >= 5,
+  **JointAI** now draws initial values for these precisions (unless they are
+  given in `inits`).
+* With JAGS 5, Weibull survival models (`survreg_imp()`) could not be
+  initialised ("Node inconsistent with parents"): JAGS 5 started the shape
+  parameter at about 100. With JAGS >= 5, **JointAI** now also draws an
+  initial value for the shape (unless it is given in `inits`).
+* `JM_imp()`: an interaction of a time-varying covariate with another variable
+  in a longitudinal sub-model (e.g., `chol ~ day + albumin * age + (1 | id)`)
+  is now calculated at the quadrature points of the survival part. Before, the
+  JAGS model did not compile.
 * A model type given in `models` for a covariate must now fit the level of the
   variable: with random effects (e.g., `"lmm"`) for a variable that varies
   within the groups of a grouping level, without random effects (e.g., `"lm"`)

@@ -27,7 +27,9 @@ jobs:
         with:
           use-public-rspm: true
 
-      # also installs the system requirements (e.g., JAGS)
+      # JAGS 5 (rjags >= 5-0 requires it); local action in .github/actions
+      - uses: ./.github/actions/install-jags
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::covr

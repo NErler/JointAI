@@ -1,0 +1,93 @@
+name: Install JAGS 5
+description: >
+  Installs JAGS 5 (required by rjags >= 5-0). macOS and Windows use the
+  official installers; on Linux, JAGS is built from source into ~/jags5,
+  because the Ubuntu package is still JAGS 4. The Linux build is cached.
+
+inputs:
+  version:
+    description: JAGS version
+    default: "5.0.2"
+
+runs:
+  using: composite
+  steps:
+    # Official installer; JAGS 5 installs into /opt/jags, where rjags looks
+    # for it (incl. the bundled pkg-config used by the source build of rjags)
+    - name: Install JAGS (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        curl -sSL -o jags.pkg "https://sourceforge.net/projects/mcmc-jags/files/JAGS/5.x/macOS/JAGS-${{ inputs.version }}-universal.pkg/download"
+        sudo installer -pkg jags.pkg -target /
+        rm jags.pkg
+
+    # Not cached: the installer writes the registry entries that rjags uses
+    # to find JAGS, and a cache restores only the files
+    - name: Install JAGS (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        curl.exe -sSL -o jags-installer.exe "https://sourceforge.net/projects/mcmc-jags/files/JAGS/5.x/Windows/Rtools45/JAGS-${{ inputs.version }}.exe/download"
+        Start-Process -FilePath .\jags-installer.exe -ArgumentList '/S' -Wait
+        Remove-Item jags-installer.exe
+        Get-ChildItem "C:\Program Files\JAGS"
+
+    # Build tools and BLAS/LAPACK: needed to build JAGS, and at run time
+    - name: Install build dependencies (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gfortran libblas-dev liblapack-dev pkg-config
+
+    # The cache key includes the runner image, because the build links to
+    # the system libraries of that image
+    - name: Cache key (Linux)
+      id: key
+      if: runner.os == 'Linux'
+      shell: bash
+      run: echo "key=jags-${{ inputs.version }}-${ImageOS}-$(uname -m)" >> "$GITHUB_OUTPUT"
+
+    - name: Restore JAGS (Linux)
+      id: cache
+      if: runner.os == 'Linux'
+      uses: actions/cache/restore@v6
+      with:
+        path: ~/jags5
+        key: ${{ steps.key.outputs.key }}
+
+    - name: Build JAGS (Linux)
+      if: runner.os == 'Linux' && steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        curl -sSL -o jags.tar.gz "https://sourceforge.net/projects/mcmc-jags/files/JAGS/5.x/Source/JAGS-${{ inputs.version }}.tar.gz/download"
+        tar xzf jags.tar.gz
+        cd "JAGS-${{ inputs.version }}"
+        ./configure --prefix="$HOME/jags5"
+        make -j"$(nproc)"
+        make install
+        cd ..
+        rm -rf jags.tar.gz "JAGS-${{ inputs.version }}"
+
+    # Saved right after the build, so that the cache is kept also when a
+    # later step of the job fails
+    - name: Save JAGS (Linux)
+      if: runner.os == 'Linux' && steps.cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v6
+      with:
+        path: ~/jags5
+        key: ${{ steps.key.outputs.key }}
+
+    # PKG_CONFIG_PATH is searched before the system path, so rjags finds
+    # JAGS 5 even if the system requirements step installs the Ubuntu
+    # package (JAGS 4) as well; ldconfig makes libjags.so.5 loadable
+    - name: Register JAGS (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        echo "$HOME/jags5/lib" | sudo tee /etc/ld.so.conf.d/jags5.conf
+        sudo ldconfig
+        echo "PKG_CONFIG_PATH=$HOME/jags5/lib/pkgconfig" >> "$GITHUB_ENV"
+        echo "$HOME/jags5/bin" >> "$GITHUB_PATH"
+        PKG_CONFIG_PATH="$HOME/jags5/lib/pkgconfig" pkg-config --modversion jags

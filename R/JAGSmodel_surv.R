@@ -746,6 +746,11 @@ jagsmodel_jm <- function(info) {
       collapse = "\n"
     ),
     "\n",
+    paste_gk_interactions(
+      interactions = info$gk_interactions,
+      index = index,
+      surv_lvl = sub("M_", "", info$resp_mat[2L], fixed = TRUE)
+    ),
     tab(),
     "}\n\n",
 

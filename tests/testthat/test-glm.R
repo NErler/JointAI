@@ -644,8 +644,22 @@ test_that("summary output remained the same", {
   expect_snapshot(lapply(models0, print))
   expect_snapshot(lapply(models0, coef))
   expect_snapshot(lapply(models0, confint))
-  expect_snapshot(lapply(models0, summary, missinfo = TRUE))
   expect_snapshot(lapply(models0, function(x) coef(summary(x))))
+})
+
+test_that("summary output remained the same (per version of JAGS)", {
+  skip_if_not_slow()
+  # the summary shows the iterations of the samples, which differ between the
+  # versions of JAGS: they start after the n.adapt iterations of the
+  # adaptation phase if a sampler adapts, at iteration 1 otherwise, and JAGS 4
+  # and JAGS 5 choose different samplers for some models (e.g., JAGS 5 samples
+  # the coefficients of the lognormal model with a sampler of its glm module,
+  # which needs no adaptation). Therefore one snapshot per major version of
+  # JAGS (_snaps/jags4/, _snaps/jags5/).
+  expect_snapshot(
+    lapply(models0, summary, missinfo = TRUE),
+    variant = paste0("jags", rjags::jags.version()[[1L, 1L]])
+  )
 })
 
 test_that("prediction works", {
